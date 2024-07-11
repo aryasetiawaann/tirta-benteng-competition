@@ -103,10 +103,40 @@
     </section>
 
     <section id="petunjuk">
-        <!-- Isi bagian petunjuk -->
+        <div class="petunjuk-img">
+            <img src="{{ asset('assets/img/Pool.jpg') }}" alt="kolam">
+        </div>
+        <div class="petunjuk-content">
+            <div class="custom-subheader">
+                <div class="line"></div>
+                <h3>Tentang Kompetisi</h3>
+                <div class="line"></div>
+            </div>
+            <h2>Karya Terbaik, Persada Sesama</h2>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. <br><br>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+        </div>
     </section>
 
     <footer>
-        <!-- Isi footer -->
+        <div class="footer-container">
+                <div class="footer-left">
+                    <img src="{{ asset('assets/img/logo.png') }}" alt="Logo" class="footer-logo">
+                    <p>Kompetisi Renang Tangerang 2024</p>
+                </div>
+                <div class="footer-menu">
+                    <h4>Menu</h4>
+                    <ul>
+                        <li><a href="#pengenalan">Pengenalan</a></li>
+                        <li><a href="#jadwal">Jadwal</a></li>
+                        <li><a href="#biaya">Biaya</a></li>
+                        <li><a href="#petunjuk">Petunjuk</a></li>
+                    </ul>
+                </div>
+                <div class="footer-contact">
+                    <h4>Hubungi Kami</h4>
+                    <p><a href="tel:0812312312312"><i class="fa fa-phone"></i> 0812312312312</a></p>
+                    <p><a href="mailto:renangtangerang@gmail.com"><i class="fa fa-envelope"></i> renangtangerang@gmail.com</a></p>
+                </div>
+        </div>
     </footer>
 </x-layout>
