@@ -20,6 +20,7 @@ body {
 
 .custom-subheader h3 {
     text-transform: uppercase;
+    text-align: center;
     font-size: 18px;
     font-weight: 800;
     color: #008dda;
