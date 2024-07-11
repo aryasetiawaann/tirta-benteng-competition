@@ -1,7 +1,28 @@
 body {
     margin: 0;
     padding: 0;
-    font-family: 'Lato', sans-serif;
+    box-sizing: border-box;
+    font-family: "Lato", sans-serif;
+}
+
+/* Buat Sub Header */
+.custom-subheader {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+
+.custom-subheader .line {
+    min-width: 45px;
+    max-height: 0;
+    border-top: 1px solid black;
+}
+
+.custom-subheader h3 {
+    text-transform: uppercase;
+    font-size: 18px;
+    font-weight: 800;
+    color: #008dda;
 }
 
 /* Navbar*/
@@ -10,10 +31,11 @@ body {
     width: 100%;
     top: 0;
     left: 0;
+    right: 0;
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
     align-items: center;
-    padding: 25px;
+    padding: 20px 0;
     border-bottom: 1px solid white;
     z-index: 1000;
 }
@@ -21,14 +43,12 @@ body {
 .navbar-left .logo {
     width: 50px;
     height: 50px;
-    padding-left: 100px;
 }
 
 .navbar-center .nav-links {
     display: flex;
     list-style: none;
     gap: 40px;
-    margin-left: 80px;
 }
 
 .navbar-center .nav-links li a {
@@ -39,8 +59,7 @@ body {
 
 .navbar-right {
     display: flex;
-    gap: 10px;
-    padding-right: 130px;
+    gap: 20px;
 }
 
 .navbar-right .btn-login,
@@ -48,7 +67,6 @@ body {
     padding: 7px 27px;
     border: none;
     border-radius: 30px;
-    margin-left: 15px;
     cursor: pointer;
     font-size: 0.9em;
 }
@@ -60,7 +78,7 @@ body {
 }
 
 .navbar-right .btn-register {
-    background-color: #008DDA;
+    background-color: #008dda;
     color: white;
 }
 
@@ -88,15 +106,16 @@ body {
 }
 
 .hero-content h1 {
+    max-width: 80%;
     font-size: 70px;
-    margin-bottom: 20px;
-    font-family: 'Inter', sans-serif;
+    margin-bottom: 0;
+    font-family: "Inter", sans-serif;
 }
 
 .hero-content p {
     font-size: 15px;
     margin-bottom: 40px;
-    font-family: 'Lato', sans-serif;
+    font-family: "Lato", sans-serif;
 }
 
 .hero-buttons {
@@ -106,37 +125,125 @@ body {
 }
 
 .hero-buttons .btn-competition {
-    padding: 15px 45px;
-    background-color: #008DDA;
+    padding: 12px 45px;
+    background-color: #008dda;
     color: white;
     border: none;
     border-radius: 30px;
     cursor: pointer;
-    font-size: 20px;
+    font-size: 18px;
 }
 
 .fa {
-  padding: 15px;
-  font-size: 30px;
-  width: 20px;
-  text-align: center;
-  text-decoration: none;
-  border-radius: 50%;
+    padding: 15px;
+    font-size: 30px;
+    width: 20px;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 50%;
 }
 
 .fa:hover {
-  opacity: 0.7;
+    opacity: 0.7;
 }
 
 .fa-facebook {
-  color: white;
+    color: white;
 }
 
 .fa-instagram {
-  color: white;
+    color: white;
 }
 
 .hero-buttons .social-icon {
     width: 30px;
     height: 30px;
+}
+
+/* Pengenalan Section*/
+#pengenalan {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 60px;
+    padding: 100px 8%;
+}
+
+.pengenalan-img {
+    /* Kalo mau re-size imagenya ubah yg ini*/
+    width: 600px;
+}
+
+.pengenalan-img img {
+    width: 100%;
+}
+
+.pengenalan-content h2 {
+    font-size: 34px;
+    font-family: "Inter", sans-serif;
+    margin: 0;
+    text-transform: uppercase;
+    max-width: 350px;
+}
+
+.pengenalan-content p {
+    font-size: 16px;
+    max-width: 500px;
+}
+
+/* Jadwal Section */
+#jadwal {
+    background-color: #f8f4ea;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 50px 0;
+}
+
+#jadwal h2 {
+    margin: 0;
+    font-family: "Inter", sans-serif;
+    text-transform: uppercase;
+    font-size: 34px;
+}
+
+.jadwal-items {
+    margin-top: 60px;
+    display: flex;
+    justify-content: space-evenly;
+    width: 100%;
+}
+
+.jadwal-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.jadwal-item-img {
+    width: 130px;
+    height: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    aspect-ratio: 1/1;
+    background-color: #ffffff;
+    border: 2px solid #008dda;
+    border-radius: 100%;
+}
+
+.jadwal-item-img img {
+    width: 40%;
+}
+
+.jadwal-item p {
+    color: #008dda;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.jadwal-item h3 {
+    margin: 0;
+    font-size: 26px;
+    font-weight: 700;
 }

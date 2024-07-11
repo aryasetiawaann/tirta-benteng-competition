@@ -29,11 +29,50 @@
     </section>
 
     <section id="pengenalan">
-        <!-- Isi bagian pengenalan -->
+        <div class="pengenalan-img">
+            <img src="{{ asset('assets/img/pengenalan.jpg') }}" alt="gambar orang berenang">
+        </div>
+        <div class="pengenalan-content">
+            <div class="custom-subheader">
+                <div class="line"></div>
+                <h3>Tentang Kompetisi</h3>
+                <div class="line"></div>
+            </div>
+            <h2>Karya Terbaik, Persada Sesama</h2>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. <br><br>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+        </div>
     </section>
 
     <section id="jadwal">
-        <!-- Isi bagian jadwal -->
+        <div class="custom-subheader">
+            <div class="line"></div>
+            <h3>Jadwal</h3>
+            <div class="line"></div>
+        </div>
+        <h2>Lomba Renang Tangerang</h2>
+        <div class="jadwal-items">
+            <div class="jadwal-item">
+                <div class="jadwal-item-img">
+                    <img src="{{ asset('assets/img/pendaftaran.png') }}" alt="pendaftaran form">
+                </div>
+                <p>20 Juni 2024</p>
+                <h3>Pendaftaran</h3>
+            </div>
+            <div class="jadwal-item">
+                <div class="jadwal-item-img">
+                    <img src="{{ asset('assets/img/tech-meeting.png') }}" alt="technical meeting">
+                </div>
+                <p>20 Juli 2024</p>
+                <h3>Technical Meeting</h3>
+            </div>
+            <div class="jadwal-item">
+                <div class="jadwal-item-img">
+                    <img src="{{ asset('assets/img/kompetisi.png') }}" alt="piala kompetisi">
+                </div>
+                <p>20 Agustus 2024</p>
+                <h3>Kompetisi</h3>
+            </div>
+        </div>
     </section>
 
     <section id="biaya">
