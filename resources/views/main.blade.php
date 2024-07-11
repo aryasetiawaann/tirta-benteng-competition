@@ -94,7 +94,7 @@
                 <h4>125.000</h4>
                 <ul>
                     <li>
-                        <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Dolores, ducimus.</p>
+                        <p>Lorem ipsum dolor sit, amet consectetur adipisicing  anjingelit. Dolores, ducimus.</p>
                     </li>
                 </ul>
                 <a href=""><button>Daftar</button></a>
