@@ -13,8 +13,8 @@
                 </ul>
             </div>
             <div class="navbar-right">
-                <button class="btn-login">Masuk</button>
-                <button class="btn-register">Daftar</button>
+                <button class="btn-login"> <a href="">Masuk</a></button>
+                <button class="btn-register"><a href="">Daftar</a></button>
             </div>
         </nav>
         <div class="hero-content">
@@ -23,7 +23,7 @@
             <div class="hero-buttons">
                 <button class="btn-competition">Ikuti Kompetisi</button>
                 <a href="https://www.instagram.com/tirtabentengsc/" target="_blank" class="fa fa-instagram"></a>
-                <a href="#" target="_blank" class="fa fa-facebook"></a>
+                {{-- <a href="#" target="_blank" class="fa fa-facebook"></a> --}}
             </div>
         </div>
     </section>
@@ -76,7 +76,30 @@
     </section>
 
     <section id="biaya">
-        <!-- Isi bagian biaya -->
+        <div class="custom-subheader">
+            <div class="line"></div>
+            <h3>Biaya</h3>
+            <div class="line"></div>
+        </div>
+        <h2>BIAYA KOMPETISI</h2>
+        <div class="event-list">
+            <div class="event">
+                <h3>Tirta Benteng Swimming Fun Competition 2024</h3>
+            </div>
+        </div>
+        <div class="price-list">
+            <div class="price">
+                <h3>Individu</h3>
+                <hr>
+                <h4>125.000</h4>
+                <ul>
+                    <li>
+                        <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Dolores, ducimus.</p>
+                    </li>
+                </ul>
+                <a href=""><button>Daftar</button></a>
+            </div>
+        </div>
     </section>
 
     <section id="petunjuk">

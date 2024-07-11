@@ -5,6 +5,11 @@ body {
     font-family: "Lato", sans-serif;
 }
 
+a {
+    text-decoration: none;
+    color: unset;
+}
+
 /* Buat Sub Header */
 .custom-subheader {
     display: flex;
@@ -183,6 +188,7 @@ body {
 
 .pengenalan-img img {
     width: 100%;
+    border-radius: 5px;
 }
 
 .pengenalan-content h2 {
