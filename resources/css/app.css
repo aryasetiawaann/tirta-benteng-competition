@@ -36,7 +36,7 @@ body {
     display: flex;
     justify-content: space-around;
     align-items: center;
-    padding: 20px 0;
+    padding: 7px 0;
     border-bottom: 1px solid white;
     z-index: 1000;
 }
@@ -47,8 +47,9 @@ body {
 }
 
 .navbar-left .logo {
-    width: 50px;
-    height: 50px;
+    width: 70px;
+    height: auto;
+    aspect-ratio: 1/1;
 }
 
 .navbar-center .nav-links {
@@ -211,6 +212,8 @@ body {
     font-family: "Inter", sans-serif;
     text-transform: uppercase;
     font-size: 34px;
+    max-width: 700px;
+    text-align: center;
 }
 
 .jadwal-items {

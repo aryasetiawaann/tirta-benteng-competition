@@ -2,7 +2,7 @@
     <section id="hero" style="background-image: linear-gradient(rgba(0, 0, 0, 0.4),rgba(0, 0, 0, 0.4)), url('{{ asset('assets/img/Swimpage.png') }}'); background-size: cover; background-position: center;">
         <nav class="navbar">
             <div class="navbar-left">
-                <img src="{{ asset('assets/img/Burger.png') }}" alt="Logo" class="logo">
+                <img src="{{ asset('assets/img/logo.png') }}" alt="Logo" class="logo">
             </div>
             <div class="navbar-center">
                 <ul class="nav-links">
@@ -18,12 +18,12 @@
             </div>
         </nav>
         <div class="hero-content">
-            <h1>KOMPETISI RENANG TANGERANG</h1>
+            <h1>TIRTA BENTENG SWIMMING FUN COMPETITION 2024</h1>
             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod</p>
             <div class="hero-buttons">
                 <button class="btn-competition">Ikuti Kompetisi</button>
-                <a href="#" class="fa fa-instagram"></a>
-                <a href="#" class="fa fa-facebook"></a>
+                <a href="https://www.instagram.com/tirtabentengsc/" target="_blank" class="fa fa-instagram"></a>
+                <a href="#" target="_blank" class="fa fa-facebook"></a>
             </div>
         </div>
     </section>
@@ -49,7 +49,7 @@
             <h3>Jadwal</h3>
             <div class="line"></div>
         </div>
-        <h2>Lomba Renang Tangerang</h2>
+        <h2>TIRTA BENTENG SWIMMING FUN COMPETITION 2024</h2>
         <div class="jadwal-items">
             <div class="jadwal-item">
                 <div class="jadwal-item-img">
