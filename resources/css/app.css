@@ -1,3 +1,8 @@
+html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 80px;
+}
+
 body {
     margin: 0;
     padding: 0;
@@ -31,7 +36,46 @@ a {
     color: #008dda;
 }
 
+/* Sidebar  */
+.sidebar {
+    position: fixed;
+    height: 100vh;
+    background-color: rgb(77, 77, 77);
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: 50%;
+    z-index: 999;
+    display: none;
+}
+
+.sidebar-links{
+    list-style: none;
+    text-align: left;
+    color: #ffffff;
+}
+
+
+.sidebar-links li {
+    padding: 30px 0;
+    margin-bottom: 10px;
+}
+
+.sidebar-links li a{
+    padding: 5px 0;
+    border-bottom: 1px solid #ffffff;
+}
+
+.sidebar-links li a:hover{
+    opacity: 0.7;
+}
+
 /* Navbar*/
+.nav-burger {
+    display: none;
+    color: #ffffff;
+}
+
 .navbar {
     position: fixed;
     width: 100%;
@@ -43,7 +87,7 @@ a {
     align-items: center;
     padding: 7px 0;
     border-bottom: 1px solid white;
-    z-index: 1000;
+    z-index: 998;
 }
 
 .scrolled {
@@ -67,6 +111,11 @@ a {
     color: white;
     text-decoration: none;
     font-size: 16px;
+    padding-bottom: 3px;
+}
+
+.navbar-center .nav-links li a:hover {
+    border-bottom: 1px solid #ffffff;
 }
 
 .navbar-right {
@@ -86,12 +135,23 @@ a {
 .navbar-right .btn-login {
     background-color: transparent;
     color: white;
-    border: 2px solid white;
+    border: 1px solid white;
+    transition: opacity 0.15s ease-in;
+}
+
+.navbar-right .btn-login:hover {
+    opacity: 0.7;
 }
 
 .navbar-right .btn-register {
     background-color: #008dda;
     color: white;
+    transition: background-color 0.15s ease-in, color 0.15s ease-in;
+}
+
+.navbar-right .btn-register:hover {
+    background-color: white;
+    color: #008dda;
 }
 
 /* Hero Section Styles */
@@ -144,6 +204,12 @@ a {
     border-radius: 30px;
     cursor: pointer;
     font-size: 18px;
+    transition: background-color 0.15s ease-in, color 0.15s ease-in;
+}
+
+.hero-buttons .btn-competition:hover {
+    background-color: white;
+    color: #008dda;
 }
 
 .fa {
@@ -153,6 +219,7 @@ a {
     text-align: center;
     text-decoration: none;
     border-radius: 50%;
+    transition: opacity 0.15s ease-in;
 }
 
 .fa:hover {
@@ -263,6 +330,130 @@ a {
     font-weight: 700;
 }
 
+/* Biaya Section */
+.event-list {
+    width: 80%;
+}
+
+.event-list p {
+    margin: 0;
+}
+
+.event-list ul {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    text-align: center;
+    font-size: 14px;
+    font-weight: 500;
+    list-style: none;
+    gap: 15px;
+    margin: 0 auto;
+}
+
+.event-list ul li {
+    border: 2px solid #008dda;
+    border-radius: 50px;
+    width: fit-content;
+    max-width: 200px;
+    padding: 7px 10px;
+    cursor: pointer;
+}
+
+.event-list ul li:hover {
+    color: #008dda;
+}
+
+.active-event {
+    background-color: #008dda;
+    color: #ffffff;
+}
+
+.event-list ul .active-event:hover{
+    color: #ffffff;
+}
+
+#biaya {
+    padding: 50px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 50px 0;
+}
+
+#biaya h2 {
+    margin: 0 auto 30px;
+    font-family: "Inter", sans-serif;
+    text-transform: uppercase;
+    font-size: 34px;
+    max-width: 700px;
+    text-align: center;
+}
+
+.price-list {
+    margin-top: 60px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 30px;
+}
+
+.price {
+    background-color: #008dda;
+    width: 300px;
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: #ffffff;
+    border-radius: 5px;
+    box-shadow: -1px 3px 8px -2px rgba(0, 0, 0, 0.75);
+    -webkit-box-shadow: -1px 3px 8px -2px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: -1px 3px 8px -2px rgba(0, 0, 0, 0.75);
+}
+
+.price hr {
+    color: #ffffff;
+    width: 100%;
+}
+
+.price h3,
+.price h4 {
+    margin: 0;
+    font-family: "Inter", sans-serif;
+    text-transform: uppercase;
+    text-align: center;
+}
+
+.price h3 {
+    margin-bottom: 15px;
+    font-size: 20px;
+}
+
+.price h4 {
+    font-size: 38px;
+    margin: 50px 0 30px;
+}
+
+.price button {
+    border: 2px solid #ffffff;
+    background-color: unset;
+    color: #ffffff;
+    border-radius: 50px;
+    padding: 10px 25px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.price button:hover {
+    background-color: #ffffff;
+    color: #008dda;
+}
+
+.price ul {
+    margin-bottom: 15px;
+}
+
 /* Petunjuk Section */
 
 #petunjuk {
@@ -300,16 +491,16 @@ a {
 .footer-container {
     display: flex;
     justify-content: space-around;
-    align-items: center;
-    padding: 120px;
-    background-color: #F2EEE6;
+    align-items: top;
+    padding: 5%;
+    background-color: #f2eee6;
     text-align: justify;
 }
 
 .footer-left {
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: left;
 }
 
 .footer-logo {
@@ -321,15 +512,17 @@ a {
     margin: 10px 0 0;
 }
 
-.footer-menu, .footer-contact {
+.footer-menu,
+.footer-contact {
     display: flex;
     flex-direction: column;
     align-items: left;
 }
 
-.footer-menu h4, .footer-contact h4 {
-    margin-bottom: 10px;
-    color: #008DDA;
+.footer-menu h4,
+.footer-contact h4 {
+    margin-bottom: 0;
+    color: #008dda;
     font-weight: bolder;
     font-family: "Inter", sans-serif;
 }
@@ -339,12 +532,13 @@ a {
     padding: 0;
 }
 
-.footer-menu ul li, .footer-contact p {
-    margin: 15px 0;
+.footer-menu ul li,
+.footer-contact a {
+    margin: 10px 0;
 }
 
-.footer-menu ul li a, .footer-contact a {
-    text-decoration: none;
+.footer-menu ul li a,
+.footer-contact a span {
     color: #000;
     text-decoration: underline;
 }
@@ -357,8 +551,35 @@ a {
 }
 
 .footer-contact a i {
-    margin-right: 0px;
-    font-size: 1.0em;
+    margin-right: 0;
+    font-size: 1em;
     padding: 5px;
-    color: #008DDA;
+    color: #008dda;
+}
+
+/* ---------------- RESPONSIVE TABLET ---------------- */
+@media  screen and (max-width: 850px) {
+
+    .navbar-center, .navbar-right{
+        display: none;
+    }
+
+    .nav-burger {
+        display: block;
+        margin-left: 60%;
+    }
+
+    .hero-content h1{
+        font-size: 48px;
+        max-width: 90%;
+    }
+}
+
+
+/* ---------------- RESPONSIVE HANDPHONE ---------------- */
+@media  screen and (max-width: 450px) {
+    .sidebar {
+        width: 100%;
+    }
+
 }
