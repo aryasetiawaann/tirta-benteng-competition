@@ -47,26 +47,26 @@ a {
     width: 50%;
     z-index: 999;
     display: none;
+    transition: display 0.3s ease-in;
 }
 
-.sidebar-links{
+.sidebar-links {
     list-style: none;
     text-align: left;
     color: #ffffff;
 }
 
-
 .sidebar-links li {
-    padding: 30px 0;
+    padding: 20px 0;
     margin-bottom: 10px;
 }
 
-.sidebar-links li a{
+.sidebar-links li a {
     padding: 5px 0;
     border-bottom: 1px solid #ffffff;
 }
 
-.sidebar-links li a:hover{
+.sidebar-links li a:hover {
     opacity: 0.7;
 }
 
@@ -74,6 +74,10 @@ a {
 .nav-burger {
     display: none;
     color: #ffffff;
+}
+
+.nav-burger i {
+    font-size: 30px;
 }
 
 .navbar {
@@ -185,7 +189,7 @@ a {
 }
 
 .hero-content p {
-    font-size: 16px;
+    font-size: 20px;
     margin-bottom: 40px;
     font-family: "Lato", sans-serif;
 }
@@ -203,7 +207,7 @@ a {
     border: none;
     border-radius: 30px;
     cursor: pointer;
-    font-size: 18px;
+    font-size: 20px;
     transition: background-color 0.15s ease-in, color 0.15s ease-in;
 }
 
@@ -369,7 +373,7 @@ a {
     color: #ffffff;
 }
 
-.event-list ul .active-event:hover{
+.event-list ul .active-event:hover {
     color: #ffffff;
 }
 
@@ -558,9 +562,9 @@ a {
 }
 
 /* ---------------- RESPONSIVE TABLET ---------------- */
-@media  screen and (max-width: 850px) {
-
-    .navbar-center, .navbar-right{
+@media screen and (max-width: 850px) {
+    .navbar-center,
+    .navbar-right {
         display: none;
     }
 
@@ -569,17 +573,183 @@ a {
         margin-left: 60%;
     }
 
-    .hero-content h1{
+    .hero-content h1 {
         font-size: 48px;
         max-width: 90%;
     }
 }
 
-
 /* ---------------- RESPONSIVE HANDPHONE ---------------- */
-@media  screen and (max-width: 450px) {
+@media screen and (max-width: 450px) {
     .sidebar {
         width: 100%;
     }
 
+    .hero-content h1 {
+        font-size: 34px;
+    }
+
+    .hero-content p {
+        width: 80%;
+        font-size: 18px;
+    }
+
+    .hero-buttons .btn-competition {
+        padding: 12px 45px;
+        font-size: 18px;
+    }
+
+    .fa-instagram {
+        font-size: 42px;
+    }
+
+    #pengenalan {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 80px 4%;
+    }
+
+    .pengenalan-img {
+        /* Kalo mau re-size imagenya ubah yg ini*/
+        width: 100%;
+    }
+
+    .custom-subheader {
+        justify-content: center;
+    }
+
+    .custom-subheader h3 {
+        font-size: 20px;
+        margin: 0;
+    }
+
+    .pengenalan-content {
+        text-align: center;
+    }
+
+    .pengenalan-content h2 {
+        margin: 35px auto;
+        font-size: 28px;
+    }
+
+    .pengenalan-content p {
+        font-size: 18px;
+        max-width: 500px;
+        margin: 0;
+    }
+
+    #jadwal h2 {
+        margin-top: 35px;
+        font-size: 28px;
+    }
+
+    .jadwal-items {
+        flex-direction: column;
+        row-gap: 60px;
+    }
+
+    .jadwal-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .jadwal-item-img {
+        width: 160px;
+    }
+
+    .jadwal-item p {
+        font-size: 18px;
+    }
+
+    .jadwal-item h3 {
+        font-size: 28px;
+    }
+
+    .event-list {
+        width: 90%;
+    }
+
+    .event-list p {
+        margin: 0;
+        font-size: 18px;
+    }
+
+    .event-list ul {
+        padding-left: 0;
+    }
+
+    .event-list ul li {
+        max-width: 300px;
+        padding: 12px 15px;
+    }
+
+    #biaya h2 {
+        margin: 35px auto;
+        font-size: 28px;
+    }
+
+    .price {
+        width: 80%;
+    }
+
+    .price h3 {
+        margin: 10px auto;
+        font-size: 28px;
+    }
+
+    .price h4 {
+        font-size: 42px;
+        margin: 40px 0 20px;
+    }
+
+    .price ul li p {
+        font-size: 18px;
+    }
+
+    .price button {
+        margin: 10px auto;
+        font-size: 18px;
+    }
+
+    .price ul {
+        margin-bottom: 0;
+    }
+
+    #petunjuk {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 30px 4% 80px;
+    }
+
+    .petunjuk-img {
+        /* Kalo mau re-size imagenya ubah yg ini*/
+        width: 100%;
+    }
+
+    .petunjuk-content {
+        text-align: center;
+    }
+
+    .petunjuk-content h2 {
+        margin: 35px auto;
+        width: 300px;
+        font-size: 28px;
+    }
+
+    .petunjuk-content p {
+        font-size: 18px;
+        max-width: 500px;
+        margin: 0;
+    }
+
+    .footer-container {
+        flex-direction: column;
+        padding: 10% 4%;
+        font-size: 20px;
+    }
 }
