@@ -54,7 +54,10 @@ a {
     list-style: none;
     text-align: left;
     color: #ffffff;
+    padding-left: 40px;
+    margin: 16px 0 16px;
 }
+
 
 .sidebar-links li {
     padding: 20px 0;

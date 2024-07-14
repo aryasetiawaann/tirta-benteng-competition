@@ -2,6 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
+/* error message */
 .input-error {
     color: #81000d;
     text-align: center;
