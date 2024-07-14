@@ -1,7 +1,12 @@
-* {
-    font-family: 'Inter', sans-serif;
+
+.login-h2 {
+    font-size: xx-large;
+    font-weight: bold;
 }
-body {
+.login-p {
+    margin: 10px;
+}
+.login-body {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -14,14 +19,14 @@ body {
     width: 50vh;
     background-color: #F2EEE6;
     padding: 20px;
-    border-top: 3px solid #41C9E2;
-    border-radius: 5px;
+    border-top: 5px solid #41C9E2;
+    border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     box-sizing: border-box;
 
     width: 80vh; padding: 0 10vh 0 10vh;
 }
-header, footer {
+.login-header, .login-footer {
     text-align: center;
     margin-bottom: 20px;
 }
@@ -29,7 +34,7 @@ header, footer {
     margin-bottom: 20px;
 }
 .login-form-input input {
-    width: calc(100% - 20px);
+    width: 100%;
     padding: 10px;
     margin-top: 5px;
     border: 1px solid #ddd;
@@ -55,7 +60,7 @@ header, footer {
 }
 .remember .checkbox-label {
     position: relative;
-    padding-left: 27px;
+    padding-left: 24px;
     cursor: pointer;
     display: flex;
     align-items: center;
@@ -109,24 +114,21 @@ header, footer {
     transition: background-color 0.08s ease-in-out;
 }
 
-@media (max-width: 800px) {
+@media (max-width: 1024px) {
     .login-container {
-        width: 50vh; padding: 0 5vh 0 5vh;
+        min-width: none;
+        width: 80vw;
+        padding: 0 10vw 0 10vw;
     }
 }
-@media (max-width: 500px) {
+@media (max-width: 520px) {
     .login-container {
-        margin: 5px;
-        width: 50vh; padding: 0 20px 0 20px;
+        min-width: none;
+        width: 80vw; 
+        padding: 0 20px 0 20px;
     }
-}
-
-/* conflict tailwindcss */
-
-blockquote, dl, dd, h1, h2, h3, h4, h5, h6, hr, figure, p, pre{
-    margin: 10px;
-}
-h1, h2, h3, h4, h5, h6 {
-    font-size: xx-large;
-    font-weight: bold;
+    .login-body {
+        justify-content: start;
+        margin-top: 20px;
+    }
 }

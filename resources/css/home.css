@@ -1,0 +1,755 @@
+html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 80px;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Lato", sans-serif;
+}
+
+a {
+    text-decoration: none;
+    color: unset;
+}
+
+/* Buat Sub Header */
+.custom-subheader {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+
+.custom-subheader .line {
+    min-width: 45px;
+    max-height: 0;
+    border-top: 1px solid black;
+}
+
+.custom-subheader h3 {
+    text-transform: uppercase;
+    text-align: center;
+    font-size: 18px;
+    font-weight: 800;
+    color: #008dda;
+}
+
+/* Sidebar  */
+.sidebar {
+    position: fixed;
+    height: 100vh;
+    background-color: rgb(77, 77, 77);
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: 50%;
+    z-index: 999;
+    display: none;
+    transition: display 0.3s ease-in;
+}
+
+.sidebar-links {
+    list-style: none;
+    text-align: left;
+    color: #ffffff;
+}
+
+.sidebar-links li {
+    padding: 20px 0;
+    margin-bottom: 10px;
+}
+
+.sidebar-links li a {
+    padding: 5px 0;
+    border-bottom: 1px solid #ffffff;
+}
+
+.sidebar-links li a:hover {
+    opacity: 0.7;
+}
+
+/* Navbar*/
+.nav-burger {
+    display: none;
+    color: #ffffff;
+}
+
+.nav-burger i {
+    font-size: 30px;
+}
+
+.navbar {
+    position: fixed;
+    width: 100%;
+    top: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 7px 0;
+    border-bottom: 1px solid white;
+    z-index: 998;
+}
+
+.scrolled {
+    background-color: rgb(77, 77, 77);
+    border-bottom: unset;
+}
+
+.navbar-left .logo {
+    width: 70px;
+    height: auto;
+    aspect-ratio: 1/1;
+}
+
+.navbar-center .nav-links {
+    display: flex;
+    list-style: none;
+    gap: 40px;
+}
+
+.navbar-center .nav-links li a {
+    color: white;
+    text-decoration: none;
+    font-size: 16px;
+    padding-bottom: 3px;
+}
+
+.navbar-center .nav-links li a:hover {
+    border-bottom: 1px solid #ffffff;
+}
+
+.navbar-right {
+    display: flex;
+    gap: 20px;
+}
+
+.navbar-right .btn-login,
+.navbar-right .btn-register {
+    padding: 7px 27px;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.navbar-right .btn-login {
+    background-color: transparent;
+    color: white;
+    border: 1px solid white;
+    transition: opacity 0.15s ease-in;
+}
+
+.navbar-right .btn-login:hover {
+    opacity: 0.7;
+}
+
+.navbar-right .btn-register {
+    background-color: #008dda;
+    color: white;
+    transition: background-color 0.15s ease-in, color 0.15s ease-in;
+}
+
+.navbar-right .btn-register:hover {
+    background-color: white;
+    color: #008dda;
+}
+
+/* Hero Section Styles */
+#hero {
+    height: 100vh;
+    background-size: cover;
+    background-position: center;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.hero-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 70vh;
+    text-align: center;
+    color: white;
+}
+
+.hero-content h1 {
+    max-width: 80%;
+    font-size: 70px;
+    margin-bottom: 0;
+    font-family: "Inter", sans-serif;
+}
+
+.hero-content p {
+    font-size: 20px;
+    margin-bottom: 40px;
+    font-family: "Lato", sans-serif;
+}
+
+.hero-buttons {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.hero-buttons .btn-competition {
+    padding: 12px 45px;
+    background-color: #008dda;
+    color: white;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    font-size: 20px;
+    transition: background-color 0.15s ease-in, color 0.15s ease-in;
+}
+
+.hero-buttons .btn-competition:hover {
+    background-color: white;
+    color: #008dda;
+}
+
+.fa {
+    padding: 15px;
+    font-size: 30px;
+    width: 20px;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 50%;
+    transition: opacity 0.15s ease-in;
+}
+
+.fa:hover {
+    opacity: 0.7;
+}
+
+.fa-facebook {
+    color: white;
+}
+
+.fa-instagram {
+    color: white;
+}
+
+.hero-buttons .social-icon {
+    width: 30px;
+    height: 30px;
+}
+
+/* Pengenalan Section*/
+#pengenalan {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 60px;
+    padding: 100px 8%;
+}
+
+.pengenalan-img {
+    /* Kalo mau re-size imagenya ubah yg ini*/
+    width: 600px;
+}
+
+.pengenalan-img img {
+    width: 100%;
+    border-radius: 5px;
+}
+
+.pengenalan-content h2 {
+    font-size: 34px;
+    font-family: "Inter", sans-serif;
+    margin: 0;
+    text-transform: uppercase;
+    max-width: 350px;
+}
+
+.pengenalan-content p {
+    font-size: 16px;
+    max-width: 500px;
+}
+
+/* Jadwal Section */
+#jadwal {
+    background-color: #f8f4ea;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 50px 0;
+}
+
+#jadwal h2 {
+    margin: 0;
+    font-family: "Inter", sans-serif;
+    text-transform: uppercase;
+    font-size: 34px;
+    max-width: 700px;
+    text-align: center;
+}
+
+.jadwal-items {
+    margin-top: 60px;
+    display: flex;
+    justify-content: space-evenly;
+    width: 100%;
+}
+
+.jadwal-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.jadwal-item-img {
+    width: 130px;
+    height: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    aspect-ratio: 1/1;
+    background-color: #ffffff;
+    border: 2px solid #008dda;
+    border-radius: 100%;
+}
+
+.jadwal-item-img img {
+    width: 40%;
+}
+
+.jadwal-item p {
+    color: #008dda;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.jadwal-item h3 {
+    margin: 0;
+    font-size: 26px;
+    font-weight: 700;
+}
+
+/* Biaya Section */
+.event-list {
+    width: 80%;
+}
+
+.event-list p {
+    margin: 0;
+}
+
+.event-list ul {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    text-align: center;
+    font-size: 14px;
+    font-weight: 500;
+    list-style: none;
+    gap: 15px;
+    margin: 0 auto;
+}
+
+.event-list ul li {
+    border: 2px solid #008dda;
+    border-radius: 50px;
+    width: fit-content;
+    max-width: 200px;
+    padding: 7px 10px;
+    cursor: pointer;
+}
+
+.event-list ul li:hover {
+    color: #008dda;
+}
+
+.active-event {
+    background-color: #008dda;
+    color: #ffffff;
+}
+
+.event-list ul .active-event:hover {
+    color: #ffffff;
+}
+
+#biaya {
+    padding: 50px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 50px 0;
+}
+
+#biaya h2 {
+    margin: 0 auto 30px;
+    font-family: "Inter", sans-serif;
+    text-transform: uppercase;
+    font-size: 34px;
+    max-width: 700px;
+    text-align: center;
+}
+
+.price-list {
+    margin-top: 60px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 30px;
+}
+
+.price {
+    background-color: #008dda;
+    width: 300px;
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: #ffffff;
+    border-radius: 5px;
+    box-shadow: -1px 3px 8px -2px rgba(0, 0, 0, 0.75);
+    -webkit-box-shadow: -1px 3px 8px -2px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: -1px 3px 8px -2px rgba(0, 0, 0, 0.75);
+}
+
+.price hr {
+    color: #ffffff;
+    width: 100%;
+}
+
+.price h3,
+.price h4 {
+    margin: 0;
+    font-family: "Inter", sans-serif;
+    text-transform: uppercase;
+    text-align: center;
+}
+
+.price h3 {
+    margin-bottom: 15px;
+    font-size: 20px;
+}
+
+.price h4 {
+    font-size: 38px;
+    margin: 50px 0 30px;
+}
+
+.price button {
+    border: 2px solid #ffffff;
+    background-color: unset;
+    color: #ffffff;
+    border-radius: 50px;
+    padding: 10px 25px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.price button:hover {
+    background-color: #ffffff;
+    color: #008dda;
+}
+
+.price ul {
+    margin-bottom: 15px;
+}
+
+/* Petunjuk Section */
+
+#petunjuk {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 60px;
+    padding: 100px 8%;
+}
+
+.petunjuk-img {
+    /* Kalo mau re-size imagenya ubah yg ini*/
+    width: 600px;
+}
+
+.petunjuk-img img {
+    width: 100%;
+    border-radius: 5px;
+}
+
+.petunjuk-content h2 {
+    font-size: 34px;
+    font-family: "Inter", sans-serif;
+    margin: 0;
+    text-transform: uppercase;
+    max-width: 350px;
+}
+
+.petunjuk-content p {
+    font-size: 16px;
+    max-width: 500px;
+}
+
+/* Footer Section */
+.footer-container {
+    display: flex;
+    justify-content: space-around;
+    align-items: top;
+    padding: 5%;
+    background-color: #f2eee6;
+    text-align: justify;
+}
+
+.footer-left {
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+}
+
+.footer-logo {
+    width: 100px;
+    aspect-ratio: 1/1;
+}
+
+.footer-left p {
+    margin: 10px 0 0;
+}
+
+.footer-menu,
+.footer-contact {
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+}
+
+.footer-menu h4,
+.footer-contact h4 {
+    margin-bottom: 0;
+    color: #008dda;
+    font-weight: bolder;
+    font-family: "Inter", sans-serif;
+}
+
+.footer-menu ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.footer-menu ul li,
+.footer-contact a {
+    margin: 10px 0;
+}
+
+.footer-menu ul li a,
+.footer-contact a span {
+    color: #000;
+    text-decoration: underline;
+}
+
+.footer-contact a {
+    display: flex;
+    align-items: center;
+    text-align: left;
+    color: #000;
+}
+
+.footer-contact a i {
+    margin-right: 0;
+    font-size: 1em;
+    padding: 5px;
+    color: #008dda;
+}
+
+/* ---------------- RESPONSIVE TABLET ---------------- */
+@media screen and (max-width: 850px) {
+    .navbar-center,
+    .navbar-right {
+        display: none;
+    }
+
+    .nav-burger {
+        display: block;
+        margin-left: 60%;
+    }
+
+    .hero-content h1 {
+        font-size: 48px;
+        max-width: 90%;
+    }
+}
+
+/* ---------------- RESPONSIVE HANDPHONE ---------------- */
+@media screen and (max-width: 450px) {
+    .sidebar {
+        width: 100%;
+    }
+
+    .hero-content h1 {
+        font-size: 34px;
+    }
+
+    .hero-content p {
+        width: 80%;
+        font-size: 18px;
+    }
+
+    .hero-buttons .btn-competition {
+        padding: 12px 45px;
+        font-size: 18px;
+    }
+
+    .fa-instagram {
+        font-size: 42px;
+    }
+
+    #pengenalan {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 80px 4%;
+    }
+
+    .pengenalan-img {
+        /* Kalo mau re-size imagenya ubah yg ini*/
+        width: 100%;
+    }
+
+    .custom-subheader {
+        justify-content: center;
+    }
+
+    .custom-subheader h3 {
+        font-size: 20px;
+        margin: 0;
+    }
+
+    .pengenalan-content {
+        text-align: center;
+    }
+
+    .pengenalan-content h2 {
+        margin: 35px auto;
+        font-size: 28px;
+    }
+
+    .pengenalan-content p {
+        font-size: 18px;
+        max-width: 500px;
+        margin: 0;
+    }
+
+    #jadwal h2 {
+        margin-top: 35px;
+        font-size: 28px;
+    }
+
+    .jadwal-items {
+        flex-direction: column;
+        row-gap: 60px;
+    }
+
+    .jadwal-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .jadwal-item-img {
+        width: 160px;
+    }
+
+    .jadwal-item p {
+        font-size: 18px;
+    }
+
+    .jadwal-item h3 {
+        font-size: 28px;
+    }
+
+    .event-list {
+        width: 90%;
+    }
+
+    .event-list p {
+        margin: 0;
+        font-size: 18px;
+    }
+
+    .event-list ul {
+        padding-left: 0;
+    }
+
+    .event-list ul li {
+        max-width: 300px;
+        padding: 12px 15px;
+    }
+
+    #biaya h2 {
+        margin: 35px auto;
+        font-size: 28px;
+    }
+
+    .price {
+        width: 80%;
+    }
+
+    .price h3 {
+        margin: 10px auto;
+        font-size: 28px;
+    }
+
+    .price h4 {
+        font-size: 42px;
+        margin: 40px 0 20px;
+    }
+
+    .price ul li p {
+        font-size: 18px;
+    }
+
+    .price button {
+        margin: 10px auto;
+        font-size: 18px;
+    }
+
+    .price ul {
+        margin-bottom: 0;
+    }
+
+    #petunjuk {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 30px 4% 80px;
+    }
+
+    .petunjuk-img {
+        /* Kalo mau re-size imagenya ubah yg ini*/
+        width: 100%;
+    }
+
+    .petunjuk-content {
+        text-align: center;
+    }
+
+    .petunjuk-content h2 {
+        margin: 35px auto;
+        width: 300px;
+        font-size: 28px;
+    }
+
+    .petunjuk-content p {
+        font-size: 18px;
+        max-width: 500px;
+        margin: 0;
+    }
+
+    .footer-container {
+        flex-direction: column;
+        padding: 10% 4%;
+        font-size: 20px;
+    }
+}

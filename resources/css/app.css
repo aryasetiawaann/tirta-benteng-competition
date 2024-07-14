@@ -1,3 +1,16 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.input-error {
+    color: #81000d;
+    text-align: center;
+    background-color: #ffa9b0;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    padding: 10px;
+}
+
+.input-error-lama {
+    color: #e2182c;
+}
