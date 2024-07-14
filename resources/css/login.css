@@ -1,0 +1,132 @@
+* {
+    font-family: 'Inter', sans-serif;
+}
+body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f0f0f0;
+}
+.login-container {
+    margin: 40px;
+    width: 50vh;
+    background-color: #F2EEE6;
+    padding: 20px;
+    border-top: 3px solid #41C9E2;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    box-sizing: border-box;
+
+    width: 80vh; padding: 0 10vh 0 10vh;
+}
+header, footer {
+    text-align: center;
+    margin-bottom: 20px;
+}
+.login-form-input {
+    margin-bottom: 20px;
+}
+.login-form-input input {
+    width: calc(100% - 20px);
+    padding: 10px;
+    margin-top: 5px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    transition: border-color 0.08s ease-in-out;
+}
+.login-form-input input:focus {
+    outline: none;
+    border-color: #007bff;
+}
+.login-form-input label {
+    display: block;
+}
+.remember {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+.remember input[type="checkbox"] {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+}
+.remember .checkbox-label {
+    position: relative;
+    padding-left: 27px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+.remember .checkbox-label::before {
+    content: '';
+    position: absolute;
+    left: 2px;
+    width: 17px;
+    height: 17px;
+    border: 1px solid #ccc;
+    background-color: #fff;
+    border-radius: 4px;
+    transition: border-color 0.1s ease, background-color 0.1s ease;
+}
+.remember .checkbox-label::after {
+    content: '';
+    position: absolute;
+    left: 8px;
+    top: 6px;
+    width: 5px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+    opacity: 0;
+    transition: opacity 0.1s ease;
+}
+.remember input[type="checkbox"]:checked + .checkbox-label::before {
+    background-color: #007bff;
+    border-color: #007bff;
+}
+.remember input[type="checkbox"]:checked + .checkbox-label::after {
+    opacity: 1;
+}
+.remember input[type="checkbox"]:hover + .checkbox-label::before {
+    border-color: #007bff;
+}
+.submit-button {
+    width: 100%;
+    padding: 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.08s ease-in-out;
+}
+.submit-button:hover {
+    background-color: #0056b3;
+    transition: background-color 0.08s ease-in-out;
+}
+
+@media (max-width: 800px) {
+    .login-container {
+        width: 50vh; padding: 0 5vh 0 5vh;
+    }
+}
+@media (max-width: 500px) {
+    .login-container {
+        margin: 5px;
+        width: 50vh; padding: 0 20px 0 20px;
+    }
+}
+
+/* conflict tailwindcss */
+
+blockquote, dl, dd, h1, h2, h3, h4, h5, h6, hr, figure, p, pre{
+    margin: 10px;
+}
+h1, h2, h3, h4, h5, h6 {
+    font-size: xx-large;
+    font-weight: bold;
+}
