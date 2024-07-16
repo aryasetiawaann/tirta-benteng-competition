@@ -70,6 +70,51 @@ a {
     opacity: 0.7;
 }
 
+.sidebar-btn{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    margin-top: 40px;
+}
+
+.sidebar-btn a{
+    width: 90%;
+}
+
+.sidebar-btn .btn-login,
+.sidebar-btn .btn-register {
+    padding: 10px 30px;
+    width: inherit;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.sidebar-btn .btn-login {
+    background-color: transparent;
+    color: white;
+    border: 1px solid white;
+    transition: opacity 0.15s ease-in;
+}
+
+.sidebar-btn .btn-login:hover {
+    opacity: 0.7;
+}
+
+.sidebar-btn .btn-register {
+    background-color: #008dda;
+    color: white;
+    border: 1px solid #008dda;
+    transition: background-color 0.15s ease-in, color 0.15s ease-in;
+}
+
+.sidebar-btn .btn-register:hover {
+    background-color: white;
+    color: #008dda;
+}
+
 /* Navbar*/
 .nav-burger {
     display: none;

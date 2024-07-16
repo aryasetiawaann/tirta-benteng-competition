@@ -2,7 +2,7 @@
     <section id="hero" style="background-image: linear-gradient(rgba(0, 0, 0, 0.4),rgba(0, 0, 0, 0.4)), url('{{ asset('assets/img/Swimpage.png') }}'); background-size: cover; background-position: center;">
         <nav class="navbar">
             <div class="navbar-left">
-                <a href="/">
+                <a href="{{ route('main') }}">
                     <img src="{{ asset('assets/img/logo.png') }}" alt="Logo" class="logo">
                 </a>
             </div>
@@ -15,8 +15,8 @@
                 </ul>
             </div>
             <div class="navbar-right">
-                <button class="btn-login"> <a href="">Masuk</a></button>
-                <button class="btn-register"><a href="">Daftar</a></button>
+                <a href="{{ route('login') }}"><button class="btn-login">Masuk</button></a>
+                <a href="{{ route('register') }}"><button class="btn-register">Daftar</button></a>
             </div>
             <div class="nav-burger">
                 <i class="fa fa-bars"></i>
@@ -30,12 +30,16 @@
                 <li><a href="#biaya">BIAYA</a></li>
                 <li><a href="#petunjuk">PETUNJUK</a></li>
             </ul>
+            <div class="sidebar-btn">
+                <a href="{{ route('login') }}"><button class="btn-login">Masuk</button></a>
+                <a href="{{ route('register') }}"><button class="btn-register">Daftar</button></a>
+            </div>
         </div>
         <div class="hero-content">
             <h1>TIRTA BENTENG SWIMMING FUN COMPETITION 2024</h1>
             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod</p>
             <div class="hero-buttons">
-                <button class="btn-competition">Ikuti Kompetisi</button>
+                <a href="{{ route('login') }}"><button class="btn-competition">Ikuti Kompetisi</button></a>
                 <a href="https://www.instagram.com/tirtabentengsc/" target="_blank" class="fa fa-instagram"></a>
                 {{-- <a href="#" target="_blank" class="fa fa-facebook"></a> --}}
             </div>
@@ -178,7 +182,7 @@
         <div class="footer-container">
                 <div class="footer-left">
                     <img src="{{ asset('assets/img/logo.png') }}" alt="Logo" class="footer-logo">
-                    <p>	&#169 Tirta Banten Swimming 2024</p>
+                    <p>	&#169 Tirta Banten Swimming Club 2024</p>
                 </div>
                 <div class="footer-menu">
                     <h4>Menu</h4>
