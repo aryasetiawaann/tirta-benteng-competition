@@ -1,0 +1,488 @@
+/* -------- REGISTRASI --------*/
+.register-container {
+    background-color: #f2eee6;
+    width: 500px;
+    height: min-content;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    padding: 30px;
+    border-radius: 10px;
+    border-top: 5px solid #008dda;
+}
+
+.register-head {
+    display: flex;
+    flex-direction: column;
+}
+
+.register-head a {
+    text-decoration: underline;
+}
+
+.register-head a i {
+    font-size: 20px;
+    width: 10px;
+}
+
+.register-head-logo {
+    align-self: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #008dda;
+    width: 90px;
+    height: auto;
+    aspect-ratio: 1/1;
+    border-radius: 100%;
+}
+
+.register-head-logo img {
+    width: 70%;
+}
+
+.register-body {
+    margin: 15px;
+}
+
+.register-body-form {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 15px;
+    gap: 5px;
+}
+
+.register-body-form p {
+    font-size: 14px;
+    margin: 0;
+    color: rgb(236, 68, 68);
+}
+
+.register-body-form label {
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.register-body-form input {
+    height: 35px;
+    padding: 5px 10px;
+    border: 1px solid #008dda;
+    border-radius: 5px;
+}
+
+.register-body-form input:focus {
+    border: 2px solid #008dda;
+    outline: none;
+}
+
+.register-body-bottom {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.register-body-bottom button {
+    width: 100%;
+    padding: 15px 0;
+    border: none;
+    border-radius: 10px;
+    background-color: #008dda;
+    color: #ffffff;
+    font-size: 16px;
+    font-weight: 500;
+    margin-top: 15px;
+    cursor: pointer;
+}
+
+.register-body-bottom a {
+    text-decoration: underline;
+    font-size: 14px;
+    margin-top: 5px;
+}
+
+/* -------- LOGIN --------*/
+.login-container {
+    background-color: #f2eee6;
+    width: 500px;
+    height: min-content;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    padding: 30px;
+    border-radius: 10px;
+    border-top: 5px solid #008dda;
+}
+
+.login-head {
+    display: flex;
+    flex-direction: column;
+}
+
+.login-head a {
+    text-decoration: underline;
+}
+
+.login-head a i {
+    font-size: 20px;
+    width: 10px;
+}
+
+.login-head-logo {
+    align-self: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #008dda;
+    width: 90px;
+    height: auto;
+    aspect-ratio: 1/1;
+    border-radius: 100%;
+}
+
+.login-head-logo img {
+    width: 70%;
+}
+
+.login-error-msg {
+    background-color: rgb(236, 68, 68);
+    margin: 15px 15px 0;
+    text-align: center;
+    border-radius: 5px;
+    color: #ffffff;
+}
+
+.login-body {
+    margin: 15px;
+}
+
+.login-body-form {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 15px;
+    gap: 5px;
+}
+
+.login-body-form label {
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.login-body-form input {
+    height: 35px;
+    padding: 5px 10px;
+    border: 1px solid #008dda;
+    border-radius: 5px;
+}
+
+.login-body-form input:focus {
+    border: 2px solid #008dda;
+    outline: none;
+}
+
+.login-body-info {
+    display: flex;
+    justify-content: space-between;
+    font-size: 16px;
+    margin-top: 20px;
+}
+
+.login-body-info a {
+    text-decoration: underline;
+}
+
+.login-body-bottom {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.login-body-bottom button {
+    width: 100%;
+    padding: 15px 0;
+    border: none;
+    border-radius: 10px;
+    background-color: #008dda;
+    color: #ffffff;
+    font-size: 16px;
+    font-weight: 500;
+    margin-top: 15px;
+    cursor: pointer;
+}
+
+.login-body-bottom a {
+    text-decoration: underline;
+    font-size: 14px;
+    margin-top: 5px;
+}
+
+/* -------- FORGOT PASSWORD --------*/
+.forgot-pass-container {
+    background-color: #f2eee6;
+    width: 500px;
+    height: min-content;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    padding: 30px;
+    border-radius: 10px;
+    border-top: 5px solid #008dda;
+}
+
+.forgot-pass-head {
+    display: flex;
+    flex-direction: column;
+}
+
+.forgot-pass-head-text {
+    text-align: center;
+    width: 87%;
+    margin: 25px auto 15px;
+    font-size: 16px;
+    border: 1px solid black;
+    border-radius: 5px;
+    padding: 15px;
+}
+
+.forgot-pass-head a {
+    text-decoration: underline;
+}
+
+.forgot-pass-head a i {
+    font-size: 20px;
+    width: 10px;
+}
+
+.forgot-pass-head-logo {
+    align-self: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #008dda;
+    width: 90px;
+    height: auto;
+    aspect-ratio: 1/1;
+    border-radius: 100%;
+}
+
+.forgot-pass-head-logo img {
+    width: 70%;
+}
+
+.forgot-pass-status-msg {
+    background-color: rgb(21, 190, 134);
+    margin: 15px 15px 0;
+    text-align: center;
+    border-radius: 5px;
+    color: #ffffff;
+}
+
+.forgot-pass-body {
+    margin: 15px;
+}
+
+.forgot-pass-body-form {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 15px;
+    gap: 5px;
+}
+
+.forgot-pass-body-form p {
+    font-size: 14px;
+    margin: 0;
+    color: rgb(236, 68, 68);
+}
+
+.forgot-pass-body-form label {
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.forgot-pass-body-form input {
+    height: 35px;
+    padding: 5px 10px;
+    border: 1px solid #008dda;
+    border-radius: 5px;
+}
+
+.forgot-pass-body-form input:focus {
+    border: 2px solid #008dda;
+    outline: none;
+}
+
+.forgot-pass-body-bottom {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.forgot-pass-body-bottom button {
+    width: 100%;
+    padding: 15px 0;
+    border: none;
+    border-radius: 10px;
+    background-color: #008dda;
+    color: #ffffff;
+    font-size: 16px;
+    font-weight: 500;
+    margin-top: 15px;
+    cursor: pointer;
+}
+
+/* -------- RESET PASSWORD --------*/
+.reset-pass-container {
+    background-color: #f2eee6;
+    width: 500px;
+    height: min-content;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    padding: 30px;
+    border-radius: 10px;
+    border-top: 5px solid #008dda;
+}
+
+.reset-pass-head {
+    display: flex;
+    flex-direction: column;
+}
+
+.reset-pass-head a {
+    text-decoration: underline;
+}
+
+.reset-pass-head a i {
+    font-size: 20px;
+    width: 10px;
+}
+
+.reset-pass-head-logo {
+    align-self: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #008dda;
+    width: 90px;
+    height: auto;
+    aspect-ratio: 1/1;
+    border-radius: 100%;
+}
+
+.reset-pass-head-logo img {
+    width: 70%;
+}
+
+.reset-pass-body {
+    margin: 15px;
+}
+
+.reset-pass-body-form {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 15px;
+    gap: 5px;
+}
+
+.reset-pass-body-form p {
+    font-size: 14px;
+    margin: 0;
+    color: rgb(236, 68, 68);
+}
+
+.reset-pass-body-form label {
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.reset-pass-body-form input {
+    height: 35px;
+    padding: 5px 10px;
+    border: 1px solid #008dda;
+    border-radius: 5px;
+}
+
+.reset-pass-body-form input:focus {
+    border: 2px solid #008dda;
+    outline: none;
+}
+
+.reset-pass-body-bottom {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.reset-pass-body-bottom button {
+    width: 100%;
+    padding: 15px 0;
+    border: none;
+    border-radius: 10px;
+    background-color: #008dda;
+    color: #ffffff;
+    font-size: 16px;
+    font-weight: 500;
+    margin-top: 15px;
+    cursor: pointer;
+}
+
+@media screen and (max-width: 450px) {
+    .register-container {
+        width: 100%;
+        min-height: 100vh;
+        bottom: unset;
+        margin: 0;
+        padding: 15px 0;
+        border-radius: 10px;
+        border-top: none;
+    }
+
+    .login-container {
+        width: 100%;
+        min-height: 100vh;
+        bottom: unset;
+        margin: 0;
+        padding: 15px 0;
+        border-radius: 10px;
+        border-top: none;
+    }
+
+    .forgot-pass-container {
+        width: 100%;
+        min-height: 100vh;
+        bottom: unset;
+        margin: 0;
+        padding: 15px 0;
+        border-radius: 10px;
+        border-top: none;
+    }
+
+    .forgot-pass-head-text {
+        width: 84%;
+    }
+
+    .reset-pass-container {
+        width: 100%;
+        min-height: 100vh;
+        bottom: unset;
+        margin: 0;
+        padding: 15px 0;
+        border-radius: 10px;
+        border-top: none;
+    }
+}
