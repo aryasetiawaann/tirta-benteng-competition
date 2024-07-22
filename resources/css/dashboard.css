@@ -7,9 +7,6 @@
     transition: all 0.5s ease;
     width: calc(100% - 80px);
     padding: 1rem;
-
-    display: flex;
-    flex-direction: row;
 }
 
 /* Additional CSS for dropdown functionality */
@@ -141,7 +138,7 @@ th {
     cursor: not-allowed;
 }
 
-/* MWUAH */
+/* positioning */
 .left-container {
     width: 70%;
 }
@@ -150,13 +147,46 @@ th {
     width: 30%;
 }
 
+.top-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+}
+
+.bottom-container {
+    display: flex;
+    flex-direction: row;
+}
+/* end positioning*/
+
 .activity-header, .table-header {
     border-bottom: 1px solid #c4c4c4;
     margin-bottom: 10px;
     padding-bottom: 10px;
 }
 
-/* Aktivitas */
+/* top-card */
+.top-card {
+    padding: 20px;
+    margin: 20px;
+    background-color: #fff;
+    display: flex;
+    align-items: center;
+    width: calc(100% / 4);
+}
+
+.card-icon {
+    background-color: #7fbdff;
+    width: 80px;
+    height: 80px;
+    display: grid;
+    place-items: center;
+    margin-right: 20px;
+}
+/* end top-card */
+
+/* acticity */
 .activity-container {
     background-color: #fff;
     padding: 20px;
