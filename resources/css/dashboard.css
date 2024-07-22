@@ -1,488 +1,289 @@
-/* -------- REGISTRASI --------*/
-.register-container {
-    background-color: #f2eee6;
-    width: 500px;
-    height: min-content;
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: 0;
-    bottom: 0;
-    margin: auto;
-    padding: 30px;
-    border-radius: 10px;
-    border-top: 5px solid #008dda;
-}
 
-.register-head {
-    display: flex;
-    flex-direction: column;
-}
-
-.register-head a {
-    text-decoration: underline;
-}
-
-.register-head a i {
-    font-size: 20px;
-    width: 10px;
-}
-
-.register-head-logo {
-    align-self: center;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: #008dda;
-    width: 90px;
-    height: auto;
-    aspect-ratio: 1/1;
-    border-radius: 100%;
-}
-
-.register-head-logo img {
-    width: 70%;
-}
-
-.register-body {
-    margin: 15px;
-}
-
-.register-body-form {
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 15px;
-    gap: 5px;
-}
-
-.register-body-form p {
-    font-size: 14px;
+* {
     margin: 0;
-    color: rgb(236, 68, 68);
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+} 
+.user-img {
+    width: 50px;
+    border-radius: 100%;
+    border: 1px solid #eee;
 }
 
-.register-body-form label {
-    font-size: 16px;
-    font-weight: 600;
+.sidebar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 80px;
+    background-color: #12171e;
+    padding: 0.4rem 0.8rem;
+    transition: all 0.5s ease;
 }
 
-.register-body-form input {
-    height: 35px;
-    padding: 5px 10px;
-    border: 1px solid #008dda;
-    border-radius: 5px;
+.sidebar.active ~ .main-content {
+    left: 250px;
+    width: calc(100% - 250px);
 }
 
-.register-body-form input:focus {
-    border: 2px solid #008dda;
-    outline: none;
+.sidebar.active {
+    width: 250px;
 }
 
-.register-body-bottom {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 10px;
-}
-
-.register-body-bottom button {
-    width: 100%;
-    padding: 15px 0;
-    border: none;
-    border-radius: 10px;
-    background-color: #008dda;
-    color: #ffffff;
-    font-size: 16px;
-    font-weight: 500;
-    margin-top: 15px;
+.sidebar #btn {
+    position: absolute;
+    top: .4rem;
+    left: 50%;
+    font-size: 1.2rem;
+    line-height: 50px;
+    transform: translateX(-50%);
+    color: #fff;
     cursor: pointer;
 }
 
-.register-body-bottom a {
-    text-decoration: underline;
-    font-size: 14px;
-    margin-top: 5px;
+.sidebar.active #btn {
+    left: 90%;
 }
 
-/* -------- LOGIN --------*/
-.login-container {
-    background-color: #f2eee6;
-    width: 500px;
-    height: min-content;
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: 0;
-    bottom: 0;
-    margin: auto;
-    padding: 30px;
-    border-radius: 10px;
-    border-top: 5px solid #008dda;
-}
-
-.login-head {
+.sidebar .top .logo {
+    color: #fff;
     display: flex;
-    flex-direction: column;
-}
-
-.login-head a {
-    text-decoration: underline;
-}
-
-.login-head a i {
-    font-size: 20px;
-    width: 10px;
-}
-
-.login-head-logo {
-    align-self: center;
-    display: flex;
-    justify-content: center;
+    height: 50px;
+    width: 100%;
     align-items: center;
-    background-color: #008dda;
-    width: 90px;
-    height: auto;
-    aspect-ratio: 1/1;
-    border-radius: 100%;
+    pointer-events: none;
+    opacity: 0;
 }
 
-.login-head-logo img {
-    width: 70%;
+.sidebar.active .top .logo {
+    opacity: 1;
 }
 
-.login-error-msg {
-    background-color: rgb(236, 68, 68);
-    margin: 15px 15px 0;
-    text-align: center;
-    border-radius: 5px;
-    color: #ffffff;
+.top .logo i {
+    font-size: 2rem;
+    margin-right: 5px;
 }
 
-.login-body {
-    margin: 15px;
-}
-
-.login-body-form {
+.user {
     display: flex;
-    flex-direction: column;
-    margin-bottom: 15px;
-    gap: 5px;
+    align-items: center;
+    margin: 1rem 0;
 }
 
-.login-body-form label {
-    font-size: 16px;
+.user p {
+    color: #fff;
+    opacity: 1;
+    margin-left: 1rem;
+}
+
+.bold {
     font-weight: 600;
 }
 
-.login-body-form input {
-    height: 35px;
-    padding: 5px 10px;
-    border: 1px solid #008dda;
-    border-radius: 5px;
+.sidebar p {
+    opacity: 0;
 }
 
-.login-body-form input:focus {
-    border: 2px solid #008dda;
-    outline: none;
+.sidebar.active p {
+    opacity: 1;
 }
 
-.login-body-info {
+.sidebar ul li {
+    position: relative;
+    list-style-type: none;
+    height: 50px;
+    width: 90%;
+    margin: 0.8rem auto;
+    line-height: 50px;
+}
+
+.sidebar ul li a {
+    color: #fff;
+    text-decoration: none;
     display: flex;
-    justify-content: space-between;
-    font-size: 16px;
+    align-items: center;
+    border-radius: 0.8rem;
+}
+
+.sidebar ul li a:hover {
+    background-color: #fff;
+    color: #12171e;
+}
+
+.sidebar ul li a i {
+    min-width: 50px;
+    text-align: center;
+    height: 50px;
+    border-radius: 12px;
+    line-height: 50px;
+}
+
+.sidebar .nav-item {
+    display: none;
+}
+
+.sidebar.active .nav-item {
+    display: inline-block;
+}
+
+.sidebar ul li .tooltip {
+    position: fixed;
+    top: 50%;
+    left: 125px;
+    transform: translate(-50%, -50%);
+    box-shadow: 0 0.5rem 0.8rem rgba(0, 0, 0, 0.2);
+    border-radius: .6rem;
+    padding: .4rem 1.2rem;
+    line-height: 1.8rem;
+    z-index: 20;
+    /* opacity: 0; */
+    display: none;
+}
+
+.sidebar ul li:hover .tooltip {
+    opacity: 1;
+}
+
+.sidebar.active ul li .tooltip {
+    display: inline;
+}
+
+.main-content {
+    position: relative;
+    background-color: #eee;
+    min-height: 100vh;
+    top: 0;
+    left: 80px;
+    transition: all 0.5s ease;
+    width: calc(100% - 80px);
+    padding: 1rem;
+}
+
+/* Additional CSS for dropdown functionality */
+.dropdown-container {
+    display: none;
+    background-color: #262626;
+    padding-left: 8px;
+}
+
+.sidebar .dropdown-btn.active .dropdown-container {
+    display: block;
+}
+
+.dropdown-btn .bx-chevron-down {
+    margin-left: auto;
+    transition: transform 0.3s;
+}
+
+.dropdown-btn.active .bx-chevron-down {
+    transform: rotate(180deg);
+}
+
+/* New CSS to shift other menu items when dropdown is active */
+.sidebar ul li .dropdown-btn.active ~ li {
+    margin-top: 40px; /* Adjust the margin as needed */
+}
+
+/* Adjust spacing to avoid overlap */
+.sidebar ul li a,
+.sidebar ul li .dropdown-btn {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+}
+
+.sidebar ul li .dropdown-btn.active ~ li {
+    margin-top: 40px; /* Adjust the margin as needed */
+}
+
+/* Add some padding to ensure clear separation */
+.dropdown-container a {
+    padding: 10px 15px;
+    display: block;
+    color: #fff;
+    text-decoration: none;
+}
+
+.dropdown-container a:hover {
+    background-color: #575757;
+}
+
+/* Table */
+/* Add styles for the table */
+.table-container {
     margin-top: 20px;
 }
 
-.login-body-info a {
-    text-decoration: underline;
+.table-container label {
+    display: block;
+    margin-bottom: 10px;
 }
 
-.login-body-bottom {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 10px;
+#entries {
+    margin-left: 5px;
 }
 
-.login-body-bottom button {
+#search {
+    float: right;
+    padding: 5px;
+    margin-bottom: 10px;
+}
+
+table {
     width: 100%;
-    padding: 15px 0;
-    border: none;
-    border-radius: 10px;
-    background-color: #008dda;
-    color: #ffffff;
-    font-size: 16px;
-    font-weight: 500;
-    margin-top: 15px;
-    cursor: pointer;
+    border-collapse: collapse;
+    margin-bottom: 10px;
 }
 
-.login-body-bottom a {
-    text-decoration: underline;
-    font-size: 14px;
-    margin-top: 5px;
+table, th, td {
+    border: 1px solid #ddd;
 }
 
-/* -------- FORGOT PASSWORD --------*/
-.forgot-pass-container {
-    background-color: #f2eee6;
-    width: 500px;
-    height: min-content;
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: 0;
-    bottom: 0;
-    margin: auto;
-    padding: 30px;
-    border-radius: 10px;
-    border-top: 5px solid #008dda;
+th, td {
+    padding: 10px;
+    text-align: left;
 }
 
-.forgot-pass-head {
-    display: flex;
-    flex-direction: column;
+th {
+    background-color: #f4f4f4;
 }
 
-.forgot-pass-head-text {
-    text-align: center;
-    width: 87%;
-    margin: 25px auto 15px;
-    font-size: 16px;
-    border: 1px solid black;
-    border-radius: 5px;
-    padding: 15px;
-}
-
-.forgot-pass-head a {
-    text-decoration: underline;
-}
-
-.forgot-pass-head a i {
-    font-size: 20px;
-    width: 10px;
-}
-
-.forgot-pass-head-logo {
-    align-self: center;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: #008dda;
-    width: 90px;
-    height: auto;
-    aspect-ratio: 1/1;
-    border-radius: 100%;
-}
-
-.forgot-pass-head-logo img {
-    width: 70%;
-}
-
-.forgot-pass-status-msg {
-    background-color: rgb(21, 190, 134);
-    margin: 15px 15px 0;
-    text-align: center;
-    border-radius: 5px;
-    color: #ffffff;
-}
-
-.forgot-pass-body {
-    margin: 15px;
-}
-
-.forgot-pass-body-form {
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 15px;
-    gap: 5px;
-}
-
-.forgot-pass-body-form p {
-    font-size: 14px;
-    margin: 0;
-    color: rgb(236, 68, 68);
-}
-
-.forgot-pass-body-form label {
-    font-size: 16px;
-    font-weight: 600;
-}
-
-.forgot-pass-body-form input {
-    height: 35px;
+.status {
     padding: 5px 10px;
-    border: 1px solid #008dda;
     border-radius: 5px;
+    color: white;
+    display: inline-block;
 }
 
-.forgot-pass-body-form input:focus {
-    border: 2px solid #008dda;
-    outline: none;
+.status.waiting {
+    background-color: #ffcc00;
 }
 
-.forgot-pass-body-bottom {
+.status.registration {
+    background-color: #ff9900;
+}
+
+.pagination {
     display: flex;
-    flex-direction: column;
+    justify-content: space-between;
     align-items: center;
-    gap: 10px;
 }
 
-.forgot-pass-body-bottom button {
-    width: 100%;
-    padding: 15px 0;
-    border: none;
-    border-radius: 10px;
-    background-color: #008dda;
-    color: #ffffff;
-    font-size: 16px;
-    font-weight: 500;
-    margin-top: 15px;
-    cursor: pointer;
-}
-
-/* -------- RESET PASSWORD --------*/
-.reset-pass-container {
-    background-color: #f2eee6;
-    width: 500px;
-    height: min-content;
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: 0;
-    bottom: 0;
-    margin: auto;
-    padding: 30px;
-    border-radius: 10px;
-    border-top: 5px solid #008dda;
-}
-
-.reset-pass-head {
-    display: flex;
-    flex-direction: column;
-}
-
-.reset-pass-head a {
-    text-decoration: underline;
-}
-
-.reset-pass-head a i {
-    font-size: 20px;
-    width: 10px;
-}
-
-.reset-pass-head-logo {
-    align-self: center;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: #008dda;
-    width: 90px;
-    height: auto;
-    aspect-ratio: 1/1;
-    border-radius: 100%;
-}
-
-.reset-pass-head-logo img {
-    width: 70%;
-}
-
-.reset-pass-body {
-    margin: 15px;
-}
-
-.reset-pass-body-form {
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 15px;
-    gap: 5px;
-}
-
-.reset-pass-body-form p {
-    font-size: 14px;
-    margin: 0;
-    color: rgb(236, 68, 68);
-}
-
-.reset-pass-body-form label {
-    font-size: 16px;
-    font-weight: 600;
-}
-
-.reset-pass-body-form input {
-    height: 35px;
+.pagination button {
     padding: 5px 10px;
-    border: 1px solid #008dda;
-    border-radius: 5px;
-}
-
-.reset-pass-body-form input:focus {
-    border: 2px solid #008dda;
-    outline: none;
-}
-
-.reset-pass-body-bottom {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 10px;
-}
-
-.reset-pass-body-bottom button {
-    width: 100%;
-    padding: 15px 0;
     border: none;
-    border-radius: 10px;
-    background-color: #008dda;
-    color: #ffffff;
-    font-size: 16px;
-    font-weight: 500;
-    margin-top: 15px;
+    background-color: #007bff;
+    color: white;
+    border-radius: 5px;
     cursor: pointer;
 }
 
-@media screen and (max-width: 450px) {
-    .register-container {
-        width: 100%;
-        min-height: 100vh;
-        bottom: unset;
-        margin: 0;
-        padding: 15px 0;
-        border-radius: 10px;
-        border-top: none;
-    }
+.pagination .current-page {
+    padding: 5px 10px;
+}
 
-    .login-container {
-        width: 100%;
-        min-height: 100vh;
-        bottom: unset;
-        margin: 0;
-        padding: 15px 0;
-        border-radius: 10px;
-        border-top: none;
-    }
-
-    .forgot-pass-container {
-        width: 100%;
-        min-height: 100vh;
-        bottom: unset;
-        margin: 0;
-        padding: 15px 0;
-        border-radius: 10px;
-        border-top: none;
-    }
-
-    .forgot-pass-head-text {
-        width: 84%;
-    }
-
-    .reset-pass-container {
-        width: 100%;
-        min-height: 100vh;
-        bottom: unset;
-        margin: 0;
-        padding: 15px 0;
-        border-radius: 10px;
-        border-top: none;
-    }
+.pagination button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
 }
