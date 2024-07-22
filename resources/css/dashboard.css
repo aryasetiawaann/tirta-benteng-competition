@@ -1,0 +1,164 @@
+.main-content {
+    position: relative;
+    background-color: #eee;
+    min-height: 100vh;
+    top: 0;
+    left: 80px;
+    transition: all 0.5s ease;
+    width: calc(100% - 80px);
+    padding: 1rem;
+
+    display: flex;
+    flex-direction: row;
+}
+
+/* Additional CSS for dropdown functionality */
+.dropdown-container {
+    display: none;
+    background-color: #262626;
+    padding-left: 8px;
+}
+
+.sidebar .dropdown-btn.active .dropdown-container {
+    display: block;
+}
+
+.dropdown-btn .bx-chevron-down {
+    margin-left: auto;
+    transition: transform 0.3s;
+}
+
+.dropdown-btn.active .bx-chevron-down {
+    transform: rotate(180deg);
+}
+
+/* New CSS to shift other menu items when dropdown is active */
+.sidebar ul li .dropdown-btn.active ~ li {
+    margin-top: 40px; /* Adjust the margin as needed */
+}
+
+/* Adjust spacing to avoid overlap */
+.sidebar ul li a,
+.sidebar ul li .dropdown-btn {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+}
+
+.sidebar ul li .dropdown-btn.active ~ li {
+    margin-top: 40px; /* Adjust the margin as needed */
+}
+
+/* Add some padding to ensure clear separation */
+.dropdown-container a {
+    padding: 10px 15px;
+    display: block;
+    color: #fff;
+    text-decoration: none;
+}
+
+.dropdown-container a:hover {
+    background-color: #575757;
+}
+
+/* Table */
+.table-container {
+    background-color: #fff;
+    padding: 20px;
+    margin: 20px;
+}
+
+.table-container label {
+    display: block;
+    margin-bottom: 10px;
+}
+
+#entries {
+    margin-left: 5px;
+}
+
+#search {
+    float: right;
+    padding: 5px;
+    margin-bottom: 10px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 10px;
+}
+
+table, th, td {
+    border: 1px solid #ddd;
+}
+
+th, td {
+    padding: 10px;
+    text-align: left;
+}
+
+th {
+    background-color: #f4f4f4;
+}
+
+.status {
+    padding: 5px 10px;
+    border-radius: 5px;
+    color: white;
+    display: inline-block;
+}
+
+.status.waiting {
+    background-color: #ffcc00;
+}
+
+.status.registration {
+    background-color: #ff9900;
+}
+
+.pagination {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.pagination button {
+    padding: 5px 10px;
+    border: none;
+    background-color: #007bff;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.pagination .current-page {
+    padding: 5px 10px;
+}
+
+.pagination button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+/* MWUAH */
+.left-container {
+    width: 70%;
+}
+
+.right-container {
+    width: 30%;
+}
+
+.activity-header, .table-header {
+    border-bottom: 1px solid #c4c4c4;
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+}
+
+/* Aktivitas */
+.activity-container {
+    background-color: #fff;
+    padding: 20px;
+    margin: 20px;
+}

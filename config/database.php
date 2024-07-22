@@ -62,6 +62,21 @@ return [
                 PDO::MYSQL_ATTR_SSL_CA => env('MYSQL_ATTR_SSL_CA'),
             ]) : [],
         ],
+        
+        'swimcomp' => [
+            'driver' => 'mysql',
+            'host' => env('DB_SWIMCOMP_HOST', '127.0.0.1'),
+            'port' => env('DB_SWIMCOMP_PORT', '3306'),
+            'database' => env('DB_SWIMCOMP_DATABASE', 'swimcomp'),
+            'username' => env('DB_SWIMCOMP_USERNAME', 'root'),
+            'password' => env('DB_SWIMCOMP_PASSWORD', ''),
+            'unix_socket' => env('DB_SWIMCOMP_SOCKET', ''),
+            'charset' => 'utf8mb4',
+            'collation' => 'utf8mb4_unicode_ci',
+            'prefix' => '',
+            'strict' => true,
+            'engine' => null,
+        ],
 
         'pgsql' => [
             'driver' => 'pgsql',

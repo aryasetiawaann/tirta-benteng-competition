@@ -12,16 +12,18 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap" rel="stylesheet">
-    @vite(['resources/css/sidebar.css', 'resources/css/dashboard.css'])
+    @vite(['resources/css/sidebar.css', 'resources/css/dashboard.css', 'resources/js/sidebar.js'])
 </head>
 <body>
 
     @include('components.dashboard-sidebar')
 
     <div class="main-content">
-        <div class="container">
-            <h1>Daftar Peserta</h1>
+        <div class="left-container">
             <div class="table-container">
+                <div class="table-header">
+                    <h1>Daftar Peserta</h1>
+                </div>
                 <label for="entries">Tampilkan
                     <select id="entries" name="entries">
                         <option value="10">10</option>
@@ -62,28 +64,16 @@
                 </div>
             </div>
         </div>
+        <div class="right-container">
+            <div class="activity-container">
+                <div class="activity-header">
+                    <h1>Aktivitas terbaru</h1>
+                </div>
+                <div class="activity-content">
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aut in porro dolorum. Minus quasi beatae nam eius neque illo quaerat, tempora, porro debitis libero sunt voluptate ratione harum facere temporibus.</p> 
+                </div>
+            </div>
+        </div>
     </div>
-
-    <script>
-        let btn = document.querySelector("#btn");
-        let sidebar = document.querySelector(".sidebar");
-        let dropdown = document.querySelectorAll(".dropdown-btn");
-
-        btn.onclick = function() {
-            sidebar.classList.toggle("active");
-        };
-
-        dropdown.forEach(button => {
-            button.addEventListener("click", function() {
-                this.classList.toggle("active");
-                let dropdownContent = this.querySelector(".dropdown-container");
-                if (dropdownContent.style.display === "block") {
-                    dropdownContent.style.display = "none";
-                } else {
-                    dropdownContent.style.display = "block";
-                }
-            });
-        });
-    </script>
 </body>
 </html>
