@@ -15,14 +15,14 @@
     </div>
     <ul>
         <li>
-            <a href="#"> 
+            <a href="{{ route('dashboard') }}"> 
                 <i class="bx bxs-grid-alt"></i>
                 <span class="nav-item">Dashboard</span>
             </a>
             <span class="tooltip">Dashboard</span>
         </li>
         <li>
-            <a href="#"> 
+            <a href="{{ route('dashboard.atlet') }}"> 
                 <i class='bx bx-body'></i>
                 <span class="nav-item">Atlet Saya</span>
             </a>

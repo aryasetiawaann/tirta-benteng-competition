@@ -104,6 +104,7 @@
     display: flex;
     align-items: center;
     border-radius: 0.8rem;
+    width: 100%;
 }
 
 .sidebar ul li a:hover {
@@ -148,3 +149,48 @@
     display: none;
 }
 
+
+
+/* taken from dashboard.css */
+/* Sidebar Dropdown */
+.sidebar .dropdown-btn {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.dropdown-container {
+    display: none;
+    background-color: #262626;
+    padding-left: 8px;
+}
+
+.sidebar .dropdown-btn.active .dropdown-container {
+    display: block;
+}
+
+.dropdown-btn .bx-chevron-down {
+    margin-left: auto;
+    transition: transform 0.3s;
+}
+
+.dropdown-btn.active .bx-chevron-down {
+    transform: rotate(180deg);
+}
+
+/* Shift other menu items when dropdown is active */
+.sidebar ul li .dropdown-btn.active ~ li {
+    margin-top: 40px; /* Adjust as needed */
+}
+
+/* Dropdown Links */
+.dropdown-container a {
+    padding: 10px 15px;
+    display: block;
+    color: #fff;
+    text-decoration: none;
+}
+
+.dropdown-container a:hover {
+    background-color: #575757;
+}

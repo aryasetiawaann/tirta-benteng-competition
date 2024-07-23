@@ -104,16 +104,7 @@ th {
 }
 
 .top-container {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: space-between;
-}
-
-.bottom-container {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
+    width: 100%;
 }
 
 /* Headers */
@@ -125,14 +116,11 @@ th {
 
 /* Top Card */
 .top-card {
-    flex: 1 1 calc(25% - 40px);
     padding: 20px;
     margin: 20px;
     background-color: #fff;
     display: flex;
     align-items: center;
-    min-width: 0;
-    max-width: 100%;
 }
 
 .card-icon {
@@ -149,26 +137,4 @@ th {
     background-color: #fff;
     padding: 20px;
     margin: 20px;
-}
-
-
-@media screen and (max-width: 1054px) {
-    .left-container {
-        width: 100%;
-    }
-    .right-container {
-        width: 100%;
-    }
-}
-
-@media (max-width: 1272px) {
-    .top-card {
-        flex: 1 1 calc(50% - 40px);
-    }
-}
-
-@media (max-width: 628px) {
-    .top-card {
-        flex: 1 1 calc(100% - 40px);
-    }
 }

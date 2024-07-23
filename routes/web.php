@@ -18,9 +18,15 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [MainController::class, 'main'])->name('main');
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::middleware(['auth', 'verified'])->group(function () {
+    Route::get('/dashboard', function () {
+        return view('dashboard.dashboard');
+    })->name('dashboard');
+
+    Route::get('/dashboard/atlet', function () {
+        return view('dashboard.atlet');
+    })->name('dashboard.atlet');
+});
 
 Route::middleware(['auth','role:admin'])->group(function () {
     Route::get('/admin/dashboard',[AdminController::class,'dashboard'])->name('admin.dashboard');
