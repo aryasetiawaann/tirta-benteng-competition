@@ -1,19 +1,16 @@
-let btn = document.querySelector("#btn");
-let sidebar = document.querySelector(".sidebar");
-let dropdown = document.querySelectorAll(".dropdown-btn");
+$(".menu > ul > li").click(function (e) {
+  // remove active from already active
+  $(this).siblings().removeClass("active");
+  // add active to clicked
+  $(this).toggleClass("active");
+  // if has sub menu open it
+  $(this).find("ul").slideToggle();
+  // close other sub menu if any open
+  $(this).siblings().find("ul").slideUp();
+  // remove active class of sub menu items
+  $(this).siblings().find("ul").find("li").removeClass("active");
+});
 
-btn.onclick = function() {
-    sidebar.classList.toggle("active");
-};
-
-dropdown.forEach(button => {
-    button.addEventListener("click", function() {
-        this.classList.toggle("active");
-        let dropdownContent = this.querySelector(".dropdown-container");
-        if (dropdownContent.style.display === "block") {
-            dropdownContent.style.display = "none";
-        } else {
-            dropdownContent.style.display = "block";
-        }
-    });
+$(".menu-btn").click(function () {
+  $(".sidebar").toggleClass("active");
 });
