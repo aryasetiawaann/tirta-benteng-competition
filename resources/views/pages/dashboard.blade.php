@@ -45,7 +45,7 @@
             <div class="left-container">
                 <div class="table-container all-card">
                     <div class="table-header">
-                        <h1>Daftar Atlet</h1>
+                        <h1>Daftar Peserta</h1>
                     </div>
                     <label for="entries">Tampilkan
                         <select id="entries" name="entries">
@@ -65,18 +65,18 @@
                             <tr>
                                 <th>#</th>
                                 <th>Nama</th>
-                                <th>Umur</th>
-                                <th>Jenis Kelamin</th>
-                                <th>Kelengkapan Dokumen</th>
-                                <th>Track Record</th>
+                                <th>Kompetisi</th>
+                                <th>Nomor Lomba</th>
+                                <th>Status Peserta</th>
+                                <th>Status Kompetisi</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
                                 <td>1</td>
                                 <td>Arya</td>
-                                <td>20</td>
-                                <td>Pria</td>
+                                <td>Agung Tirtayasa Competition</td>
+                                <td>501</td>
                                 <td><span class="status waiting">Menunggu</span></td>
                                 <td><span class="status registration">Mantan Napi</span></td>
                             </tr>

@@ -46,6 +46,7 @@
                             <th>Jenis Kelamin</th>
                             <th>Kelengkapan Dokumen</th>
                             <th>Track Record</th>
+                            <th>Aksi?</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -54,7 +55,7 @@
                             <td>Arya</td>
                             <td>20</td>
                             <td>Pria</td>
-                            <td><span class="status waiting">Menunggu</span></td>
+                            <td><span class="status waiting" style="background-color: red">Belum Lengkap</span></td>
                             <td><span class="status registration">Mantan Napi</span></td>
                         </tr>
                         <!-- Add more rows as needed -->
