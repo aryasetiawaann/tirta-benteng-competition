@@ -12,7 +12,7 @@
 @section('content')
     <div class="main-content">
         <div class="top-container">
-            <div class="top-card">
+            <div class="top-card all-card">
                 <div class="card-icon">
                     <i class="bx bxs-grid-alt"></i>
                 </div>
@@ -23,7 +23,7 @@
             </div>
         </div>
         <div class="bottom-container">
-            <div class="table-container">
+            <div class="table-container all-card w100">
                 <div class="table-header">
                     <h1>Daftar Atlet</h1>
                 </div>
@@ -61,9 +61,9 @@
                     </tbody>
                 </table>
                 <div class="pagination">
-                    <button class="prev">Sebelumnya</button>
+                    <button class="prev" disabled>Sebelumnya</button>
                     <span class="current-page">1</span>
-                    <button class="next">Selanjutnya</button>
+                    <button class="next" disabled>Selanjutnya</button>
                 </div>
             </div>
         </div>

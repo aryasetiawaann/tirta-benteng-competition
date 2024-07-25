@@ -4,7 +4,7 @@
     <div class="main-content">
         <div class="top-container">
             <!-- Cards Content -->
-            <div class="top-card">
+            <div class="top-card all-card">
                 <div class="card-icon">
                     <i class="bx bxs-grid-alt"></i>
                 </div>
@@ -13,7 +13,7 @@
                     <h1>100</h1>
                 </div>
             </div>
-        <div class="top-card">
+        <div class="top-card all-card">
             <div class="card-icon">
                 <i class="bx bxs-grid-alt"></i>
             </div>
@@ -22,7 +22,7 @@
                 <h1>100</h1>
             </div>
         </div>
-        <div class="top-card">
+        <div class="top-card all-card">
             <div class="card-icon">
                 <i class="bx bxs-grid-alt"></i>
             </div>
@@ -31,7 +31,7 @@
                 <h1>100</h1>
             </div>
         </div>
-        <div class="top-card">
+        <div class="top-card all-card">
             <div class="card-icon">
                 <i class="bx bxs-grid-alt"></i>
             </div>
@@ -43,9 +43,9 @@
     </div>
     <div class="bottom-container">
             <div class="left-container">
-                <div class="table-container">
+                <div class="table-container all-card">
                     <div class="table-header">
-                        <h1>Daftar Peserta</h1>
+                        <h1>Daftar Atlet</h1>
                     </div>
                     <label for="entries">Tampilkan
                         <select id="entries" name="entries">
@@ -57,38 +57,41 @@
                         entri
                     </label>
                     <input type="text" id="search" placeholder="Cari...">
+                    {{-- <div class="loading-overlay" id="loading-overlay">
+                        <div class="spinner"></div>
+                    </div> --}}
                     <table>
                         <thead>
                             <tr>
                                 <th>#</th>
                                 <th>Nama</th>
-                                <th>Kompetisi</th>
-                                <th>Nomor Lomba</th>
-                                <th>Status Peserta</th>
-                                <th>Status Kompetisi</th>
+                                <th>Umur</th>
+                                <th>Jenis Kelamin</th>
+                                <th>Kelengkapan Dokumen</th>
+                                <th>Track Record</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
                                 <td>1</td>
                                 <td>Arya</td>
-                                <td>Gadjah Mada Swimming Competition 2024</td>
-                                <td>120 - 50m Gaya Dada Putra</td>
+                                <td>20</td>
+                                <td>Pria</td>
                                 <td><span class="status waiting">Menunggu</span></td>
-                                <td><span class="status registration">Registrasi</span></td>
+                                <td><span class="status registration">Mantan Napi</span></td>
                             </tr>
-                        <!-- Add more rows as needed -->
-                    </tbody>
-                </table>
-                <div class="pagination">
-                        <button class="prev">Sebelumnya</button>
+                            <!-- Add more rows as needed -->
+                        </tbody>
+                    </table>
+                    <div class="pagination">
+                        <button class="prev" disabled>Sebelumnya</button>
                         <span class="current-page">1</span>
-                        <button class="next">Selanjutnya</button>
-                    </div>
+                        <button class="next" disabled>Selanjutnya</button>
+                    </div>                    
                 </div>
             </div>
             <div class="right-container">
-                <div class="activity-container">
+                <div class="activity-container all-card">
                     <div class="activity-header">
                         <h1>Aktivitas terbaru</h1>
                     </div>

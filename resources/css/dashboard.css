@@ -1,12 +1,16 @@
+/* Custom */
+.all-card {
+    border-radius: 10px;
+}
+
 /* Main Content */
 .main-content {
     position: relative;
     background-color: #eee;
     min-height: 100vh;
     top: 0;
-    transition: all 0.5s ease;
     width: 100%;
-    padding: 1rem;
+    transition: all 0.3s;
 }
 
 /* Table */
@@ -15,7 +19,7 @@
     padding: 20px;
     margin: 20px;
     overflow-x: auto;
-    border-radius: 10px;
+    position: relative;
 }
 
 .table-container label {
@@ -83,11 +87,11 @@ th {
     color: white;
     border-radius: 5px;
     cursor: pointer;
-    transition: all 0.3s;
 }
 
-.pagination button:hover {
+.pagination button:hover:enabled {
     background-color: #0056b3;
+    transition: all 0.3s;
 }
 
 .pagination .current-page {
@@ -138,7 +142,6 @@ th {
     align-items: center;
     min-width: 0;
     max-width: 100%;
-    border-radius: 10px;
 }
 
 .card-icon {
@@ -155,9 +158,7 @@ th {
     background-color: #fff;
     padding: 20px;
     margin: 20px;
-    border-radius: 10px;
 }
-
 
 @media screen and (max-width: 1054px) {
     .left-container {
