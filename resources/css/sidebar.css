@@ -17,7 +17,7 @@
   padding: 24px;
   border-top-right-radius: 30px;
   border-bottom-right-radius: 30px;
-  transition: all 0.3s;
+  transition: all 0.2s;
   z-index: 1;
 }
 .sidebar .head {
@@ -67,7 +67,7 @@
   text-decoration: none;
   padding: 12px 8px;
   border-radius: 8px;
-  transition: all 0.3s;
+  transition: all 0.2s;
 }
 .menu ul li > a:hover,
 .menu ul li.active > a {
@@ -82,7 +82,7 @@
 }
 .menu ul li .arrow {
   font-size: 14px;
-  transition: all 0.3s;
+  transition: all 0.2s;
 }
 .menu ul li.active .arrow {
   transform: rotate(180deg);
@@ -122,7 +122,7 @@
   color: #000;
 }
 .menu-btn i {
-  transition: all 0.3s;
+  transition: all 0.2s;
 }
 .sidebar.active {
   width: 92px;
@@ -156,7 +156,7 @@
   background-color: #000;
   opacity: 0;
   visibility: hidden;
-  transition: all 0.3s;
+  transition: all 0.2s;
 }
 .sidebar.active .menu > ul > li > a .text::after {
   content: "";
