@@ -55,7 +55,7 @@
                             <td>Arya</td>
                             <td>20</td>
                             <td>Pria</td>
-                            <td><span class="status waiting" style="background-color: red">Belum Lengkap</span></td>
+                            <td><span class="status waiting">Belum Lengkap</span></td>
                             <td><span class="status registration">Mantan Napi</span></td>
                         </tr>
                         <!-- Add more rows as needed -->

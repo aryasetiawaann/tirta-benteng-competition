@@ -1,21 +1,15 @@
-/* Custom */
-.all-card {
-    border-radius: 10px;
-}
-
 /* Main Content */
 .main-content {
     position: relative;
-    background-color: #eee;
     min-height: 100vh;
     top: 0;
     width: 100%;
     transition: all 0.3s;
+    padding: 10px;
 }
 
 /* Table */
 .table-container {
-    background-color: #fff;
     padding: 20px;
     margin: 20px;
     overflow-x: auto;
@@ -137,7 +131,6 @@ th {
     flex: 1 1 calc(25% - 40px);
     padding: 20px;
     margin: 20px;
-    background-color: #fff;
     display: flex;
     align-items: center;
     min-width: 0;
@@ -151,13 +144,20 @@ th {
     display: grid;
     place-items: center;
     margin-right: 20px;
+    border-radius: 6px;
 }
 
 /* Activity Container */
 .activity-container {
-    background-color: #fff;
     padding: 20px;
     margin: 20px;
+}
+
+/* Custom */
+.all-card {
+    border-radius: 10px;
+    background-color: #ffffff;
+    color: #4b4b4b;
 }
 
 @media screen and (max-width: 1054px) {

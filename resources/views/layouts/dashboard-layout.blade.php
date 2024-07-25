@@ -17,9 +17,24 @@
            'resources/js/sidebar.js', 'resources/js/dashboard.js'])
     <title>@yield('title', config('app.name', 'Laravel'))</title>
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Inter", sans-serif;
+        }
+
         body {
             display: flex;
             background-color: #eee;
+        }
+
+        body .sidebar, .menu-btn{
+            background-color: #fff;
+        }
+
+        body .main-content .all-card{
+            background-color: #fff;
         }
 
         .w100 {
