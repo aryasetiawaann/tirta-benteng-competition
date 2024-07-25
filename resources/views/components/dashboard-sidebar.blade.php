@@ -1,4 +1,3 @@
-<div class="container">
       <div class="sidebar">
         <div class="menu-btn">
           <i class="ph-bold ph-caret-left"></i>
@@ -120,4 +119,3 @@
           </ul>
         </div>
       </div>
-    </div>

@@ -26,6 +26,7 @@ body {
   padding: 24px;
   border-radius: 30px;
   transition: all 0.3s;
+  z-index: 1;
 }
 .sidebar .head {
   display: flex;

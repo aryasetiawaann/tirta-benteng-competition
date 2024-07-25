@@ -15,11 +15,16 @@
     
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.js" integrity="sha512-8Z5++K1rB3U+USaLKG6oO8uWWBhdYsM3hmdirnOEWp8h2B1aOikj5zBzlXs8QOrvY9OxEnD2QDkbSKKpfqcIWw==" crossorigin="anonymous"></script>
     @vite(['resources/css/sidebar.css', 'resources/css/dashboard.css', 'resources/js/sidebar.js'])
+    <style>
+        body {
+            display: flex;
+            background-color: #eee;
+        }
+    </style>
 
     <title>Dashboard</title>
 </head>
 <body>
-    <div class="container">
         @include('components.dashboard-sidebar')
         <div class="main-content">
             <div class="top-container">
@@ -119,6 +124,5 @@
                 </div>
             </div>
         </div>
-    </div>
 </body>
 </html>
