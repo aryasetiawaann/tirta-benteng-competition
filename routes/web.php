@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\MainController;
+use App\Http\Controllers\MainPageController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
@@ -16,15 +16,15 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', [MainController::class, 'main'])->name('main');
+Route::get('/', [MainPageController::class, 'mainpage'])->name('main');
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard', function () {
-        return view('dashboard.dashboard');
+        return view('pages.dashboard');
     })->name('dashboard');
 
     Route::get('/dashboard/atlet', function () {
-        return view('dashboard.atlet');
+        return view('pages.dashboard-atlet');
     })->name('dashboard.atlet');
 });
 
