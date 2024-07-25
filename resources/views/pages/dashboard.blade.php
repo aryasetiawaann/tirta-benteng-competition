@@ -49,6 +49,7 @@
                     </div>
                     <label for="entries">Tampilkan
                         <select id="entries" name="entries">
+                            <option value="5">5</option>
                             <option value="10">10</option>
                             <option value="25">25</option>
                             <option value="50">50</option>
@@ -80,14 +81,102 @@
                                 <td><span class="status waiting">Menunggu</span></td>
                                 <td><span class="status registration">Mantan Napi</span></td>
                             </tr>
+                            <tr>
+                                <td>1</td>
+                                <td>Arya</td>
+                                <td>Agung Tirtayasa Competition</td>
+                                <td>501</td>
+                                <td><span class="status waiting">Menunggu</span></td>
+                                <td><span class="status registration">Mantan Napi</span></td>
+                            </tr>
+                            <tr>
+                                <td>1</td>
+                                <td>Arya</td>
+                                <td>Agung Tirtayasa Competition</td>
+                                <td>501</td>
+                                <td><span class="status waiting">Menunggu</span></td>
+                                <td><span class="status registration">Mantan Napi</span></td>
+                            </tr>
+                            <tr>
+                                <td>1</td>
+                                <td>Arya</td>
+                                <td>Agung Tirtayasa Competition</td>
+                                <td>501</td>
+                                <td><span class="status waiting">Menunggu</span></td>
+                                <td><span class="status registration">Mantan Napi</span></td>
+                            </tr>
+                            <tr>
+                                <td>1</td>
+                                <td>Arya</td>
+                                <td>Agung Tirtayasa Competition</td>
+                                <td>501</td>
+                                <td><span class="status waiting">Menunggu</span></td>
+                                <td><span class="status registration">Mantan Napi</span></td>
+                            </tr>
+                            <tr>
+                                <td>1</td>
+                                <td>Arya</td>
+                                <td>Agung Tirtayasa Competition</td>
+                                <td>501</td>
+                                <td><span class="status waiting">Menunggu</span></td>
+                                <td><span class="status registration">Mantan Napi</span></td>
+                            </tr>
+                            <tr>
+                                <td>1</td>
+                                <td>Arya</td>
+                                <td>Agung Tirtayasa Competition</td>
+                                <td>501</td>
+                                <td><span class="status waiting">Menunggu</span></td>
+                                <td><span class="status registration">Mantan Napi</span></td>
+                            </tr>
+                            <tr>
+                                <td>1</td>
+                                <td>Arya</td>
+                                <td>Agung Tirtayasa Competition</td>
+                                <td>501</td>
+                                <td><span class="status waiting">Menunggu</span></td>
+                                <td><span class="status registration">Mantan Napi</span></td>
+                            </tr>
+                            <tr>
+                                <td>1</td>
+                                <td>Arya</td>
+                                <td>Agung Tirtayasa Competition</td>
+                                <td>501</td>
+                                <td><span class="status waiting">Menunggu</span></td>
+                                <td><span class="status registration">Mantan Napi</span></td>
+                            </tr>
+                            <tr>
+                                <td>1</td>
+                                <td>Arya</td>
+                                <td>Agung Tirtayasa Competition</td>
+                                <td>501</td>
+                                <td><span class="status waiting">Menunggu</span></td>
+                                <td><span class="status registration">Mantan Napi</span></td>
+                            </tr>
+                            <tr>
+                                <td>1</td>
+                                <td>Arya</td>
+                                <td>Agung Tirtayasa Competition</td>
+                                <td>501</td>
+                                <td><span class="status waiting">Menunggu</span></td>
+                                <td><span class="status registration">Mantan Napi</span></td>
+                            </tr>
+                            <tr>
+                                <td>1</td>
+                                <td>Arya</td>
+                                <td>Agung Tirtayasa Competition</td>
+                                <td>501</td>
+                                <td><span class="status waiting">Menunggu</span></td>
+                                <td><span class="status registration">Mantan Napi</span></td>
+                            </tr>
                             <!-- Add more rows as needed -->
                         </tbody>
                     </table>
                     <div class="pagination">
                         <button class="prev" disabled>Sebelumnya</button>
-                        <span class="current-page">1</span>
+                        <div class="page-numbers"></div>
                         <button class="next" disabled>Selanjutnya</button>
-                    </div>                    
+                    </div>                                
                 </div>
             </div>
             <div class="right-container">

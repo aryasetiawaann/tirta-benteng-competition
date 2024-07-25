@@ -4,7 +4,7 @@
     min-height: 100vh;
     top: 0;
     width: 100%;
-    transition: all 0.3s;
+    transition: all 0.2s;
     padding: 10px;
 }
 
@@ -81,11 +81,11 @@ th {
     color: white;
     border-radius: 5px;
     cursor: pointer;
+    transition: all 0.2s;
 }
 
 .pagination button:hover:enabled {
     background-color: #0056b3;
-    transition: all 0.3s;
 }
 
 .pagination .current-page {
@@ -94,8 +94,31 @@ th {
 
 .pagination button:disabled {
     background-color: #ccc;
+    color: #4b4b4b;
     cursor: not-allowed;
 }
+
+.pagination .page-numbers {
+    display: flex;
+    gap: 10px;
+}
+
+.pagination .page-number {
+    cursor: pointer;
+    padding: 5px 10px;
+    border-radius: 5px;
+    transition: all 0.2s;
+}
+
+.pagination .page-number:hover {
+    background-color: #eee;
+}
+
+.pagination .page-number.current {
+    background-color: #ccc;
+    font-weight: bold;
+}
+
 
 /* Layout Positioning */
 .left-container {
