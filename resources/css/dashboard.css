@@ -67,6 +67,10 @@ th {
     background-color: #ff9900;
 }
 
+.status.bayar {
+    background-color: #00cc00;
+}
+
 /* Pagination */
 .pagination {
     display: flex;
@@ -170,6 +174,28 @@ th {
     border-radius: 6px;
 }
 
+.lunas-card-icon {
+    background-color: #21c86f;
+    width: 50px;
+    height: 50px;
+    display: grid;
+    place-items: center;
+    margin-right: 20px;
+    border-radius: 6px;
+    font-size: 20px;
+}
+
+.acara-card-icon {
+    background-color: #0cbfec;
+    width: 50px;
+    height: 50px;
+    display: grid;
+    place-items: center;
+    margin-right: 20px;
+    border-radius: 6px;
+    font-size: 20px;
+}
+
 /* Activity Container */
 .activity-container {
     padding: 20px;
@@ -181,6 +207,19 @@ th {
     border-radius: 10px;
     background-color: #ffffff;
     color: #4b4b4b;
+}
+
+.tagihan-text {
+    margin-top: 15px;
+    margin-bottom: 20px;
+    color: #4b4b4b;
+    font-weight: bold;
+}
+
+.info-bayar {
+    margin-top: 15px;
+    color: #4b4b4b;
+    font-weight: normal;
 }
 
 @media screen and (max-width: 1054px) {
