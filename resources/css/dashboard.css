@@ -10,8 +10,6 @@
 
 /* Table */
 .table-container {
-    padding: 20px;
-    margin: 20px;
     overflow-x: auto;
     position: relative;
 }
@@ -78,7 +76,7 @@ th {
     align-items: center;
 }
 
-.pagination button {
+.pagination button, button {
     padding: 5px 10px;
     border: none;
     background-color: #007bff;
@@ -88,7 +86,7 @@ th {
     transition: all 0.2s;
 }
 
-.pagination button:hover:enabled {
+.pagination button:hover:enabled, button:hover {
     background-color: #0056b3;
 }
 
@@ -146,13 +144,6 @@ th {
     flex-wrap: wrap;
 }
 
-/* Headers */
-.activity-header, .table-header {
-    border-bottom: 1px solid #c4c4c4;
-    margin-bottom: 10px;
-    padding-bottom: 10px;
-}
-
 /* Top Card */
 .top-card {
     flex: 1 1 calc(25% - 40px);
@@ -172,6 +163,16 @@ th {
     place-items: center;
     margin-right: 20px;
     border-radius: 6px;
+}
+
+.card-left {
+    display: flex;
+    align-items: center;
+}
+
+.card-right {
+    display: flex;
+    align-items: center;
 }
 
 .lunas-card-icon {
@@ -196,17 +197,22 @@ th {
     font-size: 20px;
 }
 
-/* Activity Container */
-.activity-container {
+/* Custom */
+.all-container {
     padding: 20px;
     margin: 20px;
 }
 
-/* Custom */
 .all-card {
     border-radius: 10px;
     background-color: #ffffff;
     color: #4b4b4b;
+}
+
+.divider {
+    border-bottom: 1px solid #c4c4c4;
+    margin-bottom: 10px;
+    padding-bottom: 10px;
 }
 
 .tagihan-text {
@@ -220,6 +226,24 @@ th {
     margin-top: 15px;
     color: #4b4b4b;
     font-weight: normal;
+}
+
+.flex {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+.grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+@media screen and (max-width: 768px) {
+    .grid {
+        grid-template-columns: 1fr;
+    }
 }
 
 @media screen and (max-width: 1054px) {

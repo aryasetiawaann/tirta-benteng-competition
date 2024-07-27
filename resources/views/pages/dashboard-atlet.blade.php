@@ -1,14 +1,5 @@
 @extends('layouts.dashboard-layout')
 @section('title', 'Atlet Saya')
-
-@section('style')
-    <style>
-        .table-container {
-            width: 100%;
-        }
-    </style>
-@endsection
-
 @section('content')
     <div class="main-content">
         <div class="top-container">
@@ -23,99 +14,102 @@
             </div>
         </div>
         <div class="bottom-container">
-            <div class="table-container all-card w100">
-                <div class="table-header">
+            <section class="all-container all-card w100">
+                <header class="divider flex">
                     <h1>Daftar Atlet</h1>
+                    <button>Daftar</button>
+                </header>
+                <div class="table-container">
+                    <label for="entries">Tampilkan
+                        <select id="entries" name="entries">
+                            <option value="5">5</option>
+                            <option value="10">10</option>
+                            <option value="25">25</option>
+                            <option value="50">50</option>
+                            <option value="100">100</option>
+                        </select> 
+                        entri
+                    </label>
+                    <input type="text" id="search" placeholder="Cari...">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Nama</th>
+                                <th>Umur</th>
+                                <th>Jenis Kelamin</th>
+                                <th>Kelengkapan Dokumen</th>
+                                <th>Track Record</th>
+                                <th>Aksi?</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td>Arya</td>
+                                <td>20</td>
+                                <td>Pria</td>
+                                <td><span class="status waiting">Belum Lengkap</span></td>
+                                <td><span class="status registration">Mantan Napi</span></td>
+                            </tr>
+                            <tr>
+                                <td>1</td>
+                                <td>Arya</td>
+                                <td>20</td>
+                                <td>Pria</td>
+                                <td><span class="status waiting">Belum Lengkap</span></td>
+                                <td><span class="status registration">Mantan Napi</span></td>
+                            </tr>
+                            <tr>
+                                <td>1</td>
+                                <td>Arya</td>
+                                <td>20</td>
+                                <td>Pria</td>
+                                <td><span class="status waiting">Belum Lengkap</span></td>
+                                <td><span class="status registration">Mantan Napi</span></td>
+                            </tr>
+                            <tr>
+                                <td>1</td>
+                                <td>Arya</td>
+                                <td>20</td>
+                                <td>Pria</td>
+                                <td><span class="status waiting">Belum Lengkap</span></td>
+                                <td><span class="status registration">Mantan Napi</span></td>
+                            </tr>
+                            <tr>
+                                <td>1</td>
+                                <td>Arya</td>
+                                <td>20</td>
+                                <td>Pria</td>
+                                <td><span class="status waiting">Belum Lengkap</span></td>
+                                <td><span class="status registration">Mantan Napi</span></td>
+                            </tr>
+                            <tr>
+                                <td>1</td>
+                                <td>Arya</td>
+                                <td>20</td>
+                                <td>Pria</td>
+                                <td><span class="status waiting">Belum Lengkap</span></td>
+                                <td><span class="status registration">Mantan Napi</span></td>
+                            </tr>
+                            <tr>
+                                <td>1</td>
+                                <td>Arya</td>
+                                <td>20</td>
+                                <td>Pria</td>
+                                <td><span class="status waiting">Belum Lengkap</span></td>
+                                <td><span class="status registration">Mantan Napi</span></td>
+                            </tr>
+                            <!-- Add more rows as needed -->
+                        </tbody>
+                    </table>
+                    <div class="pagination">
+                        <button class="prev" disabled>Sebelumnya</button>
+                        <div class="page-numbers"></div>
+                        <button class="next" disabled>Selanjutnya</button>
+                    </div>
                 </div>
-                <label for="entries">Tampilkan
-                    <select id="entries" name="entries">
-                        <option value="5">5</option>
-                        <option value="10">10</option>
-                        <option value="25">25</option>
-                        <option value="50">50</option>
-                        <option value="100">100</option>
-                    </select> 
-                    entri
-                </label>
-                <input type="text" id="search" placeholder="Cari...">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>Nama</th>
-                            <th>Umur</th>
-                            <th>Jenis Kelamin</th>
-                            <th>Kelengkapan Dokumen</th>
-                            <th>Track Record</th>
-                            <th>Aksi?</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>Arya</td>
-                            <td>20</td>
-                            <td>Pria</td>
-                            <td><span class="status waiting">Belum Lengkap</span></td>
-                            <td><span class="status registration">Mantan Napi</span></td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>Arya</td>
-                            <td>20</td>
-                            <td>Pria</td>
-                            <td><span class="status waiting">Belum Lengkap</span></td>
-                            <td><span class="status registration">Mantan Napi</span></td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>Arya</td>
-                            <td>20</td>
-                            <td>Pria</td>
-                            <td><span class="status waiting">Belum Lengkap</span></td>
-                            <td><span class="status registration">Mantan Napi</span></td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>Arya</td>
-                            <td>20</td>
-                            <td>Pria</td>
-                            <td><span class="status waiting">Belum Lengkap</span></td>
-                            <td><span class="status registration">Mantan Napi</span></td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>Arya</td>
-                            <td>20</td>
-                            <td>Pria</td>
-                            <td><span class="status waiting">Belum Lengkap</span></td>
-                            <td><span class="status registration">Mantan Napi</span></td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>Arya</td>
-                            <td>20</td>
-                            <td>Pria</td>
-                            <td><span class="status waiting">Belum Lengkap</span></td>
-                            <td><span class="status registration">Mantan Napi</span></td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>Arya</td>
-                            <td>20</td>
-                            <td>Pria</td>
-                            <td><span class="status waiting">Belum Lengkap</span></td>
-                            <td><span class="status registration">Mantan Napi</span></td>
-                        </tr>
-                        <!-- Add more rows as needed -->
-                    </tbody>
-                </table>
-                <div class="pagination">
-                    <button class="prev" disabled>Sebelumnya</button>
-                    <div class="page-numbers"></div>
-                    <button class="next" disabled>Selanjutnya</button>
-                </div>
-            </div>
+            </section>
         </div>
     </div>
 @endsection

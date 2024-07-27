@@ -41,6 +41,7 @@
             width: 100%;
         }
     </style>
+    @yield('style')
 </head>
 <body>
     @include('components.dashboard-sidebar')

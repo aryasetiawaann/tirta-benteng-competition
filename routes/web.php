@@ -26,6 +26,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard/atlet', function () {
         return view('pages.dashboard-atlet');
     })->name('dashboard.atlet');
+
+    Route::get('/dashboard/daftar', function () {
+        return view('pages.dashboard-daftar');
+    })->name('dashboard.daftar');
 });
 
 Route::middleware(['auth','role:admin'])->group(function () {

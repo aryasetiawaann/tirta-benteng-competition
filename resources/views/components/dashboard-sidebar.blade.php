@@ -37,7 +37,7 @@
                 </a>
                 <ul class="sub-menu">
                   <li>
-                    <a href="#">
+                    <a href="{{ route('dashboard.daftar') }}">
                       <span class="text">Daftar</span>
                     </a>
                   </li>
