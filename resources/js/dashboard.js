@@ -1,3 +1,12 @@
+$('#openOverlay').click(function() {
+    $('#overlay').css('display', 'flex');
+});
+
+$('#closeOverlay').click(function() {
+    $('#overlay').css('display', 'none');
+});
+
+
 $(document).ready(function() {
     const rows = $('table tbody tr');
     const entriesDropdown = $('#entries');

@@ -1,6 +1,7 @@
 @extends('layouts.dashboard-layout')
 @section('title', 'Atlet Saya')
 @section('content')
+@include('components.daftar-atlet-overlay')
     <div class="main-content">
         <div class="top-container">
             <div class="top-card all-card">
@@ -17,7 +18,7 @@
             <section class="all-container all-card w100">
                 <header class="divider flex">
                     <h1>Daftar Atlet</h1>
-                    <button>Daftar</button>
+                    <a id="openOverlay"><button>Tambah</button></a>
                 </header>
                 <div class="table-container">
                     <label for="entries">Tampilkan

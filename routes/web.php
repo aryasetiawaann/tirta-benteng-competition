@@ -30,6 +30,19 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard/daftar', function () {
         return view('pages.dashboard-daftar');
     })->name('dashboard.daftar');
+
+    Route::get('/dashboard/kompetisi', function () {
+        return view('pages.dashboard-kompetisi');
+    })->name('dashboard.kompetisi');
+
+    #uid = unique id
+    Route::get('/dashboard/kompetisi/uid', function () {
+        return view('pages.kompetisi-daftar');
+    })->name('kompetisi.daftar');
+
+    Route::get('/dashboard/kompetisi/uid/uid', function () {
+        return view('pages.kompetisi-daftar2');
+    })->name('kompetisi.daftar2');
 });
 
 Route::middleware(['auth','role:admin'])->group(function () {

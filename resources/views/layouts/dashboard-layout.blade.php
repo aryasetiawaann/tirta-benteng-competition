@@ -24,6 +24,10 @@
             font-family: "Inter", sans-serif;
         }
 
+        body, html, .overlay {
+            min-height: 100%;
+        }
+
         body {
             display: flex;
             background-color: #eee;
@@ -38,7 +42,19 @@
         }
 
         .w100 {
-            width: 100%;
+            width: calc(100% - 40px);
+        }
+
+        .w50 {
+            width: calc(50% - 40px);
+        }
+
+        .mtopbot {
+            margin: 10px 0 10px 0;
+        }
+
+        .smaller {
+            font-size: smaller
         }
     </style>
     @yield('style')

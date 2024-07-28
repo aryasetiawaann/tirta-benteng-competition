@@ -1,5 +1,9 @@
 @extends('layouts.dashboard-layout')
 @section('title', 'Daftar')
+@section('style')
+    <style>
+        
+    </style>
 @section('content')
     <div class="main-content">
         <div class="top-container">
@@ -13,15 +17,15 @@
                 </div>
             </div>
             <div class="card-right">
-                <input type="text" id="search" placeholder="Cari...">
+                <input type="text" class="search" placeholder="Cari...">
             </div>
             </div>
         </div>
         <div class="bottom-container grid">
             <section class="all-container all-card">
                 <header class="flex divider">
-                    <h2>Agung Tirtayasa Competition</h2>
-                    <button>Daftar</button>
+                    <h2>Agung Tirtayasa Competition A</h2>
+                    <a href="{{ route('kompetisi.daftar') }}"><button>Daftar</button></a>
                 </header>
                 <div>
                     <p>Deskripsi</p>
@@ -30,8 +34,8 @@
             </section>
             <section class="all-container all-card">
                 <header class="flex divider">
-                    <h2>Agung Tirtayasa Competition</h2>
-                    <button>Daftar</button>
+                    <h2>Agung Tirtayasa Competition B</h2>
+                    <a href="{{ route('kompetisi.daftar')}}"><button>Daftar</button></a>
                 </header>
                 <div>
                     <p>Deskripsi</p>
@@ -40,8 +44,8 @@
             </section>
             <section class="all-container all-card">
                 <header class="flex divider">
-                    <h2>Agung Tirtayasa Competition</h2>
-                    <button>Daftar</button>
+                    <h2>Agung Tirtayasa Competition C</h2>
+                    <a href="{{ route('kompetisi.daftar')}}"><button>Daftar</button></a>
                 </header>
                 <div>
                     <p>Deskripsi</p>
@@ -50,8 +54,8 @@
             </section>
             <section class="all-container all-card">
                 <header class="flex divider">
-                    <h2>Agung Tirtayasa Competition</h2>
-                    <button>Daftar</button>
+                    <h2>Agung Tirtayasa Competition D</h2>
+                    <a href="{{ route('kompetisi.daftar')}}"><button>Daftar</button></a>
                 </header>
                 <div>
                     <p>Deskripsi</p>
