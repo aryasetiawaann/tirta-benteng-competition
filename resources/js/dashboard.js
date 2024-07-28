@@ -1,9 +1,25 @@
 $('#openOverlay').click(function() {
+    $(window).scrollTop(0);
     $('#overlay').css('display', 'flex');
+    $('body').css('overflow', 'hidden');
 });
 
 $('#closeOverlay').click(function() {
     $('#overlay').css('display', 'none');
+    $('body').css('overflow', 'auto');
+});
+
+$('#overlay').click(function(e) {
+    var overlayContainer = $('.overlay-container');
+    if (!overlayContainer.is(e.target) && overlayContainer.has(e.target).length === 0) {
+        $('#overlay').css('display', 'none');
+        $('body').css('overflow', 'auto');
+    }
+});
+
+// Prevent overlay from closing when clicking inside overlay-content
+$('.overlay-container').click(function(e) {
+    e.stopPropagation();
 });
 
 
