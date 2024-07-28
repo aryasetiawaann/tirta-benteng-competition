@@ -300,6 +300,14 @@ select option {
     background-color: #cc0000;
 }
 
+.button-green {
+    background-color: #21c21c;
+}
+
+.button-green:hover {
+    background-color: #09993b;
+}
+
 .search {
     padding: 10px;
     border: #4b4b4b 1px solid;

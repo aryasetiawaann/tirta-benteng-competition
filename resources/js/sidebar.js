@@ -2,14 +2,47 @@ document.addEventListener("DOMContentLoaded", function() {
   const sidebar = document.querySelector('.sidebar');
   const navbarToggle = document.querySelector('.navbar-toggle');
   const navbarUser = document.querySelector(".navbar-user");
+  const navbarTitle = document.querySelector(".navbar-title");
+  const menuBtn = document.querySelector('.menu-btn i');
   const backdrop = document.createElement('div');
   backdrop.className = 'sidebar-backdrop';
   document.body.appendChild(backdrop);
 
+  // Mapping untuk title berdasarkan route name
+  const titles = {
+    'dashboard': 'Dashboard',
+    'dashboard.atlet': 'Atlet Saya',
+    'dashboard.kompetisi': 'Kompetisi',
+    'dashboard.daftar': 'Daftar',
+    'dashboard.kompetisi': 'Kompetisi Saya',
+    'dashboard.tagihan': 'Tagihan',
+    'dashboard.lunas': 'Daftar Pembayaran',
+    'dashboard.bukuacara': 'Buku Acara',
+    'dashboard.bukuhasil': 'Buku Hasil',
+    // Tambahkan mapping lain sesuai dengan nama route Anda
+  };
+
+  function updateNavbarTitle() {
+    const pageTitle = navbarTitle.getAttribute('data-page-title');
+    navbarTitle.textContent = titles[pageTitle] || 'Default Title';
+  }
+
   function toggleSidebar() {
     sidebar.classList.toggle('active');
     backdrop.classList.toggle('active');
-    navbarUser.classList.toggle('hide');
+    navbarUser.classList.toggle('hide', sidebar.classList.contains('active'));
+
+    // Sembunyikan atau tampilkan navbar-title
+    navbarTitle.classList.toggle('hide', sidebar.classList.contains('active'));
+
+    // Ganti ikon pada menu-btn
+    if (sidebar.classList.contains('active')) {
+      menuBtn.classList.remove('ph-caret-left');
+      menuBtn.classList.add('ph-caret-right');
+    } else {
+      menuBtn.classList.remove('ph-caret-right');
+      menuBtn.classList.add('ph-caret-left');
+    }
   }
 
   navbarToggle.addEventListener('click', toggleSidebar);
@@ -36,5 +69,21 @@ document.addEventListener("DOMContentLoaded", function() {
 
   document.querySelector(".menu-btn").addEventListener('click', function() {
     sidebar.classList.toggle("active");
+
+    // Sembunyikan atau tampilkan navbar-title
+    navbarTitle.classList.toggle('hide', sidebar.classList.contains('active'));
+
+    // Ganti ikon pada menu-btn
+    if (sidebar.classList.contains('active')) {
+      menuBtn.classList.remove('ph-caret-left');
+      menuBtn.classList.add('ph-caret-right');
+    } else {
+      menuBtn.classList.remove('ph-caret-right');
+      menuBtn.classList.add('ph-caret-left');
+      navbarUser.classList.remove('hide');
+    }
   });
+
+  // Panggil updateNavbarTitle untuk mengatur title saat halaman dimuat
+  updateNavbarTitle();
 });

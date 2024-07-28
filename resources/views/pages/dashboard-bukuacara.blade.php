@@ -44,6 +44,9 @@
                             <td>1</td>
                             <td>Swimming Competition 2024</td>
                             <td><span class="status registration">Registrasi</span></td>
+                            <td>
+                                <a href="#"><button class="button-green"><i class='fa fa-arrow-right'></i></button></a>
+                            </td>
                         </tr>
                         <tr>
                             <td>2</td>

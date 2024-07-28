@@ -181,7 +181,6 @@
   background-color: #000;
   opacity: 0;
   visibility: hidden;
-  transition: all 0.1s;
 }
 .sidebar.active .menu > ul > li > a .text::after {
   position: absolute;
@@ -315,6 +314,15 @@
 
   .main-content {
     margin-top: 100px;
+  }
+  .ph-bold.ph-caret-right:before {
+    content: none; 
+  } 
+  .ph-bold.ph-caret-right:after {
+    content: "\e13a"; 
+  } 
+  .hide {
+    display: none;
   }
 }
 

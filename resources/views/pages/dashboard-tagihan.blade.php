@@ -9,7 +9,7 @@
                     <i class="icon ph-bold ph-wallet"></i>
                 </div>
                 <div class="card-content">
-                    <h1>INFORMASI PEMBAYARAN</h1>
+                    <h1>INFORMASI TAGIHAN</h1>
                 </div>
             </div>
         </div>
@@ -48,55 +48,82 @@
                             <td>Swimming Competition 2024</td>
                             <td>120 - 50m Gaya Dada Putra</td>
                             <td><span class="status bayar">Rp150.000,00</span></td>
-                            
+                            <td>
+                                <a href="#"><button><i class='bx bx-xs bx-edit'></i></button></a>
+                                <a href="#"><button class="button-red"><i class='bx bx-xs bxs-trash' ></i></button></a>
+                            </td>
                         </tr>
+
                         <tr>
                             <td>2</td>
                             <td>Tai</td>
                             <td>Swimming Competition 2024</td>
                             <td>121 - 50m Gaya Dada Putra</td>
                             <td><span class="status bayar">Rp150.000,00</span></td>
-                            
+                            <td>
+                                <a href="#"><button><i class='bx bx-xs bx-edit'></i></button></a>
+                                <a href="#"><button class="button-red"><i class='bx bx-xs bxs-trash' ></i></button></a>
+                            </td>
                         </tr>
+
                         <tr>
                             <td>3</td>
                             <td>Kucing</td>
                             <td>Swimming Competition 2024</td>
                             <td>122 - 50m Gaya Dada Putra</td>
                             <td><span class="status bayar">Rp150.000,00</span></td>
-                            
+                            <td>
+                                <a href="#"><button><i class='bx bx-xs bx-edit'></i></button></a>
+                                <a href="#"><button class="button-red"><i class='bx bx-xs bxs-trash' ></i></button></a>
+                            </td>
                         </tr>
+
                         <tr>
                             <td>4</td>
                             <td>Bool</td>
                             <td>Swimming Competition 2024</td>
                             <td>123 - 50m Gaya Dada Putra</td>
                             <td><span class="status bayar">Rp150.000,00</span></td>
-                            
+                            <td>
+                                <a href="#"><button><i class='bx bx-xs bx-edit'></i></button></a>
+                                <a href="#"><button class="button-red"><i class='bx bx-xs bxs-trash' ></i></button></a>
+                            </td>
                         </tr>
+
                         <tr>
                             <td>5</td>
                             <td>Sapi</td>
                             <td>Swimming Competition 2024</td>
                             <td>124 - 50m Gaya Dada Putra</td>
                             <td><span class="status bayar">Rp150.000,00</span></td>
-                            
+                            <td>
+                                <a href="#"><button><i class='bx bx-xs bx-edit'></i></button></a>
+                                <a href="#"><button class="button-red"><i class='bx bx-xs bxs-trash' ></i></button></a>
+                            </td>
                         </tr>
+
                         <tr>
                             <td>6</td>
                             <td>Silit</td>
                             <td>Swimming Competition 2024</td>
                             <td>125 - 50m Gaya Dada Putra</td>
                             <td><span class="status bayar">Rp150.000,00</span></td>
-                            
+                            <td>
+                                <a href="#"><button><i class='bx bx-xs bx-edit'></i></button></a>
+                                <a href="#"><button class="button-red"><i class='bx bx-xs bxs-trash' ></i></button></a>
+                            </td>
                         </tr>
+
                         <tr>
                             <td>7</td>
                             <td>Asu</td>
                             <td>Swimming Competition 2024</td>
                             <td>126 - 50m Gaya Dada Putra</td>
                             <td><span class="status bayar">Rp150.000,00</span></td>
-                            
+                            <td>
+                                <a href="#"><button><i class='bx bx-xs bx-edit'></i></button></a>
+                                <a href="#"><button class="button-red"><i class='bx bx-xs bxs-trash' ></i></button></a>
+                            </td>
                         </tr>
                         <!-- Add more rows as needed -->
                     </tbody>

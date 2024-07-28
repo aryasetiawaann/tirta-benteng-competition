@@ -18,7 +18,7 @@
             <section class="all-container all-card w100">
                 <header class="divider flex">
                     <h1>Daftar Atlet</h1>
-                    <a id="openOverlay"><button>Tambah</button></a>
+                    <a id="openOverlay"><button><i class='bx bx-cart' ></i>  Tambah</button></a>
                 </header>
                 <div class="table-container">
                     <label for="entries">Tampilkan

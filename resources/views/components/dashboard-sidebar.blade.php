@@ -2,7 +2,7 @@
       <div class="navbar-toggle">
         <i class="ph-bold ph-list"></i>
       </div>
-      <div class="navbar-title">Dashboard</div>
+      <div class="navbar-title" data-page-title="{{ Route::currentRouteName() }}"></div>
       <div class="navbar-user">
         <img src="{{ asset('assets/img/Seorina.jpeg') }}" alt="User Image">
       </div>
@@ -14,7 +14,9 @@
         </div>
         <div class="head">
             <div class="user-img">
-                <img src="{{ asset('assets/img/Seorina.jpeg') }}" alt="User Image">
+                <a href="#">
+                  <img src="{{ asset('assets/img/Seorina.jpeg') }}" alt="User Image">
+                </a>
             </div>
             <div class="user-details">
                 <p class="title">User</p>
