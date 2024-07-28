@@ -43,6 +43,23 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard/kompetisi/uid/uid', function () {
         return view('pages.kompetisi-daftar2');
     })->name('kompetisi.daftar2');
+    
+    Route::get('/dashboard/tagihan', function () {
+        return view('pages.dashboard-tagihan');
+    })->name('dashboard.tagihan');
+
+    Route::get('/dashboard/lunas', function () {
+        return view('pages.dashboard-lunas');
+    })->name('dashboard.lunas');
+
+    Route::get('/dashboard/bukuacara', function () {
+        return view('pages.dashboard-bukuacara');
+    })->name('dashboard.bukuacara');
+
+    Route::get('/dashboard/bukuhasil', function () {
+        return view('pages.dashboard-bukuhasil');
+    })->name('dashboard.bukuhasil');
+
 });
 
 Route::middleware(['auth','role:admin'])->group(function () {
