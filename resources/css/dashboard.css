@@ -292,6 +292,14 @@ select option {
 
 /* Custom */
 
+.button-red {
+    background-color: #ff1414;
+}
+
+.button-red:hover {
+    background-color: #cc0000;
+}
+
 .search {
     padding: 10px;
     border: #4b4b4b 1px solid;

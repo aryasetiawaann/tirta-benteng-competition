@@ -52,54 +52,10 @@
                                 <td>Pria</td>
                                 <td><span class="status waiting">Belum Lengkap</span></td>
                                 <td><span class="status registration">Mantan Napi</span></td>
-                            </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>Arya</td>
-                                <td>20</td>
-                                <td>Pria</td>
-                                <td><span class="status waiting">Belum Lengkap</span></td>
-                                <td><span class="status registration">Mantan Napi</span></td>
-                            </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>Arya</td>
-                                <td>20</td>
-                                <td>Pria</td>
-                                <td><span class="status waiting">Belum Lengkap</span></td>
-                                <td><span class="status registration">Mantan Napi</span></td>
-                            </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>Arya</td>
-                                <td>20</td>
-                                <td>Pria</td>
-                                <td><span class="status waiting">Belum Lengkap</span></td>
-                                <td><span class="status registration">Mantan Napi</span></td>
-                            </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>Arya</td>
-                                <td>20</td>
-                                <td>Pria</td>
-                                <td><span class="status waiting">Belum Lengkap</span></td>
-                                <td><span class="status registration">Mantan Napi</span></td>
-                            </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>Arya</td>
-                                <td>20</td>
-                                <td>Pria</td>
-                                <td><span class="status waiting">Belum Lengkap</span></td>
-                                <td><span class="status registration">Mantan Napi</span></td>
-                            </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>Arya</td>
-                                <td>20</td>
-                                <td>Pria</td>
-                                <td><span class="status waiting">Belum Lengkap</span></td>
-                                <td><span class="status registration">Mantan Napi</span></td>
+                                <td>
+                                    <a href="#"><button><i class='bx bx-xs bx-edit'></i></button></a>
+                                    <a href="#"><button class="button-red"><i class='bx bx-xs bxs-trash' ></i></button></a>
+                                </td>
                             </tr>
                             <!-- Add more rows as needed -->
                         </tbody>
