@@ -14,7 +14,7 @@
         </div>
         <div class="head">
             <div class="user-img">
-                <a href="#">
+                <a href="{{ route('profile.edit') }}">
                   <img src="{{ asset('assets/img/Seorina.jpeg') }}" alt="User Image">
                 </a>
             </div>
