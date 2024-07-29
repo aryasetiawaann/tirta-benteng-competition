@@ -70,6 +70,8 @@
     @yield('style')
 </head>
 <body>
+    <div class="margin">
+    </div>
     @include('components.dashboard-sidebar')
     @yield('content')
 </body>

@@ -15,6 +15,24 @@
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
+                    {{-- <x-nav-link :href="route('dashboard.atlet')" :active="request()->routeIs('dashboard.atlet')">
+                        {{ __('Atlet Saya') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('dashboard.daftar')" :active="request()->routeIs('dashboard.daftar')">
+                        {{ __('Daftar Kompetisi') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('dashboard.kompetisi')" :active="request()->routeIs('dashboard.kompetisi')">
+                        {{ __('Kompetisi Saya') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('dashboard.lunas')" :active="request()->routeIs('dashboard.lunas')">
+                        {{ __('Informasi Pembayaran') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('dashboard.atlet')" :active="request()->routeIs('dashboard.atlet')">
+                        {{ __('Atlet Saya') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('dashboard.atlet')" :active="request()->routeIs('dashboard.atlet')">
+                        {{ __('Atlet Saya') }}
+                    </x-nav-link> --}}
                 </div>
             </div>
 

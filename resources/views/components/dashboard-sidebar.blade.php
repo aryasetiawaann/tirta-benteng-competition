@@ -20,7 +20,7 @@
             </div>
             <div class="user-details">
                 <p class="title">User</p>
-                <p class="name">Seol In-Ah</p>
+                <p class="name">{{ Auth::user()->name }}</p>
             </div>
         </div>
         <div class="nav">
