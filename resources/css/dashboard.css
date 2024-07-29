@@ -1,3 +1,4 @@
+
 /* Main Content */
 .main-content {
     position: relative;
@@ -291,6 +292,10 @@ select option {
 }
 
 /* Custom */
+
+.button-gap {
+    margin:5px;
+}
 
 .button-red {
     background-color: #ff1414;

@@ -1,4 +1,4 @@
-<x-layout>
+<x-guest-layout>
     <div class="login-container">
         <div class="login-head">
             <a href="{{ route('main') }}"><i class="fa fa-angle-left" aria-hidden="true"></i><span>Kembali</span></a>
@@ -27,10 +27,10 @@
 
                 <div class="login-body-info">
                     <div class="login-body-info-left">
-                        <label for="remember_me">
-                            <input id="remember_me" type="checkbox" name="remember">
-                            <span class="">{{ __('Ingat saya') }}</span>
-                        </label>
+                        <div class="remember">
+                            <input id="remember" type="checkbox" name="remember" value="true">
+                            <label for="remember" class="checkbox-label">{{ __('Ingat Saya') }}</label>
+                        </div>
                     </div>
                     <div class="login-body-info-right">
                         @if (Route::has('password.request'))
@@ -52,4 +52,4 @@
             </form>
         </div>
     </div>
-</x-layout>
+</x-guest-layout>

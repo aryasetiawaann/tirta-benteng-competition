@@ -1,4 +1,4 @@
-<x-layout>
+<x-guest-layout>
     <div class="forgot-pass-container">
         <div class="forgot-pass-head">
             <a href="{{ route('login') }}"><i class="fa fa-angle-left" aria-hidden="true"></i><span>Kembali</span></a>
@@ -31,4 +31,4 @@
             </form>
         </div>
     </div>
-</x-layout>
+</x-guest-layout>

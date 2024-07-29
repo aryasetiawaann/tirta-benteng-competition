@@ -35,7 +35,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         return view('pages.dashboard-kompetisi');
     })->name('dashboard.kompetisi');
 
-    #uid = unique id
+    #uid = uni
     Route::get('/dashboard/kompetisi/uid', function () {
         return view('pages.kompetisi-daftar');
     })->name('kompetisi.daftar');
@@ -43,7 +43,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard/kompetisi/uid/uid', function () {
         return view('pages.kompetisi-daftar2');
     })->name('kompetisi.daftar2');
-    
+
     Route::get('/dashboard/tagihan', function () {
         return view('pages.dashboard-tagihan');
     })->name('dashboard.tagihan');
@@ -59,7 +59,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard/bukuhasil', function () {
         return view('pages.dashboard-bukuhasil');
     })->name('dashboard.bukuhasil');
-
 });
 
 Route::middleware(['auth','role:admin'])->group(function () {

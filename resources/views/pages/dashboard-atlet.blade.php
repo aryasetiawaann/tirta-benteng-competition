@@ -53,8 +53,8 @@
                                 <td><span class="status waiting">Belum Lengkap</span></td>
                                 <td><span class="status registration">Mantan Napi</span></td>
                                 <td>
-                                    <a href="#"><button><i class='bx bx-xs bx-edit'></i></button></a>
-                                    <a href="#"><button class="button-red"><i class='bx bx-xs bxs-trash' ></i></button></a>
+                                    <a href="#"><button class="button-gap"><i class='bx bx-xs bx-edit'></i></button></a>
+                                    <a href="#"><button class="button-red button-gap"><i class='bx bx-xs bxs-trash' ></i></button></a>
                                 </td>
                             </tr>
                             <!-- Add more rows as needed -->

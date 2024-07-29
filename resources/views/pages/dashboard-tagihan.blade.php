@@ -49,8 +49,8 @@
                             <td>120 - 50m Gaya Dada Putra</td>
                             <td><span class="status bayar">Rp150.000,00</span></td>
                             <td>
-                                <a href="#"><button><i class='bx bx-xs bx-edit'></i></button></a>
-                                <a href="#"><button class="button-red"><i class='bx bx-xs bxs-trash' ></i></button></a>
+                                <a href="#"><button class="button-gap"><i class='bx bx-xs bx-edit'></i></button></a>
+                                <a href="#"><button class="button-gap button-red"><i class='bx bx-xs bxs-trash' ></i></button></a>
                             </td>
                         </tr>
 
@@ -62,7 +62,7 @@
                             <td><span class="status bayar">Rp150.000,00</span></td>
                             <td>
                                 <a href="#"><button><i class='bx bx-xs bx-edit'></i></button></a>
-                                <a href="#"><button class="button-red"><i class='bx bx-xs bxs-trash' ></i></button></a>
+                                <a href="#"><button class="button-gap button-red"><i class='bx bx-xs bxs-trash' ></i></button></a>
                             </td>
                         </tr>
 
@@ -73,8 +73,8 @@
                             <td>122 - 50m Gaya Dada Putra</td>
                             <td><span class="status bayar">Rp150.000,00</span></td>
                             <td>
-                                <a href="#"><button><i class='bx bx-xs bx-edit'></i></button></a>
-                                <a href="#"><button class="button-red"><i class='bx bx-xs bxs-trash' ></i></button></a>
+                                <a href="#"><button class="button-gap"><i class='bx bx-xs bx-edit'></i></button></a>
+                                <a href="#"><button class="button-gap button-red"><i class='bx bx-xs bxs-trash' ></i></button></a>
                             </td>
                         </tr>
 
@@ -85,8 +85,8 @@
                             <td>123 - 50m Gaya Dada Putra</td>
                             <td><span class="status bayar">Rp150.000,00</span></td>
                             <td>
-                                <a href="#"><button><i class='bx bx-xs bx-edit'></i></button></a>
-                                <a href="#"><button class="button-red"><i class='bx bx-xs bxs-trash' ></i></button></a>
+                                <a href="#"><button class="button-gap"><i class='bx bx-xs bx-edit'></i></button></a>
+                                <a href="#"><button class="button-gap button-red"><i class='bx bx-xs bxs-trash' ></i></button></a>
                             </td>
                         </tr>
 
@@ -97,8 +97,8 @@
                             <td>124 - 50m Gaya Dada Putra</td>
                             <td><span class="status bayar">Rp150.000,00</span></td>
                             <td>
-                                <a href="#"><button><i class='bx bx-xs bx-edit'></i></button></a>
-                                <a href="#"><button class="button-red"><i class='bx bx-xs bxs-trash' ></i></button></a>
+                                <a href="#"><button class="button-gap"><i class='bx bx-xs bx-edit'></i></button></a>
+                                <a href="#"><button class="button-gap button-red"><i class='bx bx-xs bxs-trash' ></i></button></a>
                             </td>
                         </tr>
 
@@ -109,8 +109,8 @@
                             <td>125 - 50m Gaya Dada Putra</td>
                             <td><span class="status bayar">Rp150.000,00</span></td>
                             <td>
-                                <a href="#"><button><i class='bx bx-xs bx-edit'></i></button></a>
-                                <a href="#"><button class="button-red"><i class='bx bx-xs bxs-trash' ></i></button></a>
+                                <a href="#"><button class="button-gap"><i class='bx bx-xs bx-edit'></i></button></a>
+                                <a href="#"><button class="button-gap button-red"><i class='bx bx-xs bxs-trash' ></i></button></a>
                             </td>
                         </tr>
 
@@ -121,8 +121,8 @@
                             <td>126 - 50m Gaya Dada Putra</td>
                             <td><span class="status bayar">Rp150.000,00</span></td>
                             <td>
-                                <a href="#"><button><i class='bx bx-xs bx-edit'></i></button></a>
-                                <a href="#"><button class="button-red"><i class='bx bx-xs bxs-trash' ></i></button></a>
+                                <a href="#"><button class="button-gap"><i class='bx bx-xs bx-edit'></i></button></a>
+                                <a href="#"><button class="button-gap button-red"><i class='bx bx-xs bxs-trash' ></i></button></a>
                             </td>
                         </tr>
                         <!-- Add more rows as needed -->

@@ -1,4 +1,4 @@
-<x-layout>
+<x-guest-layout>
     <section id="hero" style="background-image: linear-gradient(rgba(0, 0, 0, 0.4),rgba(0, 0, 0, 0.4)), url('{{ asset('assets/img/Swimpage.png') }}'); background-size: cover; background-position: center;">
         <nav class="navbar">
             <div class="navbar-left">
@@ -200,4 +200,4 @@
                 </div>
         </div>
     </footer>
-</x-layout>
+</x-guest-layout>

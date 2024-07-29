@@ -1,3 +1,11 @@
+a, span {
+    text-decoration: initial;
+}
+
+a:hover, span:hover {
+    text-decoration: underline;
+}
+
 /* -------- REGISTRASI --------*/
 .register-container {
     background-color: #f2eee6;
@@ -17,10 +25,6 @@
 .register-head {
     display: flex;
     flex-direction: column;
-}
-
-.register-head a {
-    text-decoration: underline;
 }
 
 .register-head a i {
@@ -90,7 +94,7 @@
     padding: 15px 0;
     border: none;
     border-radius: 10px;
-    background-color: #008dda;
+    background-color: #007bff;
     color: #ffffff;
     font-size: 16px;
     font-weight: 500;
@@ -98,8 +102,12 @@
     cursor: pointer;
 }
 
+.register-body-bottom button:hover {
+    background-color: #005ec2;
+}
+
+
 .register-body-bottom a {
-    text-decoration: underline;
     font-size: 14px;
     margin-top: 5px;
 }
@@ -123,10 +131,6 @@
 .login-head {
     display: flex;
     flex-direction: column;
-}
-
-.login-head a {
-    text-decoration: underline;
 }
 
 .login-head a i {
@@ -193,10 +197,6 @@
     margin-top: 20px;
 }
 
-.login-body-info a {
-    text-decoration: underline;
-}
-
 .login-body-bottom {
     display: flex;
     flex-direction: column;
@@ -209,7 +209,7 @@
     padding: 15px 0;
     border: none;
     border-radius: 10px;
-    background-color: #008dda;
+    background-color: #007bff;
     color: #ffffff;
     font-size: 16px;
     font-weight: 500;
@@ -217,10 +217,64 @@
     cursor: pointer;
 }
 
+.login-body-bottom button:hover {
+    background-color: #005ec2;
+}
+
+
 .login-body-bottom a {
-    text-decoration: underline;
     font-size: 14px;
     margin-top: 5px;
+}
+
+.remember {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+.remember input[type="checkbox"] {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+}
+.remember .checkbox-label {
+    position: relative;
+    padding-left: 26px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+.remember .checkbox-label::before {
+    content: '';
+    position: absolute;
+    left: 4px;
+    width: 16px;
+    height: 16px;
+    border: 1px solid #ccc;
+    background-color: #fff;
+    border-radius: 4px;
+}
+.remember .checkbox-label::after {
+    content: '';
+    position: absolute;
+    left: 10px;
+    top: 4px;
+    width: 4px;
+    height: 9px;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+    opacity: 0;
+}
+.remember input[type="checkbox"]:checked + .checkbox-label::before {
+    background-color: #007bff;
+    border-color: #007bff;
+}
+.remember input[type="checkbox"]:checked + .checkbox-label::after {
+    opacity: 1;
+}
+.remember input[type="checkbox"]:hover + .checkbox-label::before {
+    border-color: #007bff;
 }
 
 /* -------- FORGOT PASSWORD --------*/
@@ -252,10 +306,6 @@
     border: 1px solid black;
     border-radius: 5px;
     padding: 15px;
-}
-
-.forgot-pass-head a {
-    text-decoration: underline;
 }
 
 .forgot-pass-head a i {
@@ -333,12 +383,16 @@
     padding: 15px 0;
     border: none;
     border-radius: 10px;
-    background-color: #008dda;
+    background-color: #007bff;
     color: #ffffff;
     font-size: 16px;
     font-weight: 500;
     margin-top: 15px;
     cursor: pointer;
+}
+
+.forgot-pass-body-bottom button:hover {
+    background-color: #005ec2;
 }
 
 /* -------- RESET PASSWORD --------*/
@@ -360,10 +414,6 @@
 .reset-pass-head {
     display: flex;
     flex-direction: column;
-}
-
-.reset-pass-head a {
-    text-decoration: underline;
 }
 
 .reset-pass-head a i {
@@ -433,12 +483,16 @@
     padding: 15px 0;
     border: none;
     border-radius: 10px;
-    background-color: #008dda;
+    background-color: #007bff;
     color: #ffffff;
     font-size: 16px;
     font-weight: 500;
     margin-top: 15px;
     cursor: pointer;
+}
+
+.reset-pass-body-bottom button:hover {
+    background-color: #005ec2;
 }
 
 @media screen and (max-width: 450px) {

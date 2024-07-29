@@ -62,6 +62,86 @@
                     <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod.</p>
                 </div>
             </section>
+            <section class="all-container all-card">
+                <header class="flex divider">
+                    <h2>Agung Tirtayasa Competition D</h2>
+                    <a href="{{ route('kompetisi.daftar')}}"><button>Daftar</button></a>
+                </header>
+                <div>
+                    <p>Deskripsi</p>
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod.</p>
+                </div>
+            </section>
+            <section class="all-container all-card">
+                <header class="flex divider">
+                    <h2>Agung Tirtayasa Competition D</h2>
+                    <a href="{{ route('kompetisi.daftar')}}"><button>Daftar</button></a>
+                </header>
+                <div>
+                    <p>Deskripsi</p>
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod.</p>
+                </div>
+            </section>
+            <section class="all-container all-card">
+                <header class="flex divider">
+                    <h2>Agung Tirtayasa Competition D</h2>
+                    <a href="{{ route('kompetisi.daftar')}}"><button>Daftar</button></a>
+                </header>
+                <div>
+                    <p>Deskripsi</p>
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod.</p>
+                </div>
+            </section>
+            <section class="all-container all-card">
+                <header class="flex divider">
+                    <h2>Agung Tirtayasa Competition D</h2>
+                    <a href="{{ route('kompetisi.daftar')}}"><button>Daftar</button></a>
+                </header>
+                <div>
+                    <p>Deskripsi</p>
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod.</p>
+                </div>
+            </section>
+            <section class="all-container all-card">
+                <header class="flex divider">
+                    <h2>Agung Tirtayasa Competition D</h2>
+                    <a href="{{ route('kompetisi.daftar')}}"><button>Daftar</button></a>
+                </header>
+                <div>
+                    <p>Deskripsi</p>
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod.</p>
+                </div>
+            </section>
+            <section class="all-container all-card">
+                <header class="flex divider">
+                    <h2>Agung Tirtayasa Competition D</h2>
+                    <a href="{{ route('kompetisi.daftar')}}"><button>Daftar</button></a>
+                </header>
+                <div>
+                    <p>Deskripsi</p>
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod.</p>
+                </div>
+            </section>
+            <section class="all-container all-card">
+                <header class="flex divider">
+                    <h2>Agung Tirtayasa Competition D</h2>
+                    <a href="{{ route('kompetisi.daftar')}}"><button>Daftar</button></a>
+                </header>
+                <div>
+                    <p>Deskripsi</p>
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod.</p>
+                </div>
+            </section>
+            <section class="all-container all-card">
+                <header class="flex divider">
+                    <h2>Agung Tirtayasa Competition D</h2>
+                    <a href="{{ route('kompetisi.daftar')}}"><button>Daftar</button></a>
+                </header>
+                <div>
+                    <p>Deskripsi</p>
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod.</p>
+                </div>
+            </section>
         </div>
     </div>
 @endsection

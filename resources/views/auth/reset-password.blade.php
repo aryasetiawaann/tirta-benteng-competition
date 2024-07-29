@@ -37,7 +37,7 @@
         </div>
     </form>
 </x-guest-layout> --}}
-<x-layout>
+<x-guest-layout>
     <div class="reset-pass-container">
         <div class="reset-pass-head">
             <a href="{{ route('login') }}"><i class="fa fa-angle-left" aria-hidden="true"></i><span>Kembali</span></a>
@@ -82,4 +82,4 @@
             </form>
         </div>
     </div>
-</x-layout>
+</x-guest-layout>
