@@ -9,8 +9,8 @@
         <div class="top-container">
             <div class="top-card all-card flex">
             <div class="card-left">
-                <div class="card-icon">
-                    <i class="bx bxs-grid-alt"></i>
+                <div class="card-icon red">
+                    <i class='bx bx-swim' ></i>
                 </div>
                 <div class="card-content">
                     <h1>Daftar Kompetisi</h1>

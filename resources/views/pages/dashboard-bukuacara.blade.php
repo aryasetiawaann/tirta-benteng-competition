@@ -9,7 +9,7 @@
                     <i class="icon ph-bold ph-book-open-text"></i>
                 </div>
                 <div class="card-content">
-                    <h1>BUKU ACARA</h1>
+                    <h1>Buku Acara</h1>
                 </div>
             </div>
         </div>

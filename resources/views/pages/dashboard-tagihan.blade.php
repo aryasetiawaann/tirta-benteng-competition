@@ -9,7 +9,7 @@
                     <i class="icon ph-bold ph-wallet"></i>
                 </div>
                 <div class="card-content">
-                    <h1>INFORMASI TAGIHAN</h1>
+                    <h1>Informasi Tagihan</h1>
                 </div>
             </div>
         </div>
@@ -61,7 +61,7 @@
                             <td>121 - 50m Gaya Dada Putra</td>
                             <td><span class="status bayar">Rp150.000,00</span></td>
                             <td>
-                                <a href="#"><button><i class='bx bx-xs bx-edit'></i></button></a>
+                                <a href="#"><button class="button-gap"><i class='bx bx-xs bx-edit'></i></button></a>
                                 <a href="#"><button class="button-gap button-red"><i class='bx bx-xs bxs-trash' ></i></button></a>
                             </td>
                         </tr>

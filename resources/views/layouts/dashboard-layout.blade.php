@@ -56,6 +56,16 @@
         .smaller {
             font-size: smaller
         }
+
+        @media (max-width: 450px) {
+            .main-content {
+                font-size: 0.9em;
+            }
+
+            button {
+                font-size: 0.8em;
+            }
+        }
     </style>
     @yield('style')
 </head>

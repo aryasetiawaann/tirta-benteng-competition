@@ -9,7 +9,7 @@
                     <i class="icon ph-bold ph-wallet"></i>
                 </div>
                 <div class="card-content">
-                    <h1>INFORMASI PEMBAYARAN</h1>
+                    <h1>Informasi Pembayaran</h1>
                 </div>
             </div>
         </div>
@@ -54,7 +54,7 @@
                             <td><span class="status bayar">Selesai</span></td>
                             <td>27-07-2024 12:00</td>
                             <td>
-                                <a href="#"><button><i class='bx bx-xs bx-edit'></i></button></a>
+                                <a href="#"><button class="button-gap"><i class='bx bx-xs bx-edit'></i></button></a>
                                 <a href="#"><button class="button-red"><i class='bx bx-xs bxs-trash' ></i></button></a>
                             </td>
                         </tr>

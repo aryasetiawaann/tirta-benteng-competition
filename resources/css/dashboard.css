@@ -1,4 +1,3 @@
-
 /* Main Content */
 .main-content {
     position: relative;
@@ -169,10 +168,14 @@ th {
     max-width: 100%;
 }
 
+.top-card p {
+    font-size: 18px;
+}
+
 .card-icon {
     background-color: #7fbdff;
-    width: 80px;
-    height: 80px;
+    width: 60px;
+    height: 60px;
     display: grid;
     place-items: center;
     margin-right: 20px;
@@ -192,8 +195,8 @@ th {
 
 .lunas-card-icon {
     background-color: #21c86f;
-    width: 50px;
-    height: 50px;
+    width: 60px;
+    height: 60px;
     display: grid;
     place-items: center;
     margin-right: 20px;
@@ -203,8 +206,8 @@ th {
 
 .acara-card-icon {
     background-color: #0cbfec;
-    width: 50px;
-    height: 50px;
+    width: 60px;
+    height: 60px;
     display: grid;
     place-items: center;
     margin-right: 20px;
@@ -293,6 +296,22 @@ select option {
 
 /* Custom */
 
+i {
+    font-size: 1.5rem;
+}
+
+.green {
+    background-color: #21c86f;
+}
+
+.orange {
+    background-color: #ffcc00;
+}
+
+.red {
+    background-color: #ff5151;
+}
+
 .button-gap {
     margin:5px;
 }
@@ -317,6 +336,7 @@ select option {
     padding: 10px;
     border: #4b4b4b 1px solid;
     border-radius: 5px;
+    width: 100%;
 }
 
 .all-container {

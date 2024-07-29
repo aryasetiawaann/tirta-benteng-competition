@@ -5,39 +5,39 @@
         <div class="top-container">
             <!-- Cards Content -->
             <div class="top-card all-card">
-                <div class="card-icon">
-                    <i class="bx bxs-grid-alt"></i>
+                <div class="card-icon red">
+                    <i class='bx bx-swim' ></i>
                 </div>
                 <div class="card-content">
-                    <p>Ini card</p>
-                    <h1>100</h1>
+                    <p>Kompetisi Aktif</p>
+                    <h1>4</h1>
                 </div>
             </div>
         <div class="top-card all-card">
-            <div class="card-icon">
-                <i class="bx bxs-grid-alt"></i>
+            <div class="card-icon orange">
+                <i class='bx bxs-trophy' ></i>
             </div>
             <div class="card-content">
-                <p>Ini card</p>
-                <h1>100</h1>
+                <p>Kompetisi Terdaftar</p>
+                <h1>1</h1>
+            </div>
+        </div>
+        <div class="top-card all-card">
+            <div class="card-icon green">
+                <i class="icon ph-bold ph-wallet"></i>
+            </div>
+            <div class="card-content">
+                <p>Tagihan Terbayar</p>
+                <h1>0 / 5</h1>
             </div>
         </div>
         <div class="top-card all-card">
             <div class="card-icon">
-                <i class="bx bxs-grid-alt"></i>
+                <i class='bx bxs-user' ></i>
             </div>
             <div class="card-content">
-                <p>Ini card</p>
-                <h1>100</h1>
-            </div>
-        </div>
-        <div class="top-card all-card">
-            <div class="card-icon">
-                <i class="bx bxs-grid-alt"></i>
-            </div>
-            <div class="card-content">
-                <p>Ini card</p>
-                <h1>100</h1>
+                <p>Atlet Terdaftar</p>
+                <h1>1</h1>
             </div>
         </div>
     </div>

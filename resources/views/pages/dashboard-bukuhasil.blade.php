@@ -9,7 +9,7 @@
                     <i class="icon ph-bold ph-book-open-text"></i>
                 </div>
                 <div class="card-content">
-                    <h1>BUKU HASIL</h1>
+                    <h1>Buku Hasil</h1>
                 </div>
             </div>
         </div>
