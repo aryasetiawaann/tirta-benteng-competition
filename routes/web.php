@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AtletController;
 use App\Http\Controllers\MainPageController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ProfileController;
@@ -23,9 +24,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         return view('pages.dashboard');
     })->name('dashboard');
 
-    Route::get('/dashboard/atlet', function () {
-        return view('pages.dashboard-atlet');
-    })->name('dashboard.atlet');
+    Route::resource('/dashboard/atlet-saya', AtletController::class)->names('dashboard.atlet');
 
     Route::get('/dashboard/daftar', function () {
         return view('pages.dashboard-daftar');
@@ -59,6 +58,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard/bukuhasil', function () {
         return view('pages.dashboard-bukuhasil');
     })->name('dashboard.bukuhasil');
+
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
 Route::middleware(['auth','role:admin'])->group(function () {
@@ -66,10 +69,10 @@ Route::middleware(['auth','role:admin'])->group(function () {
 });
 
 
-Route::middleware('auth')->group(function () {  
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-});
+// Route::middleware('auth')->group(function () {  
+//     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+//     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+//     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+// });
 
 require __DIR__.'/auth.php';

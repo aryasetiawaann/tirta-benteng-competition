@@ -34,7 +34,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="{{ route('dashboard.atlet') }}">
+                        <a href="{{ route('dashboard.atlet.index') }}">
                             <i class="icon ph-bold ph-person-simple-swim"></i>
                             <span class="text">Atlet Saya</span>
                         </a>
@@ -105,7 +105,17 @@
                 <li>
                     <a href="#">
                         <i class="icon ph-bold ph-sign-out"></i>
-                        <span class="text">Logout</span>
+                        <form method="POST" action="{{ route('logout') }}">
+                            @csrf
+                        <span class="text" href=" {{route('logout') }}"
+                        onclick="event.preventDefault();
+                                    this.closest('form').submit();">
+    
+                     
+                                    {{ __('Log Out') }}
+
+                                </span>
+                            </form>
                     </a>
                 </li>
             </ul>

@@ -1,7 +1,7 @@
 <x-guest-layout>
     <div class="register-container">
         <div class="register-head">
-            <a href="{{ route('login') }}"><i class="fa fa-angle-left" aria-hidden="true"></i><span>Kembali</span></a>
+            <a href="{{ route('main') }}"><i class="fa fa-angle-left" aria-hidden="true"></i><span>Kembali</span></a>
             <div class="register-head-logo">
                 <img src="{{ asset('assets/img/logo.png') }}" alt="logo">
             </div>

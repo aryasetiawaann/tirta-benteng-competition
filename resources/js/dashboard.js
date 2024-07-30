@@ -4,6 +4,13 @@ $('#openOverlay').click(function() {
     $('body').css('overflow', 'hidden');
 });
 
+$('#openOverlay2').click(function() {
+    $(window).scrollTop(0);
+    $('#overlay2').css('display', 'flex');
+    $('body').css('overflow', 'hidden');
+    alert('et')
+});
+
 $('#closeOverlay').click(function() {
     $('#overlay').css('display', 'none');
     $('body').css('overflow', 'auto');

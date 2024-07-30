@@ -10,7 +10,7 @@
                 </div>
                 <div class="card-content">
                     <p>List Atlet</p>
-                    <h1>100</h1>
+                    <h1>{{  $atlets_count }}</h1>
                 </div>
             </div>
         </div>
@@ -39,25 +39,32 @@
                                 <th>Nama</th>
                                 <th>Umur</th>
                                 <th>Jenis Kelamin</th>
-                                <th>Kelengkapan Dokumen</th>
                                 <th>Track Record</th>
-                                <th>Aksi?</th>
+                                <th>Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td>Arya</td>
-                                <td>20</td>
-                                <td>Pria</td>
-                                <td><span class="status waiting">Belum Lengkap</span></td>
-                                <td><span class="status registration">Mantan Napi</span></td>
-                                <td>
-                                    <a href="#"><button class="button-gap"><i class='bx bx-xs bx-edit'></i></button></a>
-                                    <a href="#"><button class="button-red button-gap"><i class='bx bx-xs bxs-trash' ></i></button></a>
-                                </td>
-                            </tr>
-                            <!-- Add more rows as needed -->
+                            @if ( $atlets_count > 0)   
+                                @foreach ($atlets as $key => $atlet) 
+                                <tr>
+                                    <td>{{ $key + 1 }}</td>
+                                    <td>{{ $atlet->name }}</td>
+                                    <td>{{ $atlet->umur }}</td>
+                                    <td>{{ $atlet->jenis_kelamin }}</td>
+                                    <td><span class="status registration">{{ str_replace('.', ':', $atlet->track_record)}}:00</span></td>
+                                    <td>
+                                        <a><button class="button-gap"><i class='bx bx-xs bx-edit'></i></button></a>
+                                        <form action="{{route('dashboard.atlet.destroy', $atlet->id)}}" method="post">
+                                            @csrf
+                                            @method('delete')
+                                            <a onclick="return confirm('Apakah kamu yakin ingin menghapus? ')"><button class="button-red button-gap"><i class='bx bx-xs bxs-trash' ></i></button></a>
+                                        </form>
+                                    </td>
+                                </tr>
+                                @endforeach
+                            @else
+                                <tr><td colspan="7" style="text-align:center;">Belum ada data</td></tr>
+                            @endif 
                         </tbody>
                     </table>
                     <div class="pagination">
