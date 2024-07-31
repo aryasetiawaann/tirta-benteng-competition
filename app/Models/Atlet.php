@@ -16,4 +16,5 @@ class Atlet extends Model
         'track_record',
         'user_id',
     ];
+
 }

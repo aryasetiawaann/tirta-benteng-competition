@@ -2,10 +2,15 @@
 .main-content {
     position: relative;
     min-height: 100vh;
+    margin-left: 256px; /* Yang ini ubah sesuai width si navbarnya ya*/
     top: 0;
     width: 100%;
     transition: all 0.1s;
     padding: 10px;
+}
+
+.main-content_sidebar-hide {
+    margin-left: 92px;
 }
 
 /* Table */

@@ -32,7 +32,8 @@
 
 /* Sidebar and backdrop */
 .sidebar {
-  position: relative;
+  position: fixed;
+  left: 0;
   width: 256px;
   height: 100vh;
   display: flex;

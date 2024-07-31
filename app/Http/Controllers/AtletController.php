@@ -16,9 +16,9 @@ class AtletController extends Controller
     public function index()
     {
 
-        $atlets = Atlet::all();
+        $atlets = Atlet::all()->where('user_id', request()->user()->id);
 
-        $atlet_count = Atlet::count();
+        $atlet_count = $atlets->count();
 
         return view('pages.dashboard-atlet')->with(['atlets'=>$atlets, 'atlets_count'=>$atlet_count]);
     }

@@ -14,7 +14,7 @@
         </div>
         <div class="head">
             <div class="user-img">
-                <a href="{{ route('profile.edit') }}">
+                <a href="#">
                   <img src="{{ asset('assets/img/Seorina.jpeg') }}" alt="User Image">
                 </a>
             </div>
@@ -103,20 +103,17 @@
             <p class="title">Account</p>
             <ul>
                 <li>
-                    <a href="#">
-                        <i class="icon ph-bold ph-sign-out"></i>
-                        <form method="POST" action="{{ route('logout') }}">
-                            @csrf
-                        <span class="text" href=" {{route('logout') }}"
+                    <form method="POST" action="{{ route('logout') }}">
+                        @csrf
+                        <a href=" {{route('logout') }}"
                         onclick="event.preventDefault();
-                                    this.closest('form').submit();">
-    
-                     
-                                    {{ __('Log Out') }}
-
-                                </span>
-                            </form>
-                    </a>
+                            this.closest('form').submit();">
+                            <i class="icon ph-bold ph-sign-out"></i>
+                            <span class="text">
+                                        {{ __('Log Out') }}
+                            </span>
+                        </a>
+                    </form>
                 </li>
             </ul>
         </div>

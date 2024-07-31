@@ -1,4 +1,4 @@
-@extends('layouts.dashboard-layout')
+{{-- @extends('layouts.dashboard-layout')
 @section('title', 'Atlet Saya')
 @section('content')
 @include('components.daftar-atlet-overlay')
@@ -49,7 +49,7 @@
                                 <tr>
                                     <td>{{ $key + 1 }}</td>
                                     <td>{{ $atlet->name }}</td>
-                                    <td>{{ $atlet->umur }} Tahun</td>
+                                    <td>{{ $atlet->umur }}</td>
                                     <td>{{ $atlet->jenis_kelamin }}</td>
                                     <td><span class="status registration">{{ str_replace('.', ':', $atlet->track_record)}}:00</span></td>
                                     <td>
@@ -76,4 +76,4 @@
             </section>
         </div>
     </div>
-@endsection
+@endsection --}}

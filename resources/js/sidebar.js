@@ -4,6 +4,7 @@ document.addEventListener("DOMContentLoaded", function() {
   const navbarUser = document.querySelector(".navbar-user");
   const navbarTitle = document.querySelector(".navbar-title");
   const menuBtn = document.querySelector('.menu-btn i');
+  const dashboardContainer = document.querySelector('.main-content')
   const backdrop = document.createElement('div');
   backdrop.className = 'sidebar-backdrop';
   document.body.appendChild(backdrop);
@@ -37,7 +38,6 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // Ganti ikon pada menu-btn
     if (sidebar.classList.contains('active')) {
-      menuBtn.classList.remove('ph-caret-left');
       menuBtn.classList.add('ph-caret-right');
     } else {
       menuBtn.classList.remove('ph-caret-right');
@@ -72,7 +72,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // Sembunyikan atau tampilkan navbar-title
     navbarTitle.classList.toggle('hide', sidebar.classList.contains('active'));
-
+    dashboardContainer.classList.toggle('main-content_sidebar-hide', sidebar.classList.contains('active'))
     // Ganti ikon pada menu-btn
     if (sidebar.classList.contains('active')) {
       menuBtn.classList.remove('ph-caret-left');
