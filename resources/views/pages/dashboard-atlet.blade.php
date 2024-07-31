@@ -14,6 +14,13 @@
                 </div>
             </div>
         </div>
+        @if ($errors->any())
+            <ul>
+                @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        @endif
         <div class="bottom-container">
             <section class="all-container all-card w100">
                 <header class="divider flex">
@@ -51,10 +58,10 @@
                                     <td>{{ $atlet->name }}</td>
                                     <td>{{ $atlet->umur }} Tahun</td>
                                     <td>{{ $atlet->jenis_kelamin }}</td>
-                                    <td><span class="status registration">{{ str_replace('.', ':', $atlet->track_record)}}:00</span></td>
+                                    <td><span class="status registration">{{ str_replace('.', ':', sprintf('%04.2f', $atlet->track_record))}}:00 Menit</span></td>
                                     <td>
-                                        <a><button class="button-gap"><i class='bx bx-xs bx-edit'></i></button></a>
-                                        <form action="{{route('dashboard.atlet.destroy', $atlet->id)}}" method="post">
+                                        <a href="{{ route('dashboard.atlet.edit', $atlet->id) }}"><button class="button-gap"><i class='bx bx-xs bx-edit'></i></button></a>
+                                        <form action="{{ route('dashboard.atlet.destroy', $atlet->id) }}" method="post">
                                             @csrf
                                             @method('delete')
                                             <a onclick="return confirm('Apakah kamu yakin ingin menghapus? ')"><button class="button-red button-gap"><i class='bx bx-xs bxs-trash' ></i></button></a>

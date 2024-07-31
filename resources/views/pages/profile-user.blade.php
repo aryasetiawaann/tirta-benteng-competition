@@ -1,4 +1,4 @@
-{{-- @extends('layouts.dashboard-layout')
+@extends('layouts.dashboard-layout')
 @section('title', 'Atlet Saya')
 @section('content')
 @include('components.daftar-atlet-overlay')
@@ -9,71 +9,92 @@
                     <i class='bx bxs-user' ></i>
                 </div>
                 <div class="card-content">
-                    <p>List Atlet</p>
-                    <h1>{{  $atlets_count }}</h1>
+                    <p>Profile</p>
+                    <h1>{{ auth()->user()->name }}</h1>
                 </div>
             </div>
         </div>
+        @if (session('status'))
+            <p>{{ session('status') }}</p>
+        @endif
         <div class="bottom-container">
             <section class="all-container all-card w100">
-                <header class="divider flex">
-                    <h1>Daftar Atlet</h1>
-                    <a id="openOverlay"><button>+ Tambah</button></a>
-                </header>
-                <div class="table-container">
-                    <label for="entries">Tampilkan
-                        <select id="entries" name="entries">
-                            <option value="5">5</option>
-                            <option value="10">10</option>
-                            <option value="25">25</option>
-                            <option value="50">50</option>
-                            <option value="100">100</option>
-                        </select> 
-                        entri
-                    </label>
-                    <input type="text" id="search" placeholder="Cari...">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>#</th>
-                                <th>Nama</th>
-                                <th>Umur</th>
-                                <th>Jenis Kelamin</th>
-                                <th>Track Record</th>
-                                <th>Aksi</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @if ( $atlets_count > 0)   
-                                @foreach ($atlets as $key => $atlet) 
-                                <tr>
-                                    <td>{{ $key + 1 }}</td>
-                                    <td>{{ $atlet->name }}</td>
-                                    <td>{{ $atlet->umur }}</td>
-                                    <td>{{ $atlet->jenis_kelamin }}</td>
-                                    <td><span class="status registration">{{ str_replace('.', ':', $atlet->track_record)}}:00</span></td>
-                                    <td>
-                                        <a><button class="button-gap"><i class='bx bx-xs bx-edit'></i></button></a>
-                                        <form action="{{route('dashboard.atlet.destroy', $atlet->id)}}" method="post">
-                                            @csrf
-                                            @method('delete')
-                                            <a onclick="return confirm('Apakah kamu yakin ingin menghapus? ')"><button class="button-red button-gap"><i class='bx bx-xs bxs-trash' ></i></button></a>
-                                        </form>
-                                    </td>
-                                </tr>
+                <div>
+                    <img src="{{ !is_null(auth()->user()->foto) ? asset(auth()->user()->foto) : asset('assets/img/blank-profile.png') }}" alt="User Image">
+                </div>
+                <div>
+                    @if (!is_null(auth()->user()->foto))    
+                    <a href="/dashboard/profile/delete-foto" onclick="return confirm('Apakah kamu yakin ingin menghapus foto? ')"><button>Hapus</button></a>
+                    @endif
+                    <form action="{{route('profile.update')}}" method="POST" enctype="multipart/form-data">
+                        @csrf
+
+                        <input type="file" name="foto" id="foto" accept=".png, .jpeg, .jpg" value="{{ auth()->user()->foto }}">
+                        <div>
+                            <label for="name">Nama</label>
+                            <input id="name" type="text" name="name" value=" {{ auth()->user()->name }} "placeholder="Masukkan nama" >
+                        </div>
+        
+                        <div>
+                            <label for="email">Email</label>
+                            <input id="email" type="email" name="email" value=" {{ auth()->user()->email }}" placeholder="Masukkan email">
+
+                        </div>
+                        
+                        <div>
+                            <label for="club">Club</label>
+                            <input id="club" type="text" name="club" value="{{ auth()->user()->club }}"  placeholder="Contoh: Tirta Benteng Club">
+
+                        </div>
+
+                        <button type="submit">Simpan</button>
+                    </form>
+                </div>
+                <div>
+                    <h1>Ubah Password</h1>
+                    <form method="post" action="{{ route('password.update') }}" class="mt-6 space-y-6">
+                        @csrf
+                        @method('put')
+                
+                        <div>
+                            <label for="current_password">Password Aktif</label>
+                            <input type="password" name="current_password" id="current_password">
+                        </div>
+    
+                        <div>
+                            <label for="update_password">Password Baru</label>
+                            <input type="password" name="password" id="update_password">
+                        </div>
+    
+                        <div>
+                            <label for="confirm_update_password">Konfirmasi Password Baru</label>
+                            <input type="password" name="password_confirmation" id="confirm_update_password">
+                        </div>
+                        
+                        <button>Ubah</button>
+                    </form>
+                </div>
+                <div>
+                    <h1>Hapus Akun</h1>
+                    <p>Setelah akun Anda dihapus, semua sumber daya dan data akan dihapus secara permanen.</p>
+                    <form method="post" action="{{ route('profile.destroy') }}">
+                        @csrf
+                        @method('delete')
+
+                        <div>
+                            <label for="password">Password</label>
+                            <input type="password" name="password" id="password" placeholder="Password">
+                            
+                            <ul>
+                                @foreach ($errors->getBag('userDeletion')->all() as $error)
+                                    <li>{{ $error }}</li>
                                 @endforeach
-                            @else
-                                <tr><td colspan="7" style="text-align:center;">Belum ada data</td></tr>
-                            @endif 
-                        </tbody>
-                    </table>
-                    <div class="pagination">
-                        <button class="prev" disabled>Sebelumnya</button>
-                        <div class="page-numbers"></div>
-                        <button class="next" disabled>Selanjutnya</button>
-                    </div>
+                            </ul>
+                        </div>
+                        <button>Hapus Akun</button>
+                    </form>
                 </div>
             </section>
         </div>
     </div>
-@endsection --}}
+@endsection

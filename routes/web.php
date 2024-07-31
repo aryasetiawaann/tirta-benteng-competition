@@ -59,20 +59,15 @@ Route::middleware(['auth', 'verified'])->group(function () {
         return view('pages.dashboard-bukuhasil');
     })->name('dashboard.bukuhasil');
 
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::get('/dashboard/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::post('/dashboard/profile/', [ProfileController::class, 'update'])->name('profile.update');
+    Route::get('/dashboard/profile/delete-foto', [ProfileController::class, 'deletePhoto']);
+    Route::delete('/dashboard/profile/delete', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
 Route::middleware(['auth','role:admin'])->group(function () {
     Route::get('/admin/dashboard',[AdminController::class,'dashboard'])->name('admin.dashboard');
 });
 
-
-// Route::middleware('auth')->group(function () {  
-//     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-//     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-//     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-// });
 
 require __DIR__.'/auth.php';

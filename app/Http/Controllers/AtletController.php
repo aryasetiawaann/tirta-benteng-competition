@@ -39,7 +39,7 @@ class AtletController extends Controller
         $data = [ "name"=> $request->nama,
         "umur"=> $request->umur,
         "jenis_kelamin"=> $request->jenisKelamin,
-        "track_record"=> number_format((double)$request->record/60, 2, "."),
+        "track_record"=> $request->record,
         "user_id"=> auth()->user()->id,
         ];
 
@@ -47,6 +47,7 @@ class AtletController extends Controller
             "name"=> "required",
             "umur"=> "required",
             "jenis_kelamin"=> "required",
+            "track_record" => "numeric|regex:/^\d+\.\d{2}$/"
         ]);
 
         if ($validation->fails()) {
@@ -69,17 +70,40 @@ class AtletController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Atlet $atlet)
+    public function edit($id)
     {
-        //
+       $atlet = Atlet::find($id);
+
+       return view('pages.edit-atlet')->with(['atlet'=>$atlet]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateAtletRequest $request, Atlet $atlet)
+    public function update(Request $request)
     {
-        //
+        $data = [ "name"=> $request->nama,
+        "umur"=> $request->umur,
+        "jenis_kelamin"=> $request->jenisKelamin,
+        "track_record"=> $request->record,
+        "user_id"=> auth()->user()->id,
+        ];
+
+        $validation = Validator::make($data, [
+            "name"=> "required",
+            "umur"=> "required",
+            "jenis_kelamin"=> "required",
+            "track_record" => "numeric|regex:/^\d+\.\d{2}$/"
+        ]);
+
+        if ($validation->fails()) {
+            return redirect()->back()->withErrors($validation)->withInput();
+        }
+
+        $atlet = Atlet::find($request->atlet_id);
+        $atlet->update($data);
+
+        return redirect('/dashboard/atlet-saya')->with('success','Atlet berhasil dibuat');
     }
 
     /**

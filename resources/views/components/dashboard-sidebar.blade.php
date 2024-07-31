@@ -4,7 +4,7 @@
       </div>
       <div class="navbar-title" data-page-title="{{ Route::currentRouteName() }}"></div>
       <div class="navbar-user">
-        <img src="{{ asset('assets/img/Seorina.jpeg') }}" alt="User Image">
+        <img src="{{ !is_null(auth()->user()->foto) ? asset(auth()->user()->foto) : asset('assets/img/blank-profile.png') }}" alt="User Image">
       </div>
     </div>
 
@@ -14,8 +14,8 @@
         </div>
         <div class="head">
             <div class="user-img">
-                <a href="#">
-                  <img src="{{ asset('assets/img/Seorina.jpeg') }}" alt="User Image">
+                <a href="{{ route('profile.edit') }}">
+                  <img src="{{ !is_null(auth()->user()->foto) ? asset(auth()->user()->foto) : asset('assets/img/blank-profile.png') }}" alt="User Image">
                 </a>
             </div>
             <div class="user-details">
