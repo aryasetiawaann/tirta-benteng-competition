@@ -22,126 +22,28 @@
             </div>
         </div>
         <div class="bottom-container grid">
+            @foreach ($kompetisi as $kompe)
             <section class="all-container all-card">
                 <header class="flex divider">
-                    <h2>Agung Tirtayasa Competition A</h2>
-                    <a href="{{ route('kompetisi.daftar') }}"><button>Daftar</button></a>
+                    <h2>{{ $kompe->nama }}</h2>
+                    @if ( now() < $kompe->tutup_pendaftaran)
+                    <a href="{{ route('dashboard.acara', $kompe->id) }}"><button>Daftar</button></a>
+                    @endif
                 </header>
                 <div>
-                    <p>Deskripsi</p>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod.</p>
+                    @if ( now() < $kompe->tutup_pendaftaran)
+                    <p>Status: <span>Registrasi</span></p>
+                    @else
+                    <p>Status: <span>Selesai</span></p>
+                    @endif
+                    
+                    <p>Open reg: {{ $kompe->buka_pendaftaran }}</p>
+                    <p>Closed reg: {{ $kompe->tutup_pendaftaran }}</p>
+                    <p>lokasi: {{ $kompe->lokasi }}</p>
+                    <p>{{ $kompe->deskripsi }}</p>
                 </div>
             </section>
-            <section class="all-container all-card">
-                <header class="flex divider">
-                    <h2>Agung Tirtayasa Competition B</h2>
-                    <a href="{{ route('kompetisi.daftar')}}"><button>Daftar</button></a>
-                </header>
-                <div>
-                    <p>Deskripsi</p>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod.</p>
-                </div>
-            </section>
-            <section class="all-container all-card">
-                <header class="flex divider">
-                    <h2>Agung Tirtayasa Competition C</h2>
-                    <a href="{{ route('kompetisi.daftar')}}"><button>Daftar</button></a>
-                </header>
-                <div>
-                    <p>Deskripsi</p>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod.</p>
-                </div>
-            </section>
-            <section class="all-container all-card">
-                <header class="flex divider">
-                    <h2>Agung Tirtayasa Competition D</h2>
-                    <a href="{{ route('kompetisi.daftar')}}"><button>Daftar</button></a>
-                </header>
-                <div>
-                    <p>Deskripsi</p>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod.</p>
-                </div>
-            </section>
-            <section class="all-container all-card">
-                <header class="flex divider">
-                    <h2>Agung Tirtayasa Competition D</h2>
-                    <a href="{{ route('kompetisi.daftar')}}"><button>Daftar</button></a>
-                </header>
-                <div>
-                    <p>Deskripsi</p>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod.</p>
-                </div>
-            </section>
-            <section class="all-container all-card">
-                <header class="flex divider">
-                    <h2>Agung Tirtayasa Competition D</h2>
-                    <a href="{{ route('kompetisi.daftar')}}"><button>Daftar</button></a>
-                </header>
-                <div>
-                    <p>Deskripsi</p>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod.</p>
-                </div>
-            </section>
-            <section class="all-container all-card">
-                <header class="flex divider">
-                    <h2>Agung Tirtayasa Competition D</h2>
-                    <a href="{{ route('kompetisi.daftar')}}"><button>Daftar</button></a>
-                </header>
-                <div>
-                    <p>Deskripsi</p>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod.</p>
-                </div>
-            </section>
-            <section class="all-container all-card">
-                <header class="flex divider">
-                    <h2>Agung Tirtayasa Competition D</h2>
-                    <a href="{{ route('kompetisi.daftar')}}"><button>Daftar</button></a>
-                </header>
-                <div>
-                    <p>Deskripsi</p>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod.</p>
-                </div>
-            </section>
-            <section class="all-container all-card">
-                <header class="flex divider">
-                    <h2>Agung Tirtayasa Competition D</h2>
-                    <a href="{{ route('kompetisi.daftar')}}"><button>Daftar</button></a>
-                </header>
-                <div>
-                    <p>Deskripsi</p>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod.</p>
-                </div>
-            </section>
-            <section class="all-container all-card">
-                <header class="flex divider">
-                    <h2>Agung Tirtayasa Competition D</h2>
-                    <a href="{{ route('kompetisi.daftar')}}"><button>Daftar</button></a>
-                </header>
-                <div>
-                    <p>Deskripsi</p>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod.</p>
-                </div>
-            </section>
-            <section class="all-container all-card">
-                <header class="flex divider">
-                    <h2>Agung Tirtayasa Competition D</h2>
-                    <a href="{{ route('kompetisi.daftar')}}"><button>Daftar</button></a>
-                </header>
-                <div>
-                    <p>Deskripsi</p>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod.</p>
-                </div>
-            </section>
-            <section class="all-container all-card">
-                <header class="flex divider">
-                    <h2>Agung Tirtayasa Competition D</h2>
-                    <a href="{{ route('kompetisi.daftar')}}"><button>Daftar</button></a>
-                </header>
-                <div>
-                    <p>Deskripsi</p>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod.</p>
-                </div>
-            </section>
+            @endforeach
         </div>
     </div>
 @endsection

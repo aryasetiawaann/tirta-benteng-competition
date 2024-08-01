@@ -9,7 +9,7 @@
                     <i class="icon ph-bold ph-wallet"></i>
                 </div>
                 <div class="card-content">
-                    <h1>Informasi Tagihan</h1>
+                    <h1>Tagihan</h1>
                 </div>
             </div>
         </div>

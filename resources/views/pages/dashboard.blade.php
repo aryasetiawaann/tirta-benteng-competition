@@ -10,7 +10,7 @@
                 </div>
                 <div class="card-content">
                     <p>Kompetisi Aktif</p>
-                    <h1>4</h1>
+                    <h1>{{ $kompetisi_count }}</h1>
                 </div>
             </div>
         <div class="top-card all-card">
@@ -19,7 +19,7 @@
             </div>
             <div class="card-content">
                 <p>Kompetisi Terdaftar</p>
-                <h1>1</h1>
+                <h1>aw</h1>
             </div>
         </div>
         <div class="top-card all-card">

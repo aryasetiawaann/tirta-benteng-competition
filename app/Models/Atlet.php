@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Acara;
+use App\Models\User;
 
 class Atlet extends Model
 {
@@ -17,4 +19,12 @@ class Atlet extends Model
         'user_id',
     ];
 
+
+    public function acara(){
+        return $this->belongsToMany(Acara::class);
+    }
+
+    public function user(){
+        return $this->belongsTo(User::class, 'user_id');
+    }
 }

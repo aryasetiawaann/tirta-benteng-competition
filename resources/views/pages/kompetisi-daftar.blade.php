@@ -33,7 +33,7 @@
                     <i class="bx bxs-grid-alt"></i>
                 </div>
                 <div class="card-content">
-                    <h1>Agung Tirtayasa Competition ABCD</h1>
+                    <h1>{{ $nama_kompetisi }} </h1>
                 </div>
             </div>
             <div class="card-right">
@@ -41,23 +41,34 @@
             </div>
         </div>
         <div class="bottom-container grid">
-            <section class="all-container all-card">
-                <header class="flex divider">
-                    <h2>120 - 50m Gaya Dada Putra</h2>
-                    <a href="{{ route('kompetisi.daftar2') }}"><button>Daftar</button></a>
-                </header>
-                <div>
-                    <h3 class="mtopbot">
-                        Status : <span class="status buka smaller">Pendaftaran Buka</span>
-                    </h3>
-                    <h3 class="mtopbot">
-                        Harga : <span class="status harga smaller">Rp. 125.000,00</span>
-                    </h3>
-                    <p>Kuota : 0 / 100</p>
-                    <p>Min Umur : 17</p>
-                    <p>Max Umur : 25</p>
-                </div>
-            </section>
+            @foreach ($acara as $aca)
+                <section class="all-container all-card">
+                    <header class="flex divider">
+                        <h2>{{ $aca->nomor_lomba }} - {{ $aca->nama }} - {{ $aca->grup }}</h2>
+
+                        @if ($aca->peserta->count() < $aca->kuota)
+                        <a href="{{ route('dashboard.acara.detail', $aca->id) }}"><button>Daftar</button></a>
+                        @endif
+                        
+                    </header>
+                    <div>
+                        <h3 class="mtopbot">
+                            @if ($aca->peserta->count() == $aca->kuota)
+                            Status : <span class="status buka smaller">Tutup</span>
+                            @else
+                            Status : <span class="status buka smaller">Buka</span>
+                            @endif
+                        </h3>
+                        <h3 class="mtopbot">
+                            Harga : <span class="status harga smaller">Rp.{{ number_format($aca->harga, 2, ',', '.') }}</span>
+                        </h3>
+                        <p>Kuota : {{ $aca->peserta->count() }} / {{$aca->kuota}}</p>
+                        <p>Nomor Grup : {{ $aca->grup }}</p>
+                        <p>Min Umur : {{ $aca->min_umur }}</p>
+                        <p>Max Umur : {{ $aca->max_umur }}</p>
+                    </div>
+                </section>
+            @endforeach
         </div>
     </div>
 @endsection

@@ -40,19 +40,19 @@
                         </a>
                     </li>
                     <li>
-                        <a href="#">
+                        <a>
                             <i class="icon ph-bold ph-trophy"></i>
                             <span class="text">Kompetisi</span>
                             <i class="arrow ph-bold ph-caret-down"></i>
                         </a>
                         <ul class="sub-menu">
                             <li>
-                                <a href="{{ route('dashboard.daftar') }}">
+                                <a href="{{ route('dashboard.kompetisi') }}">
                                     <span class="text">Daftar</span>
                                 </a>
                             </li>
                             <li>
-                                <a href="{{ route('dashboard.kompetisi') }}">
+                                <a>
                                     <span class="text">Kompetisi Saya</span>
                                 </a>
                             </li>
@@ -72,7 +72,7 @@
                             </li>
                             <li>
                                 <a href="{{ route('dashboard.lunas') }}">
-                                    <span class="text">Daftar Pembayaran</span>
+                                    <span class="text">Riwayat Pembayaran</span>
                                 </a>
                             </li>
                         </ul>

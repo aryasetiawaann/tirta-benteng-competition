@@ -9,7 +9,7 @@
                     <i class='bx bxs-user' ></i>
                 </div>
                 <div class="card-content">
-                    <p>List Atlet</p>
+                    <p>Jumlah Atlet</p>
                     <h1>{{  $atlets_count }}</h1>
                 </div>
             </div>

@@ -9,8 +9,7 @@
                     <i class="bx bxs-grid-alt"></i>
                 </div>
                 <div class="card-content">
-                    <p>List Atlet</p>
-                    <h1>100</h1>
+                    <h1>{{ $acara->kompetisi->nama }} - {{ $acara->nama }}</h1>
                 </div>
             </div>
         </div>
@@ -18,7 +17,11 @@
             <section class="all-container all-card w100">
                 <header class="divider flex">
                     <h1>Daftar Atlet</h1>
+                    @if ($acara->peserta->count() < $acara->kuota)
                     <a id="openOverlay"><button>Daftar</button></a>
+                    @else
+                    <a id="openOverlay"><button disabled style="background-color: gray">Kuota Penuh</button></a>
+                    @endif
                 </header>
                 <div class="table-container">
                     <label for="entries">Tampilkan
@@ -39,21 +42,19 @@
                                 <th>Nama</th>
                                 <th>Umur</th>
                                 <th>Jenis Kelamin</th>
-                                <th>Status Peserta</th>
-                                <th>Status Pembayaran</th>
                                 <th>Club</th>
                             </tr>
                         </thead>
                         <tbody>
+                            @foreach ($acara->peserta as $key => $peserta) 
                             <tr>
-                                <td>1</td>
-                                <td>Arya</td>
-                                <td>20</td>
-                                <td>Pria</td>
-                                <td><span class="status waiting">Menunggu</span></td>
-                                <td><span class="status registration">Menunggu</span></td>
-                                <td>Club A</td>
+                                <td>{{ $key + 1 }}</td>
+                                <td>{{ $peserta->name }}</td>
+                                <td>{{ $peserta->umur }}</td>
+                                <td>{{ $peserta->jenis_kelamin }}</td>
+                                <td>{{ $peserta->user->club }}</td>
                             </tr>
+                            @endforeach
                             <!-- Add more rows as needed -->
                         </tbody>
                     </table>

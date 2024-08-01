@@ -71,7 +71,7 @@
                             <input type="password" name="password_confirmation" id="confirm_update_password">
                         </div>
                         
-                        <button>Ubah</button>
+                        <button>Simpan</button>
                     </form>
                 </div>
                 <div>

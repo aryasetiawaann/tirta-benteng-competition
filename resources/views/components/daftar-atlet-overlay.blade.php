@@ -19,7 +19,6 @@
                 </select>
                 <label for="record">Track Record</label>
                 <input type="number" id="record" name="record" placeholder="contoh: 3,25 (Menit)" step="0.01">
-                {{-- pake apa ini?, konek ke database gmn --}}
                 <div class="flex center">   
                     <button type="submit" class="w50">Kirim</button>
                 </div>

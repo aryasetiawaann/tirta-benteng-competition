@@ -9,14 +9,14 @@
                     <i class="icon ph-bold ph-wallet"></i>
                 </div>
                 <div class="card-content">
-                    <h1>Informasi Pembayaran</h1>
+                    <h1>Riwayat Pembayaran</h1>
                 </div>
             </div>
         </div>
         <div class="bottom-container">
             <section class="all-container all-card w100">
                 <header class="divider flex">
-                    <h1>Daftar Pembayaran</h1>
+                    <h1>Daftar Riwayat Pembayaran</h1>
                     <a id="openOverlay"><button><i class='bx bx-cart' ></i>  Tambah</button></a>
                 </header>
                 <div class="table-container">
@@ -54,7 +54,7 @@
                             <td><span class="status bayar">Selesai</span></td>
                             <td>27-07-2024 12:00</td>
                             <td>
-                                <a href="#"><button class="button-gap"><i class='bx bx-xs bx-edit'></i></button></a>
+                                {{-- <a href="#"><button class="button-gap"><i class='bx bx-xs bx-edit'></i></button></a> --}}
                                 <a href="#"><button class="button-red"><i class='bx bx-xs bxs-trash' ></i></button></a>
                             </td>
                         </tr>
