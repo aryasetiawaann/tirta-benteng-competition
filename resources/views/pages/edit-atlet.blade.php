@@ -3,13 +3,13 @@
 @section('content')
 @include('components.daftar-atlet-overlay')
     <div class="main-content">
-        <div class="bottom-container">
-            <section class="all-container all-card w100">
+        <div class="bottom-container center">
+            <section class="all-container all-card w100 maxwd">
                 <header class="divider flex">
                     <h1>Edit {{ $atlet->name}}</h1>
                 </header>
                 <div>
-                    <form class="atlet" method="POST" action="{{ route('dashboard.atlet.update', $atlet->id) }}">
+                    <form class="edit-atlet" method="POST" action="{{ route('dashboard.atlet.update', $atlet->id) }}">
                         @csrf
                         @method('put')
 
@@ -26,7 +26,7 @@
                         <input type="number" id="record" name="record" placeholder="contoh: 3,25 (Menit)" value="{{ $atlet->track_record }}" step="0.01">
                         <input type="hidden" name="atlet_id" value="{{ $atlet->id }}">
                         <div class="flex center">   
-                            <button type="submit" class="w50">Kirim</button>
+                            <button type="submit" class="w50">Simpan</button>
                         </div>
                         
                     </form>

@@ -395,6 +395,10 @@ i {
     .grid {
         grid-template-columns: 1fr;
     }
+
+    .main-content {
+        margin-left: 0;
+    }
 }
 
 @media screen and (max-width: 1054px) {
@@ -416,4 +420,18 @@ i {
     .top-card {
         flex: 1 1 calc(100% - 40px);
     }
+}
+
+
+.maxwd {
+    max-width: 500px;
+}
+.edit-atlet {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.edit-atlet input, .edit-atlet select {
+    margin: 5px 0 20px 0;
+    padding: 10px;
 }

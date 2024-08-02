@@ -59,7 +59,7 @@
                                     <td>{{ $atlet->umur }} Tahun</td>
                                     <td>{{ $atlet->jenis_kelamin }}</td>
                                     <td><span class="status registration">{{ str_replace('.', ':', sprintf('%04.2f', $atlet->track_record))}}:00 Menit</span></td>
-                                    <td>
+                                    <td style="display: flex">
                                         <a href="{{ route('dashboard.atlet.edit', $atlet->id) }}"><button class="button-gap"><i class='bx bx-xs bx-edit'></i></button></a>
                                         <form action="{{ route('dashboard.atlet.destroy', $atlet->id) }}" method="post">
                                             @csrf

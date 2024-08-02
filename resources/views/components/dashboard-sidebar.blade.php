@@ -40,7 +40,7 @@
                         </a>
                     </li>
                     <li>
-                        <a>
+                        <a href="#">
                             <i class="icon ph-bold ph-trophy"></i>
                             <span class="text">Kompetisi</span>
                             <i class="arrow ph-bold ph-caret-down"></i>
@@ -52,7 +52,7 @@
                                 </a>
                             </li>
                             <li>
-                                <a>
+                                <a href="#">
                                     <span class="text">Kompetisi Saya</span>
                                 </a>
                             </li>
