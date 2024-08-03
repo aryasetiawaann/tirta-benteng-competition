@@ -12,10 +12,10 @@ document.addEventListener("DOMContentLoaded", function() {
   // Mapping untuk title berdasarkan route name
   const titles = {
     'dashboard': 'Dashboard',
-    'dashboard.atlet': 'Atlet Saya',
-    'dashboard.kompetisi': 'Kompetisi',
-    'dashboard.daftar': 'Daftar',
-    'dashboard.kompetisi': 'Kompetisi Saya',
+    'dashboard.atlet.index': 'Atlet Saya',
+    // 'dashboard.kompetisi': 'Kompetisi',
+    // 'dashboard.daftar': 'Daftar',
+    'dashboard.kompetisi': 'Daftar',
     'dashboard.tagihan': 'Tagihan',
     'dashboard.lunas': 'Daftar Pembayaran',
     'dashboard.bukuacara': 'Buku Acara',
