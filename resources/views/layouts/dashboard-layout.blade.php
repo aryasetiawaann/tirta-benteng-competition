@@ -60,7 +60,7 @@
         }
 
         @media (max-width: 450px) {
-            .main-content {
+            .main-content, .top-container, .bottom-container {
                 font-size: 0.9em;
             }
 

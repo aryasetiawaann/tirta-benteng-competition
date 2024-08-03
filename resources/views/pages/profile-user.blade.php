@@ -2,7 +2,7 @@
 @section('title', 'Atlet Saya')
 @section('content')
 @include('components.daftar-atlet-overlay')
-    <div class="main-content profile-main-content">
+    <div class="main-content">
         <div class="top-container">
             <div class="top-card profile-top-card">
                 <div class="profile-card-icon">
@@ -17,7 +17,7 @@
         @if (session('status'))
             <p>{{ session('status') }}</p>
         @endif
-        <div class="bottom-container profile-bottom-container">
+        <div class="profile-bottom-container">
             <section class="profile-section profile-form">
                 <div>
                     <img src="{{ !is_null(auth()->user()->foto) ? asset(auth()->user()->foto) : asset('assets/img/blank-profile.png') }}" alt="User Image">

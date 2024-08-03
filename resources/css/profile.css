@@ -1,17 +1,8 @@
-/* Main Content Adjustments */
-.profile-main-content {
-    padding: 20px;
-}
-
 /* Card Styles */
 .profile-top-card {
-    display: flex;
-    align-items: center;
     background-color: #ffffff;
-    padding: 20px;
     border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    margin-bottom: 20px;
+    /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); */
 }
 
 .profile-card-icon {
@@ -40,15 +31,16 @@
 .profile-bottom-container {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 20px;
+    gap: 40px;
     margin-top: 20px;
+    margin: 20px;
 }
 
 .profile-section {
     background-color: #ffffff;
     padding: 20px;
     border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); */
 }
 
 .profile-section img {
@@ -65,7 +57,7 @@
     padding: 10px 20px;
     border-radius: 5px;
     cursor: pointer;
-    transition: background-color 0.3s ease-in-out;
+    transition: background-color 0.1s ease-in-out;
 }
 
 .profile-section button:hover {
@@ -90,7 +82,7 @@
     border: 1px solid #ccc;
     border-radius: 5px;
     box-sizing: border-box;
-    transition: border-color 0.3s ease-in-out;
+    transition: border-color 0.1s ease-in-out;
 }
 
 .profile-form input[type="text"]:focus,
@@ -108,7 +100,7 @@
     padding: 10px 20px;
     border-radius: 5px;
     cursor: pointer;
-    transition: background-color 0.3s ease-in-out;
+    transition: background-color 0.1s ease-in-out;
 }
 
 .profile-form button:hover {
@@ -137,7 +129,7 @@
     padding: 10px 20px;
     border-radius: 5px;
     cursor: pointer;
-    transition: background-color 0.3s ease-in-out;
+    transition: background-color 0.1s ease-in-out;
 }
 
 .profile-section .delete-photo-button:hover {
@@ -168,7 +160,7 @@
     border: 1px solid #ccc;
     border-radius: 5px;
     box-sizing: border-box;
-    transition: border-color 0.3s ease-in-out;
+    transition: border-color 0.1s ease-in-out;
 }
 
 .profile-delete-section button {
@@ -182,5 +174,9 @@
 @media (max-width: 768px) {
     .profile-bottom-container {
         grid-template-columns: 1fr;
+    }
+
+    .profile-delete-section {
+        grid-column: span 1;
     }
 }
