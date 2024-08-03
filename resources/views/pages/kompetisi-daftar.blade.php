@@ -2,27 +2,27 @@
 @section('title', 'Daftar Kompetisi')
 
 @section('style')
-<style>
-    p {
-        margin-bottom: 5px
-    }
-
-    .grid {
-        grid-template-columns: 1fr 1fr 1fr;
-    }
-
-    @media screen and (max-width: 1024px) {
-        .grid {
-            grid-template-columns: 1fr 1fr;
+    <style>
+        p {
+            margin-bottom: 5px
         }
-    }
 
-    @media screen and (max-width: 768px) {
         .grid {
-            grid-template-columns: 1fr;
+            grid-template-columns: 1fr 1fr 1fr;
         }
-    }
-</style>
+
+        @media screen and (max-width: 1024px) {
+            .grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media screen and (max-width: 768px) {
+            .grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
 @endsection
 @section('content')
     <div class="main-content">
@@ -49,7 +49,6 @@
                         @if ($aca->peserta->count() < $aca->kuota)
                         <a href="{{ route('dashboard.acara.detail', $aca->id) }}"><button>Daftar</button></a>
                         @endif
-                        
                     </header>
                     <div>
                         <h3 class="mtopbot">

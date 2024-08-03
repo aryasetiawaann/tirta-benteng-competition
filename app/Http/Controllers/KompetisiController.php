@@ -15,7 +15,7 @@ class KompetisiController extends Controller
     {
         $kompetisi = Kompetisi::all()->sortByDesc("tutup_pendaftaran");
 
-        return view('pages.dashboard-daftar')->with(['kompetisi'=>$kompetisi]);
+        return view('pages.dashboard-kompetisi')->with(['kompetisi'=>$kompetisi]);
     }
 
     /**
