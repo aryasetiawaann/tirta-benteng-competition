@@ -2,13 +2,13 @@
 @section('title', 'Atlet Saya')
 @section('content')
 @include('components.daftar-atlet-overlay')
-    <div class="main-content">
+    <div class="main-content profile-main-content">
         <div class="top-container">
-            <div class="top-card all-card">
-                <div class="card-icon">
+            <div class="top-card profile-top-card">
+                <div class="profile-card-icon">
                     <i class='bx bxs-user' ></i>
                 </div>
-                <div class="card-content">
+                <div class="profile-card-content">
                     <p>Profile</p>
                     <h1>{{ auth()->user()->name }}</h1>
                 </div>
@@ -17,14 +17,16 @@
         @if (session('status'))
             <p>{{ session('status') }}</p>
         @endif
-        <div class="bottom-container">
-            <section class="all-container all-card w100">
+        <div class="bottom-container profile-bottom-container">
+            <section class="profile-section profile-form">
                 <div>
                     <img src="{{ !is_null(auth()->user()->foto) ? asset(auth()->user()->foto) : asset('assets/img/blank-profile.png') }}" alt="User Image">
                 </div>
                 <div>
                     @if (!is_null(auth()->user()->foto))    
-                    <a href="/dashboard/profile/delete-foto" onclick="return confirm('Apakah kamu yakin ingin menghapus foto? ')"><button>Hapus</button></a>
+                    <a href="/dashboard/profile/delete-foto" onclick="return confirm('Apakah kamu yakin ingin menghapus foto? ')">
+                        <button class="delete-photo-button">Hapus Foto</button>
+                    </a>
                     @endif
                     <form action="{{route('profile.update')}}" method="POST" enctype="multipart/form-data">
                         @csrf
@@ -50,50 +52,51 @@
                         <button type="submit">Simpan</button>
                     </form>
                 </div>
-                <div>
-                    <h1>Ubah Password</h1>
-                    <form method="post" action="{{ route('password.update') }}" class="mt-6 space-y-6">
-                        @csrf
-                        @method('put')
-                
-                        <div>
-                            <label for="current_password">Password Aktif</label>
-                            <input type="password" name="current_password" id="current_password">
-                        </div>
-    
-                        <div>
-                            <label for="update_password">Password Baru</label>
-                            <input type="password" name="password" id="update_password">
-                        </div>
-    
-                        <div>
-                            <label for="confirm_update_password">Konfirmasi Password Baru</label>
-                            <input type="password" name="password_confirmation" id="confirm_update_password">
-                        </div>
-                        
-                        <button>Simpan</button>
-                    </form>
-                </div>
-                <div>
-                    <h1>Hapus Akun</h1>
-                    <p>Setelah akun Anda dihapus, semua sumber daya dan data akan dihapus secara permanen.</p>
-                    <form method="post" action="{{ route('profile.destroy') }}">
-                        @csrf
-                        @method('delete')
+            </section>
+            <section class="profile-section">
+                <h1>Ubah Password</h1>
+                <form method="post" action="{{ route('password.update') }}" class="profile-form mt-6 space-y-6">
+                    @csrf
+                    @method('put')
 
-                        <div>
-                            <label for="password">Password</label>
-                            <input type="password" name="password" id="password" placeholder="Password">
-                            
-                            <ul>
-                                @foreach ($errors->getBag('userDeletion')->all() as $error)
-                                    <li>{{ $error }}</li>
-                                @endforeach
-                            </ul>
-                        </div>
-                        <button>Hapus Akun</button>
-                    </form>
-                </div>
+                    <div>
+                        <label for="current_password">Password Aktif</label>
+                        <input type="password" name="current_password" id="current_password">
+                    </div>
+
+                    <div>
+                        <label for="update_password">Password Baru</label>
+                        <input type="password" name="password" id="update_password">
+                    </div>
+
+                    <div>
+                        <label for="confirm_update_password">Konfirmasi Password Baru</label>
+                        <input type="password" name="password_confirmation" id="confirm_update_password">
+                    </div>
+                    
+                    <button>Simpan</button>
+                </form>
+            </section>
+
+            <section class="profile-section profile-delete-section">
+                <h1>Hapus Akun</h1>
+                <p>Setelah akun Anda dihapus, semua sumber daya dan data akan dihapus secara permanen.</p>
+                <form method="post" action="{{ route('profile.destroy') }}">
+                    @csrf
+                    @method('delete')
+
+                    <div>
+                        <label for="password">Password</label>
+                        <input type="password" name="password" id="password" placeholder="Password">
+                        
+                        <ul>
+                            @foreach ($errors->getBag('userDeletion')->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                    <button>Hapus Akun</button>
+                </form>
             </section>
         </div>
     </div>

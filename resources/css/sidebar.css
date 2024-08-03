@@ -154,7 +154,7 @@
   width: 92px;
 }
 .sidebar.active .menu-btn i {
-  transform: rotate(180deg);
+  transform: none;
 }
 .sidebar.active .user-details {
   display: none;
@@ -211,6 +211,10 @@
   box-shadow: 0px 10px 8px rgba(0, 0, 0, 0.1);
 }
 
+.sidebar.active .menu ul li .text {
+  display: none;
+}
+
 /* Mobile specific styles */
 @media screen and (max-width: 768px) {
   .navbar-mobile {
@@ -252,8 +256,16 @@
     display: flex;
   }
 
+  .sidebar.active .menu-btn i {
+    transform: rotate(180deg);
+  }
+
   .sidebar.active .menu > ul > li > a {
     justify-content: flex-start;
+  }
+
+  .sidebar.active .menu ul li .text {
+    display: flex;
   }
 
   .sidebar.active .menu > ul > li > a .text {
