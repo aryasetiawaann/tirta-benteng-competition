@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Kompetisi;
+use App\Models\Atlet;
 use App\Http\Requests\StoreKompetisiRequest;
 use App\Http\Requests\UpdateKompetisiRequest;
 
@@ -18,6 +19,21 @@ class KompetisiController extends Controller
         return view('pages.dashboard-kompetisi')->with(['kompetisi'=>$kompetisi]);
     }
 
+    public function kompetisiSaya(){
+        $acara_ids = Atlet::where('user_id', auth()->user()->id) // or auth()->user()->id
+        ->with('acara') // eager load acara
+        ->get()
+        ->flatMap(function ($atlet) {
+            return $atlet->acara->pluck('id');
+        })
+        ->unique();
+
+        $kompetisis = Kompetisi::whereHas('acara', function ($query) use ($acara_ids) {
+            $query->whereIn('id', $acara_ids);
+        })->get();
+
+        return view('pages.dashboard-kompetisi-saya')->with(['kompetisis' => $kompetisis]);
+    }
     /**
      * Show the form for creating a new resource.
      */

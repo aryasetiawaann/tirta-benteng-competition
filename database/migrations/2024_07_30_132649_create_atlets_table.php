@@ -16,7 +16,7 @@ return new class extends Migration
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->string('name');
-            $table->integer('umur');
+            $table->date('umur');
             $table->enum('jenis_kelamin', ['Pria','Wanita']);
             $table->double('track_record')->nullable();
             $table->timestamps();

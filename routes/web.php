@@ -37,6 +37,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard/daftar-kompetisi/{id}', [AcaraController::class,'index'])->name('dashboard.acara');
     Route::get('/dashboard/daftar-kompetisi/acara/{id}', [AcaraController::class,'showPesertaUser'])->name('dashboard.acara.detail');
     Route::post('/dashboard/daftar-kompetisi/acara/daftar/', [PesertaController::class,'create'])->name('dashboard.acara.daftar');
+
+    Route::get('/dashboard/kompetisi-saya', [KompetisiController::class,'kompetisiSaya'])->name('dashboard.kompe-saya');
+
+    Route::get('/dashboard/kompetisi-saya/{id}', [AcaraController::class,'kompetisiSaya'])->name('dashboard.kompe-saya.acara');
+    Route::get('/dashboard/kompetisi-saya/acara/{id}', [AcaraController::class,'kompetisiSayaDetail'])->name('dashboard.kompe-saya.acara.detail');
     // Route::get('/dashboard/daftar', function () {
     //     return view('pages.dashboard-daftar');
     // })->name('dashboard.daftar');

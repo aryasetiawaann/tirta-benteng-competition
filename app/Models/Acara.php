@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Kompetisi;
 use App\Models\Atlet;
+use Illuminate\Database\Eloquent\Relations\Concerns\InteractsWithPivotTable;
 
 
 class Acara extends Model
@@ -28,7 +29,7 @@ class Acara extends Model
 
     public function kompetisi(){
 
-        return $this->belongsTo(Kompetisi::class, 'kompetisi_id');
+        return $this->belongsTo(Kompetisi::class);
     }
 
     public function peserta(){

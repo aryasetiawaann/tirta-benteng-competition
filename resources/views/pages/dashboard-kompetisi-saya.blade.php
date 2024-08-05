@@ -1,5 +1,5 @@
 @extends('layouts.dashboard-layout')
-@section('title', 'Daftar')
+@section('title', 'Kompetisi Saya')
 @section('style')
     <style>
         p {
@@ -15,7 +15,7 @@
                     <i class='bx bx-swim' ></i>
                 </div>
                 <div class="card-content">
-                    <h1>Daftar Kompetisi</h1>
+                    <h1>Kompetisi Saya</h1>
                 </div>
             </div>
             <div class="card-right">
@@ -24,27 +24,25 @@
             </div>
         </div>
         <div class="bottom-container grid">
-            @foreach ($kompetisi as $kompe)
+            @foreach ($kompetisis as $kompetisi)
             <section class="all-container all-card">
                 <header class="flex divider">
-                    <h2>{{ $kompe->nama }}</h2>
-                    @if ( now() < $kompe->tutup_pendaftaran)
-                    <a href="{{ route('dashboard.acara', $kompe->id) }}"><button>Daftar</button></a>
-                    @endif
+                    <h2>{{ $kompetisi->nama }}</h2>
+                    <a href="{{ route('dashboard.kompe-saya.acara', $kompetisi->id) }}"><button>Lihat</button></a>
                 </header>
                 <div>
                     <h3 class="mtopbot">
-                        @if ( now() < $kompe->tutup_pendaftaran)
-                        <p>Status: <span class="status buka smaller">Registrasi</span></p>
+                        @if ( now() < $kompetisi->tutup_pendaftaran)
+                        <p>Status: <span class="status buka smaller">Menunggu</span></p>
                         @else
                         <p>Status: <span class="status tutup smaller">Selesai</span></p>
                         @endif
                     </h3>
                     
-                    <p>Open reg : {{ \Carbon\Carbon::parse($kompe->buka_pendaftaran)->format('d M Y') }}</p>
-                    <p>Closed reg : {{ \Carbon\Carbon::parse($kompe->tutup_pendaftaran)->format('d M Y') }}</p>
-                    <p>Lokasi : {{ $kompe->lokasi }}</p>
-                    <p>{{ $kompe->deskripsi }}</p>
+                    <p>Open reg : {{ \Carbon\Carbon::parse($kompetisi->buka_pendaftaran)->format('d M Y') }}</p>
+                    <p>Closed reg : {{ \Carbon\Carbon::parse($kompetisi->tutup_pendaftaran)->format('d M Y') }}</p>
+                    <p>Lokasi : {{ $kompetisi->lokasi }}</p>
+                    <p>{{ $kompetisi->deskripsi }}</p>
                 </div>
             </section>
             @endforeach

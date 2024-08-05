@@ -44,7 +44,7 @@
                             <tr>
                                 <th>#</th>
                                 <th>Nama</th>
-                                <th>Umur</th>
+                                <th>Tanggal Lahir</th>
                                 <th>Jenis Kelamin</th>
                                 <th>Track Record</th>
                                 <th>Aksi</th>
@@ -56,7 +56,7 @@
                                 <tr>
                                     <td>{{ $key + 1 }}</td>
                                     <td>{{ $atlet->name }}</td>
-                                    <td>{{ $atlet->umur }} Tahun</td>
+                                    <td>{{ \Carbon\Carbon::parse($atlet->umur)->format('d M Y') }}</td>
                                     <td>{{ $atlet->jenis_kelamin }}</td>
                                     <td><span class="status registration">{{ str_replace('.', ':', sprintf('%04.2f', $atlet->track_record))}}:00 Menit</span></td>
                                     <td style="display: flex">

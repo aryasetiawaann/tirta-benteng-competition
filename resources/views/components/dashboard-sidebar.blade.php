@@ -52,7 +52,7 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="#">
+                                <a href="{{ route('dashboard.kompe-saya') }}">
                                     <span class="text">Kompetisi Saya</span>
                                 </a>
                             </li>

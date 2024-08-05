@@ -18,8 +18,8 @@
                 <i class='bx bxs-trophy' ></i>
             </div>
             <div class="card-content">
-                <p>Kompetisi Terdaftar</p>
-                <h1>aw</h1>
+                <p>Cabang Lomba Terdaftar</p>
+                <h1>{{ $acara_count }}</h1>
             </div>
         </div>
         <div class="top-card all-card">
@@ -28,7 +28,7 @@
             </div>
             <div class="card-content">
                 <p>Tagihan Terbayar</p>
-                <h1>0 / 5</h1>
+                <h1>(belum) 0 / 5</h1>
             </div>
         </div>
         <div class="top-card all-card">
@@ -36,8 +36,8 @@
                 <i class='bx bxs-user' ></i>
             </div>
             <div class="card-content">
-                <p>Atlet Terdaftar</p>
-                <h1>1</h1>
+                <p>Jumlah Atlet</p>
+                <h1>{{ $atlet_count}}</h1>
             </div>
         </div>
     </div>
@@ -69,108 +69,28 @@
                                     <th>Nama</th>
                                     <th>Kompetisi</th>
                                     <th>Nomor Lomba</th>
-                                    <th>Status Peserta</th>
+                                    <th>Status Pembayaran</th>
                                     <th>Status Kompetisi</th>
                                 </tr>
                             </thead>
                             <tbody>
+                                {{ $counter = 1 }}
+                                @foreach ($atlets as $atlet)
+                                @foreach ($atlet->acara as $acara)    
                                 <tr>
-                                    <td>1</td>
-                                    <td>Arya</td>
-                                    <td>Agung Tirtayasa Competition</td>
-                                    <td>501</td>
-                                    <td><span class="status waiting">Menunggu</span></td>
-                                    <td><span class="status registration">Mantan Napi</span></td>
+                                    <td>{{ $counter++}}</td>
+                                    <td>{{ $atlet->name }}</td>
+                                    <td>{{ $acara->kompetisi->nama }}</td>
+                                    <td>{{ $acara->nomor_lomba}}</td>
+                                    <td><span class="status waiting">{{ $acara->pivot->status_pembayaran }}</span></td>
+                                    @if ( now() < $acara->kompetisi->tutup_pendaftaran)
+                                    <td><span class="status registration">Menunggu</span></td>
+                                    @else
+                                    <td><span class="status registration">Selesai</span></td>
+                                    @endif
                                 </tr>
-                                <tr>
-                                    <td>1</td>
-                                    <td>Arya</td>
-                                    <td>Agung Tirtayasa Competition</td>
-                                    <td>501</td>
-                                    <td><span class="status waiting">Menunggu</span></td>
-                                    <td><span class="status registration">Mantan Napi</span></td>
-                                </tr>
-                                <tr>
-                                    <td>1</td>
-                                    <td>Arya</td>
-                                    <td>Agung Tirtayasa Competition</td>
-                                    <td>501</td>
-                                    <td><span class="status waiting">Menunggu</span></td>
-                                    <td><span class="status registration">Mantan Napi</span></td>
-                                </tr>
-                                <tr>
-                                    <td>1</td>
-                                    <td>Arya</td>
-                                    <td>Agung Tirtayasa Competition</td>
-                                    <td>501</td>
-                                    <td><span class="status waiting">Menunggu</span></td>
-                                    <td><span class="status registration">Mantan Napi</span></td>
-                                </tr>
-                                <tr>
-                                    <td>1</td>
-                                    <td>Arya</td>
-                                    <td>Agung Tirtayasa Competition</td>
-                                    <td>501</td>
-                                    <td><span class="status waiting">Menunggu</span></td>
-                                    <td><span class="status registration">Mantan Napi</span></td>
-                                </tr>
-                                <tr>
-                                    <td>1</td>
-                                    <td>Arya</td>
-                                    <td>Agung Tirtayasa Competition</td>
-                                    <td>501</td>
-                                    <td><span class="status waiting">Menunggu</span></td>
-                                    <td><span class="status registration">Mantan Napi</span></td>
-                                </tr>
-                                <tr>
-                                    <td>1</td>
-                                    <td>Arya</td>
-                                    <td>Agung Tirtayasa Competition</td>
-                                    <td>501</td>
-                                    <td><span class="status waiting">Menunggu</span></td>
-                                    <td><span class="status registration">Mantan Napi</span></td>
-                                </tr>
-                                <tr>
-                                    <td>1</td>
-                                    <td>Arya</td>
-                                    <td>Agung Tirtayasa Competition</td>
-                                    <td>501</td>
-                                    <td><span class="status waiting">Menunggu</span></td>
-                                    <td><span class="status registration">Mantan Napi</span></td>
-                                </tr>
-                                <tr>
-                                    <td>1</td>
-                                    <td>Arya</td>
-                                    <td>Agung Tirtayasa Competition</td>
-                                    <td>501</td>
-                                    <td><span class="status waiting">Menunggu</span></td>
-                                    <td><span class="status registration">Mantan Napi</span></td>
-                                </tr>
-                                <tr>
-                                    <td>1</td>
-                                    <td>Arya</td>
-                                    <td>Agung Tirtayasa Competition</td>
-                                    <td>501</td>
-                                    <td><span class="status waiting">Menunggu</span></td>
-                                    <td><span class="status registration">Mantan Napi</span></td>
-                                </tr>
-                                <tr>
-                                    <td>1</td>
-                                    <td>Arya</td>
-                                    <td>Agung Tirtayasa Competition</td>
-                                    <td>501</td>
-                                    <td><span class="status waiting">Menunggu</span></td>
-                                    <td><span class="status registration">Mantan Napi</span></td>
-                                </tr>
-                                <tr>
-                                    <td>1</td>
-                                    <td>Arya</td>
-                                    <td>Agung Tirtayasa Competition</td>
-                                    <td>501</td>
-                                    <td><span class="status waiting">Menunggu</span></td>
-                                    <td><span class="status registration">Mantan Napi</span></td>
-                                </tr>
-                                <!-- Add more rows as needed -->
+                                @endforeach
+                                @endforeach
                             </tbody>
                         </table>
                         <div class="pagination">
