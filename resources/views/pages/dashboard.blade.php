@@ -93,14 +93,13 @@
                                 @endforeach
                             </tbody> --}}
                             <tbody>
-                                {{ $counter = 1 }}
                                 @if ($atlets->isEmpty())
                                     <tr><td colspan="7" style="text-align:center;">Belum ada data</td></tr>
                                 @else
                                     @foreach ($atlets as $atlet)
                                         @foreach ($atlet->acara as $acara)    
                                             <tr>
-                                                <td>{{ $counter++ }}</td>
+                                                <td>{{ $counter = isset($counter) ? $counter + 1 : 1 }}</td>
                                                 <td>{{ $atlet->name }}</td>
                                                 <td>{{ $acara->kompetisi->nama }}</td>
                                                 <td>{{ $acara->nomor_lomba }}</td>
