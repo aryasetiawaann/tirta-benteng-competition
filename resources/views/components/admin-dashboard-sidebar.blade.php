@@ -71,7 +71,7 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="{{ route('dashboard.lunas') }}">
+                                <a href="{{ route('dashboard.tagihan.riwayat') }}">
                                     <span class="text">Riwayat Pembayaran</span>
                                 </a>
                             </li>

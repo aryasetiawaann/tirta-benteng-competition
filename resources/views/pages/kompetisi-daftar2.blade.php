@@ -46,16 +46,21 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($acara->peserta as $key => $peserta) 
-                            <tr>
-                                <td>{{ $key + 1 }}</td>
-                                <td>{{ $peserta->name }}</td>
-                                <td>{{ now()->diffInYears(\Carbon\Carbon::parse($peserta->umur)) }}</td>
-                                <td>{{ $peserta->jenis_kelamin }}</td>
-                                <td>{{ $peserta->user->club }}</td>
-                            </tr>
-                            @endforeach
-                            <!-- Add more rows as needed -->
+                            @if ($acara->peserta->count() > 0)
+                                @foreach ($acara->peserta as $key => $peserta) 
+                                <tr>
+                                    <td>{{ $key + 1 }}</td>
+                                    <td>{{ $peserta->name }}</td>
+                                    <td>{{ now()->diffInYears(\Carbon\Carbon::parse($peserta->umur)) }}</td>
+                                    <td>{{ $peserta->jenis_kelamin }}</td>
+                                    <td>{{ $peserta->user->club }}</td>
+                                </tr>
+                                @endforeach
+                            @else
+                                <tr>
+                                    <td colspan="5" style="text-align:center;">Belum ada data</td>
+                                </tr>
+                            @endif
                         </tbody>
                     </table>
                     <div class="pagination">

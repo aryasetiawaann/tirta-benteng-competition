@@ -14,6 +14,7 @@
 }
 
 /* Table */
+
 .table-container {
     overflow-x: auto;
     position: relative;
@@ -53,6 +54,26 @@ th, td {
 
 th {
     background-color: #f4f4f4;
+}
+
+.table-container select {
+    font-size: 1rem;
+    background-color: #fff;
+    border: 1px solid #4b4b4b;
+    border-radius: 5px;
+    color: #4b4b4b;
+    cursor: pointer;
+}
+
+.table-container select:focus {
+    border-color: #4b4b4b;
+    outline: none;
+}
+
+.table-container select option {
+    padding: 10px;
+    background-color: white;
+    color: #4b4b4b;
 }
 
 /* Status Badges */
@@ -260,11 +281,27 @@ th {
     margin: 5px 0 20px 0;
     appearance: none;
     padding: 10px;
+    font-size: 1rem;
+}
+
+.overlay select#atlet {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #a5a5a5;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+.overlay select#atlet option {
+    padding: 10px;
+    background-color: #fff;
+    color: #4b4b4b;
 }
 
 .overlay input {
     margin: 5px 0 20px 0;
     padding: 10px;
+    font-size: 1rem;
 }
 
 #closeOverlay {
@@ -277,29 +314,31 @@ th {
     color: #272727;
 }
 
-/* Option*/
-
-select {
-    font-size: 1rem;
-    background-color: #fff;
-    border: 1px solid #4b4b4b;
-    border-radius: 5px;
-    color: #4b4b4b;
-    cursor: pointer;
-}
-
-select:focus {
-    border-color: #4b4b4b;
-    outline: none;
-}
-
-select option {
-    padding: 10px;
-    background-color: white;
-    color: #4b4b4b;
-}
-
 /* Custom */
+
+.error-list {
+    position: fixed;
+    top: -100px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #f8d7da;
+    color: #721c24;
+    padding: 10px;
+    border: 1px solid red;
+    border-radius: 5px;
+    opacity: 0;
+    transition: top 0.3s ease, opacity 0.3s ease;
+    width: calc(100% - 40px);
+    z-index: 2000;
+}
+.error-list.show {
+    top: 20px;
+    opacity: 1;
+}
+
+.error-item {
+    margin-bottom: 5px;
+}
 
 i {
     font-size: 1.5rem;
@@ -435,6 +474,7 @@ i {
 .edit-atlet input, .edit-atlet select {
     margin: 5px 0 20px 0;
     padding: 10px;
+    font-size: 1rem;
 }
 
 .tambah-container {
@@ -449,6 +489,7 @@ i {
 
 .tambah-container input, .tambah-container select {
     padding: 10px;
+    font-size: 1rem;
 }
 
 .tambah-container button, .download button { 

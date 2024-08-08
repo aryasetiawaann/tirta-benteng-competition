@@ -15,11 +15,11 @@
             </div>
         </div>
         @if ($errors->any())
-            <ul>
-                @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                @endforeach
-            </ul>
+        <x-error-list>
+            @foreach ($errors->all() as $error)
+                <x-error-item>{{ $error }}</x-error-item>
+            @endforeach
+        </x-error-list>
         @endif
         <div class="bottom-container">
             <section class="all-container all-card w100">

@@ -115,6 +115,7 @@
 .profile-section h1 {
     margin-bottom: 20px;
     font-size: 1.8rem;
+    color: #4b4b4b;
 }
 .profile-delete-section {
     grid-column: span 2;

@@ -10,9 +10,13 @@
                 @csrf
                 <label for="atlet">Pilih Atlet</label>
                 <select id="atlet" name="atlet">
-                    @foreach ( $atlets as $atlet)
-                    <option value="{{ $atlet->id }}">{{ $atlet->name }}</option>
-                    @endforeach
+                    @if ($atlets->count() > 0)
+                        @foreach ($atlets as $atlet)
+                            <option value="{{ $atlet->id }}">{{ $atlet->name }}</option>
+                        @endforeach
+                    @else
+                        <option value="" disabled>Belum ada data</option>
+                    @endif
                 </select>
                 <input type="hidden" name="acara" id="acara" value="{{ $acara->id}}">
                 <input type="hidden" name="harga" id="harga" value="{{ $acara->harga}}">
