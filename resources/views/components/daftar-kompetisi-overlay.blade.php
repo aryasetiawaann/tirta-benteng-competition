@@ -9,13 +9,13 @@
             <form class="atlet" method="POST" action="{{route('dashboard.acara.daftar')}}">
                 @csrf
                 <label for="atlet">Pilih Atlet</label>
-                {{-- pake apa ini?, konek ke database gmn --}}
                 <select id="atlet" name="atlet">
                     @foreach ( $atlets as $atlet)
                     <option value="{{ $atlet->id }}">{{ $atlet->name }}</option>
                     @endforeach
                 </select>
                 <input type="hidden" name="acara" id="acara" value="{{ $acara->id}}">
+                <input type="hidden" name="harga" id="harga" value="{{ $acara->harga}}">
                 <div class="flex center">
                     <button class="w50" type="submit">Kirim</button>
                 </div>

@@ -28,7 +28,7 @@
             </div>
             <div class="card-content">
                 <p>Tagihan Terbayar</p>
-                <h1>(belum) 0 / 5</h1>
+                <h1> {{ $tagihanSelesai}} / {{ $totalTagihan }}</h1>
             </div>
         </div>
         <div class="top-card all-card">

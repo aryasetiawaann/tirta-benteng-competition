@@ -33,6 +33,6 @@ class Acara extends Model
     }
 
     public function peserta(){
-        return $this->belongsToMany(Atlet::class);
+        return $this->belongsToMany(Atlet::class)->withPivot(['status_pembayaran', 'snap_token', 'updated_at', 'id']);
     }
 }

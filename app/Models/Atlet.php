@@ -21,8 +21,20 @@ class Atlet extends Model
 
 
     public function acara(){
-        return $this->belongsToMany(Acara::class)->withPivot(['status_pembayaran']);
+        return $this->belongsToMany(Acara::class)->withPivot(['status_pembayaran', 'snap_token', 'updated_at', 'id', 'waktu_pembayaran']);
     }
+
+    public function acaraBayarMenunggu(){
+        return $this->belongsToMany(Acara::class)
+        ->withPivot(['status_pembayaran', 'snap_token', 'updated_at', 'id', 'waktu_pembayaran'])
+        ->wherePivot('status_pembayaran', 'Menunggu');
+    }
+
+    public function acaraBayarSelesai(){
+        return $this->belongsToMany(Acara::class)
+        ->withPivot(['status_pembayaran', 'snap_token', 'updated_at', 'id', 'waktu_pembayaran'])
+        ->wherePivot('status_pembayaran', 'Selesai');
+    }    
 
     public function user(){
         return $this->belongsTo(User::class, 'user_id');

@@ -40,7 +40,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="#">
+                        <a>
                             <i class="icon ph-bold ph-trophy"></i>
                             <span class="text">Kompetisi</span>
                             <i class="arrow ph-bold ph-caret-down"></i>
@@ -59,7 +59,7 @@
                         </ul>
                     </li>
                     <li>
-                        <a href="#">
+                        <a>
                             <i class="icon ph-bold ph-wallet"></i>
                             <span class="text">Pembayaran</span>
                             <i class="arrow ph-bold ph-caret-down"></i>
@@ -71,7 +71,7 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="{{ route('dashboard.lunas') }}">
+                                <a href="{{ route('dashboard.tagihan.riwayat') }}">
                                     <span class="text">Riwayat Pembayaran</span>
                                 </a>
                             </li>

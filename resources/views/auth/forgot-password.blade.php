@@ -5,12 +5,12 @@
             <div class="forgot-pass-head-logo">
                 <img src="{{ asset('assets/img/logo.png') }}" alt="logo">
             </div>
-            <p class="forgot-pass-head-text">Lupa password? Tulis email address anda dan kami akan kirim link reset password ke email anda.</p>
             @if (session('status')) 
             <div class="forgot-pass-status-msg">
                 <p>{{ session('status') }}</p>
             </div>
             @endif
+            <p class="forgot-pass-head-text">Lupa password? Tulis email address anda dan kami akan kirim link reset password ke email anda.</p>
         </div>
         <div class="forgot-pass-body">
             <form method="POST" action="{{ route('password.email') }}">

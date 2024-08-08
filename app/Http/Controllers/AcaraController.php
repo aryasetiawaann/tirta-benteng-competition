@@ -23,8 +23,10 @@ class AcaraController extends Controller
 
     public function kompetisiSaya($id){
 
-        $acara_ids = Atlet::where('user_id', auth()->user()->id) 
-        ->with('acara')
+        $acara_ids = Atlet::where('user_id', auth()->user()->id)
+        ->with(['acara' => function ($query) use ($id) {
+            $query->where('kompetisi_id', $id);
+        }])
         ->get()
         ->flatMap(function ($atlet) {
             return $atlet->acara->pluck('id');

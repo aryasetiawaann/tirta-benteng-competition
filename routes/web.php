@@ -25,47 +25,25 @@ Route::get('/', [MainPageController::class, 'mainpage'])->name('main');
 Route::middleware(['auth', 'verified'])->group(function () {
     
     Route::get('/dashboard', [MainPageController::class, 'userDashboard'])->name('dashboard');
-    
-    // Route::get('/dashboard', function () {
-    //     return view('pages.dashboard');
-    // })->name('dashboard');
+
 
     Route::resource('/dashboard/atlet-saya', AtletController::class)->names('dashboard.atlet');
 
-    Route::get('/dashboard/daftar-kompetisi', [KompetisiController::class, 'index'])->name('dashboard.kompetisi');
     
+    Route::get('/dashboard/daftar-kompetisi', [KompetisiController::class, 'index'])->name('dashboard.kompetisi');
     Route::get('/dashboard/daftar-kompetisi/{id}', [AcaraController::class,'index'])->name('dashboard.acara');
     Route::get('/dashboard/daftar-kompetisi/acara/{id}', [AcaraController::class,'showPesertaUser'])->name('dashboard.acara.detail');
     Route::post('/dashboard/daftar-kompetisi/acara/daftar/', [PesertaController::class,'create'])->name('dashboard.acara.daftar');
-
     Route::get('/dashboard/kompetisi-saya', [KompetisiController::class,'kompetisiSaya'])->name('dashboard.kompe-saya');
-
     Route::get('/dashboard/kompetisi-saya/{id}', [AcaraController::class,'kompetisiSaya'])->name('dashboard.kompe-saya.acara');
     Route::get('/dashboard/kompetisi-saya/acara/{id}', [AcaraController::class,'kompetisiSayaDetail'])->name('dashboard.kompe-saya.acara.detail');
-    // Route::get('/dashboard/daftar', function () {
-    //     return view('pages.dashboard-daftar');
-    // })->name('dashboard.daftar');
+    
 
-    // Route::get('/dashboard/kompetisi', function () {
-    //     return view('pages.dashboard-kompetisi');
-    // })->name('dashboard.kompetisi');
-
-    #uid = uni
-    // Route::get('/dashboard/kompetisi/uid', function () {
-    //     return view('pages.kompetisi-daftar');
-    // })->name('kompetisi.daftar');
-
-    // Route::get('/dashboard/kompetisi/uid/uid', function () {
-    //     return view('pages.kompetisi-daftar2');
-    // })->name('kompetisi.daftar2');
-
-    Route::get('/dashboard/tagihan', function () {
-        return view('pages.dashboard-tagihan');
-    })->name('dashboard.tagihan');
-
-    Route::get('/dashboard/lunas', function () {
-        return view('pages.dashboard-lunas');
-    })->name('dashboard.lunas');
+    Route::get('/dashboard/tagihan', [PesertaController::class,'tagihan'])->name('dashboard.tagihan');
+    Route::get('/dashboard/tagihan/bayar-semua', [PesertaController::class,'tagihanBayarSemua'])->name('dashboard.tagihan.bayar-semua');
+    Route::get('/dashboard/tagihan/{id}', [PesertaController::class,'pembayaranSukses'])->name('dashboard.tagihan.sukses');
+    Route::get('/dashboard/riwayat-pembayaran', [PesertaController::class, 'tagihanRiwayat'])->name('dashboard.tagihan.riwayat');
+    Route::delete('/dashboard/tagihan/delete/{id}', [PesertaController::class,'destroy'])->name('dashboard.tagihan.destroy');
 
     Route::get('/dashboard/bukuacara', function () {
         return view('pages.dashboard-bukuacara');

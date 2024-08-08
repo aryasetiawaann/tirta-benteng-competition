@@ -6,6 +6,7 @@ use App\Models\Acara;
 use Illuminate\Http\Request;
 use App\Models\Kompetisi;
 use App\Models\Atlet;
+use Carbon\Carbon;
 
 class MainPageController extends Controller
 {
@@ -16,16 +17,38 @@ class MainPageController extends Controller
 
     public function userDashboard(){
 
+        $currentDate = Carbon::now();
+
         $kompetisi_count = Kompetisi::where('tutup_pendaftaran', '>=', now())->count();
         $atlet_count = Atlet::all()->where('user_id', auth()->user()->id)->count();
         $atlets = Atlet::whereHas('acara')->with('acara')->where('user_id', auth()->user()->id)->get()->sortByDesc('created_at');
 
-        $acara_ids = $atlets->flatMap(function($atlet) {
-            return $atlet->acara->pluck('id');
-        })->unique();
-        
-        $acara_count = $acara_ids->count();
+        $acaras = Acara::whereHas('peserta', function ($query) {
+            $query->where('user_id', auth()->user()->id);
+        })
+        ->whereHas('kompetisi', function ($query) use ($currentDate) {
+            $query->where('tutup_pendaftaran', '>=', $currentDate);
+        })
+        ->get();
+    
+        $acara_count = $acaras->count();
 
-        return view('pages.dashboard')->with(['kompetisi_count'=> $kompetisi_count, 'atlets'=> $atlets, 'acara_count'=> $acara_count, 'atlet_count'=> $atlet_count]);
+        $totalTagihan = 0;
+        $tagihanSelesai = 0;
+
+        foreach ($atlets as $atlet) {
+            foreach($atlet->acara as $acara) {
+                
+                if($acara->pivot->status_pembayaran == "Selesai"){
+                    $tagihanSelesai += 1;
+                }
+                
+                $totalTagihan += 1;
+
+            }
+        }
+
+        return view('pages.dashboard')->with(['kompetisi_count'=> $kompetisi_count, 'atlets'=> $atlets, 'acara_count'=> $acara_count, 'atlet_count'=> $atlet_count,
+                    'totalTagihan' => $totalTagihan, 'tagihanSelesai' => $tagihanSelesai]);
     }
 }

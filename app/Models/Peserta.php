@@ -17,6 +17,8 @@ class Peserta extends Model
         'acara_id',
         'atlet_id',
         'status_pembayaran',
+        'waktu_pembayaran',
+        'snap_token'
     ];
 
 

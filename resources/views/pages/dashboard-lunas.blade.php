@@ -17,7 +17,6 @@
             <section class="all-container all-card w100">
                 <header class="divider flex">
                     <h1>Daftar Riwayat Pembayaran</h1>
-                    <a id="openOverlay"><button><i class='bx bx-cart' ></i>  Tambah</button></a>
                 </header>
                 <div class="table-container">
                     <label for="entries">Tampilkan
@@ -41,78 +40,27 @@
                             <th>Jumlah Pembayaran</th>
                             <th>Status Pembayaran</th>
                             <th>Waktu Pembayaran</th>
-                            <th>Aksi</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>Arya</td>
-                            <td>Swimming Competition 2024</td>
-                            <td>120 - 50m Gaya Dada Putra</td>
-                            <td><span class="status bayar">Rp150.000,00</span></td>
-                            <td><span class="status bayar">Selesai</span></td>
-                            <td>27-07-2024 12:00</td>
-                            <td>
-                                {{-- <a href="#"><button class="button-gap"><i class='bx bx-xs bx-edit'></i></button></a> --}}
-                                <a href="#"><button class="button-red"><i class='bx bx-xs bxs-trash' ></i></button></a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>Tai</td>
-                            <td>Swimming Competition 2024</td>
-                            <td>121 - 50m Gaya Dada Putra</td>
-                            <td><span class="status bayar">Rp150.000,00</span></td>
-                            <td><span class="status bayar">Selesai</span></td>
-                            <td>27-07-2024 12:00</td>
-                        </tr>
-                        <tr>
-                            <td>3</td>
-                            <td>Kucing</td>
-                            <td>Swimming Competition 2024</td>
-                            <td>122 - 50m Gaya Dada Putra</td>
-                            <td><span class="status bayar">Rp150.000,00</span></td>
-                            <td><span class="status bayar">Selesai</span></td>
-                            <td>27-07-2024 12:00</td>
-                        </tr>
-                        <tr>
-                            <td>4</td>
-                            <td>Bool</td>
-                            <td>Swimming Competition 2024</td>
-                            <td>123 - 50m Gaya Dada Putra</td>
-                            <td><span class="status bayar">Rp150.000,00</span></td>
-                            <td><span class="status bayar">Selesai</span></td>
-                            <td>27-07-2024 12:00</td>
-                        </tr>
-                        <tr>
-                            <td>5</td>
-                            <td>Sapi</td>
-                            <td>Swimming Competition 2024</td>
-                            <td>124 - 50m Gaya Dada Putra</td>
-                            <td><span class="status bayar">Rp150.000,00</span></td>
-                            <td><span class="status bayar">Selesai</span></td>
-                            <td>27-07-2024 12:00</td>
-                        </tr>
-                        <tr>
-                            <td>6</td>
-                            <td>Silit</td>
-                            <td>Swimming Competition 2024</td>
-                            <td>125 - 50m Gaya Dada Putra</td>
-                            <td><span class="status bayar">Rp150.000,00</span></td>
-                            <td><span class="status bayar">Selesai</span></td>
-                            <td>27-07-2024 12:00</td>
-                        </tr>
-                        <tr>
-                            <td>7</td>
-                            <td>Asu</td>
-                            <td>Swimming Competition 2024</td>
-                            <td>126 - 50m Gaya Dada Putra</td>
-                            <td><span class="status bayar">Rp150.000,00</span></td>
-                            <td><span class="status bayar">Selesai</span></td>
-                            <td>27-07-2024 12:00</td>
-                        </tr>
-                        <!-- Add more rows as needed -->
+                    <tbody>                            
+                        @if ($atlets->isEmpty())
+                        <tr><td colspan="7" style="text-align:center;">Belum ada data</td></tr>
+                        @else
+                        <?php $total = 0 ?>
+                        @foreach ($atlets as $atlet)
+                            @foreach ($atlet->acara as $acara)
+                                    <tr>
+                                        <td>{{ $counter = isset($counter) ? $counter + 1 : 1 }}</td>
+                                        <td>{{ $atlet->name }}</td>
+                                        <td>{{ $acara->kompetisi->nama }}</td>
+                                        <td>{{ $acara->nomor_lomba }} - {{$acara->nama}}</td>
+                                        <td><span class="status bayar">Rp.{{ number_format($acara->harga, 2, ',', '.') }}</span></td>
+                                        <td><span class="status bayar">{{ $acara->pivot->status_pembayaran }}</span></td>
+                                        <td>{{ \Carbon\Carbon::parse($acara->pivot->waktu_pembayaran)->format('d-m-Y') }}</td>
+                                    </tr>
+                            @endforeach
+                        @endforeach
+                        @endif
                     </tbody>
                 </table>
                 <div class="pagination">

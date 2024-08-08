@@ -42,92 +42,37 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>Arya</td>
-                            <td>Swimming Competition 2024</td>
-                            <td>120 - 50m Gaya Dada Putra</td>
-                            <td><span class="status bayar">Rp150.000,00</span></td>
-                            <td>
-                                <a href="#"><button class="button-gap"><i class='bx bx-xs bx-edit'></i></button></a>
-                                <a href="#"><button class="button-gap button-red"><i class='bx bx-xs bxs-trash' ></i></button></a>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td>2</td>
-                            <td>Tai</td>
-                            <td>Swimming Competition 2024</td>
-                            <td>121 - 50m Gaya Dada Putra</td>
-                            <td><span class="status bayar">Rp150.000,00</span></td>
-                            <td>
-                                <a href="#"><button class="button-gap"><i class='bx bx-xs bx-edit'></i></button></a>
-                                <a href="#"><button class="button-gap button-red"><i class='bx bx-xs bxs-trash' ></i></button></a>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td>3</td>
-                            <td>Kucing</td>
-                            <td>Swimming Competition 2024</td>
-                            <td>122 - 50m Gaya Dada Putra</td>
-                            <td><span class="status bayar">Rp150.000,00</span></td>
-                            <td>
-                                <a href="#"><button class="button-gap"><i class='bx bx-xs bx-edit'></i></button></a>
-                                <a href="#"><button class="button-gap button-red"><i class='bx bx-xs bxs-trash' ></i></button></a>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td>4</td>
-                            <td>Bool</td>
-                            <td>Swimming Competition 2024</td>
-                            <td>123 - 50m Gaya Dada Putra</td>
-                            <td><span class="status bayar">Rp150.000,00</span></td>
-                            <td>
-                                <a href="#"><button class="button-gap"><i class='bx bx-xs bx-edit'></i></button></a>
-                                <a href="#"><button class="button-gap button-red"><i class='bx bx-xs bxs-trash' ></i></button></a>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td>5</td>
-                            <td>Sapi</td>
-                            <td>Swimming Competition 2024</td>
-                            <td>124 - 50m Gaya Dada Putra</td>
-                            <td><span class="status bayar">Rp150.000,00</span></td>
-                            <td>
-                                <a href="#"><button class="button-gap"><i class='bx bx-xs bx-edit'></i></button></a>
-                                <a href="#"><button class="button-gap button-red"><i class='bx bx-xs bxs-trash' ></i></button></a>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td>6</td>
-                            <td>Silit</td>
-                            <td>Swimming Competition 2024</td>
-                            <td>125 - 50m Gaya Dada Putra</td>
-                            <td><span class="status bayar">Rp150.000,00</span></td>
-                            <td>
-                                <a href="#"><button class="button-gap"><i class='bx bx-xs bx-edit'></i></button></a>
-                                <a href="#"><button class="button-gap button-red"><i class='bx bx-xs bxs-trash' ></i></button></a>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td>7</td>
-                            <td>Asu</td>
-                            <td>Swimming Competition 2024</td>
-                            <td>126 - 50m Gaya Dada Putra</td>
-                            <td><span class="status bayar">Rp150.000,00</span></td>
-                            <td>
-                                <a href="#"><button class="button-gap"><i class='bx bx-xs bx-edit'></i></button></a>
-                                <a href="#"><button class="button-gap button-red"><i class='bx bx-xs bxs-trash' ></i></button></a>
-                            </td>
-                        </tr>
-                        <!-- Add more rows as needed -->
+                        @if ($atlets->isEmpty())
+                            <tr><td colspan="7" style="text-align:center;">Belum ada data</td></tr>
+                        @else
+                            @foreach ($atlets as $atlet)
+                                @foreach ($atlet->acara as $acara)
+                                        <tr>
+                                            <td>{{ $counter = isset($counter) ? $counter + 1 : 1 }}</td>
+                                            <td>{{ $atlet->name }}</td>
+                                            <td>{{ $acara->kompetisi->nama }}</td>
+                                            <td>{{ $acara->nomor_lomba }} - {{ $acara->nama }}</td>
+                                            <td><span class="status bayar">Rp.{{ number_format($acara->harga, 2, ',', '.') }}</span></td>
+                                            <td>
+                                                <button onclick="payButton(this)" data-token="{{ $acara->pivot->snap_token }}" data-id="{{ $acara->pivot->id }}" class="button-gap pay-button"><i class='bx bx-xs bx-edit'></i></button>
+                                                <form action="{{ route('dashboard.tagihan.destroy', $acara->pivot->id) }}" method="post">
+                                                    @csrf
+                                                    @method('delete')
+                                                    <a onclick="return confirm('Apakah kamu yakin ingin menghapus? ')"><button class="button-red button-gap"><i class='bx bx-xs bxs-trash' ></i></button></a>
+                                                </form>
+                                            </td>
+                                        </tr>
+                                @endforeach
+                            @endforeach
+                        @endif
                     </tbody>
                 </table>
+                <div>
+                    @if ($totalHarga != 0)
+                        <p><b>Total: </b>Rp.{{ number_format($totalHarga, 2, ',', '.') }}</p>
+                        <button onclick="payAll()">Bayar Semua</button>
+                    @endif
+                </div>
                 <div class="pagination">
                     <button class="prev" disabled>Sebelumnya</button>
                     <div class="page-numbers"></div>
@@ -136,4 +81,45 @@
             </div>
         </div>
     </div>
+
+    <script type="text/javascript">
+        
+        function payButton(element) {
+            var transactionToken = element.getAttribute('data-token');
+            var transactionId = element.getAttribute('data-id');
+
+            window.snap.pay(transactionToken, {
+            onSuccess: function(result){
+              /* You may add your own implementation here */
+              window.location.href = "/dashboard/tagihan/" + transactionId;
+            },
+            onPending: function(result){
+              /* You may add your own implementation here */
+              alert("Menunggu pembayaran"); console.log(result);
+            },
+            onError: function(result){
+              /* You may add your own implementation here */
+              alert("Pembayaran gagal!"); console.log(result);
+            }
+          });
+        }
+
+        function payAll() {
+            window.snap.pay('{{ $snapToken }}', {
+            onSuccess: function(result){
+              /* You may add your own implementation here */
+              window.location.href = "/dashboard/tagihan/bayar-semua";
+            },
+            onPending: function(result){
+              /* You may add your own implementation here */
+              alert("Menunggu pembayaran"); console.log(result);
+            },
+            onError: function(result){
+              /* You may add your own implementation here */
+              alert("Pembayaran gagal!"); console.log(result);
+            }
+          });
+        }
+    </script>
+
 @endsection
