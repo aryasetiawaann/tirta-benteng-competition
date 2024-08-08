@@ -34,7 +34,7 @@ class RegisteredUserController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
-            'club' => ['string', 'max:255']
+            'club' => ['nullable', 'string', 'max:255'], // Updated to make 'club' optional
         ]);
 
         $user = User::create([
