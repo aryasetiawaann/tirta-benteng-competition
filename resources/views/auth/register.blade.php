@@ -20,7 +20,7 @@
 
                 <div class="register-body-form">
                     <label for="email">Email *</label>
-                    <input id="email" type="email" name="email" value="{{old('email')}}" required autofocus autocomplete="username" placeholder="Masukkan email">
+                    <input id="email" type="email" name="email" value="{{old('email')}}" required autocomplete="username" placeholder="Masukkan email">
                     @error('email')
                     <p>{{ $message }}</p>
                     @enderror
@@ -43,7 +43,7 @@
                 </div>
                 
                 <div class="register-body-form">
-                    <label for="password_confirmation">Konfirmasi Password </label>
+                    <label for="password_confirmation">Konfirmasi Password *</label>
                     <input id="password_confirmation" type="password" name="password_confirmation" required autocomplete="new-password" placeholder="Masukkan ulang password">
                     @error('password_confirmation')
                     <p>{{ $message }}</p>
