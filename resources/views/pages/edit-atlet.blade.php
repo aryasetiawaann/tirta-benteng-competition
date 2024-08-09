@@ -23,6 +23,7 @@
                             <option value="wanita" {{ $atlet->jenis_kelamin === "Wanita" ? "selected" : "" }}>Wanita</option>
                         </select>
                         <label for="record">Track Record</label>
+                        <p><i style="font-size: 12px">(Tulis 0 Jika tidak ada)</i></p>
                         <input type="number" id="record" name="record" placeholder="contoh: 3,25 (Menit)" value="{{ $atlet->track_record }}" step="0.01">
                         <input type="hidden" name="atlet_id" value="{{ $atlet->id }}">
                         <div class="flex center">   

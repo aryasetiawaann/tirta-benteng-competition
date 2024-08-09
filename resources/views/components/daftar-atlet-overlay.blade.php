@@ -18,6 +18,7 @@
                     <option value="wanita">Wanita</option>
                 </select>
                 <label for="record">Track Record</label>
+                <p><i style="font-size: 12px">(Tulis 0 Jika tidak ada)</i></p>
                 <input type="number" id="record" name="record" placeholder="contoh: 3,25 (Menit)" step="0.01">
                 <div class="flex center">   
                     <button type="submit" class="w50">Kirim</button>

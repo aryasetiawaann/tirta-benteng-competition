@@ -47,7 +47,7 @@ class AtletController extends Controller
             "name"=> "required",
             "umur"=> "required",
             "jenis_kelamin"=> "required",
-            "track_record" => "numeric|regex:/^\d+\.\d{2}$/"
+            "track_record" => "numeric|regex:/^\d+(\.\d{1,2})?$/"
         ]);
 
         if ($validation->fails()) {
@@ -93,7 +93,7 @@ class AtletController extends Controller
             "name"=> "required",
             "umur"=> "required",
             "jenis_kelamin"=> "required",
-            "track_record" => "numeric|regex:/^\d+\.\d{2}$/"
+            "track_record" => "numeric|regex:/^\d+(\.\d{1,2})?$/"
         ]);
 
         if ($validation->fails()) {

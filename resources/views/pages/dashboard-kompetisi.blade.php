@@ -28,14 +28,16 @@
             <section class="all-container all-card">
                 <header class="flex divider">
                     <h2>{{ $kompe->nama }}</h2>
-                    @if ( now() < $kompe->tutup_pendaftaran)
+                    @if (now() > $kompe->buka_pendaftaran && now() < $kompe->tutup_pendaftaran)
                     <a href="{{ route('dashboard.acara', $kompe->id) }}"><button>Daftar</button></a>
                     @endif
                 </header>
                 <div>
                     <h3 class="mtopbot">
-                        @if ( now() < $kompe->tutup_pendaftaran)
+                        @if (now() > $kompe->buka_pendaftaran && now() < $kompe->tutup_pendaftaran)
                         <p>Status: <span class="status buka smaller">Registrasi</span></p>
+                        @elseif (now() < $kompe->buka_pendaftaran)
+                        <p>Status: <span class="status buka smaller">Belum dibuka</span></p>
                         @else
                         <p>Status: <span class="status tutup smaller">Selesai</span></p>
                         @endif

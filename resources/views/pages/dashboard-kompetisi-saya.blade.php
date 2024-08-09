@@ -32,7 +32,7 @@
                 </header>
                 <div>
                     <h3 class="mtopbot">
-                        @if ( now() < $kompetisi->tutup_pendaftaran)
+                        @if (now() < $kompetisi->tutup_pendaftaran)
                         <p>Status: <span class="status buka smaller">Menunggu</span></p>
                         @else
                         <p>Status: <span class="status tutup smaller">Selesai</span></p>

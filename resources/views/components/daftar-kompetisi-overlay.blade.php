@@ -9,20 +9,25 @@
             <form class="atlet" method="POST" action="{{route('dashboard.acara.daftar')}}">
                 @csrf
                 <label for="atlet">Pilih Atlet</label>
-                <select id="atlet" name="atlet">
+                <select id="atlet" name="atlet" style="cursor: pointer">
                     @if ($atlets->count() > 0)
-                        @foreach ($atlets as $atlet)
+                        @foreach ($atlets as $key => $atlet)
+                            @if ($key == 0)
+                            <option value="{{ $atlet->id }}" selected>{{ $atlet->name }}</option>
+                            @endif
                             <option value="{{ $atlet->id }}">{{ $atlet->name }}</option>
                         @endforeach
                     @else
-                        <option value="" disabled>Belum ada data</option>
+                        <option value="" selected>Belum ada data</option>
                     @endif
                 </select>
                 <input type="hidden" name="acara" id="acara" value="{{ $acara->id}}">
                 <input type="hidden" name="harga" id="harga" value="{{ $acara->harga}}">
+                @if ($atlets->count() > 0)
                 <div class="flex center">
                     <button class="w50" type="submit">Kirim</button>
                 </div>
+                @endif
             </form>
         </section>
     </div>

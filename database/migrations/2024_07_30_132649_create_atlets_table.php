@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('name');
             $table->date('umur');
             $table->enum('jenis_kelamin', ['Pria','Wanita']);
-            $table->double('track_record')->nullable();
+            $table->double('track_record', 8, 2)->nullable();
             $table->timestamps();
         });
     }

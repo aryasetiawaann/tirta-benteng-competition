@@ -7,6 +7,7 @@ use App\Http\Controllers\MainPageController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\PesertaController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\UnduhanController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -45,9 +46,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard/riwayat-pembayaran', [PesertaController::class, 'tagihanRiwayat'])->name('dashboard.tagihan.riwayat');
     Route::delete('/dashboard/tagihan/delete/{id}', [PesertaController::class,'destroy'])->name('dashboard.tagihan.destroy');
 
-    Route::get('/dashboard/bukuacara', function () {
-        return view('pages.dashboard-bukuacara');
-    })->name('dashboard.bukuacara');
+    Route::get('/dashboard/bukuacara', [UnduhanController::class, 'userBukuAcara'])->name('dashboard.bukuacara');
 
     Route::get('/dashboard/bukuhasil', function () {
         return view('pages.dashboard-bukuhasil');
