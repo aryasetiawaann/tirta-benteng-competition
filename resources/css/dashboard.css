@@ -500,3 +500,40 @@ i {
     cursor: pointer;
     transition: all 0.1s;
 }
+
+.breadcrumb {
+    margin-bottom: 10px;
+    font-size: 14px;
+}
+
+.breadcrumb ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    gap: 8px;
+    padding-left: 30px;
+}
+
+.breadcrumb ul li {
+    display: flex;
+    align-items: center;
+}
+
+.breadcrumb ul li a {
+    text-decoration: none;
+    color: #007bff;
+}
+
+.breadcrumb ul li a:hover {
+    text-decoration: underline;
+}
+
+.breadcrumb ul li::after {
+    content: '/';
+    margin-left: 8px;
+}
+
+.breadcrumb ul li:last-child::after {
+    content: '';
+}

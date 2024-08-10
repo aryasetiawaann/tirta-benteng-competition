@@ -16,6 +16,7 @@ document.addEventListener("DOMContentLoaded", function() {
     'dashboard.lunas': 'Daftar Pembayaran',
     'dashboard.bukuacara': 'Buku Acara',
     'dashboard.bukuhasil': 'Buku Hasil',
+    'profile.edit': 'Profil',
     // Tambahkan mapping lain sesuai dengan nama route Anda
   };
 
