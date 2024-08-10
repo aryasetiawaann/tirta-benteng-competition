@@ -67,10 +67,10 @@
                         @endif
                     </tbody>
                 </table>
-                <div>
+                <div class="total-price">
                     @if ($totalHarga != 0)
                         <p><b>Total: </b>Rp.{{ number_format($totalHarga, 2, ',', '.') }}</p>
-                        <button onclick="payAll()">Bayar Semua</button>
+                        <button class="pay-all-button" onclick="payAll()">Bayar Semua</button>
                     @endif
                 </div>
                 <div class="pagination">

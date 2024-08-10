@@ -39,8 +39,8 @@
                         @endif
                     </h3>
                     
-                    <p>Open reg : {{ \Carbon\Carbon::parse($kompetisi->buka_pendaftaran)->format('d M Y') }}</p>
-                    <p>Closed reg : {{ \Carbon\Carbon::parse($kompetisi->tutup_pendaftaran)->format('d M Y') }}</p>
+                    <p>Open Registration : {{ \Carbon\Carbon::parse($kompetisi->buka_pendaftaran)->format('d M Y') }}</p>
+                    <p>Closed Registration : {{ \Carbon\Carbon::parse($kompetisi->tutup_pendaftaran)->format('d M Y') }}</p>
                     <p>Lokasi : {{ $kompetisi->lokasi }}</p>
                     <p>{{ $kompetisi->deskripsi }}</p>
                 </div>
