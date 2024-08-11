@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Kompetisi;
 use App\Models\Atlet;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class UnduhanController extends Controller
 {
@@ -27,9 +28,7 @@ class UnduhanController extends Controller
 
     public function showBukuAcara(){
 
-        $mpdf = new \Mpdf\Mpdf();
-        $mpdf->SetHTMLHeader(view('layouts.print-layout-header'));
-        $mpdf->WriteHTML(view('layouts.print-layout-bukuacara'));
-        $mpdf->output('D');
+        $pdf = Pdf::loadView('layouts.print-layout-bukuacara')->setPaper('a3', 'potrait');
+        return $pdf->download('BUKU_ACARA.pdf');
     }
 }
