@@ -65,7 +65,7 @@
                                     <td>{{ \Carbon\Carbon::parse($atlet->umur)->format('d M Y') }}</td>
                                     <td>{{ now()->diffInYears(\Carbon\Carbon::parse($atlet->umur)) }}</td>
                                     <td>{{ $atlet->jenis_kelamin }}</td>
-                                    <td><span class="status registration">{{ str_replace('.', ':', sprintf('%04.2f', $atlet->track_record))}}:00 Menit</span></td>
+                                    <td><span class="status registration">{{ str_replace('.', ':', sprintf('%04.2f', $atlet->track_record))}} Menit</span></td>
                                     <td style="display: flex">
                                         <a href="{{ route('dashboard.atlet.edit', $atlet->id) }}"><button class="button-gap"><i class='bx bx-xs bx-edit'></i></button></a>
                                         <form action="{{ route('dashboard.atlet.destroy', $atlet->id) }}" method="post">

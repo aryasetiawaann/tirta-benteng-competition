@@ -27,9 +27,8 @@ class UnduhanController extends Controller
 
     public function showBukuAcara(){
 
-        //Ini buat nge show buku acaranya
-        // - Kalo acaranya resmi pake rumus
-        // - Kalo gak fun dia gak pake rumus
-        //
+        $mpdf = new \Mpdf\Mpdf();
+        
+        $mpdf->output();
     }
 }

@@ -12,6 +12,7 @@
                 </div>
             </div>
         </div>
+<<<<<<< Updated upstream
         <div class="nav-page nav-card">
             <p>
                 <a href="{{ route('dashboard.kompe-saya') }}">Kompetisi Saya</a> / 
@@ -19,6 +20,16 @@
                 <a href="">{{ $acaras->nama }}</a>
             </p>
         </div>
+=======
+        <nav class="breadcrumb">
+            <ul>
+                <li>Kompetisi</li>
+                <li><a href="{{ route('dashboard.kompe-saya') }}">Kompetisi Saya</a></li>
+                <li><a href="{{ route('dashboard.kompe-saya.acara', $acaras->kompetisi->id) }}">{{ $acaras->kompetisi->nama }}</a></li>
+                <li><a href="{{ route('dashboard.kompe-saya.acara.detail', $acaras->id) }}">{{ $acaras->nama }}</a></li>
+            </ul>
+        </nav>
+>>>>>>> Stashed changes
         <div class="bottom-container">
             <section class="all-container all-card w100">
                 <header class="divider flex">

@@ -40,12 +40,22 @@
             </div>
             </div>
         </div>
+<<<<<<< Updated upstream
         <div class="nav-page nav-card">
             <p>
                 <a href="{{ route('dashboard.kompe-saya') }}">Kompetisi Saya</a> / 
                 <a href="{{ route('dashboard.kompe-saya.acara', $id_kompetisi) }}">{{ $nama_kompetisi }}</a> / 
             </p>
         </div>
+=======
+        <nav class="breadcrumb">
+            <ul>
+                <li>Kompetisi</li>
+                <li><a href="{{ route('dashboard.kompe-saya') }}">Kompetisi Saya</a></li>
+                <li><a href="{{ route('dashboard.kompe-saya.acara', $id_kompetisi) }}">{{ $nama_kompetisi }}</a></li>
+            </ul>
+        </nav>
+>>>>>>> Stashed changes
         <div class="bottom-container grid">
             @foreach ($acaras as $acara)
             <section class="all-container all-card">
