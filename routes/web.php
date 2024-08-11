@@ -49,6 +49,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard/bukuacara', [UnduhanController::class, 'userBukuAcara'])->name('dashboard.bukuacara');
     Route::get('/dashboard/bukuacara/view/pdf', [UnduhanController::class, 'showBukuAcara'])->name('dashboard.bukuacara.view');
 
+    Route::get('/dasboard/bukuacara/test', function() {
+        return view('layouts.print-layout-header');
+    });
+
     Route::get('/dashboard/bukuhasil', function () {
         return view('pages.dashboard-bukuhasil');
     })->name('dashboard.bukuhasil');

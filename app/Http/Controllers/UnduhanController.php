@@ -28,7 +28,8 @@ class UnduhanController extends Controller
     public function showBukuAcara(){
 
         $mpdf = new \Mpdf\Mpdf();
-        
-        $mpdf->output();
+        $mpdf->SetHTMLHeader(view('layouts.print-layout-header'));
+        $mpdf->WriteHTML(view('layouts.print-layout-bukuacara'));
+        $mpdf->output('D');
     }
 }

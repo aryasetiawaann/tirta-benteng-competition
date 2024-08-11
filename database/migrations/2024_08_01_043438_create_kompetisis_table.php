@@ -19,6 +19,8 @@ return new class extends Migration
             $table->date('buka_pendaftaran');
             $table->date('tutup_pendaftaran');
             $table->enum('kategori', ['Resmi','Fun'])->default('Fun');
+            $table->date('waktu_techmeeting')->nullable();
+            $table->date('waktu_kompetisi');
             $table->timestamps();
         });
     }
