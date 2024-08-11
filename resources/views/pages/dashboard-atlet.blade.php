@@ -21,6 +21,11 @@
             @endforeach
         </x-error-list>
         @endif
+        <!-- <div class="nav-page nav-card">
+            <p>
+                <a href="#">#</a> / 
+            </p>
+        </div> -->
         <div class="bottom-container">
             <section class="all-container all-card w100">
                 <header class="divider flex">
@@ -45,6 +50,7 @@
                                 <th>#</th>
                                 <th>Nama</th>
                                 <th>Tanggal Lahir</th>
+                                <th>Umur</th>
                                 <th>Jenis Kelamin</th>
                                 <th>Track Record</th>
                                 <th>Aksi</th>
@@ -57,6 +63,7 @@
                                     <td>{{ $key + 1 }}</td>
                                     <td>{{ $atlet->name }}</td>
                                     <td>{{ \Carbon\Carbon::parse($atlet->umur)->format('d M Y') }}</td>
+                                    <td>{{ now()->diffInYears(\Carbon\Carbon::parse($atlet->umur)) }}</td>
                                     <td>{{ $atlet->jenis_kelamin }}</td>
                                     <td><span class="status registration">{{ str_replace('.', ':', sprintf('%04.2f', $atlet->track_record))}}:00 Menit</span></td>
                                     <td style="display: flex">

@@ -10,7 +10,7 @@
 
                 <label for="nama">Nama Atlet</label>
                 <input type="text" id="nama" name="nama" placeholder="Nama Atlet">
-                <label for="umur">Umur</label>
+                <label for="umur">Tanggal lahir</label>
                 <input type="date" id="umur" name="umur" placeholder="Umur">
                 <label for="jenisKelamin">Jenis Kelamin</label>
                 <select id="jenisKelamin" name="jenisKelamin">

@@ -13,6 +13,11 @@
                 </div>
             </div>
         </div>
+        <!-- <div class="nav-page nav-card">
+            <p>
+                <a href="#">#</a> / 
+            </p>
+        </div> -->
         <div class="bottom-container">
             <section class="all-container all-card w100">
                 <header class="divider flex">

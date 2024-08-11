@@ -41,6 +41,11 @@
             </div>
         </div>
     </div>
+    <!-- <div class="nav-page nav-card">
+            <p>
+                <a href="#">#</a> / 
+            </p>
+        </div> -->
     <div class="bottom-container">
             <div class="left-container">
                 <section class="all-container all-card">

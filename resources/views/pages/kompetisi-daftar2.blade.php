@@ -13,19 +13,13 @@
                 </div>
             </div>
         </div>
-<<<<<<< Updated upstream
-        <nav class="breadcrumb">
-            <ul>
-                <li>Kompetisi</li>
-                <li><a href="{{ route('dashboard.kompetisi') }}">Daftar</a></li>
-                <li><a href="#">Acara 1</a></li>
-                <li><a href="#">Nomor Perlombaan 1</a></li>
-            </ul>
-        </nav>
-=======
-        <p><a href="{{ route('dashboard.kompetisi') }}">Daftar Kompetisi</a> / <a href="{{ route('dashboard.acara', $acara->kompetisi->id) }}">{{ $acara->kompetisi->nama }}</a> /
-         <a href="{{ route('dashboard.acara.detail', $acara->id) }}">{{ $acara->nama }}</a></p>
->>>>>>> Stashed changes
+        <div class="nav-page nav-card">
+            <p>
+                <a href="{{ route('dashboard.kompetisi') }}">Daftar Kompetisi</a> / 
+                <a href="{{ route('dashboard.acara', $acara->kompetisi->id) }}">{{ $acara->kompetisi->nama }}</a> /
+                <a href="{{ route('dashboard.acara.detail', $acara->id) }}">{{ $acara->nama }}</a>
+            </p>
+        </div>
         <div class="bottom-container">
             <section class="all-container all-card w100">
                 <header class="divider flex">

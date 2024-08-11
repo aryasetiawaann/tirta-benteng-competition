@@ -6,7 +6,6 @@
     top: 0;
     width: 100%;
     transition: all 0.1s;
-    padding: 10px;
 }
 
 .main-content_sidebar-hide {
@@ -563,4 +562,28 @@ i {
 
 .pay-all-button:hover {
     background-color: #0056b3; /* Darker blue on hover */
+}
+
+/* Nav Page*/
+
+.nav-page {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    background-color: #d4d4d4 !important;
+}
+
+.nav-page a {
+    text-decoration: none;
+    color: #0056b3;
+}
+
+.nav-page a:hover {
+    text-decoration: underline;
+}
+
+.nav-card {
+    padding: 20px;
+    margin: 0;
 }

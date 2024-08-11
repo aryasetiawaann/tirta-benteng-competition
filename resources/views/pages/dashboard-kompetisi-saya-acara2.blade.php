@@ -12,8 +12,13 @@
                 </div>
             </div>
         </div>
-        <p><a href="{{ route('dashboard.kompe-saya') }}">Kompetisi Saya</a> / <a href="{{ route('dashboard.kompe-saya.acara', $acaras->kompetisi->id) }}">{{ $acaras->kompetisi->nama }}</a> / 
-        <a href="">{{ $acaras->nama }}</a></p>
+        <div class="nav-page nav-card">
+            <p>
+                <a href="{{ route('dashboard.kompe-saya') }}">Kompetisi Saya</a> / 
+                <a href="{{ route('dashboard.kompe-saya.acara', $acaras->kompetisi->id) }}">{{ $acaras->kompetisi->nama }}</a> / 
+                <a href="">{{ $acaras->nama }}</a>
+            </p>
+        </div>
         <div class="bottom-container">
             <section class="all-container all-card w100">
                 <header class="divider flex">
