@@ -24,4 +24,12 @@ class UnduhanController extends Controller
 
         return view('pages.dashboard-bukuacara', compact('competitions'));
     }
+
+    public function showBukuAcara(){
+
+        //Ini buat nge show buku acaranya
+        // - Kalo acaranya resmi pake rumus
+        // - Kalo gak fun dia gak pake rumus
+        //
+    }
 }

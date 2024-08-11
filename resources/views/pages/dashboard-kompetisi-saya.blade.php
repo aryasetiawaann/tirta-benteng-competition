@@ -23,6 +23,7 @@
             </div>
             </div>
         </div>
+        <p><a href="{{ route('dashboard.kompe-saya') }}">Kompetisi Saya</a> / </p>
         <div class="bottom-container grid">
             @foreach ($kompetisis as $kompetisi)
             <section class="all-container all-card">

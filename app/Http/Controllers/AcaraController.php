@@ -18,7 +18,8 @@ class AcaraController extends Controller
         $acara = Acara::all()->where("kompetisi_id", $id)->sortBy("nomor_lomba");
         
         $nama_kompetisi = Kompetisi::find($id)->nama;
-        return view('pages.kompetisi-daftar')->with(['acara'=> $acara, 'nama_kompetisi'=> $nama_kompetisi]);
+        $id_kompetisi = Kompetisi::find($id)->id;
+        return view('pages.kompetisi-daftar')->with(['acara'=> $acara, 'nama_kompetisi'=> $nama_kompetisi, 'id_kompetisi' => $id_kompetisi]);
     }
 
     public function kompetisiSaya($id){
@@ -35,8 +36,9 @@ class AcaraController extends Controller
 
         $acaras = Acara::whereIn('id', $acara_ids)->get();
         $nama_kompetisi = Kompetisi::find($id)->nama;
+        $id_kompetisi = Kompetisi::find($id)->id;
 
-        return view('pages.dashboard-kompetisi-saya-acara')->with(['acaras' => $acaras, 'nama_kompetisi'=> $nama_kompetisi]);
+        return view('pages.dashboard-kompetisi-saya-acara')->with(['acaras' => $acaras, 'nama_kompetisi'=> $nama_kompetisi, 'id_kompetisi' => $id_kompetisi]);
     }
 
     public function kompetisiSayaDetail($id){

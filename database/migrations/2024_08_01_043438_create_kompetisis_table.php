@@ -18,6 +18,7 @@ return new class extends Migration
             $table->text('deskripsi')->nullable();
             $table->date('buka_pendaftaran');
             $table->date('tutup_pendaftaran');
+            $table->enum('kategori', ['Resmi','Fun'])->default('Fun');
             $table->timestamps();
         });
     }

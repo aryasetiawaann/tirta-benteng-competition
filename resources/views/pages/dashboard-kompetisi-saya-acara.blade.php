@@ -40,6 +40,7 @@
             </div>
             </div>
         </div>
+        <p><a href="{{ route('dashboard.kompe-saya') }}">Kompetisi Saya</a> / <a href="{{ route('dashboard.kompe-saya.acara', $id_kompetisi) }}">{{ $nama_kompetisi }}</a> / </p>
         <div class="bottom-container grid">
             @foreach ($acaras as $acara)
             <section class="all-container all-card">
