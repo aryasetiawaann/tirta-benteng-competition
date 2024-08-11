@@ -19,24 +19,28 @@
                 </div>
             </div>
         </div>
+<<<<<<< Updated upstream
         <nav class="breadcrumb">
             <ul>
                 <li>Kompetisi</li>
                 <li><a href="{{ route('dashboard.kompetisi') }}">Daftar</a></li>
             </ul>
         </nav>
+=======
+        <p><a href="{{ route('dashboard.kompetisi') }}">Daftar Kompetisi</a> / </p>
+>>>>>>> Stashed changes
         <div class="bottom-container grid">
             @foreach ($kompetisi as $kompe)
             <section class="all-container all-card">
                 <header class="flex divider">
                     <h2>{{ $kompe->nama }}</h2>
-                    @if (now() > $kompe->buka_pendaftaran && now() < $kompe->tutup_pendaftaran)
+                    @if (now() >= $kompe->buka_pendaftaran && now() < $kompe->tutup_pendaftaran)
                     <a href="{{ route('dashboard.acara', $kompe->id) }}"><button>Daftar</button></a>
                     @endif
                 </header>
                 <div>
                     <h3 class="mtopbot">
-                        @if (now() > $kompe->buka_pendaftaran && now() < $kompe->tutup_pendaftaran)
+                        @if (now() >= $kompe->buka_pendaftaran && now() < $kompe->tutup_pendaftaran)
                         <p>Status: <span class="status buka smaller">Registrasi</span></p>
                         @elseif (now() < $kompe->buka_pendaftaran)
                         <p>Status: <span class="status buka smaller">Belum dibuka</span></p>
