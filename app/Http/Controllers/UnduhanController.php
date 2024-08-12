@@ -28,7 +28,7 @@ class UnduhanController extends Controller
 
     public function showBukuAcara(){
 
-        $pdf = Pdf::loadView('layouts.print-layout-bukuacara')->setPaper('a3', 'potrait');
-        return $pdf->download('BUKU_ACARA.pdf');
+        $pdf = Pdf::loadView('layouts.print-layout-bukuacara')->setPaper('a4', 'potrait');
+        return $pdf->stream('BUKU_ACARA.pdf');
     }
 }
