@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Kompetisi;
 use App\Models\Atlet;
+use App\Models\Acara;
 use Barryvdh\DomPDF\Facade\Pdf;
+
 
 class UnduhanController extends Controller
 {
@@ -26,9 +28,47 @@ class UnduhanController extends Controller
         return view('pages.dashboard-bukuacara', compact('competitions'));
     }
 
-    public function showBukuAcara(){
+    public function showBukuAcara($id){
 
-        $pdf = Pdf::loadView('layouts.print-layout-bukuacara')->setPaper('a4', 'potrait');
-        return $pdf->stream('BUKU_ACARA.pdf');
+        $acaras = Acara::where('kompetisi_id', $id)->get();
+
+        $kompetisi = Kompetisi::find("id");
+
+        // if($kompetisi->kategori == "Fun"){
+
+        // }else{
+
+        // }
+
+        foreach($acaras as $acara) {
+            $participants = $acara->pesertaSelesai; // Pastikan Anda sudah relasi 'participants' di model Acara
+
+
+            foreach ($participants as $participant) {
+                $participant->club =  $participant->user->club ? $participant->user->club : '-';
+            }
+
+            // Membagi peserta ke dalam heat
+            $heats = $this->divideIntoHeats($participants->toArray());
+
+            // Menambahkan data heat ke dalam acara
+            $acara->heats = $heats;
+        }
+
+        $pdf = Pdf::loadView('layouts.print-layout-bukuacara' , compact('acaras'))->setPaper('a4', 'potrait');
+        return $pdf->stream('BUKU_ACARA.pdf', ["Attachment" => false]);
+    }
+
+    private function divideIntoHeats($participants, $maxLanes = 8)
+    {
+        // Membagi peserta ke dalam heat, maksimal 8 peserta per heat
+        $heats = array_chunk($participants, $maxLanes);
+
+        // Loop untuk membagi setiap heat menjadi 2 grup (4 peserta per grup)
+        foreach ($heats as &$heat) {
+            $heat = array_chunk($heat, 4);
+        }
+
+        return $heats;
     }
 }

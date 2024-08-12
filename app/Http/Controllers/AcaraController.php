@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Acara;
 use App\Models\Atlet;
 use App\Http\Requests\StoreAcaraRequest;
 use App\Http\Requests\UpdateAcaraRequest;
+use App\Models\Acara;
 use App\Models\Kompetisi;
 use Carbon\Carbon;
 class AcaraController extends Controller

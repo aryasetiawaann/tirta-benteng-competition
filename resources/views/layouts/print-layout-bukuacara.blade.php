@@ -5,7 +5,7 @@
         <style>
             /** Define the margins of your page **/
             @page {
-                margin: 130px 30px 160px 30px;
+                margin: 130px 25px 160px 25px;
             }
 
             header {
@@ -63,10 +63,51 @@
                 font-size: 12px;
             }
 
+            main h2 {
+                font-size: 12px;
+            }
+
+            main table {
+                width: 100%;
+                text-align: left;
+            }
+
+            .garis {
+                border-top: 2px solid black;
+            }
+
+            .grup {
+                width: 10%;
+                text-align: center;
+            }
+
+            .line {
+                width: 10%;
+                text-align: center;
+            }
+
+            .name, .club {
+                width: 30%;
+                text-align: left;
+            }
+
+            .age {
+                width: 10%;
+                text-align: center;
+            }
+
+            .record, .finals, .place {
+                width: 20%;
+                text-align: right;
+            }
+
+            .record {
+                text-align: left;
+            }
+
         </style>
     </head>
     <body>
-        <!-- Define header and footer blocks before your content -->
         <header>
             <p>HY-TEK's MEET MANAGER 8.0 - 5:00 PM 09/08/2024</p>
             <h1>Tirta Benteng Club Fun Swimming 2024 Tangerang - 10/08/2024 Meet Program</h1>
@@ -90,12 +131,58 @@
 
         <!-- Wrap the content of your PDF inside a main tag -->
         <main>
-            <p style="page-break-after: always;">
-                Content Page 1
-            </p>
-            <p style="page-break-after: never;">
-                Content Page 2
-            </p>
+            @foreach ($acaras as $acara)
+                <h2>Event {{ $acara->nomor_lomba }} {{ $acara->nama }} {{ $acara->grup }}</h2>
+                <table>
+                    <thead>
+                        <tr class="head">
+                            <th class="grup">Group</th>
+                            <th class="line">Lane</th>
+                            <th class="name">Name</th>
+                            <th class="age">Age</th>
+                            <th class="club">Club</th>
+                            <th class="record">Best Record</th>
+                            <th class="finals">Finals</th>
+                            <th class="place">Place</th>
+                        </tr>
+                    </thead>
+                    <tr>
+                        <td colspan="8" class="garis"></td>
+                    </tr>
+                    <tbody>
+                            @foreach($acara->heats as $heatIndex => $heat)
+                            <tr>
+                                <td style="text-align: left;" colspan="8"><h4>Heat {{ $heatIndex + 1 }} of {{ count($acara->heats) }} Timed Finals</h4></td>
+                            </tr>
+                            @foreach($heat as $groupKey => $group)
+                                @foreach($group as $key => $participant)
+                                    <tr>
+                                        @if (($groupKey + 1) % 2 != 0)
+                                            @if ($key == 0)
+                                                <td rowspan="4" class="grup">A</td>
+                                            @endif
+                                        @else
+                                            @if ($key == 0)
+                                                <td rowspan="4" class="grup">B</td>
+                                            @endif
+                                        @endif
+                                        <td class="line">{{ $key+1 }}</td>
+                                        <td class="name">{{ $participant['name'] }}</td>
+                                        <td class="age">{{ now()->diffInYears(\Carbon\Carbon::parse($participant['umur'])) }}</td>
+                                        <td class="club">{{ $participant['club']}}</td>
+                                        <td class="record">{{ str_replace('.', ':', sprintf('%04.2f', $participant['track_record']))}}</td>
+                                        <td class="finals">____________</td>
+                                        <td class="place">____________</td>
+                                    </tr>
+                                @endforeach
+                            @endforeach
+                            @endforeach
+                    </tbody>
+                </table>
+            @endforeach
+            <table>
+
+            </table>
         </main>
     </body>
 </html>

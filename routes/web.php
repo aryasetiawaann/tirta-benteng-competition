@@ -48,7 +48,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::delete('/dashboard/tagihan/delete/{id}', [PesertaController::class,'destroy'])->name('dashboard.tagihan.destroy');
 
     Route::get('/dashboard/bukuacara', [UnduhanController::class, 'userBukuAcara'])->name('dashboard.bukuacara');
-    Route::get('/dashboard/bukuacara/view/pdf', [UnduhanController::class, 'showBukuAcara'])->name('dashboard.bukuacara.view');
+    Route::get('/dashboard/bukuacara/view/{id}/pdf', [UnduhanController::class, 'showBukuAcara'])->name('dashboard.bukuacara.view');
 
     Route::get('/dashboard/bukuacara/test', function() {
         return view('layouts.print-layout-bukuacara');

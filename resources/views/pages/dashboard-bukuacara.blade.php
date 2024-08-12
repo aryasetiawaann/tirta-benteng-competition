@@ -57,7 +57,7 @@
                                 @else
                                 <td><span class="status registration">Berjalan</span></td>
                                 <td>
-                                    <a href="{{ route('dashboard.bukuacara.view') }}"><button class="button-green"><i class='fa fa-arrow-right'></i></button></a>
+                                    <a href="{{ route('dashboard.bukuacara.view', $competition->id) }}"><button class="button-green"><i class='fa fa-arrow-right'></i></button></a>
                                 </td>
                                 @endif
                             </tr>
