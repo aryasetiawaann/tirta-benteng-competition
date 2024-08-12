@@ -29,6 +29,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
 
     Route::resource('/dashboard/atlet-saya', AtletController::class)->names('dashboard.atlet');
+    
 
     
     Route::get('/dashboard/daftar-kompetisi', [KompetisiController::class, 'index'])->name('dashboard.kompetisi');

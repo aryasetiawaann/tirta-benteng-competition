@@ -8,6 +8,13 @@
                 <header class="divider flex">
                     <h1>Edit {{ $atlet->name}}</h1>
                 </header>
+                @if ($errors->any())
+                <x-error-list>
+                    @foreach ($errors->all() as $error)
+                        <x-error-item>{{ $error }}</x-error-item>
+                    @endforeach
+                </x-error-list>
+                @endif
                 <div>
                     <form class="edit-atlet" method="POST" action="{{ route('dashboard.atlet.update', $atlet->id) }}">
                         @csrf

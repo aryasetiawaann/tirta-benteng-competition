@@ -589,6 +589,11 @@ a {
 .footer-menu ul li a,
 .footer-contact a span {
     color: #000;
+    text-decoration: none;
+}
+
+.footer-menu ul li a:hover,
+.footer-contact a span:hover {
     text-decoration: underline;
 }
 

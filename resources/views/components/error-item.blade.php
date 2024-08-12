@@ -1,3 +1,3 @@
 <div class="error-item">
-    {{ $slot }}
+<i class='bx bxs-error-circle' ></i> {{ $slot }}
 </div>
