@@ -1,29 +1,29 @@
-    <div class="navbar-mobile">
-        <div class="navbar-toggle">
-            <i class="ph-bold ph-list"></i>
-        </div>
-        <div class="navbar-title" data-page-title="{{ Route::currentRouteName() }}"></div>
-        <div class="navbar-user">
+<div class="navbar-mobile">
+    <div class="navbar-toggle">
+        <i class="ph-bold ph-list"></i>
+    </div>
+    <div class="navbar-title" data-page-title="{{ Route::currentRouteName() }}"></div>
+    <div class="navbar-user">
         <a href="{{ route('profile.edit') }}">
             <img src="{{ !is_null(auth()->user()->foto) ? asset(auth()->user()->foto) : asset('assets/img/blank-profile.png') }}" alt="User Image">
         </a>
-        </div>
     </div>
+</div>
 
-    <div class="sidebar">
+<div class="sidebar">
     <div class="menu-btn">
         <i class="ph-bold ph-caret-left"></i>
     </div>
     <a href="{{ route('profile.edit') }}">
-    <div class="head">
-        <div class="user-img">
-            <img src="{{ !is_null(auth()->user()->foto) ? asset(auth()->user()->foto) : asset('assets/img/blank-profile.png') }}" alt="User Image">
+        <div class="head">
+            <div class="user-img">
+                <img src="{{ !is_null(auth()->user()->foto) ? asset(auth()->user()->foto) : asset('assets/img/blank-profile.png') }}" alt="User Image">
+            </div>
+            <div class="user-details">
+                <p class="title">User</p>
+                <p class="name">{{ Auth::user()->name }}</p>
+            </div>
         </div>
-        <div class="user-details">
-            <p class="title">User</p>
-            <p class="name">{{ Auth::user()->name }}</p>
-        </div>
-    </div>
     </a>
     <div class="nav">
         <div class="menu">
@@ -50,7 +50,7 @@
                         <i class="arrow ph-bold ph-caret-down"></i>
                     </a>
                     <ul class="sub-menu {{ Request::routeIs('dashboard.kompetisi') || Request::routeIs('dashboard.kompe-saya') ? 'open' : '' }}">
-                        <li class="{{ request()->routeIs('dashboard.kompetisi') ? 'active' : '' }}">
+                        <li class="{{ request()->routeIs('dashboard.kompetisi') || request()->routeIs('dashboard.acara') || request()->routeIs('dashboard.acara.detail') ? 'active' : '' }}">
                             <a href="{{ route('dashboard.kompetisi') }}">
                                 <span class="text">Daftar</span>
                             </a>
@@ -111,13 +111,10 @@
             <li>
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf
-                    <a href=" {{route('logout') }}"
-                        onclick="event.preventDefault();
-                        this.closest('form').submit();">
+                    <a href="{{ route('logout') }}"
+                       onclick="event.preventDefault(); this.closest('form').submit();">
                         <i class="icon ph-bold ph-sign-out"></i>
-                        <span class="text">
-                            {{ __('Log Out') }}
-                        </span>
+                        <span class="text">{{ __('Log Out') }}</span>
                     </a>
                 </form>
             </li>
