@@ -21,6 +21,7 @@ return new class extends Migration
             $table->enum('kategori', ['Resmi','Fun'])->default('Fun');
             $table->date('waktu_techmeeting')->nullable();
             $table->date('waktu_kompetisi');
+            $table->string('file_hasil');
             $table->timestamps();
         });
     }

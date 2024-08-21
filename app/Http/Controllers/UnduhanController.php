@@ -34,47 +34,64 @@ class UnduhanController extends Controller
 
         $kompetisi = Kompetisi::find($id);
 
-        if($kompetisi->kategori == "Fun"){
+        // if($kompetisi->kategori == "Fun"){
 
-            foreach($acaras as $acara) {
-                $participants = $acara->pesertaSelesai;
+        //     foreach($acaras as $acara) {
+        //         $participants = $acara->pesertaSelesai;
     
     
-                foreach ($participants as $participant) {
-                    $participant->club =  $participant->user->club ? $participant->user->club : '-';
+        //         foreach ($participants as $participant) {
+        //             $participant->club =  $participant->user->club ? $participant->user->club : '-';
+        //         }
+    
+        //         // Membagi peserta ke dalam heat
+        //         $heats = $this->divideIntoHeats($participants->toArray());
+    
+        //         // Menambahkan data heat ke dalam acara
+        //         $acara->heats = $heats;
+        //     }
+    
+        //     $pdf = Pdf::loadView('layouts.print-layout-bukuacara' , compact('acaras'))->setPaper('a4', 'potrait');
+
+        // }else{
+
+        //     foreach ($acaras as $acara) {
+        //         $participants = $acara->pesertaSelesai;
+    
+        //         foreach ($participants as $participant) {
+        //             $participant->club = $participant->user->club ? $participant->user->club : '-';
+        //         }
+    
+        //         // Mengurutkan peserta dengan logika sortMiddle
+        //         $sortedParticipants = $this->sortMiddle($participants->toArray());
+    
+        //         // Membagi peserta yang telah diurutkan ke dalam heat tanpa membagi lagi menjadi grup kecil
+        //         $heats = $this->divideIntoHeatsWithoutGroups($sortedParticipants);
+    
+        //         // Menambahkan data heat ke dalam acara
+        //         $acara->heats = $heats;
+        //     }
+    
+        //     $pdf = Pdf::loadView('layouts.print-layout-bukuacara-resmi', compact('acaras'))->setPaper('a4', 'potrait');
+
+        // }
+
+        foreach($acaras as $acara) {
+                    $participants = $acara->pesertaSelesai;
+        
+        
+                    foreach ($participants as $participant) {
+                        $participant->club =  $participant->user->club ? $participant->user->club : '-';
+                    }
+        
+                    // Membagi peserta ke dalam heat
+                    $heats = $this->divideIntoHeats($participants->toArray());
+        
+                    // Menambahkan data heat ke dalam acara
+                    $acara->heats = $heats;
                 }
-    
-                // Membagi peserta ke dalam heat
-                $heats = $this->divideIntoHeats($participants->toArray());
-    
-                // Menambahkan data heat ke dalam acara
-                $acara->heats = $heats;
-            }
-    
-            $pdf = Pdf::loadView('layouts.print-layout-bukuacara' , compact('acaras'))->setPaper('a4', 'potrait');
-
-        }else{
-
-            foreach ($acaras as $acara) {
-                $participants = $acara->pesertaSelesai;
-    
-                foreach ($participants as $participant) {
-                    $participant->club = $participant->user->club ? $participant->user->club : '-';
-                }
-    
-                // Mengurutkan peserta dengan logika sortMiddle
-                $sortedParticipants = $this->sortMiddle($participants->toArray());
-    
-                // Membagi peserta yang telah diurutkan ke dalam heat tanpa membagi lagi menjadi grup kecil
-                $heats = $this->divideIntoHeatsWithoutGroups($sortedParticipants);
-    
-                // Menambahkan data heat ke dalam acara
-                $acara->heats = $heats;
-            }
-    
-            $pdf = Pdf::loadView('layouts.print-layout-bukuacara-resmi', compact('acaras'))->setPaper('a4', 'potrait');
-
-        }
+        
+                $pdf = Pdf::loadView('layouts.print-layout-bukuacara' , compact('acaras'))->setPaper('a4', 'potrait');
 
         return $pdf->stream('BUKU_ACARA.pdf');
     }

@@ -19,6 +19,10 @@ class Kompetisi extends Model
         'deskripsi',
         'buka_pendaftaran',
         'tutup_pendaftaran',
+        'kategori',
+        'waktu_techmeeting',
+        'waktu_kompetisi',
+        'file_hasil',
     ];
 
     public function acara(){
