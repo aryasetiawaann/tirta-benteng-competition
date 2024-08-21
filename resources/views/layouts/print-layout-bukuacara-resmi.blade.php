@@ -76,15 +76,7 @@
                 border-top: 2px solid black;
             }
 
-            .grup {
-                width: 10%;
-                text-align: center;
-            }
             
-            table tbody .grup {
-                border: 1px solid black;
-            }
-
             .line {
                 width: 10%;
                 text-align: center;
@@ -141,7 +133,6 @@
                 <table>
                     <thead>
                         <tr class="head">
-                            <th class="grup">Group</th>
                             <th class="line">Lane</th>
                             <th class="name">Name</th>
                             <th class="age">Age</th>
@@ -152,25 +143,15 @@
                         </tr>
                     </thead>
                     <tr>
-                        <td colspan="8" class="garis"></td>
+                        <td colspan="7" class="garis"></td>
                     </tr>
                     <tbody>
                             @foreach($acara->heats as $heatIndex => $heat)
                             <tr>
-                                <td style="text-align: left;" colspan="8"><h4>Heat {{ $heatIndex + 1 }} of {{ count($acara->heats) }} Timed Finals</h4></td>
+                                <td style="text-align: left;" colspan="7"><h4>Heat {{ $heatIndex + 1 }} of {{ count($acara->heats) }} Timed Finals</h4></td>
                             </tr>
-                            @foreach($heat as $groupKey => $group)
-                                @foreach($group as $key => $participant)
+                            @foreach($heat as $key => $participant)
                                     <tr>
-                                        @if (($groupKey + 1) % 2 != 0)
-                                            @if ($key == 0)
-                                                <td rowspan="4" class="grup">A</td>
-                                            @endif
-                                        @else
-                                            @if ($key == 0)
-                                                <td rowspan="4" class="grup">B</td>
-                                            @endif
-                                        @endif
                                         <td class="line">{{ $key+1 }}</td>
                                         <td class="name">{{ $participant['name'] }}</td>
                                         <td class="age">{{ now()->diffInYears(\Carbon\Carbon::parse($participant['umur'])) }}</td>
@@ -179,7 +160,6 @@
                                         <td class="finals">____________</td>
                                         <td class="place">____________</td>
                                     </tr>
-                                @endforeach
                             @endforeach
                             @endforeach
                     </tbody>
