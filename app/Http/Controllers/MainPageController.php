@@ -19,7 +19,7 @@ class MainPageController extends Controller
 
         $currentDate = Carbon::now();
 
-        $kompetisi_count = Kompetisi::where('tutup_pendaftaran', '>=', now())->count();
+        $kompetisi_count = Kompetisi::where('waktu_kompetisi', '>', now())->count();
         $atlet_count = Atlet::all()->where('user_id', auth()->user()->id)->count();
         $atlets = Atlet::whereHas('acara')->with('acara')->where('user_id', auth()->user()->id)->get()->sortByDesc('created_at');
 
@@ -27,7 +27,7 @@ class MainPageController extends Controller
             $query->where('user_id', auth()->user()->id);
         })
         ->whereHas('kompetisi', function ($query) use ($currentDate) {
-            $query->where('tutup_pendaftaran', '>=', $currentDate);
+            $query->where('waktu_kompetisi', '>', $currentDate);
         })
         ->get();
     

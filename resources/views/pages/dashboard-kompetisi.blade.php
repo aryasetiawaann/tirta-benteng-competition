@@ -36,17 +36,21 @@
                 </header>
                 <div>
                     <h3 class="mtopbot">
-                        @if (now() >= $kompe->buka_pendaftaran && now() < $kompe->tutup_pendaftaran)
-                        <p>Status: <span class="status buka smaller">Registrasi</span></p>
-                        @elseif (now() < $kompe->buka_pendaftaran)
-                        <p>Status: <span class="status buka smaller">Belum dibuka</span></p>
-                        @else
+                        @if(now() > $kompe->waktu_kompetisi)
                         <p>Status: <span class="status tutup smaller">Selesai</span></p>
+                        @elseif (now() >= $kompe->tutup_pendaftaran)
+                        <p>Status: <span class="status buka smaller">Berjalan</span></p>
+                        @elseif (now() >= $kompe->buka_pendaftaran && now() < $kompe->tutup_pendaftaran)
+                        <p>Status: <span class="status buka smaller">Registrasi</span></p>
+                        @else
+                        <p>Status: <span class="status buka smaller">Belum dibuka</span></p>
                         @endif
                     </h3>
                     
-                    <p>Open reg : {{ \Carbon\Carbon::parse($kompe->buka_pendaftaran)->format('d M Y') }}</p>
-                    <p>Closed reg : {{ \Carbon\Carbon::parse($kompe->tutup_pendaftaran)->format('d M Y') }}</p>
+                    <p>Open Registration : {{ \Carbon\Carbon::parse($kompe->buka_pendaftaran)->format('d M Y') }}</p>
+                    <p>Closed Registration : {{ \Carbon\Carbon::parse($kompe->tutup_pendaftaran)->format('d M Y') }}</p>
+                    <p>Tech Meeting : {{ $kompe->waktu_techmeeting? \Carbon\Carbon::parse($kompe->waktu_techmeeting)->format('d M Y') : '-' }}</p>
+                    <p>Tanggal Kompetisi : {{ \Carbon\Carbon::parse($kompe->waktu_kompetisi)->format('d M Y') }}</p>
                     <p>Lokasi : {{ $kompe->lokasi }}</p>
                     <p>{{ $kompe->deskripsi }}</p>
                 </div>

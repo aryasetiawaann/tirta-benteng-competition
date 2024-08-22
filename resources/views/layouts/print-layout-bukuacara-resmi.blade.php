@@ -106,8 +106,8 @@
     </head>
     <body>
         <header>
-            <p>HY-TEK's MEET MANAGER 8.0 - 5:00 PM 09/08/2024</p>
-            <h1>Tirta Benteng Club Fun Swimming 2024 Tangerang - 10/08/2024 Meet Program</h1>
+            <p>TIRTA BENTENG SWIMMING CLUB - {{$time}}</p>
+            <h1>{{$kompetisi->nama}} - {{ \Carbon\Carbon::parse($kompetisi->waktu_kompetisi)->format('d/m/Y') }} Meet Program</h1>
         </header>
 
         <footer>
@@ -151,15 +151,27 @@
                                 <td style="text-align: left;" colspan="7"><h4>Heat {{ $heatIndex + 1 }} of {{ count($acara->heats) }} Timed Finals</h4></td>
                             </tr>
                             @foreach($heat as $key => $participant)
-                                    <tr>
-                                        <td class="line">{{ $key+1 }}</td>
-                                        <td class="name">{{ $participant['name'] }}</td>
-                                        <td class="age">{{ now()->diffInYears(\Carbon\Carbon::parse($participant['umur'])) }}</td>
-                                        <td class="club">{{ $participant['club']}}</td>
-                                        <td class="record">{{ str_replace('.', ':', sprintf('%04.2f', $participant['track_record']))}}</td>
-                                        <td class="finals">____________</td>
-                                        <td class="place">____________</td>
-                                    </tr>
+                            @if($participant)
+                                <tr>
+                                    <td class="line">{{ $key+1 }}</td>
+                                    <td class="name">{{ $participant['name'] }}</td>
+                                    <td class="age">{{ now()->diffInYears(\Carbon\Carbon::parse($participant['umur'])) }}</td>
+                                    <td class="club">{{ $participant['club'] }}</td>
+                                    <td class="record">{{ str_replace('.', ':', sprintf('%04.2f', $participant['track_record'])) }}</td>
+                                    <td class="finals">____________</td>
+                                    <td class="place">____________</td>
+                                </tr>
+                            @else
+                                <tr>
+                                    <td class="line">{{ $key+1 }}</td>
+                                    <td class="name">&nbsp;</td>
+                                    <td class="age">&nbsp;</td>
+                                    <td class="club">&nbsp;</td>
+                                    <td class="record">&nbsp;</td>
+                                    <td class="finals">&nbsp;</td>
+                                    <td class="place">&nbsp;</td>
+                                </tr>
+                            @endif
                             @endforeach
                             @endforeach
                     </tbody>

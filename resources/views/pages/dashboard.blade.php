@@ -78,25 +78,6 @@
                                     <th>Status Kompetisi</th>
                                 </tr>
                             </thead>
-                            {{-- <tbody>
-                                {{ $counter = 1 }}
-                                @foreach ($atlets as $atlet)
-                                @foreach ($atlet->acara as $acara)    
-                                <tr>
-                                    <td>{{ $counter++}}</td>
-                                    <td>{{ $atlet->name }}</td>
-                                    <td>{{ $acara->kompetisi->nama }}</td>
-                                    <td>{{ $acara->nomor_lomba}}</td>
-                                    <td><span class="status waiting">{{ $acara->pivot->status_pembayaran }}</span></td>
-                                    @if ( now() < $acara->kompetisi->tutup_pendaftaran)
-                                    <td><span class="status registration">Menunggu</span></td>
-                                    @else
-                                    <td><span class="status registration">Selesai</span></td>
-                                    @endif
-                                </tr>
-                                @endforeach
-                                @endforeach
-                            </tbody> --}}
                             <tbody>
                                 @if ($atlets->isEmpty())
                                     <tr><td colspan="7" style="text-align:center;">Belum ada data</td></tr>
@@ -109,10 +90,12 @@
                                                 <td>{{ $acara->kompetisi->nama }}</td>
                                                 <td>{{ $acara->nomor_lomba }}</td>
                                                 <td><span class="status waiting">{{ $acara->pivot->status_pembayaran }}</span></td>
-                                                @if (now() < $acara->kompetisi->tutup_pendaftaran)
-                                                    <td><span class="status registration">Menunggu</span></td>
-                                                @else
+                                                @if (now() > $acara->kompetisi->waktu_kompetisi)
                                                     <td><span class="status registration">Selesai</span></td>
+                                                @elseif (now() >= $acara->kompetisi->tutup_pendaftaran)
+                                                    <td><span class="status registration">Berjalan</span></td>
+                                                @else
+                                                    <td><span class="status registration">Menunggu</span></td>
                                                 @endif
                                             </tr>
                                         @endforeach

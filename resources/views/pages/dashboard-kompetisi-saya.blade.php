@@ -38,15 +38,19 @@
                 </header>
                 <div>
                     <h3 class="mtopbot">
-                        @if (now() < $kompetisi->tutup_pendaftaran)
-                        <p>Status: <span class="status buka smaller">Menunggu</span></p>
-                        @else
+                        @if (now() > $kompetisi->waktu_kompetisi)
                         <p>Status: <span class="status tutup smaller">Selesai</span></p>
+                        @elseif (now() >= $kompetisi->tutup_pendaftaran)
+                        <p>Status: <span class="status buka smaller">Berjalan</span></p>
+                        @else
+                        <p>Status: <span class="status buka smaller">Menunggu</span></p>
                         @endif
                     </h3>
                     
                     <p>Open Registration : {{ \Carbon\Carbon::parse($kompetisi->buka_pendaftaran)->format('d M Y') }}</p>
                     <p>Closed Registration : {{ \Carbon\Carbon::parse($kompetisi->tutup_pendaftaran)->format('d M Y') }}</p>
+                    <p>Tech Meeting : {{ $kompetisi->waktu_techmeeting? \Carbon\Carbon::parse($kompetisi->waktu_techmeeting)->format('d M Y') : '-' }}</p>
+                    <p>Tanggal Kompetisi : {{ \Carbon\Carbon::parse($kompetisi->waktu_kompetisi)->format('d M Y') }}</p>
                     <p>Lokasi : {{ $kompetisi->lokasi }}</p>
                     <p>{{ $kompetisi->deskripsi }}</p>
                 </div>

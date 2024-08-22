@@ -114,8 +114,8 @@
     </head>
     <body>
         <header>
-            <p>HY-TEK's MEET MANAGER 8.0 - 5:00 PM 09/08/2024</p>
-            <h1>Tirta Benteng Club Fun Swimming 2024 Tangerang - 10/08/2024 Meet Program</h1>
+            <p>TIRTA BENTENG SWIMMING CLUB - {{$time}}</p>
+            <h1>{{$kompetisi->nama}} - {{ \Carbon\Carbon::parse($kompetisi->waktu_kompetisi)->format('d/m/Y') }} Meet Program</h1>
         </header>
 
         <footer>

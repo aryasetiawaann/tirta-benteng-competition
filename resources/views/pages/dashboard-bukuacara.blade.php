@@ -52,13 +52,18 @@
                             <tr>
                                 <td>{{ $counter = isset($counter) ? $counter + 1 : 1 }}</td>
                                 <td>{{ $competition->nama }}</td>
-                                @if ( now() < $competition->tutup_pendaftaran)
-                                <td><span class="status registration">Registrasi</span></td>
-                                @else
+                                @if ( now() > $competition->waktu_kompetisi)
+                                <td><span class="status registration">Selesai</span></td>
+                                <td>
+                                    <a href="{{ route('dashboard.bukuacara.view', $competition->id) }}"><button class="button-green"><i class='fa fa-arrow-right'></i></button></a>
+                                </td>
+                                @elseif (now() >= $competition->tutup_pendaftaran)
                                 <td><span class="status registration">Berjalan</span></td>
                                 <td>
                                     <a href="{{ route('dashboard.bukuacara.view', $competition->id) }}"><button class="button-green"><i class='fa fa-arrow-right'></i></button></a>
                                 </td>
+                                @else
+                                <td><span class="status registration">Registrasi</span></td>
                                 @endif
                             </tr>
                             @endforeach

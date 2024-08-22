@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->timestamps();
             $table->unsignedBigInteger('kompetisi_id');
-            $table->foreign('kompetisi_id')->references('id')->on('kompetisis')->onDelete('cascade');
+            $table->foreign('kompetisi_id')->references('id')->on('kompetisi')->onDelete('cascade');
             $table->string('name');
         });
     }

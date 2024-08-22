@@ -7,14 +7,15 @@ use App\Models\Kompetisi;
 use App\Models\Atlet;
 use App\Models\Acara;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Carbon\Carbon;
 
 
 class UnduhanController extends Controller
 {
     public function userBukuAcara(){
 
-        $acara_ids = Atlet::where('user_id', auth()->user()->id) // or auth()->user()->id
-        ->with('acara') // eager load acara
+        $acara_ids = Atlet::where('user_id', auth()->user()->id) 
+        ->with('acara') 
         ->get()
         ->flatMap(function ($atlet) {
             return $atlet->acara->pluck('id');
@@ -23,110 +24,118 @@ class UnduhanController extends Controller
 
         $competitions = Kompetisi::whereHas('acara', function ($query) use ($acara_ids) {
             $query->whereIn('id', $acara_ids);
-        })->get();
+        })->orderBy('created_at', 'desc')->get();
 
         return view('pages.dashboard-bukuacara', compact('competitions'));
     }
 
     public function showBukuAcara($id){
 
+
+        $currentTime = Carbon::now(); // Mendapatkan waktu saat ini
+        $time = $currentTime->format('g:i A d/m/Y');   
+
         $acaras = Acara::where('kompetisi_id', $id)->get();
 
         $kompetisi = Kompetisi::find($id);
 
-        // if($kompetisi->kategori == "Fun"){
+        if($kompetisi->kategori == "Fun"){
 
-        //     foreach($acaras as $acara) {
-        //         $participants = $acara->pesertaSelesai;
+            foreach($acaras as $acara) {
+                $participants = $acara->pesertaSelesai;
     
     
-        //         foreach ($participants as $participant) {
-        //             $participant->club =  $participant->user->club ? $participant->user->club : '-';
-        //         }
-    
-        //         // Membagi peserta ke dalam heat
-        //         $heats = $this->divideIntoHeats($participants->toArray());
-    
-        //         // Menambahkan data heat ke dalam acara
-        //         $acara->heats = $heats;
-        //     }
-    
-        //     $pdf = Pdf::loadView('layouts.print-layout-bukuacara' , compact('acaras'))->setPaper('a4', 'potrait');
-
-        // }else{
-
-        //     foreach ($acaras as $acara) {
-        //         $participants = $acara->pesertaSelesai;
-    
-        //         foreach ($participants as $participant) {
-        //             $participant->club = $participant->user->club ? $participant->user->club : '-';
-        //         }
-    
-        //         // Mengurutkan peserta dengan logika sortMiddle
-        //         $sortedParticipants = $this->sortMiddle($participants->toArray());
-    
-        //         // Membagi peserta yang telah diurutkan ke dalam heat tanpa membagi lagi menjadi grup kecil
-        //         $heats = $this->divideIntoHeatsWithoutGroups($sortedParticipants);
-    
-        //         // Menambahkan data heat ke dalam acara
-        //         $acara->heats = $heats;
-        //     }
-    
-        //     $pdf = Pdf::loadView('layouts.print-layout-bukuacara-resmi', compact('acaras'))->setPaper('a4', 'potrait');
-
-        // }
-
-        foreach($acaras as $acara) {
-                    $participants = $acara->pesertaSelesai;
-        
-        
-                    foreach ($participants as $participant) {
-                        $participant->club =  $participant->user->club ? $participant->user->club : '-';
-                    }
-        
-                    // Membagi peserta ke dalam heat
-                    $heats = $this->divideIntoHeats($participants->toArray());
-        
-                    // Menambahkan data heat ke dalam acara
-                    $acara->heats = $heats;
+                foreach ($participants as $participant) {
+                    $participant->club =  $participant->user->club ? $participant->user->club : '-';
                 }
-        
-                $pdf = Pdf::loadView('layouts.print-layout-bukuacara' , compact('acaras'))->setPaper('a4', 'potrait');
+    
+                // Membagi peserta ke dalam heat
+                $heats = $this->divideIntoHeats($participants->toArray());
+    
+                // Menambahkan data heat ke dalam acara
+                $acara->heats = $heats;
+            }
+    
+            $pdf = Pdf::loadView('layouts.print-layout-bukuacara' , compact('acaras', 'kompetisi', 'time'))->setPaper('a4', 'potrait');
 
-        return $pdf->stream('BUKU_ACARA.pdf');
+        }else{
+
+            foreach ($acaras as $acara) {
+                $participants = $acara->pesertaSelesai;
+            
+                // Setel club untuk setiap peserta
+                foreach ($participants as $participant) {
+                    $participant->club = $participant->user->club ? $participant->user->club : '-';
+                }
+            
+                // Membagi peserta yang telah diurutkan ke dalam heat
+                $heats = $this->divideIntoHeatsWithoutGroups($participants->toArray());
+            
+                // Mengurutkan peserta di setiap heat dengan logika sortMiddle
+                foreach ($heats as &$heat) {
+                    $heat = $this->sortMiddle($heat);
+                }
+            
+                // Menambahkan data heat ke dalam acara
+                $acara->heats = $heats;
+            }
+
+            $pdf = Pdf::loadView('layouts.print-layout-bukuacara-resmi', compact('acaras', 'kompetisi', 'time'))->setPaper('a4', 'potrait');
+
+        }
+
+        return $pdf->stream('Buku Acara ' . $kompetisi->nama . '.pdf');
     }
 
     private function sortMiddle($participants)
     {
-        // Konversi peserta menjadi array dari nilai yang ingin diurutkan, misalnya berdasarkan skor
-        $arr = array_column($participants, 'track_record'); // Anggap 'nilai' adalah atribut yang ingin diurutkan
+        // Filter out null values
+        $participants = array_filter($participants, function($participant) {
+            return $participant !== null;
+        });
 
-        // Langkah 1: Urutkan array secara menurun
-        rsort($arr);
+        // Urutkan peserta berdasarkan 'track_record' secara menaik (waktu tercepat ke terlama)
+        usort($participants, function($a, $b) {
+            return $a['track_record'] <=> $b['track_record'];
+        });
 
-        // Langkah 2 & 3: Buat array baru untuk hasil
-        $result = [];
-        $left = 0;
-        $right = count($arr) - 1;
+        $numParticipants = count($participants);
+        $result = array_fill(0, 8, null); // Inisialisasi array dengan 8 elemen null
 
-        foreach ($arr as $i => $value) {
+        $middleIndex = intdiv(8, 2); // Posisi tengah dalam array 8 elemen
+        $leftIndex = $middleIndex - 1;
+        $rightIndex = $middleIndex;
+
+        foreach ($participants as $i => $participant) {
             if ($i % 2 == 0) {
-                array_push($result, $value); // Masukkan ke tengah dari kiri
+                // Tempatkan peserta di posisi tengah dan ke bawah
+                $result[$leftIndex--] = $participant;
             } else {
-                array_unshift($result, $value); // Masukkan ke tengah dari kanan
+                // Tempatkan peserta di posisi tengah dan ke atas
+                $result[$rightIndex++] = $participant;
             }
         }
 
-        // Kembalikan array yang telah diurutkan dengan logika di tengah
-        return $result;
+        return $result; // Kembalikan array yang sudah diurutkan
     }
+
 
     private function divideIntoHeatsWithoutGroups($participants, $maxLanes = 8)
     {
-        // Membagi peserta ke dalam heat tanpa membaginya lagi menjadi grup
-        return array_chunk($participants, $maxLanes);
-    }
+        // Membagi peserta ke dalam heat
+        $heats = array_chunk($participants, $maxLanes);
 
+        // Menambahkan baris kosong di setiap heat sehingga memiliki 8 baris
+        foreach ($heats as &$heat) {
+            $count = count($heat);
+            if ($count < $maxLanes) {
+                // Menambahkan elemen kosong jika peserta kurang dari 8
+                $heat = array_merge($heat, array_fill($count, $maxLanes - $count, null));
+            }
+        }
+
+        return $heats;
+    }
 
     private function divideIntoHeats($participants, $maxLanes = 8)
     {
