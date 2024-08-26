@@ -290,6 +290,7 @@ th {
     border: 1px solid #a5a5a5;
     border-radius: 4px;
     font-size: 16px;
+    color: inherit;
 }
 
 .overlay select#atlet option {
@@ -478,30 +479,6 @@ i {
     margin: 5px 0 20px 0;
     padding: 10px;
     font-size: 1rem;
-}
-
-.tambah-container {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-}
-
-.tambah-container * {
-    margin: 10px 0 5px 0;
-}
-
-.tambah-container input, .tambah-container select {
-    padding: 10px;
-    font-size: 1rem;
-}
-
-.tambah-container button, .download button { 
-    padding: 10px 15px;
-    border: none;
-    color: white;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: all 0.1s;
 }
 
 .breadcrumb {

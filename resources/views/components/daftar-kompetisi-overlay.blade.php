@@ -18,7 +18,7 @@
                             <option value="{{ $atlet->id }}">{{ $atlet->name }}</option>
                         @endforeach
                     @else
-                        <option value="" selected>Belum ada data</option>
+                        <option value="" selected>Belum ada atlet memenuhi kriteria</option>
                     @endif
                 </select>
                 <input type="hidden" name="acara" id="acara" value="{{ $acara->id}}">

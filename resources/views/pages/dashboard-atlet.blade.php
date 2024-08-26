@@ -71,7 +71,9 @@
                                         <form action="{{ route('dashboard.atlet.destroy', $atlet->id) }}" method="post">
                                             @csrf
                                             @method('delete')
-                                            <a onclick="return confirm('Apakah kamu yakin ingin menghapus? ')"><button class="button-red button-gap"><i class='bx bx-xs bxs-trash' ></i></button></a>
+                                            <button class="button-red button-gap" onclick="return confirm('Apakah kamu yakin ingin menghapus? ')">
+                                                <i class='bx bx-xs bxs-trash'></i>
+                                            </button>
                                         </form>
                                     </td>
                                 </tr>

@@ -1,0 +1,47 @@
+.admin-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.card {
+    width: 50%;
+}
+
+.card100 {
+    width: 100%;
+}
+
+.tambah-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.tambah-container * {
+    margin: 10px 0 5px 0;
+}
+
+.tambah-container input, .tambah-container select {
+    padding: 10px;
+    font-size: 1rem;
+}
+
+.tambah-container button, .download button { 
+    padding: 10px 15px;
+    border: none;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.1s;
+}
+
+@media screen and (max-width: 768px) {
+    .admin-container {
+        flex-direction: column;
+    }
+    .card {
+        width: 100%;
+    }
+}
