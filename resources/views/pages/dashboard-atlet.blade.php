@@ -53,6 +53,7 @@
                                 <th>Umur</th>
                                 <th>Jenis Kelamin</th>
                                 <th>Track Record</th>
+                                <th>Kelengkapan Dokumen</th>
                                 <th>Aksi</th>
                             </tr>
                         </thead>
@@ -66,8 +67,14 @@
                                     <td>{{ now()->diffInYears(\Carbon\Carbon::parse($atlet->umur)) }}</td>
                                     <td>{{ $atlet->jenis_kelamin }}</td>
                                     <td><span class="status registration">{{ str_replace('.', ':', sprintf('%04.2f', $atlet->track_record))}} Menit</span></td>
+                                    <td></td>
                                     <td style="display: flex">
-                                        <a href="{{ route('dashboard.atlet.edit', $atlet->id) }}"><button class="button-gap"><i class='bx bx-xs bx-edit'></i></button></a>
+                                        <a href="{{ route('dashboard.atlet.edit', $atlet->id) }}">
+                                            <button class="button-gap"><i class='bx bx-xs bx-edit'></i></button>
+                                        </a>
+                                        <a href="#">
+                                            <button class="button-gap"><i class='bx bx-xs bx-file'></i></button>
+                                        </a>
                                         <form action="{{ route('dashboard.atlet.destroy', $atlet->id) }}" method="post">
                                             @csrf
                                             @method('delete')
