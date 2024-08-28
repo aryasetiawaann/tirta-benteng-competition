@@ -61,7 +61,25 @@ Route::middleware(['auth', 'verified'])->group(function () {
 });
 
 Route::middleware(['auth','role:admin'])->group(function () {
+    Route::get('/admin/dashboard/profile', [ProfileController::class, 'adminEdit'])->name('profile.admin.edit');
+    Route::post('/admin/dashboard/profile/', [ProfileController::class, 'adminUpdate'])->name('profile.admin.update');
+    Route::get('/admin/dashboard/profile/delete-foto', [ProfileController::class, 'adminDeletePhoto']);
+    Route::delete('/admin/dashboard/profile/delete', [ProfileController::class, 'adminDestroy'])->name('profile.admin.destroy');
+    
     Route::get('/admin/dashboard',[AdminController::class,'dashboard'])->name('admin.dashboard');
+
+    Route::get('/admin/dashboard/tambah-kompetisi', [KompetisiController::class, 'adminIndex'])->name('dashboard.admin.kompetisi');
+    Route::post('/admin/dashboard/tambah-kompetisi', [KompetisiController::class, 'tambahKompetisi'])->name('dashboard.admin.tambahkompetisi');
+    Route::put('/admin/dashboard/edit-kompetisi', [KompetisiController::class, 'update'])->name('dashboard.admin.updatekompetisi');
+    Route::delete('/admin/dashboard/kompetisi/{id}/delete', [KompetisiController::class, 'destroy'])->name('dashboard.admin.kompetisi.destroy');
+    Route::get('/admin/dashboard/{id}/edit-kompetisi', [KompetisiController::class, 'editKompetisi'])->name('dashboard.admin.editkompetisi');
+
+
+    Route::get('/admin/dashboard/tambah-acara', [KompetisiController::class, 'showKompetisiAdmin'])->name('dashboard.admin.acara');
+    Route::get('/admin/dashboard/{id}/tambah-acara', [AcaraController::class, 'indexAdmin'])->name('dashboard.admin.listacara');
+    Route::delete('/admin/dashboard/{id}/delete', [AcaraController::class, 'destroy'])->name('dashboard.admin.acara.destroy');
+
+
 });
 
 

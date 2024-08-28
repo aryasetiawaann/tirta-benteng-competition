@@ -1,5 +1,5 @@
-@extends('layouts.dashboard-layout')
-@section('title', 'Profile Saya')
+@extends('admin.admin-dashboard-layout')
+@section('title', 'Atlet Saya')
 @section('content')
     <div class="main-content">
         <div class="top-container">
@@ -23,11 +23,11 @@
                 </div>
                 <div>
                     @if (!is_null(auth()->user()->foto))    
-                    <a href="/dashboard/profile/delete-foto" onclick="return confirm('Apakah kamu yakin ingin menghapus foto? ')">
+                    <a href="/admin/dashboard/profile/delete-foto" onclick="return confirm('Apakah kamu yakin ingin menghapus foto? ')">
                         <button class="delete-photo-button">Hapus Foto</button>
                     </a>
                     @endif
-                    <form action="{{route('profile.update')}}" method="POST" enctype="multipart/form-data">
+                    <form action="{{route('profile.admin.update')}}" method="POST" enctype="multipart/form-data">
                         @csrf
 
                         <input type="file" name="foto" id="foto" accept=".png, .jpeg, .jpg" value="{{ auth()->user()->foto }}">
@@ -80,7 +80,7 @@
             <section class="profile-section profile-delete-section">
                 <h1>Hapus Akun</h1>
                 <p>Setelah akun Anda dihapus, semua sumber daya dan data akan dihapus secara permanen.</p>
-                <form method="post" action="{{ route('profile.destroy') }}">
+                <form method="post" action="{{ route('profile.admin.destroy') }}">
                     @csrf
                     @method('delete')
 

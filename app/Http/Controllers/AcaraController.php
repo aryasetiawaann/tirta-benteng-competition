@@ -73,6 +73,16 @@ class AcaraController extends Controller
 
         return view('pages.kompetisi-daftar2')->with(['acara'=> $acara, 'atlets'=> $atlets]);
     }
+
+    public function indexAdmin($id){
+        $acara = Acara::all()->where("kompetisi_id", $id)->sortBy("nomor_lomba");
+        
+        $nama_kompetisi = Kompetisi::find($id)->nama;
+        $id_kompetisi = Kompetisi::find($id)->id;
+        return view('admin.admin-tambahacara-list', compact('acara', 'nama_kompetisi', 'id_kompetisi'));
+    }
+
+
     /**
      * Show the form for creating a new resource.
      */
@@ -116,8 +126,9 @@ class AcaraController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Acara $acara)
+    public function destroy($id)
     {
-        //
+        Acara::find($id)->delete();
+        redirect()->route('dashboard.admin.listacara')->with('success','Acara berhasil dihapus');
     }
 }

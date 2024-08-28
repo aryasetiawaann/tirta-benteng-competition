@@ -12,31 +12,25 @@
         <div class="menu-btn">
             <i class="ph-bold ph-caret-left"></i>
         </div>
-        {{-- <div class="head">
+        <div class="head">
             <div class="user-img">
-                <a href="{{ route('profile.edit') }}">
+                <a href="{{ route('profile.admin.edit') }}">
                   <img src="{{ !is_null(auth()->user()->foto) ? asset(auth()->user()->foto) : asset('assets/img/blank-profile.png') }}" alt="User Image">
                 </a>
             </div>
             <div class="user-details">
-                <p class="title">User</p>
+                <p class="title">Admin</p>
                 <p class="name">{{ Auth::user()->name }}</p>
             </div>
-        </div> --}}
+        </div>
         <div class="nav">
             <div class="menu">
                 <p class="title">Main</p>
                 <ul>
                     <li>
-                        <a href="{{ route('dashboard') }}">
+                        <a href="{{ route('admin.dashboard') }}">
                             <i class="icon ph-bold ph-house-simple"></i>
                             <span class="text">Dashboard</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{{ route('dashboard.atlet.index') }}">
-                            <i class="icon ph-bold ph-person-simple-swim"></i>
-                            <span class="text">Atlet Saya</span>
                         </a>
                     </li>
                     <li>
@@ -47,32 +41,13 @@
                         </a>
                         <ul class="sub-menu">
                             <li>
-                                <a href="{{ route('dashboard.kompetisi') }}">
-                                    <span class="text">Daftar</span>
+                                <a href="{{ route('dashboard.admin.kompetisi') }}">
+                                    <span class="text">Tambah Kompetisi</span>
                                 </a>
                             </li>
                             <li>
-                                <a href="{{ route('dashboard.kompe-saya') }}">
-                                    <span class="text">Kompetisi Saya</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <i class="icon ph-bold ph-wallet"></i>
-                            <span class="text">Pembayaran</span>
-                            <i class="arrow ph-bold ph-caret-down"></i>
-                        </a>
-                        <ul class="sub-menu">
-                            <li>
-                                <a href="{{ route('dashboard.tagihan') }}">
-                                    <span class="text">Tagihan</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="{{ route('dashboard.tagihan.riwayat') }}">
-                                    <span class="text">Riwayat Pembayaran</span>
+                                <a href="{{ route('dashboard.admin.acara') }}">
+                                    <span class="text">Tambah Acara</span>
                                 </a>
                             </li>
                         </ul>
