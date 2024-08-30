@@ -52,25 +52,6 @@
                             </li>
                         </ul>
                     </li>
-                    <li>
-                        <a href="#">
-                            <i class="icon ph-bold ph-book-open-text"></i>
-                            <span class="text">Unduhan</span>
-                            <i class="arrow ph-bold ph-caret-down"></i>
-                        </a>
-                        <ul class="sub-menu">
-                            <li>
-                                <a href="{{ route('dashboard.bukuacara') }}">
-                                    <span class="text">Buku Acara</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="{{ route('dashboard.bukuhasil') }}">
-                                    <span class="text">Buku Hasil</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
                 </ul>
             </div>
         </div>

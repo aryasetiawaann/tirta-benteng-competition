@@ -210,6 +210,6 @@ class KompetisiController extends Controller
     public function destroy($id)
     {
         Kompetisi::find($id)->delete();
-        redirect()->route('dashboard.admin.acara')->with('success','Kompetisi berhasil dihapus');
+        return redirect()->route('dashboard.admin.acara')->with('success','Kompetisi berhasil dihapus');
     }
 }

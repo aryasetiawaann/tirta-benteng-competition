@@ -8,4 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class LogoKompetisi extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'kompetisi_id',
+        'name'
+    ];
 }

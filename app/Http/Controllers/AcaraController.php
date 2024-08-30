@@ -8,6 +8,11 @@ use App\Http\Requests\UpdateAcaraRequest;
 use App\Models\Acara;
 use App\Models\Kompetisi;
 use Carbon\Carbon;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+
+
+
 class AcaraController extends Controller
 {
     /**
@@ -86,9 +91,77 @@ class AcaraController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        $data = ["kompetisi_id" => $request->kompe_id,
+        "nomor_lomba" => $request->nomor,
+        "nama" => $request->nama,
+        "kategori" => $request->kategori,
+        "harga" => $request->harga,
+        "kuota" => $request->kuota,
+        "grup" => $request->grup,
+        "max_umur" => $request->maxumur,
+        "min_umur" => $request->minumur];
+
+
+        $validation = Validator::make($data, [
+            "kompetisi_id" => "required|exists:kompetisi,id",
+            "nomor_lomba" => "required",
+            "nama" => "required",
+            "kategori" => "required",
+            "harga" => "required|numeric|min:0",
+            "kuota" => "required|integer|min:1",
+            "grup" => "required",
+            "max_umur" => "required|integer|min:0",
+            "min_umur" => "required|integer|min:0|lte:max_umur",
+        ], [
+            'kompetisi_id.required' => 'Kompetisi ID wajib diisi.',
+            'kompetisi_id.exists' => 'Kompetisi tidak ditemukan.',
+            'nomor_lomba.required' => 'Nomor lomba wajib diisi.',
+            'nama.required' => 'Nama wajib diisi.',
+            'kategori.required' => 'Kategori wajib diisi.',
+            'harga.required' => 'Harga wajib diisi.',
+            'harga.numeric' => 'Harga harus berupa angka.',
+            'harga.min' => 'Harga tidak boleh kurang dari 0.',
+            'kuota.required' => 'Kuota wajib diisi.',
+            'kuota.integer' => 'Kuota harus berupa angka.',
+            'kuota.min' => 'Kuota harus lebih besar dari 0.',
+            'grup.required' => 'Grup wajib diisi.',
+            'max_umur.required' => 'Maksimal umur wajib diisi.',
+            'max_umur.integer' => 'Maksimal umur harus berupa angka.',
+            'max_umur.min' => 'Maksimal umur tidak boleh kurang dari 0.',
+            'min_umur.required' => 'Minimal umur wajib diisi.',
+            'min_umur.integer' => 'Minimal umur harus berupa angka.',
+            'min_umur.min' => 'Minimal umur tidak boleh kurang dari 0.',
+            'min_umur.lte' => 'Minimal umur harus kurang dari atau sama dengan maksimal umur.',
+        ]);
+
+        $validation->after(function($validator) use ($data) {
+            if (isset($data['max_umur']) && isset($data['min_umur'])) {
+                if ($data['max_umur'] < $data['min_umur']) {
+                    $validator->errors()->add('max_umur', 'Maksimal umur harus lebih besar dari atau sama dengan minimal umur.');
+                }
+            }
+        });
+        
+        if ($validation->fails()) {
+            return redirect()->back()
+                ->withErrors($validation)
+                ->withInput()
+                ->with('error', 'Validasi gagal, silakan periksa kembali input Anda.');
+        }
+        
+        Acara::create($data);
+        
+        return redirect()->back()->with('success', 'Data berhasil disimpan.');
+
+    }
+
+    public function editAcara($id)
+    {
+        $acara = Acara::find($id);
+
+        return view('admin.admin-editacara', compact('acara'));
     }
 
     /**
@@ -118,9 +191,67 @@ class AcaraController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateAcaraRequest $request, Acara $acara)
+    public function update(Request $request)
     {
-        //
+        $data = ["nomor_lomba" => $request->nomor,
+        "nama" => $request->nama,
+        "kategori" => $request->kategori,
+        "harga" => $request->harga,
+        "kuota" => $request->kuota,
+        "grup" => $request->grup,
+        "max_umur" => $request->maxumur,
+        "min_umur" => $request->minumur];
+
+
+        $validation = Validator::make($data, [
+            "nomor_lomba" => "required",
+            "nama" => "required",
+            "kategori" => "required",
+            "harga" => "required|numeric|min:0",
+            "kuota" => "required|integer|min:1",
+            "grup" => "required",
+            "max_umur" => "required|integer|min:0",
+            "min_umur" => "required|integer|min:0|lte:max_umur",
+        ], [
+            'nomor_lomba.required' => 'Nomor lomba wajib diisi.',
+            'nama.required' => 'Nama wajib diisi.',
+            'kategori.required' => 'Kategori wajib diisi.',
+            'harga.required' => 'Harga wajib diisi.',
+            'harga.numeric' => 'Harga harus berupa angka.',
+            'harga.min' => 'Harga tidak boleh kurang dari 0.',
+            'kuota.required' => 'Kuota wajib diisi.',
+            'kuota.integer' => 'Kuota harus berupa angka.',
+            'kuota.min' => 'Kuota harus lebih besar dari 0.',
+            'grup.required' => 'Grup wajib diisi.',
+            'max_umur.required' => 'Maksimal umur wajib diisi.',
+            'max_umur.integer' => 'Maksimal umur harus berupa angka.',
+            'max_umur.min' => 'Maksimal umur tidak boleh kurang dari 0.',
+            'min_umur.required' => 'Minimal umur wajib diisi.',
+            'min_umur.integer' => 'Minimal umur harus berupa angka.',
+            'min_umur.min' => 'Minimal umur tidak boleh kurang dari 0.',
+            'min_umur.lte' => 'Minimal umur harus kurang dari atau sama dengan maksimal umur.',
+        ]);
+
+        $validation->after(function($validator) use ($data) {
+            if (isset($data['max_umur']) && isset($data['min_umur'])) {
+                if ($data['max_umur'] < $data['min_umur']) {
+                    $validator->errors()->add('max_umur', 'Maksimal umur harus lebih besar dari atau sama dengan minimal umur.');
+                }
+            }
+        });
+        
+        if ($validation->fails()) {
+            return redirect()->back()
+                ->withErrors($validation)
+                ->withInput()
+                ->with('error', 'Validasi gagal, silakan periksa kembali input Anda.');
+        }
+        
+        $acara = Acara::find($request->id);
+        $acara->update($data);
+        
+        return redirect()->route('dashboard.admin.listacara', $request->kompe_id)->with('success', 'Data berhasil diubah.');
+   
     }
 
     /**
@@ -128,7 +259,11 @@ class AcaraController extends Controller
      */
     public function destroy($id)
     {
-        Acara::find($id)->delete();
-        redirect()->route('dashboard.admin.listacara')->with('success','Acara berhasil dihapus');
+        $acara = Acara::find($id);
+        $id_kompetisi = $acara->kompetisi->id;
+
+        $acara->delete();
+
+        return redirect()->route('dashboard.admin.listacara', $id_kompetisi)->with('success','Acara berhasil dihapus');
     }
 }

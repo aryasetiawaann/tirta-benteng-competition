@@ -2,11 +2,6 @@
 @section('content')
 <div class="main-content">
 
-    <div>
-        <h2>Peringatan!!</h2>
-        <p>Menghapus kompetisi yang sedang berjalan atau sudah selesai akan menghapus seluruh data peserta dan semua history kompetisi pada pengguna akan terhapus.</p>
-    </div>
-
     @if (session('success'))
     <div style="color: green;">
         {{ session('success') }}
@@ -65,7 +60,7 @@
             <form action="{{ route('dashboard.admin.kompetisi.destroy', $kompe->id) }}" method="post">
                 @csrf
                 @method('delete')
-                <button class="button-red button-gap" onclick="return confirm('Apakah kamu yakin ingin menghapus? ')">
+                <button class="button-red button-gap" onclick="return confirm('-- PERINGATAN!! --\nMenghapus kompetisi yang sedang berjalan atau sudah selesai akan menghapus seluruh data peserta dan semua history kompetisi pada pengguna akan terhapus.')">
                     <i class='bx bx-xs bxs-trash'></i>
                 </button>
             </form>

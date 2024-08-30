@@ -76,8 +76,11 @@ Route::middleware(['auth','role:admin'])->group(function () {
 
 
     Route::get('/admin/dashboard/tambah-acara', [KompetisiController::class, 'showKompetisiAdmin'])->name('dashboard.admin.acara');
+    Route::post('/admin/dashboard/tambah-acara',  [AcaraController::class, 'create'])->name('dashboard.admin.tambahacara');
+    Route::put('/admin/dashboard/edit-acara',  [AcaraController::class, 'update'])->name('dashboard.admin.updateacara');
     Route::get('/admin/dashboard/{id}/tambah-acara', [AcaraController::class, 'indexAdmin'])->name('dashboard.admin.listacara');
-    Route::delete('/admin/dashboard/{id}/delete', [AcaraController::class, 'destroy'])->name('dashboard.admin.acara.destroy');
+    Route::delete('/admin/dashboard/acara/{id}/delete', [AcaraController::class, 'destroy'])->name('dashboard.admin.acara.destroy');
+    Route::get('/admin/dashboard/{id}/edit-acara', [AcaraController::class, 'editAcara'])->name('dashboard.admin.editacara');
 
 
 });

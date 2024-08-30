@@ -16,17 +16,35 @@
         </div>
         </div>
     </div>
-    <div>
-        <h2>Peringatan!!</h2>
-        <p>Menghapus acara yang sedang berjalan atau sudah selesai akan menghapus seluruh data peserta dan semua history kompetisi pada pengguna akan terhapus.</p>
+    @if (session('success'))
+    <div style="color: green;">
+        {{ session('success') }}
     </div>
-    {{-- <nav class="breadcrumb">
+    @endif
+
+    <!-- Menampilkan Pesan Error -->
+    @if (session('error'))
+        <div style="color: red;">
+            {{ session('error') }}
+        </div>
+    @endif
+
+    <!-- Menampilkan Validasi Error -->
+    @if ($errors->any())
+        <div style="color: red;">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+    <nav class="breadcrumb">
         <ul>
-            <li>Kompetisi</li>
-            <li><a href="{{ route('dashboard.kompe-saya') }}">Kompetisi Saya</a></li>
-            <li><a href="{{ route('dashboard.kompe-saya.acara', $id_kompetisi) }}">{{ $nama_kompetisi }}</a></li>
+            <li><a href="{{ route('dashboard.admin.acara') }}">List Kompetisi</a></li>
+            <li><a href="{{ route('dashboard.admin.listacara', $id_kompetisi) }}">{{ $nama_kompetisi }}</a></li>
         </ul>
-    </nav> --}}
+    </nav>
     <div>
         <button id="openOverlay">Tambah</button>
     </div>
@@ -47,11 +65,13 @@
                 <p>Max Umur : {{ $ac->max_umur }}</p>
             </div>
             <div>
-                <button>edit</button>
+                <a href="{{ route('dashboard.admin.editacara', $ac->id) }}">
+                    <button>Edit</button>
+                </a>
                 <form action="{{ route('dashboard.admin.acara.destroy', $ac->id) }}" method="post">
                     @csrf
                     @method('delete')
-                    <button class="button-red button-gap" onclick="return confirm('Apakah kamu yakin ingin menghapus? ')">
+                    <button class="button-red button-gap" onclick="return confirm('-- PERINGATAN!! --\nMenghapus acara yang sedang berjalan atau sudah selesai akan menghapus seluruh data peserta dan semua history kompetisi pada pengguna akan terhapus.')">
                         <i class='bx bx-xs bxs-trash'></i>
                     </button>
                 </form>
