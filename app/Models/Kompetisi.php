@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Acara;
+use App\Models\LogoKompetisi;
 
 class Kompetisi extends Model
 {
@@ -27,5 +28,9 @@ class Kompetisi extends Model
 
     public function acara(){
         return $this->hasMany(Acara::class, 'id');
+    }
+
+    public function logo(){
+        return $this->hasMany(LogoKompetisi::class, 'kompetisi_id');
     }
 }

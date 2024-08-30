@@ -17,6 +17,7 @@ class Atlet extends Model
         'jenis_kelamin',
         'track_record',
         'user_id',
+        'dokumen',
     ];
 
 

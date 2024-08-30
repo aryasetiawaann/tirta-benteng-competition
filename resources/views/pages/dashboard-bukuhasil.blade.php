@@ -45,45 +45,31 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>Swimming Competition 2024</td>
-                            <td><span class="status registration">Registrasi</span></td>
-                            <td>
-                                <a href="#"><button class="button-green"><i class='fa fa-arrow-right'></i></button></a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>Catur Competition 2024</td>
-                            <td><span class="status registration">Registrasi</span></td>
-                        </tr>
-                        <tr>
-                            <td>3</td>
-                            <td>Valorant Competition 2024</td>
-                            <td><span class="status registration">Registrasi</span></td>
-                        </tr>
-                        <tr>
-                            <td>4</td>
-                            <td>Tidur Competition 2024</td>
-                            <td><span class="status registration">Registrasi</span></td>
-                        </tr>
-                        <tr>
-                            <td>5</td>
-                            <td>Rebahan Competition 2024</td>
-                            <td><span class="status registration">Registrasi</span></td>
-                        </tr>
-                        <tr>
-                            <td>6</td>
-                            <td>Makan Competition 2024</td>
-                            <td><span class="status registration">Registrasi</span></td>
-                        </tr>
-                        <tr>
-                            <td>7</td>
-                            <td>Main Competition 2024</td>
-                            <td><span class="status registration">Registrasi</span></td>
-                        </tr>
-                        <!-- Add more rows as needed -->
+                        @if ($competitions->isEmpty())
+                            <tr><td colspan="4" style="text-align:center;">Belum ada data</td></tr>
+                        @else
+                            @foreach ( $competitions as $competition )
+                            @if ($competition->file_hasil != NULL)    
+                            <tr>
+                                <td>{{ $counter = isset($counter) ? $counter + 1 : 1 }}</td>
+                                <td>{{ $competition->nama }}</td>
+                                @if ( now() > $competition->waktu_kompetisi)
+                                <td><span class="status registration">Selesai</span></td>
+                                <td>
+                                    <a href="{{ route('dashboard.bukuhasil.download', $competition->id) }}"><button class="button-green"><i class='bx bx-download'></i></button></a>
+                                </td>
+                                @elseif (now() >= $competition->tutup_pendaftaran)
+                                <td><span class="status registration">Berjalan</span></td>
+                                <td>
+                                    <a href="{{ route('dashboard.bukuhasil.download', $competition->id) }}"><button class="button-green"><i class='bx bx-download'></i></button></a>
+                                </td>
+                                @else
+                                <td><span class="status registration">Registrasi</span></td>
+                                @endif
+                            </tr>
+                            @endif
+                            @endforeach
+                        @endif
                     </tbody>
                 </table>
                 <div class="pagination">

@@ -114,11 +114,28 @@
             <div class="right-container">
                 <div class="all-container all-card">
                     <header class="divider">
-                        <h2>Aktivitas terbaru</h2>
+                        <h2>Kompetisi Terbaru</h2>
                     </header>
-                    <div class="activity-content">
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aut in porro dolorum. Minus quasi beatae nam eius neque illo quaerat, tempora, porro debitis libero sunt voluptate ratione harum facere temporibus.</p> 
-                    </div>
+                    @if ($kompetisis->count() > 0)
+                        @foreach ($kompetisis as $kompetisi)
+                            <div>
+                                <h3>{{ $kompetisi->nama }}</h3>
+                                @if(now() > $kompetisi->waktu_kompetisi)
+                                <p><span class="status tutup smaller">Selesai</span></p>
+                                @elseif (now() >= $kompetisi->tutup_pendaftaran)
+                                <p><span class="status buka smaller">Berjalan</span></p>
+                                @elseif (now() >= $kompetisi->buka_pendaftaran && now() < $kompetisi->tutup_pendaftaran)
+                                <p><span class="status buka smaller">Registrasi</span></p>
+                                @else
+                                <p><span class="status buka smaller">Belum dibuka</span></p>
+                                @endif
+                                <p>Lokasi: {{ $kompetisi->lokasi }}</p>
+                                <p>{{ $kompetisi->deskripsi }}</p>
+                            </div>
+                        @endforeach
+                    @else
+                    <p>Belum ada kompetisi</p>
+                    @endif
                 </div>
             </div>
         </div>

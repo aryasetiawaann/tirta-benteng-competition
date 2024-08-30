@@ -27,7 +27,7 @@
                 </div>
                 
                 <div class="register-body-form">
-                    <label for="club">Club (opsional)</label>
+                    <label for="club">Club/Asal Sekolah (opsional)</label>
                     <input id="club" type="text" name="club" value="{{old('club')}}" placeholder="Contoh: Tirta Benteng Club">
                     @error('club')
                     <p>{{ $message }}</p>

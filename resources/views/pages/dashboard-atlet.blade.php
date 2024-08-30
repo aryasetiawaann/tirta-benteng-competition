@@ -21,11 +21,11 @@
             @endforeach
         </x-error-list>
         @endif
-        <!-- <div class="nav-page nav-card">
-            <p>
-                <a href="#">#</a> / 
-            </p>
-        </div> -->
+        @if (session('success'))
+            <div style="color: green;">
+                {{ session('success') }}
+            </div>
+        @endif
         <div class="bottom-container">
             <section class="all-container all-card w100">
                 <header class="divider flex">
@@ -67,18 +67,31 @@
                                     <td>{{ now()->diffInYears(\Carbon\Carbon::parse($atlet->umur)) }}</td>
                                     <td>{{ $atlet->jenis_kelamin }}</td>
                                     <td><span class="status registration">{{ str_replace('.', ':', sprintf('%04.2f', $atlet->track_record))}} Menit</span></td>
-                                    <td></td>
+                                    @if ($atlet->dokumen != NULL)
+                                        <td>Lengkap</td>  
+                                    @else
+                                        <td>Tidak Lengkap</td>
+                                    @endif
                                     <td style="display: flex">
                                         <a href="{{ route('dashboard.atlet.edit', $atlet->id) }}">
                                             <button class="button-gap"><i class='bx bx-xs bx-edit'></i></button>
                                         </a>
-                                        <a href="#">
-                                            <button class="button-gap"><i class='bx bx-xs bx-file'></i></button>
-                                        </a>
+                                        @if ($atlet->dokumen != NULL)
+                                            <a href="{{ route('dashboard.atlet.dokumen.download', $atlet->id) }}">
+                                                <button class="button-gap button-green"><i class='bx bx-xs bx-file'></i></button>
+                                            </a>
+                                            <form action="{{ route('dashboard.atlet.dokumen.delete', $atlet->id) }}" method="post">
+                                                @csrf
+                                                @method('delete')
+                                                <button class="button-red button-gap" onclick="return confirm('Apakah kamu yakin ingin menghapus dokumen ini? ')">
+                                                    <i class='bx bx-xs bx-file'></i>
+                                                </button>
+                                            </form>
+                                        @endif
                                         <form action="{{ route('dashboard.atlet.destroy', $atlet->id) }}" method="post">
                                             @csrf
                                             @method('delete')
-                                            <button class="button-red button-gap" onclick="return confirm('Apakah kamu yakin ingin menghapus? ')">
+                                            <button class="button-red button-gap" onclick="return confirm('Apakah kamu yakin ingin menghapus atlet ini? ')">
                                                 <i class='bx bx-xs bxs-trash'></i>
                                             </button>
                                         </form>

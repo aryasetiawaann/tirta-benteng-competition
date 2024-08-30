@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\LogoKompetisi;
-use App\Http\Requests\StoreLogoKompetisiRequest;
-use App\Http\Requests\UpdateLogoKompetisiRequest;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
+
 
 class LogoKompetisiController extends Controller
 {
@@ -19,48 +20,46 @@ class LogoKompetisiController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+
+        $request->validate([
+            'logo.*' => 'required|image|mimes:png,jpg,jpeg,webp'
+        ]);
+
+        $imageData = [];
+        if($files = $request->file('logo')){
+
+            foreach($files as $key => $file){
+
+                $filename = $key. '-' . time() . '.' . $file->extension();
+
+
+                $file->move(public_path('assets/img'), $filename);
+
+                $imageData[] = [
+                    'kompetisi_id' => $request->kompetisi,
+                    'name' => 'assets/img/' . $filename,
+                ];
+            }
+
+        }
+
+        LogoKompetisi::insert($imageData);
+
+        return redirect()->route('dashboard.admin.kompetisi')->with('success', 'Logo berhasil dimasukkan');
+
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(StoreLogoKompetisiRequest $request)
+    public function destroy($id)
     {
-        //
-    }
+        $logo = LogoKompetisi::find($id);
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(LogoKompetisi $logoKompetisi)
-    {
-        //
-    }
+        if ($logo->name && File::exists(public_path($logo->name))) {
+            File::delete(public_path($logo->name));
+            $logo->delete();
+        }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(LogoKompetisi $logoKompetisi)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(UpdateLogoKompetisiRequest $request, LogoKompetisi $logoKompetisi)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(LogoKompetisi $logoKompetisi)
-    {
-        //
+        return redirect()->route('admin.dashboard')->with('success','Logo profil berhasil dihapus');
     }
 }

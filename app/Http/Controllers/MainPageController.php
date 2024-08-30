@@ -19,7 +19,8 @@ class MainPageController extends Controller
 
         $currentDate = Carbon::now();
 
-        $kompetisi_count = Kompetisi::where('waktu_kompetisi', '>', now())->count();
+        $kompetisis = Kompetisi::all()->sortByDesc('created_at');
+        $kompetisi_count = Kompetisi::where('waktu_kompetisi', '>', now())->where('buka_pendaftaran', '<=', now())->count();
         $atlet_count = Atlet::all()->where('user_id', auth()->user()->id)->count();
         $atlets = Atlet::whereHas('acara')->with('acara')->where('user_id', auth()->user()->id)->get()->sortByDesc('created_at');
 
@@ -49,6 +50,6 @@ class MainPageController extends Controller
         }
 
         return view('pages.dashboard')->with(['kompetisi_count'=> $kompetisi_count, 'atlets'=> $atlets, 'acara_count'=> $acara_count, 'atlet_count'=> $atlet_count,
-                    'totalTagihan' => $totalTagihan, 'tagihanSelesai' => $tagihanSelesai]);
+                    'totalTagihan' => $totalTagihan, 'tagihanSelesai' => $tagihanSelesai, 'kompetisis' => $kompetisis]);
     }
 }

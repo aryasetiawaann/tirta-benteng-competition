@@ -3,6 +3,7 @@
 use App\Http\Controllers\AcaraController;
 use App\Http\Controllers\AtletController;
 use App\Http\Controllers\KompetisiController;
+use App\Http\Controllers\LogoKompetisiController;
 use App\Http\Controllers\MainPageController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\PesertaController;
@@ -29,7 +30,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
 
     Route::resource('/dashboard/atlet-saya', AtletController::class)->names('dashboard.atlet');
-    
+    Route::get('/dashboard/atlet-saya/{id}/dokumen/download', [AtletController::class, 'downloadDocument'])->name('dashboard.atlet.dokumen.download');
+    Route::delete('/dashboard/edit/atlet-saya/{id}/dokumen/delete', [AtletController::class, 'deleteDocument'])->name('dashboard.atlet.dokumen.delete');
+
 
     
     Route::get('/dashboard/daftar-kompetisi', [KompetisiController::class, 'index'])->name('dashboard.kompetisi');
@@ -50,9 +53,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard/bukuacara', [UnduhanController::class, 'userBukuAcara'])->name('dashboard.bukuacara');
     Route::get('/dashboard/bukuacara/view/{id}/pdf', [UnduhanController::class, 'showBukuAcara'])->name('dashboard.bukuacara.view');
 
-    Route::get('/dashboard/bukuhasil', function () {
-        return view('pages.dashboard-bukuhasil');
-    })->name('dashboard.bukuhasil');
+    Route::get('/dashboard/bukuhasil', [UnduhanController::class, 'showBukuHasil'])->name('dashboard.bukuhasil');
+    Route::get('/admin/bukuhasil/{id}/download', [UnduhanController::class, 'downloadBukuHasil'])->name('dashboard.bukuhasil.download');
+
 
     Route::get('/dashboard/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::post('/dashboard/profile/', [ProfileController::class, 'update'])->name('profile.update');
@@ -70,6 +73,8 @@ Route::middleware(['auth','role:admin'])->group(function () {
 
     Route::get('/admin/dashboard/tambah-kompetisi', [KompetisiController::class, 'adminIndex'])->name('dashboard.admin.kompetisi');
     Route::post('/admin/dashboard/tambah-kompetisi', [KompetisiController::class, 'tambahKompetisi'])->name('dashboard.admin.tambahkompetisi');
+    Route::post('/admin/dashboard/kompetisi/logo', [LogoKompetisiController::class, 'create'])->name('dashboard.admin.kompetisi.logo.create');
+    Route::delete('/admin/dashboard/kompetisi/{id}/logo/delete', [LogoKompetisiController::class, 'destroy'])->name('dashboard.admin.kompetisi.logo.delete');
     Route::put('/admin/dashboard/edit-kompetisi', [KompetisiController::class, 'update'])->name('dashboard.admin.updatekompetisi');
     Route::delete('/admin/dashboard/kompetisi/{id}/delete', [KompetisiController::class, 'destroy'])->name('dashboard.admin.kompetisi.destroy');
     Route::get('/admin/dashboard/{id}/edit-kompetisi', [KompetisiController::class, 'editKompetisi'])->name('dashboard.admin.editkompetisi');
@@ -82,6 +87,13 @@ Route::middleware(['auth','role:admin'])->group(function () {
     Route::delete('/admin/dashboard/acara/{id}/delete', [AcaraController::class, 'destroy'])->name('dashboard.admin.acara.destroy');
     Route::get('/admin/dashboard/{id}/edit-acara', [AcaraController::class, 'editAcara'])->name('dashboard.admin.editacara');
 
+    Route::post('/admin/dashboard/upload-hasil', [KompetisiController::class, 'uploadHasilKompetisi'])->name('dashboard.admin.file.add');
+    Route::get('/admin/dashboard/file/{id}/edit', [KompetisiController::class, 'editHasilKompetisi'])->name('dashboard.admin.file.edit');
+    Route::get('/admin/dashboard/file/{id}/file/download', [KompetisiController::class, 'downloadHasilKompetisi'])->name('dashboard.admin.file.download');
+    Route::put('/admin/dashboard/file/update', [KompetisiController::class, 'updateHasilKompetisi'])->name('dashboard.admin.file.update');
+    Route::delete('/admin/dashboard/file/{id}/delete', [KompetisiController::class, 'deleteHasilKompetisi'])->name('dashboard.admin.file.delete');
+
+    Route::get('/admin/dashboard/file/{id}/download', [KompetisiController::class, 'downloadExcel'])->name('dashboard.admin.excel.download');
 
 });
 

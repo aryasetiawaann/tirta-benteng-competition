@@ -59,6 +59,41 @@
                 </form>
             </section>
         </div>
+
+        <div class="all-container all-card w100">
+            <header class="flex divider">
+                <h2>Tambah Logo</h2>
+            </header>
+            <section>
+                <form class="tambah-container" enctype="multipart/form-data" method="POST" action="{{ route('dashboard.admin.kompetisi.logo.create') }}">
+                    @csrf
+    
+                    <label for="kompetisi">Pilih Kompetisi</label>
+                    <select name="kompetisi" id="kompetisi">
+                        @if ($kompetisis->count() > 0 )
+                            @foreach ($kompetisis as $key => $kompetisi)
+                                @if ($key == 0)
+                                <option value="{{ $kompetisi->id }}" selected>{{ $kompetisi->nama }}</option>
+                                @else
+                                <option value="{{ $kompetisi->id }}">{{ $kompetisi->nama }}</option>
+                                @endif
+                        @endforeach    
+                        @else
+                            <option value="" selected>Tidak ada kompetisi</option>                  
+                        @endif
+                    </select>
+
+                    <label for="logo">Masukan Logo</label>
+                    <input type="file" name="logo[]" multiple id="logo">
+
+                    @if ($kompetisis->count() > 0)
+                    <div class="flex center">
+                        <button class="w50" type="submit">Simpan</button>
+                    </div>
+                    @endif
+                </form>
+            </section>
+        </div>
     </div>
 </div>
 

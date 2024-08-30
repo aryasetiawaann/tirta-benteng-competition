@@ -8,6 +8,8 @@ use App\Models\Atlet;
 use App\Models\Acara;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Facades\File;
 
 
 class UnduhanController extends Controller
@@ -184,6 +186,45 @@ class UnduhanController extends Controller
         }
 
         return $heats;
+    }
+
+    public function showBukuHasil(){
+
+        $acara_ids = Atlet::where('user_id', auth()->user()->id) 
+        ->with('acara') 
+        ->get()
+        ->flatMap(function ($atlet) {
+            return $atlet->acara->pluck('id');
+        })
+        ->unique();
+
+        $competitions = Kompetisi::whereHas('acara', function ($query) use ($acara_ids) {
+            $query->whereIn('id', $acara_ids);
+        })->orderBy('created_at', 'desc')->get();
+
+        return view('pages.dashboard-bukuhasil', compact('competitions'));
+    }
+
+
+    public function downloadBukuHasil($id)
+    {
+        $kompetisi = Kompetisi::find($id);
+
+        $path = public_path($kompetisi->file_hasil);
+
+        if (!File::exists($path)) {
+            abort(404);
+        }
+
+        $file = File::get($path);
+        $type = File::mimeType($path);
+
+        $response = Response::make($file, 200);
+        $response->header("Content-Type", $type);
+
+        $response->header("Content-Disposition", 'attachment; filename='.$kompetisi->nama.".pdf");
+
+        return $response;
     }
 
 }

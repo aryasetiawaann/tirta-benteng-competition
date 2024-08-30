@@ -14,8 +14,9 @@
                         @foreach ($atlets as $key => $atlet)
                             @if ($key == 0)
                             <option value="{{ $atlet->id }}" selected>{{ $atlet->name }}</option>
-                            @endif
+                            @else
                             <option value="{{ $atlet->id }}">{{ $atlet->name }}</option>
+                            @endif
                         @endforeach
                     @else
                         <option value="" selected>Belum ada atlet memenuhi kriteria</option>

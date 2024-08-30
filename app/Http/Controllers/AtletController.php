@@ -7,6 +7,8 @@ use App\Http\Requests\StoreAtletRequest;
 use App\Http\Requests\UpdateAtletRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Facades\File;
 
 class AtletController extends Controller
 {
@@ -23,6 +25,41 @@ class AtletController extends Controller
         return view('pages.dashboard-atlet')->with(['atlets'=>$atlets, 'atlets_count'=>$atlet_count]);
     }
 
+    public function deleteDocument($id)
+    {
+        $atlet = Atlet::find($id);
+
+        if ($atlet->dokumen && File::exists(public_path($atlet->dokumen))) {
+            File::delete(public_path($atlet->dokumen));
+            $atlet->dokumen = null;
+            $atlet->save();
+        }
+
+        return redirect()->back()->with('success','Dokumuen berhasil dihapus');
+    }
+
+    public function downloadDocument($id)
+    {
+        $atlet = Atlet::find($id);
+
+        $path = public_path($atlet->dokumen);
+
+        if (!File::exists($path)) {
+            abort(404);
+        }
+
+        $file = File::get($path);
+        $type = File::mimeType($path);
+
+        $response = Response::make($file, 200);
+        $response->header("Content-Type", $type);
+
+        $response->header("Content-Disposition", 'attachment; filename=Dokumen'.$atlet->name.".pdf");
+
+        return $response;
+
+    }
+
     /**
      * Show the form for creating a new resource.
      */
@@ -36,11 +73,20 @@ class AtletController extends Controller
      */
     public function store(Request $request)
     {
+        $dokumen = NULL;
+        if ($request->hasFile('dokumen')) {
+
+            $fileName = time() . '.' . $request->dokumen->extension();
+            $request->dokumen->move(public_path('assets/dokumen'), $fileName);
+            $dokumen = 'assets/dokumen/' . $fileName;
+        }
+
         $data = [ "name"=> $request->nama,
         "umur"=> $request->umur,
         "jenis_kelamin"=> $request->jenisKelamin,
         "track_record"=> $request->record,
         "user_id"=> auth()->user()->id,
+        'dokumen' => $dokumen
         ];
 
         $validation = Validator::make($data, [
@@ -88,11 +134,27 @@ class AtletController extends Controller
      */
     public function update(Request $request)
     {
+        $atlet = Atlet::find($request->atlet_id);
+        
+        $dokumen = $atlet->dokumen;
+        
+        if ($request->hasFile('dokumen')) {
+
+            if ($atlet->dokumen && File::exists(public_path($atlet->dokumen))) {
+                File::delete(public_path($atlet->dokumen));
+            }
+
+            $fileName = time() . '.' . $request->dokumen->extension();
+            $request->dokumen->move(public_path('assets/dokumen'), $fileName);
+            $dokumen = 'assets/dokumen/' . $fileName;
+        }
+
         $data = [ "name"=> $request->nama,
         "umur"=> $request->umur,
         "jenis_kelamin"=> $request->jenisKelamin,
         "track_record"=> $request->record,
         "user_id"=> auth()->user()->id,
+        "dokumen" => $dokumen
         ];
 
         $validation = Validator::make($data, [
@@ -112,10 +174,9 @@ class AtletController extends Controller
             return redirect()->back()->withErrors($validation)->withInput();
         }
 
-        $atlet = Atlet::find($request->atlet_id);
         $atlet->update($data);
 
-        return redirect('/dashboard/atlet-saya')->with('success','Atlet berhasil dibuat');
+        return redirect('/dashboard/atlet-saya')->with('success','Atlet berhasil diperbaharui');
     }
 
     /**
@@ -123,7 +184,14 @@ class AtletController extends Controller
      */
     public function destroy($id)
     {
-        Atlet::find($id)->delete();
+        $atlet = Atlet::find($id);
+
+        if ($atlet->dokumeun && File::exists(public_path($atlet->dokumeun))) {
+            File::delete(public_path($atlet->dokumeun));
+        }
+
+        $atlet->delete();
+
         return redirect()->back()->with('success','Atlet berhasil dihapus');
     }
 }

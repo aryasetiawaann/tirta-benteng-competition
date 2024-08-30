@@ -16,7 +16,7 @@
                 </x-error-list>
                 @endif
                 <div>
-                    <form class="edit-atlet" method="POST" action="{{ route('dashboard.atlet.update', $atlet->id) }}">
+                    <form class="edit-atlet" method="POST" action="{{ route('dashboard.atlet.update', $atlet->id) }}" enctype="multipart/form-data">
                         @csrf
                         @method('put')
 
@@ -32,6 +32,8 @@
                         <label for="record">Track Record</label>
                         <p><i style="font-size: 12px">(Tulis 0 Jika tidak ada)</i></p>
                         <input type="number" id="record" name="record" placeholder="contoh: 3,25 (Menit)" value="{{ $atlet->track_record }}" step="0.01">
+                        <label for="dokumen">Dokumen</label>
+                        <input type="file" name="dokumen" id="dokumen" accept=".pdf" value="{{ $atlet->dokumen }}">
                         <input type="hidden" name="atlet_id" value="{{ $atlet->id }}">
                         <div class="flex center">   
                             <button type="submit" class="w50">Simpan</button>

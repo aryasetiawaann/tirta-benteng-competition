@@ -4,10 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Models\Kompetisi;
 use App\Models\Atlet;
-use App\Http\Requests\StoreKompetisiRequest;
-use App\Http\Requests\UpdateKompetisiRequest;
+use App\Exports\KompetisiExport;
+use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Facades\File;
+
 
 class KompetisiController extends Controller
 {
@@ -39,7 +42,9 @@ class KompetisiController extends Controller
 
     public function adminIndex(){
 
-        return view('admin.admin-tambahkompetisi');
+        $kompetisis = Kompetisi::all();
+
+        return view('admin.admin-tambahkompetisi', compact('kompetisis'));
     }
 
     public function showKompetisiAdmin(){
@@ -111,41 +116,98 @@ class KompetisiController extends Controller
 
         return view('admin.admin-editkompetisi', compact('kompetisi'));
     }
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    
+    public function uploadHasilKompetisi(Request $request)
     {
-        //
+
+        $kompetisi = Kompetisi::find($request->kompetisi);
+
+        if ($request->hasFile('file')) {
+
+            if ($kompetisi->file_hasil && File::exists(public_path($kompetisi->file_hasil))) {
+                File::delete(public_path($kompetisi->file_hasil));
+            }
+
+            $fileName = time() . '.' . $request->file->extension();
+            $request->file->move(public_path('assets/file_hasil'), $fileName);
+            $kompetisi->file_hasil = 'assets/file_hasil/' . $fileName;
+        }
+
+        $kompetisi->save();
+
+        return redirect()->back()->with('success','Upload berhasil');
+        
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(StoreKompetisiRequest $request)
+    public function deleteHasilKompetisi($id)
     {
-        //
+        $kompetisi = Kompetisi::find($id);
+
+        if ($kompetisi->file_hasil && File::exists(public_path($kompetisi->file_hasil))) {
+            File::delete(public_path($kompetisi->file_hasil));
+            $kompetisi->file_hasil = null;
+            $kompetisi->save();
+        }
+
+        return redirect()->back()->with('success','File berhasil dihapus');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Kompetisi $kompetisi)
+    public function editHasilKompetisi($id)
     {
-        //
+        $kompetisi = Kompetisi::find($id);
+
+        return view('admin.admin-editfile', compact('kompetisi'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Kompetisi $kompetisi)
+    public function updateHasilKompetisi(Request $request)
     {
-        //
+        $kompetisi = Kompetisi::find($request->id);
+
+        if ($request->hasFile('file')) {
+
+            if ($kompetisi->file_hasil && File::exists(public_path($kompetisi->file_hasil))) {
+                File::delete(public_path($kompetisi->file_hasil));
+            }
+
+            $fileName = time() . '.' . $request->file->extension();
+            $request->file->move(public_path('assets/file_hasil'), $fileName);
+            $kompetisi->file_hasil = 'assets/file_hasil/' . $fileName;
+        }
+
+        $kompetisi->save();
+
+        return redirect()->route('admin.dashboard')->with('success','File berhasil diperbaharui');
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
+    public function downloadHasilKompetisi($id)
+    {
+        $kompetisi = Kompetisi::find($id);
+
+        $path = public_path($kompetisi->file_hasil);
+
+        if (!File::exists($path)) {
+            abort(404);
+        }
+
+        $file = File::get($path);
+        $type = File::mimeType($path);
+
+        $response = Response::make($file, 200);
+        $response->header("Content-Type", $type);
+
+        $response->header("Content-Disposition", 'attachment; filename='.$kompetisi->nama.".pdf");
+
+        return $response;
+
+    }
+
+    public function downloadExcel($kompetisiId)
+    {
+        $kompetisi = Kompetisi::find($kompetisiId);
+
+        return Excel::download(new KompetisiExport($kompetisiId), $kompetisi->nama . '.xlsx');
+    }
+
     public function update(Request $request)
     {
         $data = [ "nama"=> $request->nama,

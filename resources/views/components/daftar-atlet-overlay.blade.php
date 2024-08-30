@@ -5,7 +5,7 @@
             <span id="closeOverlay" class="bx bx-md bx-x"></span>
         </header>
         <section>
-            <form class="atlet" method="POST" action="{{ route('dashboard.atlet.store') }}">
+            <form class="atlet" method="POST" action="{{ route('dashboard.atlet.store') }}" enctype="multipart/form-data">
                 @csrf
 
                 <label for="nama">Nama Atlet</label>
@@ -20,6 +20,8 @@
                 <label for="record">Track Record</label>
                 <p><i style="font-size: 12px">(Tulis 0 Jika tidak ada)</i></p>
                 <input type="number" id="record" name="record" placeholder="contoh: 3,25 (Menit)" step="0.01">
+                <label for="dokumen">Dokumen</label>
+                <input type="file" name="dokumen" id="dokumen" accept=".pdf">
                 <div class="flex center">   
                     <button type="submit" class="w50">Kirim</button>
                 </div>
