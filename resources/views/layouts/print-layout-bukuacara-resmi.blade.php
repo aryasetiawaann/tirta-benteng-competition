@@ -113,15 +113,18 @@
         <footer>
             <table class="table-footer">
                 <tr>
-                    <td>
-                        <img src="{{ public_path('assets/img/logo.png') }}" alt="logo">
-                    </td>
-                    <td>
-                        <img src="{{ public_path('assets/img/logo.png') }}" alt="logo">
-                    </td>
-                    <td>
-                        <img src="{{ public_path('assets/img/logo.png') }}" alt="logo">
-                    </td>
+                    @if ($kompetisi->logo->count() > 0)
+                        @foreach ($kompetisi->logo as $logo)  
+                            <td>
+                                <img src="{{ public_path('assets/img/logo.png') }}" alt="logo">
+                                <img src="{{ public_path($logo->name) }}" alt="logo">
+                            </td>
+                        @endforeach
+                    @else
+                        <td>
+                            <img src="{{ public_path('assets/img/logo.png') }}" alt="logo">
+                        </td>
+                    @endif
                 </tr>
             </table>
         </footer>
