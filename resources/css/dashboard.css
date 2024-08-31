@@ -458,6 +458,7 @@ i {
 .center {
     justify-content: center;
 }
+
 .grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -496,9 +497,10 @@ i {
 }
 
 
-.maxwd {
+.maxwd500 {
     max-width: 500px;
 }
+
 .edit-atlet {
     display: flex;
     flex-direction: column;
@@ -508,6 +510,11 @@ i {
     margin: 5px 0 20px 0;
     padding: 10px;
     font-size: 1rem;
+}
+
+.edit-dokumen label {
+    display: block;
+    margin-bottom: 5px;
 }
 
 .breadcrumb {

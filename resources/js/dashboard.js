@@ -34,6 +34,26 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
+function handleResize() {
+    if ($(window).width() <= 1024) {
+        $('.main-content').addClass('main-content_sidebar-hide');
+        $('.sidebar').addClass('active');
+    } else {
+        $('.main-content').removeClass('main-content_sidebar-hide');
+        $('.sidebar').removeClass('active');
+    }
+    if ($(window).width() <= 768) {
+        $('.main-content').removeClass('main-content_sidebar-hide');
+        $('.sidebar').removeClass('active');
+    }
+}
+
+// Initial check
+handleResize();
+
+// Check on window resize
+$(window).resize(handleResize);
+
 $('#openOverlay').click(function() {
     $(window).scrollTop(0);
     $('#overlay').css('display', 'flex');
