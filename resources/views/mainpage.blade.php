@@ -196,7 +196,7 @@
                 <div class="footer-contact">
                     <h4>Hubungi Kami</h4>
                     <a href="tel:0812312312312"><i class="fa fa-phone"></i><span>0812312312312</span></a>
-                    <a href="mailto:renangtangerang@gmail.com"><i class="fa fa-envelope"></i><span>renangtangerang@gmail.com</span></a>
+                    <a href="mailto:renangtangerang@gmail.com"><i class="fa fa-envelope"></i><span>info@tirtabentengcomp.com</span></a>
                 </div>
         </div>
     </footer>
