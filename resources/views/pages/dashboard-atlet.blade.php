@@ -22,9 +22,9 @@
         </x-error-list>
         @endif
         @if (session('success'))
-            <div style="color: green;">
-                {{ session('success') }}
-            </div>
+            <x-success-list>
+                <x-success-item>{{ session('success') }}</x-success-item>
+            </x-success-list>
         @endif
         <div class="bottom-container">
             <section class="all-container all-card w100">

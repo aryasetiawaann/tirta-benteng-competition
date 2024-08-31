@@ -1,21 +1,38 @@
 document.addEventListener('DOMContentLoaded', function() {
-        const errorList = document.getElementById('error-list');
+    const errorList = document.getElementById('error-list');
 
-        setTimeout(() => {
-            errorList.classList.add('show');
-        }, 100);
+    setTimeout(() => {
+        errorList.classList.add('show');
+    }, 100);
 
-        setTimeout(() => {
+    setTimeout(() => {
+        errorList.classList.remove('show');
+    }, 10000);
+
+    // Hide the error list when clicking outside of it
+    document.addEventListener('click', function(event) {
+        if (!errorList.contains(event.target)) {
             errorList.classList.remove('show');
-        }, 10000);
-
-        // Hide the error list when clicking outside of it
-        document.addEventListener('click', function(event) {
-            if (!errorList.contains(event.target)) {
-                errorList.classList.remove('show');
-            }
-        });
+        }
     });
+
+    const successList = document.getElementById('success-list');
+    
+    setTimeout(() => {
+        successList.classList.add('show');
+    }, 100);
+    
+    setTimeout(() => {
+        successList.classList.remove('show');
+    }, 10000);
+    
+    // Hide the success list when clicking outside of it
+    document.addEventListener('click', function(event) {
+        if (!successList.contains(event.target)) {
+            successList.classList.remove('show');
+        }
+    });
+});
 
 $('#openOverlay').click(function() {
     $(window).scrollTop(0);

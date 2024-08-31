@@ -317,6 +317,7 @@ th {
 
 /* Custom */
 
+/* Error */
 .error-list {
     position: fixed;
     top: -100px;
@@ -338,6 +339,34 @@ th {
 }
 
 .error-item {
+    margin-bottom: 5px;   
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+/*Success*/
+.success-list {
+    position: fixed;
+    top: -100px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #def8d7;
+    color: #2a6d19;
+    padding: 10px;
+    border: 1px solid green;
+    border-radius: 5px;
+    opacity: 0;
+    transition: top 0.3s ease, opacity 0.3s ease;
+    width: calc(100% - 40px);
+    z-index: 2000;
+}
+.success-list.show {
+    top: 20px;
+    opacity: 1;
+}
+
+.success-item {
     margin-bottom: 5px;   
     display: flex;
     align-items: center;
