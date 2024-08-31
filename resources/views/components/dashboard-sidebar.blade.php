@@ -14,7 +14,7 @@
     <div class="menu-btn">
         <i class="ph-bold ph-caret-left"></i>
     </div>
-    <a href="{{ route('profile.edit') }}">
+    <a href="{{ route('profile.edit') }}" class="no-underline">
         <div class="head">
             <div class="user-img">
                 <img src="{{ !is_null(auth()->user()->foto) ? asset(auth()->user()->foto) : asset('assets/img/blank-profile.png') }}" alt="User Image">

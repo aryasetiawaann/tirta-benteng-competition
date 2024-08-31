@@ -63,8 +63,8 @@
   object-fit: cover;
 }
 
-.user-details{
-  text-decoration: none;
+.no-underline {
+    text-decoration: none;
 }
 
 .user-details .title,

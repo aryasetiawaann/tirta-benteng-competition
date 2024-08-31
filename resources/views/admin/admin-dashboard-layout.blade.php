@@ -16,7 +16,7 @@
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.js" integrity="sha512-8Z5++K1rB3U+USaLKG6oO8uWWBhdYsM3hmdirnOEWp8h2B1aOikj5zBzlXs8QOrvY9OxEnD2QDkbSKKpfqcIWw==" crossorigin="anonymous"></script>
-    @vite(['resources/css/sidebar.css', 'resources/css/dashboard.css', 'resources/css/admin.css', 
+    @vite(['resources/css/sidebar.css', 'resources/css/dashboard.css', 'resources/css/admin.css', 'resources/css/profile.css',
            'resources/js/sidebar.js', 'resources/js/dashboard.js'])
     <style>
         * {
