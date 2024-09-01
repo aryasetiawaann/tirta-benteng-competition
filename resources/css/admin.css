@@ -37,6 +37,16 @@
     transition: all 0.1s;
 }
 
+.button-container {
+    display: flex;
+    justify-content: flex-start; /* Aligns the button to the left */
+    align-items: center; /* Centers the button vertically */
+}
+
+.button-container button {
+        margin-left: 25px;
+}
+
 @media screen and (max-width: 768px) {
     .admin-container {
         flex-direction: column;
