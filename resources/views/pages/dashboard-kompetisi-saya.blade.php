@@ -18,9 +18,6 @@
                     <h1>Kompetisi Saya</h1>
                 </div>
             </div>
-            <div class="card-right">
-                <input type="text" class="search" placeholder="Cari...">
-            </div>
             </div>
         </div>
         <nav class="breadcrumb">

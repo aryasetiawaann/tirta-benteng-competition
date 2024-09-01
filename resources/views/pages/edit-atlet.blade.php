@@ -38,14 +38,10 @@
                         <label for="record">Track Record</label>
                         <p><i style="font-size: 12px">(Tulis 0 Jika tidak ada)</i></p>
                         <input type="number" id="record" name="record" placeholder="contoh: 3,25 (Menit)" value="{{ $atlet->track_record }}" step="0.01">
-<<<<<<< Updated upstream
-                        <label for="dokumen">Upload Dokumen</label>
-=======
-                        <label for="dokumen">Upload Dokumen *.pdf</label>
->>>>>>> Stashed changes
+                        <label for="">Upload Dokumen *.pdf</label>
                         <input type="file" name="dokumen" id="dokumen" accept=".pdf" value="{{ $atlet->dokumen }}">
                         <input type="hidden" name="atlet_id" value="{{ $atlet->id }}">
-                        <div class="flex center">   
+                        <div class="flex center" style="margin-top:10px">   
                             <button type="submit" class="w50">Simpan</button>
                         </div>
                     </form>
