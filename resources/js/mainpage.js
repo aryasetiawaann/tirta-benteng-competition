@@ -29,3 +29,21 @@ document.addEventListener("scroll", () => {
         navbar.classList.remove("scrolled");
     }
 });
+
+document.addEventListener('DOMContentLoaded', function () {
+    let currentIndex = 0;
+    const kompetisiContainers = document.querySelectorAll('.jadwal-container');
+    const totalKompetisi = kompetisiContainers.length;
+
+    document.getElementById('jadPrevBtn').addEventListener('click', function () {
+        kompetisiContainers[currentIndex].style.display = 'none';
+        currentIndex = (currentIndex - 1 + totalKompetisi) % totalKompetisi;
+        kompetisiContainers[currentIndex].style.display = 'block';
+    });
+
+    document.getElementById('jadNextBtn').addEventListener('click', function () {
+        kompetisiContainers[currentIndex].style.display = 'none';
+        currentIndex = (currentIndex + 1) % totalKompetisi;
+        kompetisiContainers[currentIndex].style.display = 'block';
+    });
+});

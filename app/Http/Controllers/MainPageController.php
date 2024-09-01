@@ -11,7 +11,10 @@ use Carbon\Carbon;
 class MainPageController extends Controller
 {
     public function mainpage(){
-        return view('mainpage');
+
+        $kompetisis = Kompetisi::where('waktu_kompetisi', ">=", now())->where('buka_pendaftaran', '<=', now())->orderBy('waktu_kompetisi', 'asc')->get();
+
+        return view('mainpage', compact('kompetisis'));
     }
 
 

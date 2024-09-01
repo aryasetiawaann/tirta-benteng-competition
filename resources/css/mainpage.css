@@ -330,12 +330,16 @@ a {
 }
 
 #jadwal h2 {
-    margin: 0;
+    margin: 0 auto;
     font-family: "Inter", sans-serif;
     text-transform: uppercase;
     font-size: 34px;
     max-width: 700px;
     text-align: center;
+}
+
+.jadwal-container{
+    width: 100%;
 }
 
 .jadwal-items {
@@ -371,6 +375,8 @@ a {
     color: #008dda;
     font-size: 18px;
     font-weight: 600;
+    width: 200px;
+    text-align: center;
 }
 
 .jadwal-item h3 {

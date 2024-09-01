@@ -67,30 +67,44 @@
             <h3>Jadwal</h3>
             <div class="line"></div>
         </div>
-        <h2>TIRTA BENTENG SWIMMING FUN COMPETITION 2024</h2>
-        <div class="jadwal-items">
-            <div class="jadwal-item">
-                <div class="jadwal-item-img">
-                    <img src="{{ asset('assets/img/pendaftaran.png') }}" alt="pendaftaran form">
+        @if ($kompetisis->count() > 0)
+            @foreach ($kompetisis as $index => $kompetisi)
+            <div class="jadwal-container" id="kompetisi-{{ $index }}" style="{{ $index == 0 ? '' : 'display:none;'}}">
+                <h2>{{ $kompetisi->nama }}</h2>
+                <div class="jadwal-items">
+                    <div class="jadwal-item">
+                        <div class="jadwal-item-img">
+                            <img src="{{ asset('assets/img/pendaftaran.png') }}" alt="pendaftaran form">
+                        </div>
+                        <p>{{ \Carbon\Carbon::parse($kompetisi->buka_pendaftaran)->format('d M Y') }} - {{ \Carbon\Carbon::parse($kompetisi->tutup_pendaftaran)->subDay()->format('d M Y') }}</p>
+                        <h3>Pendaftaran</h3>
+                    </div>
+                    <div class="jadwal-item">
+                        <div class="jadwal-item-img">
+                            <img src="{{ asset('assets/img/tech-meeting.png') }}" alt="technical meeting">
+                        </div>
+                        <p>{{ $kompetisi->waktu_techmeeting? \Carbon\Carbon::parse($kompetisi->waktu_techmeeting)->format('d M Y') : '-' }}</p>
+                        <h3>Technical Meeting</h3>
+                    </div>
+                    <div class="jadwal-item">
+                        <div class="jadwal-item-img">
+                            <img src="{{ asset('assets/img/kompetisi.png') }}" alt="piala kompetisi">
+                        </div>
+                        <p>{{ \Carbon\Carbon::parse($kompetisi->waktu_kompetisi)->format('d M Y') }}</p>
+                        <h3>Kompetisi</h3>
+                    </div>
                 </div>
-                <p>20 Juni 2024</p>
-                <h3>Pendaftaran</h3>
             </div>
-            <div class="jadwal-item">
-                <div class="jadwal-item-img">
-                    <img src="{{ asset('assets/img/tech-meeting.png') }}" alt="technical meeting">
-                </div>
-                <p>20 Juli 2024</p>
-                <h3>Technical Meeting</h3>
+            @endforeach
+            <div class="jadwal-navigation">
+                <button id="jadPrevBtn">Previous</button>
+                <button id="jadNextBtn">Next</button>
             </div>
-            <div class="jadwal-item">
-                <div class="jadwal-item-img">
-                    <img src="{{ asset('assets/img/kompetisi.png') }}" alt="piala kompetisi">
-                </div>
-                <p>20 Agustus 2024</p>
-                <h3>Kompetisi</h3>
-            </div>
-        </div>
+        @else
+        <h2>Coming Soon!</h2>
+        <div class="jadwal-items"></div>
+        @endif
+        
     </section>
 
     <section id="biaya">
