@@ -63,7 +63,7 @@
 
         <div class="all-container all-card w100">
             <header class="flex divider">
-                <h2>Tambah Logo</h2>
+                <h2>Tambah Logo PDF</h2>
             </header>
             <section>
                 <form class="tambah-container" enctype="multipart/form-data" method="POST" action="{{ route('dashboard.admin.kompetisi.logo.create') }}">

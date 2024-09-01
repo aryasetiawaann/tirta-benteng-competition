@@ -47,23 +47,22 @@
                     <h2>Download Buku Acara</h2>
                 </header>
                 <section>
-                    <div>
-                        <h4 style="margin-bottom: 10px">EXCEL</h4>
+                    <div class="download-section">
                         @if ($kompetisi->count() > 0)
-                            <hr>
                             @foreach ($kompetisi as $kompe)
-                            <div>
-                                <h4 style="margin-top: 10px">{{ $kompe->nama }}</h4>
-                                <a href="{{ route('dashboard.admin.excel.download', $kompe->id) }}">
-                                    <button ton class="button-blue"><i class='bx bx-download'></i></button>
-                                </a>
-                            </div>
+                                <div class="download-item">
+                                    <a href="{{ route('dashboard.admin.excel.download', $kompe->id) }}">
+                                        <button class="button-blue download-button"><i class='bx bx-download'></i></button>
+                                    </a>
+                                    <h4>{{ $kompe->nama }}</h4>
+                                </div>
                             @endforeach
                         @else
                             <h4>Belum ada kompetisi</h4>
                         @endif
                     </div>
                 </section>
+
             </div>
         </div>
         <div class="upload card">
