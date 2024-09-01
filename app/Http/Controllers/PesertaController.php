@@ -138,6 +138,7 @@ class PesertaController extends Controller
         return view('pages.dashboard-lunas', compact('atlets'));
     }
 
+
     public function destroy($id){
         Peserta::find($id)->delete();
         return redirect()->back()->with('success','Tagihan berhasil dihapus');

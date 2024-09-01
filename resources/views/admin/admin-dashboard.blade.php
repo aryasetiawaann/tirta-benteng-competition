@@ -182,6 +182,33 @@
             </div>
         </div>
     </div>
+    <div class="admin-container">
+        <div class="card100">
+            <div class="all-container all-card w100">
+                <header class="flex divider">
+                    <h2>Unduh Dokumen Peserta</h2>
+                </header>
+                <section>
+                    <div>
+                        @if ($kompetisi->count() > 0)
+                            @foreach ($kompetisi as $kompe)
+                            @foreach ($kompe->acara as $acara)
+                            @endforeach
+                            <div>
+                                <h3>{{ $kompe->nama }}</h3>
+                                <a href="{{ route('dashboard.admin.dokumen.download', $kompe->id) }}">
+                                    <button class="button-green"><i class='bx bx-download'></i></button>
+                                </a>
+                            </div>
+                            @endforeach
+                        @else
+                            <h4>Belum ada kompetisi</h4>
+                        @endif
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
     
 </div>
 @endsection

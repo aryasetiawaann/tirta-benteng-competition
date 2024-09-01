@@ -97,6 +97,8 @@ Route::middleware(['auth','role:admin'])->group(function () {
     Route::delete('/admin/dashboard/file/{id}/delete', [KompetisiController::class, 'deleteHasilKompetisi'])->name('dashboard.admin.file.delete');
 
     Route::get('/admin/dashboard/file/{id}/download', [KompetisiController::class, 'downloadExcel'])->name('dashboard.admin.excel.download');
+    
+    Route::get('/admin/dashboard/dokumen-peserta/{id}/download', [KompetisiController::class, 'downloadDokumen'])->name('dashboard.admin.dokumen.download');
 
 });
 

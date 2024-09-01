@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\File;
+use ZipArchive;
 
 
 class KompetisiController extends Controller
@@ -266,6 +267,59 @@ class KompetisiController extends Controller
 
     }
 
+    public function downloadDokumen($id)
+    {
+        $kompetisi = Kompetisi::find($id);
+        $acaras = $kompetisi->acara;
+
+        $participantsExist = false;
+
+        foreach ($acaras as $acara) {
+            if ($acara->pesertaSelesai()->exists()) {
+                $participantsExist = true;
+                break;
+            }
+        }
+    
+
+        if (!$participantsExist) {
+            return redirect()->back()->with('error', 'Tidak ada peserta dalam kompetisi ini.');
+        }
+
+
+        $zipFileName = $kompetisi->nama . '.zip';
+        $zipFilePath = public_path($zipFileName);
+
+
+        $zip = new ZipArchive;
+
+        // Buka zip file untuk ditulis
+        if ($zip->open($zipFilePath, ZipArchive::CREATE) === TRUE) {
+            
+
+            foreach ($acaras as $acara) {
+                $participants = $acara->pesertaSelesai;
+
+                foreach ($participants as $participant) {
+
+
+                    if ($participant->dokumen != null) {
+                        $filePath = public_path($participant->dokumen);
+
+
+                        if (File::exists($filePath)) {
+                            // Tambahkan file ke dalam zip dengan nama yang unik
+                            $zip->addFile($filePath, $participant->name . '_' . basename($filePath));
+                        }
+                    }
+                }
+            }
+
+            $zip->close();
+        }
+
+        return response()->download($zipFilePath)->deleteFileAfterSend(true);
+    }
     /**
      * Remove the specified resource from storage.
      */

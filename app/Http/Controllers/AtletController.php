@@ -134,6 +134,7 @@ class AtletController extends Controller
      */
     public function update(Request $request)
     {
+
         $atlet = Atlet::find($request->atlet_id);
         
         $dokumen = $atlet->dokumen;
