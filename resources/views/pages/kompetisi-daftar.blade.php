@@ -11,6 +11,14 @@
             grid-template-columns: 1fr 1fr 1fr;
         }
 
+        .card-content h1 {
+            word-wrap: break-word;
+            word-break: normal;
+            font-size: 2.0em;
+            overflow: hidden;
+            white-space: normal;
+        }
+
         @media screen and (max-width: 1024px) {
             .grid {
                 grid-template-columns: 1fr 1fr;
