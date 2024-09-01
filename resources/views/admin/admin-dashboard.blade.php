@@ -53,7 +53,7 @@
                             <hr>
                             @foreach ($kompetisi as $kompe)
                             <div>
-                                <h4>{{ $kompe->nama }}</h4>
+                                <h4 style="margin-top: 10px">{{ $kompe->nama }}</h4>
                                 <a href="{{ route('dashboard.admin.excel.download', $kompe->id) }}">
                                     <button ton class="button-blue"><i class='bx bx-download'></i></button>
                                 </a>
@@ -107,14 +107,14 @@
                     <h2>Logo Kompetisi</h2>
                 </header>
                 <section>
-                    <div>
+                    <div class="logo-section">
                         @if ($kompetisi->count() > 0)
                             @foreach ($kompetisi as $kompe)
-                            <div>
-                                <h3>{{ $kompe->nama }}</h3>
-                                    @if ($kompe->logo->count() > 0)
-                                        @foreach ($kompe->logo as $logo)
-                                            <img src="{{ asset($logo->name) }}" alt="logo">
+                                @if ($kompe->logo->count() > 0)
+                                    @foreach ($kompe->logo as $logo)
+                                        <div class="logo-item">
+                                            <img src="{{ asset($logo->name) }}" alt="logo" class="logo-img">
+                                            <p class="logo-name">{{ $kompe->nama }}</p>
                                             <form action="{{ route('dashboard.admin.kompetisi.logo.delete', $logo->id) }}" method="post">
                                                 @csrf
                                                 @method('delete')
@@ -122,11 +122,11 @@
                                                     <i class='bx bx-xs bxs-trash'></i>
                                                 </button>
                                             </form>
-                                        @endforeach
-                                    @else
+                                        </div>
+                                    @endforeach
+                                @else
                                     <p>Belum ada logo</p>
-                                    @endif
-                                </div>
+                                @endif
                             @endforeach
                         @else
                             <h4>Belum ada kompetisi</h4>
