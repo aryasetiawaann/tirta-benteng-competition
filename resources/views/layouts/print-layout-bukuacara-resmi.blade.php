@@ -56,7 +56,7 @@
             }
 
             .table-footer tr img {
-                width: 65px;
+                width: 70px;
             }
 
             main {
@@ -116,7 +116,6 @@
                     @if ($kompetisi->logo->count() > 0)
                         @foreach ($kompetisi->logo as $logo)  
                             <td>
-                                <img src="{{ public_path('assets/img/logo.png') }}" alt="logo">
                                 <img src="{{ public_path($logo->name) }}" alt="logo">
                             </td>
                         @endforeach
