@@ -78,7 +78,7 @@
                                         </a>
                                         @if ($atlet->dokumen != NULL)
                                             <a href="{{ route('dashboard.atlet.dokumen.download', $atlet->id) }}">
-                                                <button class="button-gap button-green"><i class='bx bx-xs bx-file'></i></button>
+                                                <button class="button-gap button-green"><i class='bx bx-xs bx-download'></i></button>
                                             </a>
                                             <form action="{{ route('dashboard.atlet.dokumen.delete', $atlet->id) }}" method="post">
                                                 @csrf
