@@ -130,7 +130,7 @@
                                 <p><span class="status buka smaller">Belum dibuka</span></p>
                                 @endif
                                 <p>Lokasi: {{ $kompetisi->lokasi }}</p>
-                                <p>{{ $kompetisi->deskripsi }}</p>
+                                <p>{!! $kompetisi->deskripsi !!}</p>
                             </div>
                         @endforeach
                     @else

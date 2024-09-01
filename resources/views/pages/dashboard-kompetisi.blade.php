@@ -53,7 +53,7 @@
                     <p>Tanggal Kompetisi : {{ \Carbon\Carbon::parse($kompe->waktu_kompetisi)->format('d M Y') }}</p>
                     <p>Lokasi : {{ $kompe->lokasi }}</p>
                         <p style="margin-bottom: 1em;"></p>
-                    <p>{{ $kompe->deskripsi }}</p>
+                    <p>{!! $kompe->deskripsi !!}</p>
                 </div>
             </section>
             @endforeach

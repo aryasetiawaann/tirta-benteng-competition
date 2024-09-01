@@ -52,7 +52,7 @@
                     <p>Tech Meeting : {{ $kompetisi->waktu_techmeeting? \Carbon\Carbon::parse($kompetisi->waktu_techmeeting)->format('d M Y') : '-' }}</p>
                     <p>Tanggal Kompetisi : {{ \Carbon\Carbon::parse($kompetisi->waktu_kompetisi)->format('d M Y') }}</p>
                     <p>Lokasi : {{ $kompetisi->lokasi }}</p>
-                    <p>{{ $kompetisi->deskripsi }}</p>
+                    <p>{!! $kompetisi->deskripsi !!}</p>
                 </div>
             </section>
             @endforeach

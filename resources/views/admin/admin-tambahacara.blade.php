@@ -70,7 +70,7 @@
             <p>Tanggal Kompetisi : {{ \Carbon\Carbon::parse($kompe->waktu_kompetisi)->format('d M Y') }}</p>
             <p>Lokasi : {{ $kompe->lokasi }}</p>
                 <p style="margin-bottom: 1em;"></p>
-            <p>{{ $kompe->deskripsi }}</p>
+            <div>{!! $kompe->deskripsi !!}</div>
         </div>
         <div class="actions flex">
             <a href="{{ route('dashboard.admin.listacara', $kompe->id) }}">

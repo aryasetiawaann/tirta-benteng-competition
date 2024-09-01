@@ -28,7 +28,8 @@
                 <label for="lokasi">Lokasi*</label>
                 <input type="text" id="lokasi" name="lokasi" placeholder="Lokasi" value="{{ $kompetisi->lokasi }}">
                 <label for="deskripsi">Deskripsi</label>
-                <textarea id="deskripsi" name="deskripsi" id="" cols="30" rows="10" value="{{ $kompetisi->deskripsi }}">{{ $kompetisi->deskripsi }}</textarea>
+                <input id="deskripsi" type="hidden" name="deskripsi" value="{{ $kompetisi->deskripsi }}">
+                <trix-editor input="deskripsi" style="height:200px;"></trix-editor>
                 <input type="hidden" name="id" value="{{ $kompetisi->id }}">
                 <div class="flex center">    
                     <button type="submit" class="w100">Simpan</button>

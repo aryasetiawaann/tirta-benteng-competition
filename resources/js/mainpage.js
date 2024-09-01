@@ -46,4 +46,28 @@ document.addEventListener('DOMContentLoaded', function () {
         currentIndex = (currentIndex + 1) % totalKompetisi;
         kompetisiContainers[currentIndex].style.display = 'block';
     });
+
+    const eventItems = document.querySelectorAll('.event-list li');
+    const priceSections = document.querySelectorAll('.price');
+
+    eventItems.forEach(item => {
+        item.addEventListener('click', function() {
+            // Remove active-event class from all event items
+            eventItems.forEach(event => event.classList.remove('active-event'));
+
+            // Hide all price sections
+            priceSections.forEach(price => price.style.display = 'none');
+
+            // Add active-event class to the clicked item
+            this.classList.add('active-event');
+
+            // Get the index of the clicked event
+            const index = this.getAttribute('data-index');
+
+            // Show all price sections corresponding to the clicked event
+            document.querySelectorAll(`[id^="price-${index}"]`).forEach(price => {
+                price.style.display = '';
+            });
+        });
+    });
 });

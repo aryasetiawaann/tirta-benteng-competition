@@ -96,10 +96,12 @@
                 </div>
             </div>
             @endforeach
+            @if ($kompetisis->count() > 1)
             <div class="jadwal-navigation">
                 <button id="jadPrevBtn">Previous</button>
                 <button id="jadNextBtn">Next</button>
             </div>
+            @endif
         @else
         <h2>Coming Soon!</h2>
         <div class="jadwal-items"></div>
@@ -113,68 +115,40 @@
             <h3>Biaya</h3>
             <div class="line"></div>
         </div>
+        @if ($kompetisis->count() > 0)
         <h2>BIAYA KOMPETISI</h2>
         <div class="event-list">
             <ul>
-                <li class="active-event"><p>Tirta Benteng Swimming Fun Competition 2024</p></li>
-                <li><p>Tirta Benteng Swimming Fun Competition 2024</p></li>
-                <li><p>Tirta Benteng Swimming Fun Competition 2024</p></li>
-
+                @foreach($kompetisis as $index => $kompetisi)
+                <li class="{{ $index === 0 ? 'active-event' : '' }}" data-index="{{ $index }}">
+                    <p>{{ $kompetisi->nama }}</p>
+                </li>
+                @endforeach
             </ul>
         </div>
         <div class="price-list">
-            <div class="price">
-                <h3>Individu</h3>
-                <hr>
-                <h4>Rp. 125.000</h4>
-                <ul>
-                    <li>
-                        <p>Lorem ipsum dolor sit, amet consectetur adipisicing  anjingelit. Dolores, ducimus.</p>
-                    </li>
-                    <li>
-                        <p>Lorem ipsum dolor sit, amet consectetur adipisicing  anjingelit. Dolores, ducimus.</p>
-                    </li>
-                    <li>
-                        <p>Lorem ipsum dolor sit, amet consectetur adipisicing  anjingelit. Dolores, ducimus.</p>
-                    </li>
-                </ul>
-                <a href=""><button>Daftar</button></a>
-            </div>
-            <div class="price">
-                <h3>Individu</h3>
-                <hr>
-                <h4>Rp. 125.000</h4>
-                <ul>
-                    <li>
-                        <p>Lorem ipsum dolor sit, amet consectetur adipisicing  anjingelit. Dolores, ducimus.</p>
-                    </li>
-                    <li>
-                        <p>Lorem ipsum dolor sit, amet consectetur adipisicing  anjingelit. Dolores, ducimus.</p>
-                    </li>
-                    <li>
-                        <p>Lorem ipsum dolor sit, amet consectetur adipisicing  anjingelit. Dolores, ducimus.</p>
-                    </li>
-                </ul>
-                <a href=""><button>Daftar</button></a>
-            </div>
-            <div class="price">
-                <h3>Individu</h3>
-                <hr>
-                <h4>Rp. 125.000</h4>
-                <ul>
-                    <li>
-                        <p>Lorem ipsum dolor sit, amet consectetur adipisicing  anjingelit. Dolores, ducimus.</p>
-                    </li>
-                    <li>
-                        <p>Lorem ipsum dolor sit, amet consectetur adipisicing  anjingelit. Dolores, ducimus.</p>
-                    </li>
-                    <li>
-                        <p>Lorem ipsum dolor sit, amet consectetur adipisicing  anjingelit. Dolores, ducimus.</p>
-                    </li>
-                </ul>
-                <a href=""><button>Daftar</button></a>
-            </div>
+            @foreach ($kompetisis as $index => $kompetisi)    
+                @if ($kompetisi->harga->count() > 0)
+                    @foreach ($kompetisi->harga as $hargaIndex => $harga)
+                        <div class="price" id="price-{{ $index }}-{{ $hargaIndex }}" style="{{ $index !== 0 ? 'display: none;' : '' }}">
+                            <h3>{{ $harga->judul }}</h3>
+                            <hr>
+                            <h4>Rp.{{ number_format($harga->harga, 2, ',', '.') }}</h4>
+                            {!! $harga->deskripsi !!}
+                            <a href="{{ route('dashboard.kompetisi') }}"><button>Daftar</button></a>
+                        </div>
+                    @endforeach
+                @else
+                <div class="price" id="price-{{ $index }}" style="{{ $index !== 0 ? 'display: none;' : '' }}">
+                    <h3>Harga belum tersedia</h3>
+                    <hr>
+                </div>
+                @endif
+            @endforeach
         </div>
+        @else
+        <h2>Coming Soon!</h2>
+        @endif
     </section>
 
     <section id="petunjuk">

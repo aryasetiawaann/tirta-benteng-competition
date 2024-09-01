@@ -111,8 +111,8 @@
                         @if ($kompetisi->count() > 0)
                             @foreach ($kompetisi as $kompe)
                             <div>
+                                <h3>{{ $kompe->nama }}</h3>
                                     @if ($kompe->logo->count() > 0)
-                                        <h2>{{ $kompe->nama }}</h2>
                                         @foreach ($kompe->logo as $logo)
                                             <img src="{{ asset($logo->name) }}" alt="logo">
                                             <form action="{{ route('dashboard.admin.kompetisi.logo.delete', $logo->id) }}" method="post">
@@ -123,6 +123,54 @@
                                                 </button>
                                             </form>
                                         @endforeach
+                                    @else
+                                    <p>Belum ada logo</p>
+                                    @endif
+                                </div>
+                            @endforeach
+                        @else
+                            <h4>Belum ada kompetisi</h4>
+                        @endif
+                    </div>
+                </section>
+            </div>
+        </div>
+        <div class="download card">
+            <div class="all-container all-card w100">
+                <header class="flex divider">
+                    <h2>Detail Harga Kompetisi</h2>
+                </header>
+                <section>
+                    <div>
+                        @if ($kompetisi->count() > 0)
+                            @foreach ($kompetisi as $kompe)
+                            <div>
+                                <h3>{{ $kompe->nama }}</h3>
+                                    @if ($kompe->harga->count() > 0)
+                                        @foreach ($kompe->harga as $harga)
+                                            {{-- dibuat jadi card --}}
+                                            <div >
+                                                <div>
+                                                    <h3>{{ $harga->judul }}</h3>
+                                                    <p>Rp.{{ number_format($harga->harga, 2, ',', '.') }}</p>
+                                                    <div>
+                                                        {!! $harga->deskripsi !!}
+                                                    </div>
+                                                </div>
+                                                <div>
+                                                    <form action="{{ route('dashboard.admin.kompetisi.detail-harga.delete', $harga->id) }}" method="post">
+                                                        @csrf
+                                                        @method('delete')
+                                                        <button class="button-red button-gap" onclick="return confirm('Apakah anda yakin ingin menghapus ini?')">
+                                                            <i class='bx bx-xs bxs-trash'></i>
+                                                        </button>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                            {{--  --}}
+                                        @endforeach
+                                    @else
+                                    <p>Belum ada detail harga</p>
                                     @endif
                                 </div>
                             @endforeach
