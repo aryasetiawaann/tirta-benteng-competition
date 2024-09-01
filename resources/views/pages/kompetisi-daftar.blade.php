@@ -65,7 +65,7 @@
                         <a href="{{ route('dashboard.acara.detail', $aca->id) }}"><button>Daftar</button></a>
                         @endif
                     </header>
-                    <div>
+                    <div class="card-info">
                         <h3 class="mtopbot">
                             @if ($aca->peserta->count() == $aca->kuota)
                             Status : <span class="status buka smaller">Tutup</span>

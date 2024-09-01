@@ -57,6 +57,10 @@
             width: calc(50% - 40px);
         }
 
+        .w768 {
+            max-width: 768px;
+        }
+
         .mtopbot {
             margin: 10px 0 10px 0;
         }

@@ -2,6 +2,28 @@
 @section('content')
 @include('components.upload-file-hasil')
 <div class="main-content">
+    
+    @if (session('success'))
+        <x-success-list>
+            <x-success-item>{{ session('success') }}</x-success-item>
+        </x-success-list>
+    @endif
+
+    <!-- Menampilkan Pesan Error -->
+    @if (session('error'))
+        <x-error-list>
+            <x-error-item>{{ session('error') }}</x-error-item>
+        </x-error-list>
+    @endif
+
+    <!-- Menampilkan Validasi Error -->
+    @if ($errors->any())
+        <x-error-list>
+            @foreach ($errors->all() as $error)
+                <x-error-item>{{ $error }}</x-error-item>
+            @endforeach
+        </x-error-list>
+    @endif
 
     <div class="admin-container">
         <div class="card100">
@@ -15,30 +37,6 @@
             </div>
         </div>
     </div>
-
-    @if (session('success'))
-    <div style="color: green;">
-        {{ session('success') }}
-    </div>
-    @endif
-
-    <!-- Menampilkan Pesan Error -->
-    @if (session('error'))
-        <div style="color: red;">
-            {{ session('error') }}
-        </div>
-    @endif
-
-    <!-- Menampilkan Validasi Error -->
-    @if ($errors->any())
-        <div style="color: red;">
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
 
     <div class="admin-container">
         <div class="download card">
@@ -73,7 +71,7 @@
                 <section>
                     <div>
                         <h4 style="margin-bottom: 10px">PDF</h4>
-                        <button class="button-blue" id="openOverlay"><i class='bx bx-upload'></i></button>
+                        <button class="button-green" id="openOverlay"><i class='bx bx-upload'></i></button>
                         @if ($kompetisi_file->count() > 0 )
                             <hr>
                             @foreach ($kompetisi_file as $kompe)

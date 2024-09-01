@@ -414,6 +414,7 @@ a {
     list-style: none;
     gap: 15px;
     margin: 0 auto;
+    padding: 0;
 }
 
 .event-list ul li {

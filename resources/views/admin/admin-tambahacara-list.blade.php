@@ -51,25 +51,25 @@
     </div>
 
     @if (session('success'))
-        <div style="color: green;">
-            {{ session('success') }}
-        </div>
+        <x-success-list>
+            <x-success-item>{{ session('success') }}</x-success-item>
+        </x-success-list>
     @endif
 
+    <!-- Menampilkan Pesan Error -->
     @if (session('error'))
-        <div style="color: red;">
-            {{ session('error') }}
-        </div>
+        <x-error-list>
+            <x-error-item>{{ session('error') }}</x-error-item>
+        </x-error-list>
     @endif
 
+    <!-- Menampilkan Validasi Error -->
     @if ($errors->any())
-        <div style="color: red;">
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
+        <x-error-list>
+            @foreach ($errors->all() as $error)
+                <x-error-item>{{ $error }}</x-error-item>
+            @endforeach
+        </x-error-list>
     @endif
 
     <nav class="breadcrumb">

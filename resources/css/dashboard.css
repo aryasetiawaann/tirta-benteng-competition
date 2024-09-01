@@ -378,7 +378,7 @@ i {
 }
 
 .green {
-    background-color: #21c86f;
+    background-color: #21c21c;
 }
 
 .orange {
@@ -463,6 +463,29 @@ i {
     display: grid;
     grid-template-columns: 1fr 1fr;
 }
+
+input#dokumen {
+    padding: 0;
+    margin: 10px;
+
+}
+
+.news {
+    margin-bottom: 20px;
+}
+
+.news h3, 
+.news p {
+    margin-bottom: 5px;
+}
+
+.news span {
+    margin: 5px 0 10px 0;
+}
+
+.card-info p{
+    margin-bottom: 5px;
+}   
 
 @media screen and (max-width: 768px) {
     .grid {

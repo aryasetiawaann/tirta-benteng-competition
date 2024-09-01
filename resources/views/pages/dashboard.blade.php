@@ -118,16 +118,16 @@
                     </header>
                     @if ($kompetisis->count() > 0)
                         @foreach ($kompetisis as $kompetisi)
-                            <div>
+                            <div class="news">
                                 <h3>{{ $kompetisi->nama }}</h3>
                                 @if(now() > $kompetisi->waktu_kompetisi)
-                                <p><span class="status tutup smaller">Selesai</span></p>
+                                <span class="status tutup smaller">Selesai</span>
                                 @elseif (now() >= $kompetisi->tutup_pendaftaran)
-                                <p><span class="status buka smaller">Berjalan</span></p>
+                                <span class="status buka smaller">Berjalan</span>
                                 @elseif (now() >= $kompetisi->buka_pendaftaran && now() < $kompetisi->tutup_pendaftaran)
-                                <p><span class="status buka smaller">Registrasi</span></p>
+                                <span class="status buka smaller">Registrasi</span>
                                 @else
-                                <p><span class="status buka smaller">Belum dibuka</span></p>
+                                <span class="status buka smaller">Belum dibuka</span>
                                 @endif
                                 <p>Lokasi: {{ $kompetisi->lokasi }}</p>
                                 <p>{!! $kompetisi->deskripsi !!}</p>

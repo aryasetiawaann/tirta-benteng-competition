@@ -72,7 +72,7 @@
                                     @else
                                         <td>Tidak Lengkap</td>
                                     @endif
-                                    <td style="display: flex">
+                                    <td style="display: flex;">
                                         <a href="{{ route('dashboard.atlet.edit', $atlet->id) }}">
                                             <button class="button-gap"><i class='bx bx-xs bx-edit'></i></button>
                                         </a>

@@ -16,7 +16,7 @@
             </x-success-list>
         @endif
 
-        <div class="bottom-container center grid">
+        <div class="bottom-container center w768">
             <section class="all-container all-card w100">
                 <header class="divider flex">
                     <h1>Edit {{ $atlet->name}}</h1>
@@ -38,7 +38,11 @@
                         <label for="record">Track Record</label>
                         <p><i style="font-size: 12px">(Tulis 0 Jika tidak ada)</i></p>
                         <input type="number" id="record" name="record" placeholder="contoh: 3,25 (Menit)" value="{{ $atlet->track_record }}" step="0.01">
+<<<<<<< Updated upstream
                         <label for="dokumen">Upload Dokumen</label>
+=======
+                        <label for="dokumen">Upload Dokumen *.pdf</label>
+>>>>>>> Stashed changes
                         <input type="file" name="dokumen" id="dokumen" accept=".pdf" value="{{ $atlet->dokumen }}">
                         <input type="hidden" name="atlet_id" value="{{ $atlet->id }}">
                         <div class="flex center">   

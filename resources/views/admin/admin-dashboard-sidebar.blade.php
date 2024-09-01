@@ -12,17 +12,17 @@
         <div class="menu-btn">
             <i class="ph-bold ph-caret-left"></i>
         </div>
-        <div class="head">
-            <div class="user-img">
-                <a href="{{ route('profile.admin.edit') }}">
-                  <img src="{{ !is_null(auth()->user()->foto) ? asset(auth()->user()->foto) : asset('assets/img/blank-profile.png') }}" alt="User Image">
-                </a>
+        <a href="{{ route('profile.admin.edit') }}" class="no-underline">
+            <div class="head">
+                <div class="user-img">
+                    <img src="{{ !is_null(auth()->user()->foto) ? asset(auth()->user()->foto) : asset('assets/img/blank-profile.png') }}" alt="User Image">
+                </div>
+                <div class="user-details">
+                    <p class="title">Admin</p>
+                    <p class="name">{{ Auth::user()->name }}</p>
+                </div>
             </div>
-            <div class="user-details">
-                <p class="title">Admin</p>
-                <p class="name">{{ Auth::user()->name }}</p>
-            </div>
-        </div>
+        </a>
         <div class="nav">
             <div class="menu">
                 <p class="title">Main</p>

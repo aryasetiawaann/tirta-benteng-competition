@@ -34,7 +34,7 @@
                     <a href="{{ route('dashboard.acara', $kompe->id) }}"><button>Daftar</button></a>
                     @endif
                 </header>
-                <div>
+                <div class="card-info">
                     <h3 class="mtopbot">
                         @if(now() > $kompe->waktu_kompetisi)
                         <p>Status: <span class="status tutup smaller">Selesai</span></p>

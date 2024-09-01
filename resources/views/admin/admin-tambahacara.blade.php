@@ -9,27 +9,25 @@
 <div class="main-content">
 
     @if (session('success'))
-    <div class="alert success">
-        {{ session('success') }}
-    </div>
+        <x-success-list>
+            <x-success-item>{{ session('success') }}</x-success-item>
+        </x-success-list>
     @endif
 
     <!-- Menampilkan Pesan Error -->
     @if (session('error'))
-    <div class="alert error">
-        {{ session('error') }}
-    </div>
+        <x-error-list>
+            <x-error-item>{{ session('error') }}</x-error-item>
+        </x-error-list>
     @endif
 
     <!-- Menampilkan Validasi Error -->
     @if ($errors->any())
-    <div class="alert error">
-        <ul>
+        <x-error-list>
             @foreach ($errors->all() as $error)
-            <li>{{ $error }}</li>
+                <x-error-item>{{ $error }}</x-error-item>
             @endforeach
-        </ul>
-    </div>
+        </x-error-list>
     @endif
 
     <div class="top-container">
