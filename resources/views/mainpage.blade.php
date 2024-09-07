@@ -11,7 +11,7 @@
                     <li><a href="#pengenalan">PENGENALAN</a></li>
                     <li><a href="#jadwal">JADWAL</a></li>
                     <li><a href="#biaya">BIAYA</a></li>
-                    <li><a href="#petunjuk">PETUNJUK</a></li>
+                    {{-- <li><a href="#petunjuk">PETUNJUK</a></li> --}}
                 </ul>
             </div>
             <div class="navbar-right">
@@ -36,12 +36,11 @@
             </div>
         </div>
         <div class="hero-content">
-            <h1>TIRTA BENTENG SWIMMING FUN COMPETITION 2024</h1>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod</p>
+            <h1>FUN SWIMMING COMPETITION 2024</h1>
+            <p>Bergabunglah dalam kompetisi renang yang menyenangkan dan penuh semangat!</p>
             <div class="hero-buttons">
                 <a href="{{ route('login') }}"><button class="btn-competition">Ikuti Kompetisi</button></a>
-                <a href="https://www.instagram.com/tirtabentengsc/" target="_blank" class="fa fa-instagram"></a>
-                {{-- <a href="#" target="_blank" class="fa fa-facebook"></a> --}}
+                {{-- <a href="https://www.instagram.com/tirtabentengsc/" target="_blank" class="fa fa-instagram"></a> --}}
             </div>
         </div>
     </section>
@@ -56,9 +55,10 @@
                 <h3>Tentang Kompetisi</h3>
                 <div class="line"></div>
             </div>
-            <h2>Karya Terbaik, Persada Sesama</h2>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. <br><br>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
-        </div>
+            <h2>Fun Swimming Competition</h2>
+                <p>Diadakan setiap tahun, Fun Swimming Competition dirancang untuk menginspirasi atlet muda dan berbakat dalam mengejar mimpi mereka di arena olahraga. Dengan berbagai kategori lomba yang mencakup semua gaya renang dan kelompok umur, kompetisi ini memberikan kesempatan bagi semua orang untuk bersaing dan berkembang.
+                <br><br>Bersiaplah untuk menyaksikan pertarungan sengit di kolam renang, serta merasakan kegembiraan dan antusiasme yang membara. Mari bersama-sama menciptakan momen tak terlupakan dan mengukir prestasi terbaik di kejuaraan kali ini! </p>
+            </div>
     </section>
 
     <section id="jadwal">
@@ -151,7 +151,7 @@
         @endif
     </section>
 
-    <section id="petunjuk">
+    {{-- <section id="petunjuk">
         <div class="petunjuk-img">
             <img src="{{ asset('assets/img/Pool.jpg') }}" alt="kolam">
         </div>
@@ -164,12 +164,12 @@
             <h2>Persyaratan Lomba</h2>
             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. <br><br>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
         </div>
-    </section>
+    </section> --}}
 
     <footer>
         <div class="footer-container">
                 <div class="footer-left">
-                    <img src="{{ asset('assets/img/logo.png') }}" alt="Logo" class="footer-logo">
+                    <img src="{{ asset('assets/img/LogoWebHD.png') }}" alt="Logo" class="footer-logo">
                     <p>	&#169 Tirta Benteng Swimming Club 2024</p>
                 </div>
                 <div class="footer-menu">
