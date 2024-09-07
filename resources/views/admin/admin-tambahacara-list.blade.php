@@ -22,11 +22,7 @@
         }
 
         .button-container {
-            margin-bottom: 20px;
-        }
-
-        .pagination button, button {
-            margin-top: 20px;
+            margin: 20px 0 20px 0;
         }
     </style>
 @endsection
@@ -89,7 +85,7 @@
                 <header class="flex divider">
                     <h2>{{ $ac->nomor_lomba }} - {{ $ac->nama }} - {{ $ac->grup }}</h2>
                 </header>
-                <div>
+                <div class="info">
                     <h3 class="mtopbot">
                         Harga: <span class="status harga smaller">Rp.{{ number_format($ac->harga, 2, ',', '.') }}</span>
                     </h3>
@@ -98,14 +94,14 @@
                     <p>Min Umur: {{ $ac->min_umur }}</p>
                     <p>Max Umur: {{ $ac->max_umur }}</p>
                 </div>
-                <div>
+                <div class="actions">
                     <a href="{{ route('dashboard.admin.editacara', $ac->id) }}">
                         <button>Edit</button>
                     </a>
                     <form action="{{ route('dashboard.admin.acara.destroy', $ac->id) }}" method="post">
                         @csrf
                         @method('delete')
-                        <button class="button-red button-gap" onclick="return confirm('-- PERINGATAN!! --\nMenghapus acara yang sedang berjalan atau sudah selesai akan menghapus seluruh data peserta dan semua history kompetisi pada pengguna akan terhapus.')">
+                        <button class="button-red" onclick="return confirm('-- PERINGATAN!! --\nMenghapus acara yang sedang berjalan atau sudah selesai akan menghapus seluruh data peserta dan semua history kompetisi pada pengguna akan terhapus.')">
                             <i class='bx bx-xs bxs-trash'></i>
                         </button>
                     </form>

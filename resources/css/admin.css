@@ -19,7 +19,9 @@
     justify-content: space-between;
 }
 
-.tambah-container * {
+.tambah-container label,
+.tambah-container input,
+.tambah-container select {
     margin: 10px 0 5px 0;
 }
 
@@ -35,7 +37,10 @@
     border-radius: 5px;
     cursor: pointer;
     transition: all 0.1s;
-    margin-top: 15px;
+}
+
+.tambah-kompetisi button {
+    margin-top: 20px;
 }
 
 .button-container {
@@ -79,10 +84,17 @@
 
 .download-item {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: center; 
-    width: 100px; 
-    text-align: center; 
+    width: 100%; 
+    text-align: start; 
+    gap: 10px;
+}
+
+.actions {
+    display: flex;
+    justify-content: start;
+    gap: 10px;
 }
 
 .download-button {

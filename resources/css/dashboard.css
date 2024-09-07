@@ -474,6 +474,13 @@ input#dokumen {
     margin: 5px 0 10px 0;
 }
 
+.info {
+    margin-bottom: 20px;
+}
+.info * {
+    margin-bottom: 5px;
+}
+
 .card-info p{
     margin-bottom: 5px;
 }   
@@ -511,8 +518,9 @@ input#dokumen {
 }
 
 
-.maxwd500 {
-    max-width: 500px;
+.maxwd {
+    max-width: 768px;
+    width: 100%;
 }
 
 .edit-atlet {

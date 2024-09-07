@@ -69,9 +69,9 @@
                     <h2>Upload Hasil Kompetisi</h2>
                 </header>
                 <section>
-                    <div>
-                        <h4 style="margin-bottom: 10px">PDF</h4>
+                    <div class="download-item">
                         <button class="button-green" id="openOverlay"><i class='bx bx-upload'></i></button>
+                        <h4 style="margin-bottom: 10px">PDF</h4>
                         @if ($kompetisi_file->count() > 0 )
                             <hr>
                             @foreach ($kompetisi_file as $kompe)
@@ -144,11 +144,11 @@
                         @if ($kompetisi->count() > 0)
                             @foreach ($kompetisi as $kompe)
                                 <div style="margin-bottom: 20px;">
-                                    <h3>{{ $kompe->nama }}</h3>
+                                    <h3 style="margin: 10px 10px 10px 0;">{{ $kompe->nama }}</h3>
                                     @if ($kompe->harga->count() > 0)
                                         @foreach ($kompe->harga as $harga)
                                             <div style="border: 1px solid #ddd; padding: 10px; margin-bottom: 10px; border-radius: 5px;">
-                                                <div>
+                                                <div class="info">
                                                     <h4><strong>Judul:</strong> {{ $harga->judul }}</h4>
                                                     <p><strong>Harga:</strong> Rp.{{ number_format($harga->harga, 2, ',', '.') }}</p>
                                                     <div>
@@ -191,7 +191,7 @@
                             @foreach ($kompetisi as $kompe)
                                 <div class="download-item">
                                     <a href="{{ route('dashboard.admin.dokumen.download', $kompe->id) }}">
-                                        <button class="button-green download-button"><i class='bx bx-download'></i></button>
+                                        <button class="button-blue download-button"><i class='bx bx-download'></i></button>
                                     </a>
                                     <h4>{{ $kompe->nama }}</h4>
                                 </div>
