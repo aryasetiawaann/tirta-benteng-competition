@@ -4,7 +4,7 @@
 @include('components.daftar-atlet-overlay')
     <div class="main-content">
         <div class="top-container">
-            <div class="top-card all-card">
+            <div class="top-card all-card flex">
                 <div class="card-icon">
                     <i class='bx bxs-user' ></i>
                 </div>

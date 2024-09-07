@@ -11,20 +11,45 @@ document.addEventListener("DOMContentLoaded", function() {
   const titles = {
     'dashboard': 'Dashboard',
     'dashboard.atlet.index': 'Atlet Saya',
-    'dashboard.kompetisi': 'Daftar',
+    'dashboard.kompetisi': 'Daftar Kompetisi',
+    'dashboard.acara': 'Acara',
+    'dashboard.acara.detail': 'Detail Acara',
+    'dashboard.kompe-saya': 'Kompetisi Saya',
+    'dashboard.kompe-saya.acara': 'Acara',
+    'dashboard.kompe-saya.acara.detail': 'Detail Acara',
     'dashboard.tagihan': 'Tagihan',
-    'dashboard.lunas': 'Daftar Pembayaran',
+    'dashboard.tagihan.riwayat': 'Riwayat Pembayaran',
     'dashboard.bukuacara': 'Buku Acara',
     'dashboard.bukuhasil': 'Buku Hasil',
     'profile.edit': 'Profil',
-    // Tambahkan mapping lain sesuai dengan nama route Anda
   };
 
   // Fungsi untuk memperbarui judul navbar berdasarkan data-page-title
   function updateNavbarTitle() {
     const pageTitle = navbarTitle.getAttribute('data-page-title');
-    navbarTitle.textContent = titles[pageTitle] || 'Default Title';
+
+    // Ambil elemen berdasarkan id
+    const competisiElement = document.getElementById('competisi');
+    const acaraDetailElement = document.getElementById('acara-detail');
+    const acaraElement = document.getElementById('acara');
+
+    if (acaraElement && (pageTitle === 'dashboard.acara' || pageTitle === 'dashboard.kompe-saya.acara')) {
+      const acaraName = acaraElement.getAttribute('data-acara-name');
+      navbarTitle.textContent = acaraName || 'Acara';
+    } 
+    else if (acaraDetailElement && (pageTitle === 'dashboard.kompe-saya.acara.detail' || pageTitle === 'dashboard.acara.detail')) {
+      const acaraDetail = acaraDetailElement.getAttribute('data-acara-detail');
+      navbarTitle.textContent = acaraDetail || 'Nomor Lomba';
+    } 
+    else if (competisiElement && pageTitle === 'dashboard.kompe-saya.acara') {
+      const competisiName = competisiElement.getAttribute('data-competisi-name');
+      navbarTitle.textContent = competisiName || 'Acara';
+    } 
+    else {
+      navbarTitle.textContent = titles[pageTitle] || 'Default Title';
+    }
   }
+
   updateNavbarTitle();
 
   // Fungsi untuk toggle tampilan sidebar

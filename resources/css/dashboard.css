@@ -216,34 +216,12 @@ th {
 .card-left {
     display: flex;
     align-items: center;
+    height: 70px;
 }
 
 .card-right {
     display: flex;
     align-items: center;
-}
-
-
-.lunas-card-icon {
-    background-color: #21c86f;
-    width: 60px;
-    height: 60px;
-    display: grid;
-    place-items: center;
-    margin-right: 20px;
-    border-radius: 6px;
-    font-size: 20px;
-}
-
-.acara-card-icon {
-    background-color: #0cbfec;
-    width: 60px;
-    height: 60px;
-    display: grid;
-    place-items: center;
-    margin-right: 20px;
-    border-radius: 6px;
-    font-size: 20px;
 }
 
 /* Overlay */
@@ -386,12 +364,20 @@ i {
     background-color: #21c21c;
 }
 
+.dark-green {
+    background-color: #00aa00;
+}
+
 .orange {
     background-color: #ffcc00;
 }
 
 .red {
     background-color: #ff5151;
+}
+
+.blue {
+    background-color: #0cbfec;
 }
 
 .button-gap {

@@ -40,7 +40,7 @@
                 <div class="card-icon">
                     <i class="bx bxs-grid-alt"></i>
                 </div>
-                <div class="card-content">
+                <div class="card-content" id="acara" data-acara-name="{{ $nama_kompetisi }}">
                     <h1>{{ $nama_kompetisi }} </h1>
                 </div>
             </div>

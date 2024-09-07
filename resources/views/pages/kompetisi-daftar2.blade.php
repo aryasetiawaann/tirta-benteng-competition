@@ -8,7 +8,7 @@
                 <div class="card-icon">
                     <i class="bx bxs-grid-alt"></i>
                 </div>
-                <div class="card-content">
+                <div class="card-content" id="acara-detail" data-acara-detail="{{ $acara->nama }}">
                     <h1>{{ $acara->kompetisi->nama }} - {{ $acara->nama }}</h1>
                 </div>
             </div>

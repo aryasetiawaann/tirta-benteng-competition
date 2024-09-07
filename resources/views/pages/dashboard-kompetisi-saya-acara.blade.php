@@ -32,7 +32,7 @@
                 <div class="card-icon">
                     <i class="bx bxs-grid-alt"></i>
                 </div>
-                <div class="card-content">
+                <div class="card-content" id="competisi" data-competisi-name="{{ $nama_kompetisi }}">
                     <h1>{{$nama_kompetisi}}</h1>
                 </div>
             </div>

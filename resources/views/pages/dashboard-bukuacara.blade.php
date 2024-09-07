@@ -4,12 +4,14 @@
 @section('content')
     <div class="main-content">
         <div class="top-container">
-            <div class="top-card all-card">
-                <div class="acara-card-icon">
-                    <i class="icon ph-bold ph-book-open-text"></i>
-                </div>
-                <div class="card-content">
-                    <h1>Buku Acara</h1>
+            <div class="top-card all-card flex">
+                <div class="card-left">
+                    <div class="card-icon blue">
+                        <i class="icon ph-bold ph-book-open-text"></i>
+                    </div>
+                    <div class="card-content">
+                        <h1>Buku Acara</h1>
+                    </div>
                 </div>
             </div>
         </div>
