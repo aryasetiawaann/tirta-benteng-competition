@@ -63,7 +63,7 @@ class PesertaController extends Controller
                 $query->whereIn('acara_id', $acaraOpen);
             }])
             ->get()
-            ->sortByDesc('created_at');
+            ->sortBy('name');
 
         $totalHarga = 0;
         
