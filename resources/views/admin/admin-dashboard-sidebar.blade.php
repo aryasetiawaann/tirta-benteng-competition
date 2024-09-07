@@ -34,23 +34,16 @@
                         </a>
                     </li>
                     <li>
-                        <a href="#">
+                        <a href="{{ route('dashboard.admin.kompetisi') }}">
                             <i class="icon ph-bold ph-trophy"></i>
-                            <span class="text">Kompetisi</span>
-                            <i class="arrow ph-bold ph-caret-down"></i>
+                            <span class="text">Tambah Kompetisi</span>
                         </a>
-                        <ul class="sub-menu">
-                            <li>
-                                <a href="{{ route('dashboard.admin.kompetisi') }}">
-                                    <span class="text">Tambah Kompetisi</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="{{ route('dashboard.admin.acara') }}">
-                                    <span class="text">Edit Acara</span>
-                                </a>
-                            </li>
-                        </ul>
+                    </li>
+                    <li>
+                        <a href="{{ route('dashboard.admin.acara') }}">
+                            <i class="icon ph-bold ph-trophy"></i>
+                            <span class="text">Edit Acara</span>
+                        </a>
                     </li>
                 </ul>
             </div>

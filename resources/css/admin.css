@@ -43,6 +43,10 @@
     margin-top: 20px;
 }
 
+.trix-button-row button {
+    margin-top: 0;
+}
+
 .button-container {
     display: flex;
     justify-content: flex-start; 

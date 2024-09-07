@@ -87,7 +87,7 @@
                                         </a>
                                         @if ($atlet->dokumen != NULL)
                                             <a href="{{ route('dashboard.atlet.dokumen.download', $atlet->id) }}">
-                                                <button class="button-gap button-green"><i class='bx bx-xs bx-download'></i></button>
+                                                <button class="button-gap button-green"><i class='bx bx-xs bx-file'></i></button>
                                             </a>
                                             <form action="{{ route('dashboard.atlet.dokumen.delete', $atlet->id) }}" method="post">
                                                 @csrf
@@ -101,7 +101,7 @@
                                             @csrf
                                             @method('delete')
                                             <button class="button-red button-gap" onclick="return confirm('Apakah kamu yakin ingin menghapus atlet ini? ')">
-                                                <i class='bx bx-xs bxs-trash'></i>
+                                                <i class='bx bx-xs bx-trash'></i>
                                             </button>
                                         </form>
                                     </td>
