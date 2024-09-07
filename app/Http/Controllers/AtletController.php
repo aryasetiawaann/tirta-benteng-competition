@@ -75,24 +75,27 @@ class AtletController extends Controller
     {
         $dokumen = NULL;
         if ($request->hasFile('dokumen')) {
-
             $fileName = time() . '.' . $request->dokumen->extension();
             $request->dokumen->move(public_path('assets/dokumen'), $fileName);
             $dokumen = 'assets/dokumen/' . $fileName;
         }
 
-        $data = [ "name"=> $request->nama,
-        "umur"=> $request->umur,
-        "jenis_kelamin"=> $request->jenisKelamin,
-        "track_record"=> $request->record,
-        "user_id"=> auth()->user()->id,
-        'dokumen' => $dokumen
+        // Menggabungkan track record
+        $track_record = ($request->record_minute * 60) + $request->record_second + ($request->record_millisecond / 100);
+
+        $data = [
+            "name" => $request->nama,
+            "umur" => $request->umur,
+            "jenis_kelamin" => $request->jenisKelamin,
+            "track_record" => $track_record,
+            "user_id" => auth()->user()->id,
+            'dokumen' => $dokumen
         ];
 
         $validation = Validator::make($data, [
-            "name"=> "required",
-            "umur"=> "required",
-            "jenis_kelamin"=> "required",
+            "name" => "required",
+            "umur" => "required",
+            "jenis_kelamin" => "required",
             "track_record" => "numeric|regex:/^\d+(\.\d{1,2})?$/"
         ], [
             'name.required' => 'Nama atlet wajib diisi.',
@@ -108,8 +111,9 @@ class AtletController extends Controller
 
         Atlet::create($data);
 
-        return redirect()->back()->with('success','Atlet berhasil dibuat');
+        return redirect()->back()->with('success', 'Atlet berhasil dibuat');
     }
+
 
     /**
      * Display the specified resource.
@@ -134,13 +138,11 @@ class AtletController extends Controller
      */
     public function update(Request $request)
     {
-
         $atlet = Atlet::find($request->atlet_id);
-        
+
         $dokumen = $atlet->dokumen;
         
         if ($request->hasFile('dokumen')) {
-
             if ($atlet->dokumen && File::exists(public_path($atlet->dokumen))) {
                 File::delete(public_path($atlet->dokumen));
             }
@@ -150,18 +152,22 @@ class AtletController extends Controller
             $dokumen = 'assets/dokumen/' . $fileName;
         }
 
-        $data = [ "name"=> $request->nama,
-        "umur"=> $request->umur,
-        "jenis_kelamin"=> $request->jenisKelamin,
-        "track_record"=> $request->record,
-        "user_id"=> auth()->user()->id,
-        "dokumen" => $dokumen
+        // Menggabungkan track record
+        $track_record = ($request->record_minute * 60) + $request->record_second + ($request->record_millisecond / 100);
+
+        $data = [
+            "name" => $request->nama,
+            "umur" => $request->umur,
+            "jenis_kelamin" => $request->jenisKelamin,
+            "track_record" => $track_record,
+            "user_id" => auth()->user()->id,
+            "dokumen" => $dokumen
         ];
 
         $validation = Validator::make($data, [
-            "name"=> "required",
-            "umur"=> "required",
-            "jenis_kelamin"=> "required",
+            "name" => "required",
+            "umur" => "required",
+            "jenis_kelamin" => "required",
             "track_record" => "numeric|regex:/^\d+(\.\d{1,2})?$/"
         ], [
             'name.required' => 'Nama atlet wajib diisi.',
@@ -177,8 +183,9 @@ class AtletController extends Controller
 
         $atlet->update($data);
 
-        return redirect('/dashboard/atlet-saya')->with('success','Atlet berhasil diperbaharui');
+        return redirect('/dashboard/atlet-saya')->with('success', 'Atlet berhasil diperbaharui');
     }
+
 
     /**
      * Remove the specified resource from storage.

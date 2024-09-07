@@ -3,7 +3,7 @@
         <nav class="navbar">
             <div class="navbar-left">
                 <a href="{{ route('main') }}">
-                    <img src="{{ asset('assets/img/logo.png') }}" alt="Logo" class="logo">
+                    <img src="{{ asset('assets/img/LogoWebHD.png') }}" alt="Logo" class="logo">
                 </a>
             </div>
             <div class="navbar-center">

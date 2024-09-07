@@ -18,8 +18,12 @@
                     <option value="wanita">Wanita</option>
                 </select>
                 <label for="record">Track Record</label>
-                <p><i style="font-size: 12px">(Tulis 0 Jika tidak ada)</i></p>
-                <input type="number" id="record" name="record" placeholder="contoh: 3,25 (Menit)" step="0.01">
+                <p><i style="font-size: 12px">(Tulis 0 jika tidak ada)</i></p>
+                    <div class="flex">
+                        <input type="number" id="record_minute" name="record_minute" placeholder="Menit" min="0" step="1" style="width: 30%;">
+                        <input type="number" id="record_second" name="record_second" placeholder="Detik" min="0" max="59" step="1" style="width: 30%;">
+                        <input type="number" id="record_millisecond" name="record_millisecond" placeholder="Milidetik" min="0" max="99" step="1" style="width: 30%;">
+                    </div>
                 <label for="dokumen">Dokumen</label>
                 <input type="file" name="dokumen" id="dokumen" accept=".pdf">
                 <div class="flex center">   
