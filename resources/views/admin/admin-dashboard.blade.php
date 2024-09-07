@@ -60,9 +60,9 @@
                         @endif
                     </div>
                 </section>
-
             </div>
         </div>
+
         <div class="upload card">
             <div class="all-container all-card w100">
                 <header class="flex divider">
@@ -98,6 +98,7 @@
                 </section>
             </div>
         </div>
+
         <div class="download card">
             <div class="all-container all-card w100">
                 <header class="flex divider">
@@ -132,6 +133,7 @@
                 </section>
             </div>
         </div>
+
         <div class="download card">
             <div class="all-container all-card w100">
                 <header class="flex divider">
@@ -141,17 +143,17 @@
                     <div>
                         @if ($kompetisi->count() > 0)
                             @foreach ($kompetisi as $kompe)
-                            <div>
-                                <h3>{{ $kompe->nama }}</h3>
+                                <div style="margin-bottom: 20px;">
+                                    <h3>{{ $kompe->nama }}</h3>
                                     @if ($kompe->harga->count() > 0)
                                         @foreach ($kompe->harga as $harga)
-                                            {{-- dibuat jadi card --}}
-                                            <div >
+                                            <div style="border: 1px solid #ddd; padding: 10px; margin-bottom: 10px; border-radius: 5px;">
                                                 <div>
-                                                    <h3>{{ $harga->judul }}</h3>
-                                                    <p>Rp.{{ number_format($harga->harga, 2, ',', '.') }}</p>
+                                                    <h4><strong>Judul:</strong> {{ $harga->judul }}</h4>
+                                                    <p><strong>Harga:</strong> Rp.{{ number_format($harga->harga, 2, ',', '.') }}</p>
                                                     <div>
-                                                        {!! $harga->deskripsi !!}
+                                                        <strong>Deskripsi:</strong>
+                                                        <p>{!! $harga->deskripsi !!}</p>
                                                     </div>
                                                 </div>
                                                 <div>
@@ -164,10 +166,9 @@
                                                     </form>
                                                 </div>
                                             </div>
-                                            {{--  --}}
                                         @endforeach
                                     @else
-                                    <p>Belum ada detail harga</p>
+                                        <p>Belum ada detail harga</p>
                                     @endif
                                 </div>
                             @endforeach
@@ -178,25 +179,22 @@
                 </section>
             </div>
         </div>
-    </div>
-    <div class="admin-container">
-        <div class="card100">
+
+        <div class="download card">
             <div class="all-container all-card w100">
                 <header class="flex divider">
                     <h2>Unduh Dokumen Peserta</h2>
                 </header>
                 <section>
-                    <div>
+                    <div class="download-section">
                         @if ($kompetisi->count() > 0)
                             @foreach ($kompetisi as $kompe)
-                            @foreach ($kompe->acara as $acara)
-                            @endforeach
-                            <div>
-                                <h3>{{ $kompe->nama }}</h3>
-                                <a href="{{ route('dashboard.admin.dokumen.download', $kompe->id) }}">
-                                    <button class="button-green"><i class='bx bx-download'></i></button>
-                                </a>
-                            </div>
+                                <div class="download-item">
+                                    <a href="{{ route('dashboard.admin.dokumen.download', $kompe->id) }}">
+                                        <button class="button-green download-button"><i class='bx bx-download'></i></button>
+                                    </a>
+                                    <h4>{{ $kompe->nama }}</h4>
+                                </div>
                             @endforeach
                         @else
                             <h4>Belum ada kompetisi</h4>
@@ -206,6 +204,5 @@
             </div>
         </div>
     </div>
-    
 </div>
 @endsection

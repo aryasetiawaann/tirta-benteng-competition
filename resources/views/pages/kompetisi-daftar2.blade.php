@@ -50,7 +50,7 @@
                                 <th>Nama</th>
                                 <th>Umur</th>
                                 <th>Jenis Kelamin</th>
-                                <th>Club</th>
+                                {{-- <th>Club</th> --}}
                             </tr>
                         </thead>
                         <tbody>
@@ -61,7 +61,7 @@
                                     <td>{{ $peserta->name }}</td>
                                     <td>{{ now()->diffInYears(\Carbon\Carbon::parse($peserta->umur)) }}</td>
                                     <td>{{ $peserta->jenis_kelamin }}</td>
-                                    <td>{{ $peserta->user->club }}</td>
+                                    {{-- <td>{{ $peserta->user->club }}</td> --}}
                                 </tr>
                                 @endforeach
                             @else

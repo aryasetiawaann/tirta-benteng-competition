@@ -47,7 +47,7 @@
                             </li>
                             <li>
                                 <a href="{{ route('dashboard.admin.acara') }}">
-                                    <span class="text">Tambah Acara</span>
+                                    <span class="text">Edit Acara</span>
                                 </a>
                             </li>
                         </ul>
