@@ -5,6 +5,11 @@
         width: calc(100% - 40px);
         height: calc(100% - 40px);
     }
+
+    .admin-container section {
+    overflow: auto;
+    max-height: 500px;
+}
 </style>
 @endsection
 @section('content')
