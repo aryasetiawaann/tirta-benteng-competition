@@ -1,4 +1,12 @@
 @extends('admin.admin-dashboard-layout')
+@section('style')
+<style>
+    .w100 {
+        width: calc(100% - 40px);
+        height: calc(100% - 40px);
+    }
+</style>
+@endsection
 @section('content')
 @include('components.upload-file-hasil')
 <div class="main-content">
