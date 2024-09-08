@@ -19,6 +19,7 @@ class Acara extends Model
         'kompetisi_id',
         'nomor_lomba',
         'nama',
+        'jenis_lomba',
         'kategori',
         'harga',
         'kuota',
@@ -41,4 +42,6 @@ class Acara extends Model
         ->withPivot(['status_pembayaran', 'snap_token', 'updated_at', 'id', 'waktu_pembayaran'])
         ->wherePivot('status_pembayaran', 'Selesai');
     }
+
+    
 }

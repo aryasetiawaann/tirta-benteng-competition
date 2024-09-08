@@ -18,7 +18,6 @@ return new class extends Migration
             $table->string('name');
             $table->date('umur');
             $table->enum('jenis_kelamin', ['Pria','Wanita']);
-            $table->decimal('track_record', 8, 2)->nullable();
             $table->string('dokumen')->nullable();
             $table->timestamps();
         });

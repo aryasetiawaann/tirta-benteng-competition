@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('kompetisi_id');
             $table->foreign('kompetisi_id')->references('id')->on('kompetisi')->onDelete('cascade');
+            $table->string('jenis_lomba');
             $table->integer('nomor_lomba');
             $table->string('nama');
             $table->enum('kategori', ['Pria','Wanita', 'Campuran'])->default('Campuran');

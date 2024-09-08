@@ -163,6 +163,8 @@
                             </tr>
                             @foreach($heat as $groupKey => $group)
                                 @foreach($group as $key => $participant)
+                                @if ($participant)
+                                    
                                     <tr>
                                         @if (($groupKey + 1) % 2 != 0)
                                             @if ($key == 0)
@@ -177,10 +179,38 @@
                                         <td class="name">{{ $participant['name'] }}</td>
                                         <td class="age">{{ now()->diffInYears(\Carbon\Carbon::parse($participant['umur'])) }}</td>
                                         <td class="club">{{ $participant['club']}}</td>
-                                        <td class="record">{{ str_replace('.', ':', sprintf('%04.2f', $participant['track_record']))}}</td>
+                                        @if ($participant['track_record'] == 999)
+                                            <td class="record">NT</td>
+                                        @else
+                                            <td class="record">{{ sprintf('%02d:%02d.%02d', 
+                                                floor($participant['track_record'] / 60),  // Menit
+                                                floor(fmod($participant['track_record'], 60)),  // Detik
+                                                ceil(($participant['track_record'] - floor($participant['track_record'])) * 100)  // Milidetik
+                                            ) }}</td>
+                                        @endif
                                         <td class="finals">____________</td>
                                         <td class="place">____________</td>
                                     </tr>
+                                @else
+                                    <tr>
+                                        @if (($groupKey + 1) % 2 != 0)
+                                            @if ($key == 0)
+                                                <td rowspan="4" class="grup">A</td>
+                                            @endif
+                                        @else
+                                            @if ($key == 0)
+                                                <td rowspan="4" class="grup">B</td>
+                                            @endif
+                                        @endif
+                                        <td class="line">{{ $key+1 }}</td>
+                                        <td class="name">&nbsp;</td>
+                                        <td class="age">&nbsp;</td>
+                                        <td class="club">&nbsp;</td>
+                                        <td class="record">&nbsp;</td>
+                                        <td class="finals">&nbsp;</td>
+                                        <td class="place">&nbsp;</td>
+                                    </tr>
+                                @endif
                                 @endforeach
                             @endforeach
                             @endforeach

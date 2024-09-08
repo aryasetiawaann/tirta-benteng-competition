@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Acara;
 use App\Models\User;
+use App\Models\TrackRecord;
 
 class Atlet extends Model
 {
@@ -15,7 +16,6 @@ class Atlet extends Model
         'name',
         'umur',
         'jenis_kelamin',
-        'track_record',
         'user_id',
         'dokumen',
     ];
@@ -39,5 +39,10 @@ class Atlet extends Model
 
     public function user(){
         return $this->belongsTo(User::class, 'user_id');
+    }
+
+    public function trackRecords()
+    {
+        return $this->hasMany(TrackRecord::class);
     }
 }

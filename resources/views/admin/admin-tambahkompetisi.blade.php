@@ -81,7 +81,7 @@
                         @endif
                     </select>
 
-                    <label for="logo">Masukan Logo</label>
+                    <label for="logo">Masukan Logo (dapat lebih dari satu file)</label>
                     <input type="file" name="logo[]" multiple id="logo">
 
                     @if ($kompetisis->count() > 0)

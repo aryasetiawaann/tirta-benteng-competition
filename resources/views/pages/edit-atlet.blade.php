@@ -35,13 +35,13 @@
                             <option value="pria" {{ $atlet->jenis_kelamin === "Pria" ? "selected" : "" }}>Pria</option>
                             <option value="wanita" {{ $atlet->jenis_kelamin === "Wanita" ? "selected" : "" }}>Wanita</option>
                         </select>
-                        <label for="record">Track Record</label>
+                        {{-- <label for="record">Track Record</label>
                         <p><i style="font-size: 12px">(Tulis 0 Jika tidak ada)</i></p>
                             <div class="record">
                                 <input type="number" id="record_minute" name="record_minute" placeholder="Menit" min="0" step="1" value="{{ floor($atlet->track_record / 60) }}" style="width: 30%;">
                                 <input type="number" id="record_second" name="record_second" placeholder="Detik" min="0" max="59" step="1" value="{{ floor(fmod($atlet->track_record, 60)) }}" style="width: 30%;">
                                 <input type="number" id="record_millisecond" name="record_millisecond" placeholder="Milidetik" min="0" max="99" step="1" value="{{ intval(($atlet->track_record - floor($atlet->track_record)) * 100) }}" style="width: 30%;">
-                            </div>
+                            </div> --}}
                         <label for="">Upload Dokumen *</label>
                         <p><i style="font-size: 12px">(Akte / KTP *.pdf)</i></p>
                         <input type="file" name="dokumen" id="dokumen" accept=".pdf" value="{{ $atlet->dokumen }}">

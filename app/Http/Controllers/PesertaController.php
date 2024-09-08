@@ -7,6 +7,7 @@ use App\Models\Atlet;
 use App\Models\Peserta;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Midtrans\Notification;
 
 class PesertaController extends Controller
 {
@@ -69,6 +70,7 @@ class PesertaController extends Controller
         
         foreach ($atlets as $atlet) {
             foreach ($atlet->acara as $acara) {
+                if($acara->pivot->status_pembayaran == "Menunggu")
                 $totalHarga += $acara->harga;
             }
         }
@@ -121,18 +123,8 @@ class PesertaController extends Controller
         return redirect('/dashboard/riwayat-pembayaran');        
     }   
 
-    // public function tagihanCallback(Request $request){
-    //     $serverKey = config('midtrans.server_key');
-    //     $hashed = hash('sha512', $request->order_id.$request->status_code.$request->gross_amount.$serverKey);
-        
-    //     if($hashed == $request->signature_key){
-    //         if($request->transaction_status == 'expire' || $request->transaction_status == 'cancel'){
-    //             return redirect('/dashboard/tagihan');
-    //         }
-    //     }
-    // }
-
     public function tagihanRiwayat(){
+
         $atlets = Atlet::whereHas('acaraBayarSelesai')->with('acara')->where('user_id', auth()->user()->id)->get()->sortByDesc('created_at');
 
         return view('pages.dashboard-lunas', compact('atlets'));

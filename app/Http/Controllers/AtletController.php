@@ -81,13 +81,12 @@ class AtletController extends Controller
         }
 
         // Menggabungkan track record
-        $track_record = ($request->record_minute * 60) + $request->record_second + ($request->record_millisecond / 100);
+        // $track_record = ($request->record_minute * 60) + $request->record_second + ($request->record_millisecond / 100);
 
         $data = [
             "name" => $request->nama,
             "umur" => $request->umur,
             "jenis_kelamin" => $request->jenisKelamin,
-            "track_record" => $track_record,
             "user_id" => auth()->user()->id,
             'dokumen' => $dokumen
         ];
@@ -96,13 +95,10 @@ class AtletController extends Controller
             "name" => "required",
             "umur" => "required",
             "jenis_kelamin" => "required",
-            "track_record" => "numeric|regex:/^\d+(\.\d{1,2})?$/"
         ], [
             'name.required' => 'Nama atlet wajib diisi.',
             'umur.required' => 'Tanggal Lahir atlet wajib diisi.',
             'jenis_kelamin.required' => 'Jenis kelamin atlet wajib diisi.',
-            'track_record.numeric' => 'Track record harus berupa angka.',
-            'track_record.regex' => 'Format track record tidak valid. Harus berupa angka dengan maksimal dua digit desimal.',
         ]);
 
         if ($validation->fails()) {
@@ -153,13 +149,12 @@ class AtletController extends Controller
         }
 
         // Menggabungkan track record
-        $track_record = ($request->record_minute * 60) + $request->record_second + ($request->record_millisecond / 100);
+        // $track_record = ($request->record_minute * 60) + $request->record_second + ($request->record_millisecond / 100);
 
         $data = [
             "name" => $request->nama,
             "umur" => $request->umur,
             "jenis_kelamin" => $request->jenisKelamin,
-            "track_record" => $track_record,
             "user_id" => auth()->user()->id,
             "dokumen" => $dokumen
         ];
@@ -168,13 +163,10 @@ class AtletController extends Controller
             "name" => "required",
             "umur" => "required",
             "jenis_kelamin" => "required",
-            "track_record" => "numeric|regex:/^\d+(\.\d{1,2})?$/"
         ], [
             'name.required' => 'Nama atlet wajib diisi.',
             'umur.required' => 'Umur atlet wajib diisi.',
             'jenis_kelamin.required' => 'Jenis kelamin atlet wajib diisi.',
-            'track_record.numeric' => 'Track record harus berupa angka.',
-            'track_record.regex' => 'Format track record tidak valid. Harus berupa angka dengan maksimal dua digit desimal.',
         ]);
 
         if ($validation->fails()) {

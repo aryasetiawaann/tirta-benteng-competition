@@ -67,13 +67,9 @@
                                     <td>{{ now()->diffInYears(\Carbon\Carbon::parse($atlet->umur)) }}</td>
                                     <td>{{ $atlet->jenis_kelamin }}</td>
                                     <td>
-                                        <span class="status registration">
-                                            {{ sprintf('%02d:%02d.%02d', 
-                                                floor($atlet->track_record / 60),  // Menit
-                                                floor(fmod($atlet->track_record, 60)),  // Detik
-                                                intval(($atlet->track_record - floor($atlet->track_record)) * 100)  // Milidetik
-                                            ) }}
-                                        </span>
+                                        <a href="{{ route('dashboard.track-record.index', $atlet->id) }}">
+                                            <button>Logo Show</button>
+                                        </a>
                                     </td>
 
                                     @if ($atlet->dokumen != NULL)

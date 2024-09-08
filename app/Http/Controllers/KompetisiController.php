@@ -49,7 +49,7 @@ class KompetisiController extends Controller
     }
 
     public function showKompetisiAdmin(){
-        $kompetisi = Kompetisi::all()->sortByDesc("tutup_pendaftaran");
+        $kompetisi = Kompetisi::all()->sortByDesc("waktu_kompetisi");
 
         return view('admin.admin-tambahacara', compact('kompetisi'));
     }

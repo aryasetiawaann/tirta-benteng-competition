@@ -49,6 +49,14 @@ class UnduhanController extends Controller
     
                 foreach ($participants as $participant) {
                     $participant->club =  $participant->user->club ? $participant->user->club : '-';
+
+                    $trackRecord = $participant->trackRecords->firstWhere('nomor_lomba', $acara->jenis_lomba);
+
+                    if ($trackRecord) {
+                        $participant->track_record = $trackRecord->time;
+                    } else {
+                        $participant->track_record = 999;
+                    }
                 }
     
                 // Membagi peserta ke dalam heat
@@ -68,11 +76,22 @@ class UnduhanController extends Controller
                 // Setel club untuk setiap peserta
                 foreach ($participants as $participant) {
                     $participant->club = $participant->user->club ? $participant->user->club : '-';
+
+                    $trackRecord = $participant->trackRecords->firstWhere('nomor_lomba', $acara->jenis_lomba);
+
+                    if ($trackRecord) {
+                        $participant->track_record = $trackRecord->time;
+                    } else {
+                        $participant->track_record = 999;
+                    }
                 }
             
                 // Membagi peserta yang telah diurutkan ke dalam heat
-                $heats = $this->divideIntoHeatsWithoutGroups($participants->toArray());
-            
+                $participantsArray = $participants->toArray();
+
+                // Membagi peserta yang telah diurutkan ke dalam heat
+                $heats = $this->divideIntoHeatsWithoutGroups($participantsArray);
+
                 // Mengurutkan peserta di setiap heat dengan logika sortMiddle
                 foreach ($heats as &$heat) {
                     $heat = $this->sortMiddle($heat);
@@ -91,42 +110,46 @@ class UnduhanController extends Controller
 
     private function sortMiddle($participants)
     {
-        // Filter out null values
+        // Ensure all participants have a track record, set default if not set
         $participants = array_filter($participants, function($participant) {
-            return $participant !== null;
+            return $participant !== null; // Filter out null participants
         });
-
+    
+        // Ensure all remaining participants have a valid track record
         $participants = array_map(function($participant) {
-            if ($participant['track_record'] == 0) {
-                $participant['track_record'] = 999;
+            if (!isset($participant['track_record']) || $participant['track_record'] == 0) {
+                $participant['track_record'] = 999; // Default value
             }
             return $participant;
         }, $participants);
 
-        // Urutkan peserta berdasarkan 'track_record' secara menaik (waktu tercepat ke terlama)
+        // Sort participants by 'track_record' in ascending order
         usort($participants, function($a, $b) {
-            return $a['track_record'] <=> $b['track_record'];
+            $trackRecordA = $a['track_record'];
+            $trackRecordB = $b['track_record'];
+            return $trackRecordA <=> $trackRecordB;
         });
-
-        $numParticipants = count($participants);
-        $result = array_fill(0, 8, null); // Inisialisasi array dengan 8 elemen null
-
-        $middleIndex = intdiv(8, 2); // Posisi tengah dalam array 8 elemen
+    
+        $result = array_fill(0, 8, null); // Initialize array with 8 null elements
+        
+        $middleIndex = intdiv(8, 2); // Middle position in an 8-element array
         $leftIndex = $middleIndex - 1;
         $rightIndex = $middleIndex;
-
+        
         foreach ($participants as $i => $participant) {
             if ($i % 2 == 0) {
-                // Tempatkan peserta di posisi tengah dan ke bawah
+                // Place participant in the middle and downwards
                 $result[$leftIndex--] = $participant;
             } else {
-                // Tempatkan peserta di posisi tengah dan ke atas
+                // Place participant in the middle and upwards
                 $result[$rightIndex++] = $participant;
             }
         }
 
-        return $result; // Kembalikan array yang sudah diurutkan
+        return $result; // Return the sorted array
     }
+
+    
 
 
     private function divideIntoHeatsWithoutGroups($participants, $maxLanes = 8)

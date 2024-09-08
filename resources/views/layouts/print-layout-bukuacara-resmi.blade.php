@@ -148,7 +148,7 @@
                         <td colspan="7" class="garis"></td>
                     </tr>
                     <tbody>
-                            @foreach($acara->heats as $heatIndex => $heat)
+                        @foreach($acara->heats as $heatIndex => $heat)
                             <tr>
                                 <td style="text-align: left;" colspan="7"><h4>Heat {{ $heatIndex + 1 }} of {{ count($acara->heats) }} Timed Finals</h4></td>
                             </tr>
@@ -159,7 +159,15 @@
                                     <td class="name">{{ $participant['name'] }}</td>
                                     <td class="age">{{ now()->diffInYears(\Carbon\Carbon::parse($participant['umur'])) }}</td>
                                     <td class="club">{{ $participant['club'] }}</td>
-                                    <td class="record">{{ str_replace('.', ':', sprintf('%04.2f', $participant['track_record'])) }}</td>
+                                    @if ($participant['track_record'] == 999)
+                                    <td class="record">NT</td>
+                                    @else
+                                    <td class="record">{{ sprintf('%02d:%02d.%02d', 
+                                        floor($participant['track_record'] / 60),  // Menit
+                                        floor(fmod($participant['track_record'], 60)),  // Detik
+                                        ceil(($participant['track_record'] - floor($participant['track_record'])) * 100)  // Milidetik
+                                    ) }}</td>
+                                    @endif
                                     <td class="finals">____________</td>
                                     <td class="place">____________</td>
                                 </tr>

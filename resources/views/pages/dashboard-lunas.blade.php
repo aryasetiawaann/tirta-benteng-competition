@@ -56,15 +56,17 @@
                         <?php $total = 0 ?>
                         @foreach ($atlets as $atlet)
                             @foreach ($atlet->acara as $acara)
-                                    <tr>
-                                        <td>{{ $counter = isset($counter) ? $counter + 1 : 1 }}</td>
-                                        <td>{{ $atlet->name }}</td>
-                                        <td>{{ $acara->kompetisi->nama }}</td>
-                                        <td>{{ $acara->nomor_lomba }} - {{$acara->nama}}</td>
-                                        <td><span class="status bayar">Rp.{{ number_format($acara->harga, 2, ',', '.') }}</span></td>
-                                        <td><span class="status bayar">{{ $acara->pivot->status_pembayaran }}</span></td>
-                                        <td>{{ \Carbon\Carbon::parse($acara->pivot->waktu_pembayaran)->format('d-m-Y') }}</td>
-                                    </tr>
+                            @if ($acara->pivot->status_pembayaran == 'Selesai')   
+                            <tr>
+                                <td>{{ $counter = isset($counter) ? $counter + 1 : 1 }}</td>
+                                <td>{{ $atlet->name }}</td>
+                                <td>{{ $acara->kompetisi->nama }}</td>
+                                <td>{{ $acara->nomor_lomba }} - {{$acara->nama}}</td>
+                                <td><span class="status bayar">Rp.{{ number_format($acara->harga, 2, ',', '.') }}</span></td>
+                                <td><span class="status bayar">{{ $acara->pivot->status_pembayaran }}</span></td>
+                                <td>{{ \Carbon\Carbon::parse($acara->pivot->waktu_pembayaran)->format('d-m-Y') }}</td>
+                            </tr>
+                            @endif
                             @endforeach
                         @endforeach
                         @endif

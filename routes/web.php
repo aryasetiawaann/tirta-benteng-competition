@@ -10,6 +10,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\PesertaController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UnduhanController;
+use App\Http\Controllers\TrackRecordController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -33,9 +34,14 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::resource('/dashboard/atlet-saya', AtletController::class)->names('dashboard.atlet');
     Route::get('/dashboard/atlet-saya/{id}/dokumen/download', [AtletController::class, 'downloadDocument'])->name('dashboard.atlet.dokumen.download');
     Route::delete('/dashboard/edit/atlet-saya/{id}/dokumen/delete', [AtletController::class, 'deleteDocument'])->name('dashboard.atlet.dokumen.delete');
-
-
     
+    Route::get('/dashboard/atlet-saya/{id}/track-record', [TrackRecordController::class, 'index'])->name('dashboard.track-record.index');
+    Route::get('/dashboard/atlet-saya/track-record/{id}/edit', [TrackRecordController::class, 'edit'])->name('dashboard.track-record.edit');
+    Route::post('/dashboard/atlet-saya/track-record/store', [TrackRecordController::class, 'create'])->name('dashboard.track-record.create');
+    Route::put('/dashboard/atlet-saya/track-record/{id}/update', [TrackRecordController::class, 'update'])->name('dashboard.track-record.update');
+    Route::delete('/dashboard/atlet-saya/track-record/{id}/delete', [TrackRecordController::class, 'destroy'])->name('dashboard.track-record.destroy');
+    
+
     Route::get('/dashboard/daftar-kompetisi', [KompetisiController::class, 'index'])->name('dashboard.kompetisi');
     Route::get('/dashboard/daftar-kompetisi/{id}', [AcaraController::class,'index'])->name('dashboard.acara');
     Route::get('/dashboard/daftar-kompetisi/acara/{id}', [AcaraController::class,'showPesertaUser'])->name('dashboard.acara.detail');
