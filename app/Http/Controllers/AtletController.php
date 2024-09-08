@@ -35,7 +35,7 @@ class AtletController extends Controller
             $atlet->save();
         }
 
-        return redirect()->back()->with('success','Dokumuen berhasil dihapus');
+        return redirect()->back()->with('success','Dokumen berhasil dihapus');
     }
 
     public function downloadDocument($id)
