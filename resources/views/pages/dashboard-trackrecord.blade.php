@@ -13,6 +13,14 @@
                 </div>
             </div>
         </div>
+        <nav class="breadcrumb">
+            <ul>
+                <li>Atlet Saya</li>
+                <li><a href="{{ route('dashboard.atlet.index') }}">Daftar Atlet</a></li>
+                <li><a href="{{ route('dashboard.track-record.index', $atlet->id) }}">{{ $atlet->name }} - Track Record</a></li>
+            </ul>
+        </nav>
+
         @if ($errors->any())
         <x-error-list>
             @foreach ($errors->all() as $error)

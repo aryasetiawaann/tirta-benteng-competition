@@ -14,6 +14,12 @@
                 </div>
             </div>
         </div>
+        <nav class="breadcrumb">
+            <ul>
+                <li>Atlet Saya</li>
+                <li><a href="{{ route('dashboard.atlet.index') }}">Daftar Atlet</a></li>
+            </ul>
+        </nav>
         @if ($errors->any())
         <x-error-list>
             @foreach ($errors->all() as $error)
@@ -68,7 +74,7 @@
                                     <td>{{ $atlet->jenis_kelamin }}</td>
                                     <td>
                                         <a href="{{ route('dashboard.track-record.index', $atlet->id) }}">
-                                            <button>Logo Show</button>
+                                            <button class="button-gap" data-tooltip="Track Record"><i class='bx bx-xs bx-timer'></i></button>
                                         </a>
                                     </td>
 

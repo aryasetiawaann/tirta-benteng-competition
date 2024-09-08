@@ -18,7 +18,7 @@ class TrackRecordController extends Controller
         $records = TrackRecord::where('atlet_id', $id)->get();
         $atlet = Atlet::find($id);
 
-      return view('pages.dashboard-trackrecord', compact('records', 'atlet'));
+        return view('pages.dashboard-trackrecord', compact('records', 'atlet'));
     }
 
     public function create(Request $request)
@@ -57,7 +57,6 @@ class TrackRecordController extends Controller
     {
         $record = TrackRecord::find($id);
 
-
         return view('pages.edit-trackrecord', compact('record'));
     }
 
@@ -66,7 +65,6 @@ class TrackRecordController extends Controller
      */
     public function update($id, Request $request)
     {
-
         $record = TrackRecord::find($id);
 
         $time = ($request->record_minute * 60) + $request->record_second + ($request->record_millisecond / 100);
