@@ -13,23 +13,23 @@
 
                 <label for="kategori">Nomor Lomba *</label>
                 <select name="kategori" id="kategori">
-                    <option value="50m Gaya Bebas">50m Gaya Bebas</option>
-                    <option value="100m Gaya Bebas">100m Gaya Bebas</option>
-                    <option value="200m Gaya Bebas">200m Gaya Bebas</option>
-                    <option value="400m Gaya Bebas">400m Gaya Bebas</option>
-                    <option value="800m Gaya Bebas">800m Gaya Bebas</option>
-                    <option value="1500m Gaya Bebas">1500m Gaya Bebas</option>
-                    <option value="50m Gaya Kupu-Kupu">50m Gaya Kupu-Kupu</option>
-                    <option value="100m Gaya Kupu-Kupu">100m Gaya Kupu-Kupu</option>
-                    <option value="200m Gaya Kupu-Kupu">200m Gaya Kupu-Kupu</option>
-                    <option value="50m Gaya Punggung">50m Gaya Punggung</option>
-                    <option value="100m Gaya Punggung">100m Gaya Punggung</option>
-                    <option value="200m Gaya Punggung">200m Gaya Punggung</option>
-                    <option value="50m Gaya Dada">50m Gaya Dada</option>
-                    <option value="100m Gaya Dada">100m Gaya Dada</option>
-                    <option value="200m Gaya Dada">200m Gaya Dada</option>
-                    <option value="200m Gaya Ganti">200m Gaya Ganti</option>
-                    <option value="400m Gaya Ganti">400m Gaya Ganti</option>
+                    <option value="50m gaya bebas">50m Gaya Bebas</option>
+                    <option value="100m gaya bebas">100m Gaya Bebas</option>
+                    <option value="200m gaya bebas">200m Gaya Bebas</option>
+                    <option value="400m gaya bebas">400m Gaya Bebas</option>
+                    <option value="800m gaya bebas">800m Gaya Bebas</option>
+                    <option value="1500m gaya bebas">1500m Gaya Bebas</option>
+                    <option value="50m gaya kupu-kupu">50m Gaya Kupu-Kupu</option>
+                    <option value="100m gaya kupu-kupu">100m Gaya Kupu-Kupu</option>
+                    <option value="200m gaya kupu-kupu">200m Gaya Kupu-Kupu</option>
+                    <option value="50m gaya punggung">50m Gaya Punggung</option>
+                    <option value="100m gaya punggung">100m Gaya Punggung</option>
+                    <option value="200m gaya punggung">200m Gaya Punggung</option>
+                    <option value="50m gaya dada">50m Gaya Dada</option>
+                    <option value="100m gaya dada">100m Gaya Dada</option>
+                    <option value="200m gaya dada">200m Gaya Dada</option>
+                    <option value="200m gaya ganti">200m Gaya Ganti</option>
+                    <option value="400m gaya ganti">400m Gaya Ganti</option>
                 </select>
 
                 <label for="record">Durasi Renang *</label>
