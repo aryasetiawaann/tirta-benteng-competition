@@ -70,4 +70,19 @@ document.addEventListener('DOMContentLoaded', function () {
             });
         });
     });
+
+    document.getElementById('termsLink').onclick = function() {
+    document.getElementById('termsOverlay').style.display = 'flex';
+    }
+
+    document.getElementById('closeOverlay').onclick = function() {
+        document.getElementById('termsOverlay').style.display = 'none';
+    }
+
+    window.onclick = function(event) {
+        const overlay = document.getElementById('termsOverlay');
+        if (event.target == overlay) {
+            overlay.style.display = 'none';
+        }
+    }
 });
