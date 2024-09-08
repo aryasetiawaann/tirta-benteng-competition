@@ -61,11 +61,11 @@
                                             <td>{{ $acara->nomor_lomba }} - {{ $acara->nama }}</td>
                                             <td><span class="status bayar">Rp.{{ number_format($acara->harga, 2, ',', '.') }}</span></td>
                                             <td style="display:flex">
-                                                <button onclick="payButton(this)" data-token="{{ $acara->pivot->snap_token }}" data-id="{{ $acara->pivot->id }}" class="button-gap pay-button"><i class='bx bx-xs bxs-credit-card'></i></button>
+                                                <button onclick="payButton(this)" data-token="{{ $acara->pivot->snap_token }}" data-id="{{ $acara->pivot->id }}" class="button-gap pay-button" data-tooltip="Bayar"><i class='bx bx-xs bxs-credit-card'></i></button>
                                                 <form action="{{ route('dashboard.tagihan.destroy', $acara->pivot->id) }}" method="post">
                                                     @csrf
                                                     @method('delete')
-                                                    <a onclick="return confirm('Apakah kamu yakin ingin menghapus? ')"><button class="button-red button-gap"><i class='bx bx-xs bxs-trash' ></i></button></a>
+                                                    <a onclick="return confirm('Apakah kamu yakin ingin menghapus? ')"><button class="button-red button-gap" data-tooltip="Hapus Tagihan"><i class='bx bx-xs bxs-trash'></i></button></a>
                                                 </form>
                                             </td>
                                         </tr>
