@@ -84,16 +84,16 @@
                                     <td>
                                         <div class="actions">
                                             <a href="{{ route('dashboard.atlet.edit', $atlet->id) }}">
-                                                <button class="button-gap"><i class='bx bx-xs bx-edit'></i></button>
+                                                <button class="button-gap" data-tooltip="Edit Atlet"><i class='bx bx-xs bx-edit'></i></button>
                                             </a>
                                             @if ($atlet->dokumen != NULL)
                                                 <a href="{{ route('dashboard.atlet.dokumen.download', $atlet->id) }}">
-                                                    <button class="button-gap button-green"><i class='bx bx-xs bx-file'></i></button>
+                                                    <button class="button-gap button-green" data-tooltip="Unduh Dokumen"><i class='bx bx-xs bx-file'></i></button>
                                                 </a>
                                                 <form action="{{ route('dashboard.atlet.dokumen.delete', $atlet->id) }}" method="post">
                                                     @csrf
                                                     @method('delete')
-                                                    <button class="button-red button-gap" onclick="return confirm('Apakah kamu yakin ingin menghapus dokumen ini? ')">
+                                                    <button class="button-red button-gap" data-tooltip="Hapus Dokumen" onclick="return confirm('Apakah kamu yakin ingin menghapus dokumen ini? ')">
                                                         <i class='bx bx-xs bx-file'></i>
                                                     </button>
                                                 </form>
@@ -101,7 +101,7 @@
                                             <form action="{{ route('dashboard.atlet.destroy', $atlet->id) }}" method="post">
                                                 @csrf
                                                 @method('delete')
-                                                <button class="button-red button-gap" onclick="return confirm('Apakah kamu yakin ingin menghapus atlet ini? ')">
+                                                <button class="button-red button-gap" data-tooltip="Hapus Atlet"onclick="return confirm('Apakah kamu yakin ingin menghapus atlet ini? ')">
                                                     <i class='bx bx-xs bx-trash'></i>
                                                 </button>
                                             </form>
