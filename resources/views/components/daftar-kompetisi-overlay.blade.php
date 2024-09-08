@@ -26,7 +26,7 @@
                 <input type="hidden" name="harga" id="harga" value="{{ $acara->harga}}">
                 @if ($atlets->count() > 0)
                 <div class="flex center">
-                    <button class="w50" type="submit">Kirim</button>
+                    <button class="submit-button" type="submit">Kirim</button>
                 </div>
                 @endif
             </form>

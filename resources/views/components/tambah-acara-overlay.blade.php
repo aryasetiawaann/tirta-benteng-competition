@@ -32,7 +32,7 @@
                 <input type="hidden" name="kompe_id" value="{{ $id_kompetisi }}">
 
                 <div class="flex center">   
-                    <button type="submit" class="w50">Simpan</button>
+                    <button type="submit" class="submit-button">Simpan</button>
                 </div>
             </form>
         </section>

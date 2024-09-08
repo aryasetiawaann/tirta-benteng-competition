@@ -42,7 +42,7 @@
                     <input type="date" id="openreg" name="openreg" placeholder="Open Registrasi">
                     <label for="closereg">Close Registrasi*</label>
                     <input type="date" id="closereg" name="closereg" placeholder="Close Registrasi">
-                    <label for="techmeet">Technical Meeting</label>
+                    <label for="techmeet">Technical Meeting*</label>
                     <input type="date" id="techmeet" name="techmeet" placeholder="Technical Meeting">
                     <label for="datekompe">Tanggal Kompetisi*</label>
                     <input type="date" id="datekompe" name="datekompe">
@@ -52,7 +52,7 @@
                     <input id="deskripsi" type="hidden" name="deskripsi">
                     <trix-editor input="deskripsi" style="height:200px;"></trix-editor>
                     <div class="flex center">   
-                        <button type="submit" class="w100">Tambah</button>
+                        <button type="submit" class="submit-button">Tambah</button>
                     </div>
                 </form>
             </section>
@@ -86,7 +86,7 @@
 
                     @if ($kompetisis->count() > 0)
                     <div class="flex center">
-                        <button class="w50" type="submit">Simpan</button>
+                        <button class="submit-button" type="submit">Simpan</button>
                     </div>
                     @endif
                 </form>
@@ -117,6 +117,7 @@
                     </select>
 
                     <label for="judul">Judul*</label>
+                    <p><i style="font-size: 12px">(Individu/Estafet)</i></p>
                     <input type="text" name="judul" id="judul">
 
                     <label for="harga">Harga*</label>
@@ -129,7 +130,7 @@
 
                     @if ($kompetisis->count() > 0)
                     <div class="flex center">
-                        <button class="w50" type="submit">Simpan</button>
+                        <button class="submit-button" type="submit">Simpan</button>
                     </div>
                     @endif
                 </form>

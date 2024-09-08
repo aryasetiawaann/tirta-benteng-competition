@@ -32,7 +32,7 @@
                 <trix-editor input="deskripsi" style="height:200px;"></trix-editor>
                 <input type="hidden" name="id" value="{{ $kompetisi->id }}">
                 <div class="flex center">    
-                    <button type="submit" class="w100">Simpan</button>
+                    <button type="submit" class="submit-button">Simpan</button>
                 </div>
             </form>
         </section>

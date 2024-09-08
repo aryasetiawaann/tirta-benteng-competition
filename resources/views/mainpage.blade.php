@@ -36,8 +36,8 @@
             </div>
         </div>
         <div class="hero-content">
-            <h1>FUN SWIMMING COMPETITION 2024</h1>
-            <p>Bergabunglah dalam kompetisi renang yang menyenangkan dan penuh semangat!</p>
+            <h1>Swimming Competition Registration</h1>
+            <p>Show your skills in this fun and inspiring swimming competition!</p>
             <div class="hero-buttons">
                 <a href="{{ route('login') }}"><button class="btn-competition">Ikuti Kompetisi</button></a>
                 {{-- <a href="https://www.instagram.com/tirtabentengsc/" target="_blank" class="fa fa-instagram"></a> --}}
@@ -55,8 +55,8 @@
                 <h3>Tentang Kompetisi</h3>
                 <div class="line"></div>
             </div>
-            <h2>Fun Swimming Competition</h2>
-                <p>Diadakan setiap tahun, Fun Swimming Competition dirancang untuk menginspirasi atlet muda dan berbakat dalam mengejar mimpi mereka di arena olahraga. Dengan berbagai kategori lomba yang mencakup semua gaya renang dan kelompok umur, kompetisi ini memberikan kesempatan bagi semua orang untuk bersaing dan berkembang.
+            <h2>Swimming Competition</h2>
+                <p>Diadakan setiap tahun, Swimming Competition dirancang untuk menginspirasi atlet muda dan berbakat dalam mengejar mimpi mereka di arena olahraga. Dengan berbagai kategori lomba yang mencakup semua gaya renang dan kelompok umur, kompetisi ini memberikan kesempatan bagi semua orang untuk bersaing dan berkembang.
                 <br><br>Bersiaplah untuk menyaksikan pertarungan sengit di kolam renang, serta merasakan kegembiraan dan antusiasme yang membara. Mari bersama-sama menciptakan momen tak terlupakan dan mengukir prestasi terbaik di kejuaraan kali ini! </p>
             </div>
     </section>

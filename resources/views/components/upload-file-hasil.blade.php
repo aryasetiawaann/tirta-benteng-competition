@@ -28,7 +28,7 @@
                 
                 @if ($kompetisis->count() > 0)
                 <div class="flex center">
-                    <button class="w50" type="submit">Simpan</button>
+                    <button class="submit-button" type="submit">Simpan</button>
                 </div>
                 @endif
             </form>
