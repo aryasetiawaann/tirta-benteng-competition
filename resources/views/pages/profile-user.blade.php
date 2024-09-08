@@ -5,7 +5,7 @@
         <div class="top-container">
             <div class="top-card profile-top-card">
                 <div class="profile-card-icon">
-                    <i class='bx bxs-user' ></i>
+                    <i class='bx bxs-user'></i>
                 </div>
                 <div class="profile-card-content">
                     <p>Profile</p>
@@ -22,36 +22,35 @@
                     <img src="{{ !is_null(auth()->user()->foto) ? asset(auth()->user()->foto) : asset('assets/img/blank-profile.png') }}" alt="User Image">
                 </div>
                 <div>
-                    @if (!is_null(auth()->user()->foto))    
+                    @if (!is_null(auth()->user()->foto))
                     <a href="/dashboard/profile/delete-foto" onclick="return confirm('Apakah kamu yakin ingin menghapus foto? ')">
                         <button class="delete-photo-button">Hapus Foto</button>
                     </a>
                     @endif
-                    <form action="{{route('profile.update')}}" method="POST" enctype="multipart/form-data">
+                    <form action="{{ route('profile.update') }}" method="POST" enctype="multipart/form-data" onsubmit="return validatePhoto()">
                         @csrf
 
-                        <input type="file" name="foto" id="foto" accept=".png, .jpeg, .jpg" value="{{ auth()->user()->foto }}">
+                        <input type="file" name="foto" id="foto" accept=".png, .jpeg, .jpg" value="{{ auth()->user()->foto }}" onchange="previewImage(event)">
                         <div>
                             <label for="name">Nama</label>
-                            <input id="name" type="text" name="name" value=" {{ auth()->user()->name }} "placeholder="Masukkan nama" >
+                            <input id="name" type="text" name="name" value="{{ auth()->user()->name }}" placeholder="Masukkan nama">
                         </div>
         
                         <div>
                             <label for="email">Email</label>
-                            <input id="email" type="email" name="email" value=" {{ auth()->user()->email }}" placeholder="Masukkan email">
-
+                            <input id="email" type="email" name="email" value="{{ auth()->user()->email }}" placeholder="Masukkan email">
                         </div>
                         
                         <div>
                             <label for="club">Club</label>
-                            <input id="club" type="text" name="club" value="{{ auth()->user()->club }}"  placeholder="Contoh: Tirta Benteng Club">
-
+                            <input id="club" type="text" name="club" value="{{ auth()->user()->club }}" placeholder="Contoh: Tirta Benteng Club">
                         </div>
 
                         <button type="submit">Simpan</button>
                     </form>
                 </div>
             </section>
+
             <section class="profile-section">
                 <h1>Ubah Password</h1>
                 <form method="post" action="{{ route('password.update') }}" class="profile-form mt-6 space-y-6">
@@ -98,5 +97,32 @@
                 </form>
             </section>
         </div>
+        <x-profile-image-preview-overlay />
     </div>
+
+    <script>
+        function previewImage(event) {
+            const input = event.target;
+            const reader = new FileReader();
+            
+            reader.onload = function() {
+                const output = document.getElementById('preview-image');
+                output.src = reader.result;
+                toggleOverlay(true);
+            };
+
+            if (input.files && input.files[0]) {
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        function toggleOverlay(show) {
+            const overlay = document.getElementById('image-preview-overlay');
+            overlay.style.display = show ? 'flex' : 'none';
+        }
+
+        function validatePhoto() {
+            return true;
+        }
+    </script>
 @endsection
