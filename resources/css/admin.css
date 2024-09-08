@@ -18,30 +18,40 @@
     width: 100%;
 }
 
+.edit-container,
 .tambah-container {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
 }
 
+.edit-container label,
+.edit-container input,
+.edit-container select,
 .tambah-container label,
 .tambah-container input,
 .tambah-container select {
     margin: 10px 0 5px 0;
 }
 
-.tambah-container input, .tambah-container select {
+.edit-container input, 
+.edit-container select,
+.tambah-container input,
+.tambah-container select {
     padding: 10px;
     font-size: 1rem;
 }
 
-.tambah-container button, .download button { 
+.edit-container button, 
+.download button,
+.tambah-container button { 
     padding: 10px 15px;
     border: none;
     color: white;
     border-radius: 5px;
     cursor: pointer;
     transition: all 0.1s;
+    margin-top: 20px;
 }
 
 .tambah-kompetisi button {

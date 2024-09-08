@@ -6,7 +6,7 @@
             <h2>Edit {{$acara->nama}}</h2>
         </header>
         <section>
-            <form class="tambah-container" method="POST" action="{{ route('dashboard.admin.updateacara', $acara->id) }}">
+            <form class="edit-container" method="POST" action="{{ route('dashboard.admin.updateacara', $acara->id) }}">
                 @csrf
                 @method('put')
 

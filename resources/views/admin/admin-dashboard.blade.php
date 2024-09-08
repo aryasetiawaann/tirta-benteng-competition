@@ -1,7 +1,8 @@
 @extends('admin.admin-dashboard-layout')
 @section('style')
 <style>
-    .w100 {
+    .download .w100,
+    .upload .w100, {
         width: calc(100% - 40px);
         height: calc(100% - 40px);
     }
