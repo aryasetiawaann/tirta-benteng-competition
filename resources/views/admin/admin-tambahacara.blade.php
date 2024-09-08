@@ -43,9 +43,9 @@
         </div>
     </div>
 
-    <div class="bottom-container">
+    <div class="bottom-container grid">
         @foreach ($kompetisi as $kompe)
-        <div class="all-container all-card maxwd">
+        <div class="all-container all-card">
             <header class="flex divider">
                 <h2>{{ $kompe->nama }}</h2>
             </header>
