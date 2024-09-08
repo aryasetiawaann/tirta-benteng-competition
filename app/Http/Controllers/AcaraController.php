@@ -153,7 +153,7 @@ class AcaraController extends Controller
         
         Acara::create($data);
         
-        return redirect()->back()->with('success', 'Data berhasil disimpan.');
+        return redirect()->back()->with('success', 'Data acara berhasil disimpan.');
 
     }
 
@@ -250,7 +250,7 @@ class AcaraController extends Controller
         $acara = Acara::find($request->id);
         $acara->update($data);
         
-        return redirect()->route('dashboard.admin.listacara', $request->kompe_id)->with('success', 'Data berhasil diubah.');
+        return redirect()->route('dashboard.admin.listacara', $request->kompe_id)->with('success', 'Data acara berhasil diubah.');
    
     }
 

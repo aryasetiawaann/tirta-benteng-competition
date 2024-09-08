@@ -24,7 +24,7 @@
         </div>
         <div class="top-card all-card">
             <div class="card-icon green">
-                <i class="icon ph-bold ph-wallet"></i>
+                <i class='bx bxs-wallet' ></i>
             </div>
             <div class="card-content">
                 <p>Tagihan Terbayar</p>
@@ -41,11 +41,6 @@
             </div>
         </div>
     </div>
-    <!-- <div class="nav-page nav-card">
-            <p>
-                <a href="#">#</a> / 
-            </p>
-        </div> -->
     <div class="bottom-container">
             <div class="left-container">
                 <section class="all-container all-card">
@@ -78,7 +73,7 @@
                                     <th>Status Kompetisi</th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody>z    
                                 @if ($atlets->isEmpty())
                                     <tr><td colspan="7" style="text-align:center;">Belum ada data</td></tr>
                                 @else
@@ -132,6 +127,7 @@
                                 <p>Lokasi: {{ $kompetisi->lokasi }}</p>
                                 <p>{!! $kompetisi->deskripsi !!}</p>
                             </div>
+                            <div class="divider"></div>
                         @endforeach
                     @else
                     <p>Belum ada kompetisi</p>

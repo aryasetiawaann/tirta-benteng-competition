@@ -59,7 +59,7 @@ class ProfileController extends Controller
         $user->club = $data['club'];
         $user->save();
 
-        return redirect()->back()->with('success','Profile berhasil diperbaharui');
+        return redirect()->back()->with('success','Profil berhasil diperbaharui');
 
     }
 
@@ -139,7 +139,7 @@ class ProfileController extends Controller
         $user->club = $data['club'];
         $user->save();
 
-        return redirect()->back()->with('success','Profile berhasil diperbaharui');
+        return redirect()->back()->with('success','Profil berhasil diperbaharui');
 
     }
 

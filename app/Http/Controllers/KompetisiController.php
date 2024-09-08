@@ -108,7 +108,7 @@ class KompetisiController extends Controller
 
         Kompetisi::create($data);
 
-        return redirect()->back()->with('success', 'Data berhasil disimpan.');
+        return redirect()->back()->with('success', 'Data kompetisi berhasil disimpan.');
 
     }
 
@@ -263,7 +263,7 @@ class KompetisiController extends Controller
         $kompetisi = Kompetisi::find($request->id);
         $kompetisi->update($data);
 
-        return redirect()->route('dashboard.admin.acara')->with('success', 'Data berhasil diperbaharui.');
+        return redirect()->route('dashboard.admin.acara')->with('success', 'Data kompetisi berhasil diperbaharui.');
 
     }
 

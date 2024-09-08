@@ -99,6 +99,10 @@
         background-color: #007bff;
     }
 
+    .status.belum-buka {
+        background-color: #ff9900;
+    }
+
     .status.tutup {
         background-color: #ff0000;
     }
@@ -483,9 +487,9 @@ input#dokumen {
     grid-template-columns: 1fr 1fr;
 }
 
-.news {
+/* .news {
     margin-bottom: 20px;
-}
+} */
 
 .news h3, 
 .news p {
