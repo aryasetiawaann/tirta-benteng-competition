@@ -3,6 +3,26 @@
 @section('content')
 @include('components.daftar-atlet-overlay')
     <div class="main-content">
+        <div class="top-container">
+            <div class="top-card all-card flex">
+                <div class="card-left">
+                    <div class="card-icon">
+                        <i class='bx bxs-user' ></i>
+                    </div>
+                    <div class="card-content">
+                        <h1>Edit Atlet</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <nav class="breadcrumb">
+            <ul>
+                <li>Atlet Saya</li>
+                <li><a href="{{ route('dashboard.atlet.index') }}">Daftar Atlet</a></li>
+                <li><a href="{{ route('dashboard.atlet.edit', $atlet->id) }}">Edit - {{ $atlet->name }}</a></li>
+            </ul>
+        </nav>
+
         @if ($errors->any())
         <x-error-list>
             @foreach ($errors->all() as $error)

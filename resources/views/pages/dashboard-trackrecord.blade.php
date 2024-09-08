@@ -5,11 +5,13 @@
     <div class="main-content">
         <div class="top-container">
             <div class="top-card all-card flex">
-                <div class="card-icon">
-                    <i class='bx bxs-user' ></i>
-                </div>
-                <div class="card-content">
-                    <h1>Track Record {{ $atlet->name }}</h1>
+                <div class="card-left">
+                    <div class="card-icon">
+                        <i class='bx bxs-user' ></i>
+                    </div>
+                    <div class="card-content">
+                        <h1>Track Record {{ $atlet->name }}</h1>
+                    </div>
                 </div>
             </div>
         </div>
@@ -17,7 +19,7 @@
             <ul>
                 <li>Atlet Saya</li>
                 <li><a href="{{ route('dashboard.atlet.index') }}">Daftar Atlet</a></li>
-                <li><a href="{{ route('dashboard.track-record.index', $atlet->id) }}">{{ $atlet->name }} - Track Record</a></li>
+                <li><a href="{{ route('dashboard.track-record.index', $atlet->id) }}">Track Record - {{ $atlet->name }}</a></li>
             </ul>
         </nav>
 

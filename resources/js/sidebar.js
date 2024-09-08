@@ -11,6 +11,9 @@ document.addEventListener("DOMContentLoaded", function() {
   const titles = {
     'dashboard': 'Dashboard',
     'dashboard.atlet.index': 'Atlet Saya',
+    'dashboard.atlet.edit': 'Edit Atlet',
+    'dashboard.track-record.index': 'Track Record',
+    'dashboard.track-record.edit': 'Edit Track Record',
     'dashboard.kompetisi': 'Daftar Kompetisi',
     'dashboard.acara': 'Acara',
     'dashboard.acara.detail': 'Detail Acara',
@@ -21,7 +24,7 @@ document.addEventListener("DOMContentLoaded", function() {
     'dashboard.tagihan.riwayat': 'Riwayat Pembayaran',
     'dashboard.bukuacara': 'Buku Acara',
     'dashboard.bukuhasil': 'Buku Hasil',
-    'profile.edit': 'Profil',
+    'profile.edit': 'Profil', 
   };
 
   // Fungsi untuk memperbarui judul navbar berdasarkan data-page-title

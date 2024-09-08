@@ -3,12 +3,14 @@
 @section('content')
     <div class="main-content">
         <div class="top-container">
-            <div class="top-card all-card">
-                <div class="card-icon">
-                    <i class="bx bxs-grid-alt"></i>
-                </div>
-                <div class="card-content" id="acara-detail" data-acara-detail="{{ $acaras->nama }}">
-                    <h1>{{ $acaras->kompetisi->nama }} - {{ $acaras->nama }}</h1>
+            <div class="top-card all-card flex">
+                <div class="card-left">
+                    <div class="card-icon">
+                        <i class="bx bxs-grid-alt"></i>
+                    </div>
+                    <div class="card-content" id="acara-detail" data-acara-detail="{{ $acaras->nama }}">
+                        <h1>{{ $acaras->kompetisi->nama }} - {{ $acaras->nama }}</h1>
+                    </div>
                 </div>
             </div>
         </div>

@@ -5,12 +5,14 @@
     <div class="main-content">
         <div class="top-container">
             <div class="top-card all-card flex">
-                <div class="card-icon">
-                    <i class='bx bxs-user' ></i>
-                </div>
-                <div class="card-content">
-                    <p>Jumlah Atlet</p>
-                    <h1>{{  $atlets_count }}</h1>
+                <div class="card-left">
+                    <div class="card-icon">
+                        <i class='bx bxs-user' ></i>
+                    </div>
+                    <div class="card-content">
+                        <p>Jumlah Atlet</p>
+                        <h1>{{  $atlets_count }}</h1>
+                    </div>
                 </div>
             </div>
         </div>
