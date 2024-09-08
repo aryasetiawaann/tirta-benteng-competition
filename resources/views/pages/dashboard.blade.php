@@ -73,7 +73,7 @@
                                     <th>Status Kompetisi</th>
                                 </tr>
                             </thead>
-                            <tbody>z    
+                            <tbody>
                                 @if ($atlets->isEmpty())
                                     <tr><td colspan="7" style="text-align:center;">Belum ada data</td></tr>
                                 @else
