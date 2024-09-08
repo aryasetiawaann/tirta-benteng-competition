@@ -15,11 +15,6 @@
                 </div>
             </div>
         </div>
-        <!-- <div class="nav-page nav-card">
-            <p>
-                <a href="#">#</a> / 
-            </p>
-        </div> -->
         <div class="bottom-container">
             <section class="all-container all-card w100">
                 <header class="divider flex">
@@ -61,13 +56,15 @@
                                     <td>{{ $acara->kompetisi->nama }}</td>
                                     <td>{{ $acara->nomor_lomba }} - {{ $acara->nama }}</td>
                                     <td><span class="status bayar">Rp.{{ number_format($acara->harga, 2, ',', '.') }}</span></td>
-                                    <td style="display:flex">
-                                        <button onclick="payButton(this)" data-token="{{ $acara->pivot->snap_token }}" data-id="{{ $acara->pivot->id }}" class="button-gap pay-button" data-tooltip="Bayar"><i class='bx bx-xs bxs-credit-card'></i></button>
-                                        <form action="{{ route('dashboard.tagihan.destroy', $acara->pivot->id) }}" method="post">
-                                            @csrf
-                                            @method('delete')
-                                            <a onclick="return confirm('Apakah kamu yakin ingin menghapus? ')"><button class="button-red button-gap" data-tooltip="Hapus Tagihan"><i class='bx bx-xs bxs-trash' ></i></button></a>
-                                        </form>
+                                    <td>
+                                        <div class="actions">
+                                            <button onclick="payButton(this)" data-token="{{ $acara->pivot->snap_token }}" data-id="{{ $acara->pivot->id }}" class="button-gap pay-button" data-tooltip="Bayar"><i class='bx bx-xs bxs-credit-card'></i></button>
+                                            <form action="{{ route('dashboard.tagihan.destroy', $acara->pivot->id) }}" method="post">
+                                                @csrf
+                                                @method('delete')
+                                                <a onclick="return confirm('Apakah kamu yakin ingin menghapus? ')"><button class="button-red button-gap" data-tooltip="Hapus Tagihan"><i class='bx bx-xs bxs-trash' ></i></button></a>
+                                            </form>
+                                        </div>
                                     </td>
                                 </tr>
                                 @endif
@@ -104,11 +101,11 @@
             },
             onPending: function(result){
               /* You may add your own implementation here */
-              alert("Menunggu pembayaran"); console.log(result);
+               console.log(result);
             },
             onError: function(result){
               /* You may add your own implementation here */
-              alert("Pembayaran gagal!"); console.log(result);
+               console.log(result);
             }
           });
         }
@@ -121,11 +118,11 @@
             },
             onPending: function(result){
               /* You may add your own implementation here */
-              alert("Menunggu pembayaran"); console.log(result);
+              console.log(result);
             },
             onError: function(result){
               /* You may add your own implementation here */
-              alert("Pembayaran gagal!"); console.log(result);
+              console.log(result);
             }
           });
         }

@@ -41,8 +41,6 @@
                     <h1>{{$nama_kompetisi}}</h1>
                 </div>
             </div>
-            <div class="card-right">
-            </div>
         </div>
     </div>
 

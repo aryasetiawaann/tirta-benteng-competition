@@ -11,14 +11,6 @@
             grid-template-columns: 1fr 1fr 1fr;
         }
 
-        .card-content h1 {
-            word-wrap: break-word;
-            word-break: normal;
-            font-size: 2.0em;
-            overflow: hidden;
-            white-space: normal;
-        }
-
         @media screen and (max-width: 1280px) {
             .grid {
                 grid-template-columns: 1fr 1fr;
@@ -36,16 +28,14 @@
     <div class="main-content">
         <div class="top-container">
             <div class="top-card all-card flex">
-            <div class="card-left">
-                <div class="card-icon">
-                    <i class="bx bxs-grid-alt"></i>
+                <div class="card-left">
+                    <div class="card-icon">
+                        <i class="bx bxs-grid-alt"></i>
+                    </div>
+                    <div class="card-content" id="acara" data-acara-name="{{ $nama_kompetisi }}">
+                        <h1>{{ $nama_kompetisi }} </h1>
+                    </div>
                 </div>
-                <div class="card-content" id="acara" data-acara-name="{{ $nama_kompetisi }}">
-                    <h1>{{ $nama_kompetisi }} </h1>
-                </div>
-            </div>
-            <div class="card-right">
-            </div>
             </div>
         </div>
         <nav class="breadcrumb">

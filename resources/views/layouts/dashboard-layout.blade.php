@@ -70,9 +70,13 @@
             font-size: smaller
         }
 
-        @media (max-width: 450px) {
-            .main-content, .top-container, .bottom-container {
+        @media (max-width: 768px) {
+            p {
                 font-size: 0.9em;
+            }
+
+            h1 {
+                font-size: 1.5em;
             }
 
             button {

@@ -27,16 +27,14 @@
     <div class="main-content">
         <div class="top-container">
             <div class="top-card all-card flex">
-            <div class="card-left">
-                <div class="card-icon">
-                    <i class="bx bxs-grid-alt"></i>
+                <div class="card-left">
+                    <div class="card-icon">
+                        <i class="bx bxs-grid-alt"></i>
+                    </div>
+                    <div class="card-content" id="competisi" data-competisi-name="{{ $nama_kompetisi }}">
+                        <h1>{{$nama_kompetisi}}</h1>
+                    </div>
                 </div>
-                <div class="card-content" id="competisi" data-competisi-name="{{ $nama_kompetisi }}">
-                    <h1>{{$nama_kompetisi}}</h1>
-                </div>
-            </div>
-            <div class="card-right">
-            </div>
             </div>
         </div>
         <nav class="breadcrumb">
