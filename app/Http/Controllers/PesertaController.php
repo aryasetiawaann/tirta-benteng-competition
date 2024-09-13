@@ -94,6 +94,7 @@ class PesertaController extends Controller
                     'first_name' => auth()->user()->name,
                     'email' => auth()->user()->email,
                 ),
+                'custom_field1' => auth()->user()->id,
             );
             
             $snapToken = \Midtrans\Snap::getSnapToken($params);
@@ -135,14 +136,14 @@ class PesertaController extends Controller
             {
                 $peserta = Peserta::find($request->order_id);
 
-                if($peserta)
+                if($peserta != null)
                 {
                     $peserta->update(['status_pembayaran' => 'Selesai', 'waktu_pembayaran' => now()]);
 
                 }
                 else
                 {
-                    $atletIds = Atlet::where('user_id', auth()->user()->id)->pluck('id');
+                    $atletIds = Atlet::where('user_id', $request->custom_field1)->pluck('id');
 
                     Peserta::whereIn('atlet_id', $atletIds)
                     ->where('status_pembayaran', 'Menunggu')
