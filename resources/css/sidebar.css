@@ -10,7 +10,7 @@
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   position: fixed;
   width: 100%;
-  height: 10%;
+  height: 80px;
   top: 0;
   z-index: 1001;
 }
@@ -357,7 +357,7 @@
     margin-bottom: 10px;
   }
   .main-content {
-    margin-top: 90px;
+    margin-top: 80px;
   }
   .ph-bold.ph-caret-right:before {
     content: none; 

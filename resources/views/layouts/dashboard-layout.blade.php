@@ -82,6 +82,9 @@
             button {
                 font-size: 0.8em;
             }
+            html {
+                font-size: smaller;
+            }
         }
     </style>
     @yield('style')
