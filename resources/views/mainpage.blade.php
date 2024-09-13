@@ -171,7 +171,7 @@
         <div class="footer-container">
             <div class="footer-left">
                 <img src="{{ asset('assets/img/LogoWebHD.png') }}" alt="Logo" class="footer-logo">
-                <p>&#169 Tirta Benteng Swimming Club 2024</p>
+                <p>&#169 Swimming Competition Registration 2024</p>
             </div>
             <div class="footer-menu">
                 <h4>Menu</h4>

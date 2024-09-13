@@ -131,7 +131,7 @@ class PesertaController extends Controller
 
         if($hashed == $request->signature_key)
         {
-            if($request->transaction_status == 'settlement' | $request->transaction_status == 'capture')
+            if($request->transaction_status == 'settlement' || $request->transaction_status == 'capture')
             {
                 $peserta = Peserta::find($request->order_id);
 
