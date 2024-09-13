@@ -79,18 +79,20 @@
                                             ) }}
                                         </span>
                                     </td>
-                                    <td style="display: flex;">
-                                        <a href="{{ route('dashboard.track-record.edit', $record->id) }}">
-                                            <button class="button-gap"><i class='bx bx-xs bx-edit'></i></button>
-                                        </a>
-                        
-                                        <form action="{{ route('dashboard.track-record.destroy', $record->id) }}" method="post">
-                                            @csrf
-                                            @method('delete')
-                                            <button class="button-red button-gap" onclick="return confirm('Apakah kamu yakin ingin menghapus track record ini? ')">
-                                                <i class='bx bx-xs bx-trash'></i>
-                                            </button>
-                                        </form>
+                                    <td>
+                                        <div class="actions">
+                                            <a href="{{ route('dashboard.track-record.edit', $record->id) }}">
+                                                <button class="button-gap"><i class='bx bx-xs bx-edit'></i></button>
+                                            </a>
+                            
+                                            <form action="{{ route('dashboard.track-record.destroy', $record->id) }}" method="post">
+                                                @csrf
+                                                @method('delete')
+                                                <button class="button-red button-gap" onclick="return confirm('Apakah kamu yakin ingin menghapus track record ini? ')">
+                                                    <i class='bx bx-xs bx-trash'></i>
+                                                </button>
+                                            </form>
+                                        </div>
                                     </td>
                                 </tr>
                                 @endforeach
