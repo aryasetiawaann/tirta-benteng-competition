@@ -106,24 +106,6 @@ class PesertaController extends Controller
         return view('pages.dashboard-tagihan', compact('atlets', 'totalHarga', 'snapToken'));
     }
 
-    // public function pembayaranSukses($id){
-
-    //     Peserta::find($id)->update(['status_pembayaran' => 'Selesai', 'waktu_pembayaran' => now()]);
-
-    //     return redirect('/dashboard/riwayat-pembayaran');
-    // }
-
-    // public function tagihanBayarSemua() {
-
-    //     $atletIds = Atlet::where('user_id', auth()->user()->id)->pluck('id');
-
-    //     Peserta::whereIn('atlet_id', $atletIds)
-    //     ->where('status_pembayaran', 'Menunggu')
-    //     ->update(['status_pembayaran' => 'Selesai', 'waktu_pembayaran' => now()]);
-
-    //     return redirect('/dashboard/riwayat-pembayaran');        
-    // }   
-
 
     public function paymentCallback(Request $request)
     {

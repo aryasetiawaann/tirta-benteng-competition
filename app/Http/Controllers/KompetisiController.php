@@ -266,7 +266,7 @@ class KompetisiController extends Controller
         $participantsExist = false;
 
         foreach ($acaras as $acara) {
-            if ($acara->pesertaSelesai()->exists()) {
+            if ($acara->peserta->pivot->status_pembayaran == "Selesai") {
                 $participantsExist = true;
                 break;
             }
@@ -289,12 +289,12 @@ class KompetisiController extends Controller
             
 
             foreach ($acaras as $acara) {
-                $participants = $acara->pesertaSelesai;
+                $participants = $acara->peserta;
 
                 foreach ($participants as $participant) {
 
 
-                    if ($participant->dokumen != null) {
+                    if ($participant->dokumen != null && $participant->pivot->status_pembayaran == "Selesai") {
                         $filePath = public_path($participant->dokumen);
 
 

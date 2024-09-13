@@ -67,51 +67,54 @@
                         </thead>
                         <tbody>
                             @if ( $atlets_count > 0)   
+                            @php $counter = 1; @endphp
                                 @foreach ($atlets as $key => $atlet) 
-                                <tr>
-                                    <td>{{ $counter = isset($counter) ? $counter + 1 : 1 }}</td>
-                                    <td>{{ $atlet->name }}</td>
-                                    <td>{{ \Carbon\Carbon::parse($atlet->umur)->format('d M Y') }}</td>
-                                    <td>{{ now()->diffInYears(\Carbon\Carbon::parse($atlet->umur)) }}</td>
-                                    <td>{{ $atlet->jenis_kelamin }}</td>
-                                    <td>
-                                        <a href="{{ route('dashboard.track-record.index', $atlet->id) }}">
-                                            <button class="button-gap" data-tooltip="Track Record"><i class='bx bx-xs bx-timer'></i></button>
-                                        </a>
-                                    </td>
-
-                                    @if ($atlet->dokumen != NULL)
-                                        <td>Lengkap</td>  
-                                    @else
-                                        <td>Tidak Lengkap</td>
-                                    @endif
-                                    <td>
-                                        <div class="actions">
-                                            <a href="{{ route('dashboard.atlet.edit', $atlet->id) }}">
-                                                <button class="button-gap" data-tooltip="Edit Atlet"><i class='bx bx-xs bx-edit'></i></button>
+                                    @if($atlet->user_id == auth()->user()->id)
+                                    <tr>
+                                        <td>{{ $counter++}}</td>
+                                        <td>{{ $atlet->name }}</td>
+                                        <td>{{ \Carbon\Carbon::parse($atlet->umur)->format('d M Y') }}</td>
+                                        <td>{{ now()->diffInYears(\Carbon\Carbon::parse($atlet->umur)) }}</td>
+                                        <td>{{ $atlet->jenis_kelamin }}</td>
+                                        <td>
+                                            <a href="{{ route('dashboard.track-record.index', $atlet->id) }}">
+                                                <button class="button-gap" data-tooltip="Track Record"><i class='bx bx-xs bx-timer'></i></button>
                                             </a>
-                                            @if ($atlet->dokumen != NULL)
-                                                <a href="{{ route('dashboard.atlet.dokumen.download', $atlet->id) }}">
-                                                    <button class="button-gap button-green" data-tooltip="Unduh Dokumen"><i class='bx bx-xs bx-file'></i></button>
+                                        </td>
+
+                                        @if ($atlet->dokumen != NULL)
+                                            <td>Lengkap</td>  
+                                        @else
+                                            <td>Tidak Lengkap</td>
+                                        @endif
+                                        <td>
+                                            <div class="actions">
+                                                <a href="{{ route('dashboard.atlet.edit', $atlet->id) }}">
+                                                    <button class="button-gap" data-tooltip="Edit Atlet"><i class='bx bx-xs bx-edit'></i></button>
                                                 </a>
-                                                <form action="{{ route('dashboard.atlet.dokumen.delete', $atlet->id) }}" method="post">
+                                                @if ($atlet->dokumen != NULL)
+                                                    <a href="{{ route('dashboard.atlet.dokumen.download', $atlet->id) }}">
+                                                        <button class="button-gap button-green" data-tooltip="Unduh Dokumen"><i class='bx bx-xs bx-file'></i></button>
+                                                    </a>
+                                                    <form action="{{ route('dashboard.atlet.dokumen.delete', $atlet->id) }}" method="post">
+                                                        @csrf
+                                                        @method('delete')
+                                                        <button class="button-red button-gap" data-tooltip="Hapus Dokumen" onclick="return confirm('Apakah kamu yakin ingin menghapus dokumen ini? ')">
+                                                            <i class='bx bx-xs bx-file'></i>
+                                                        </button>
+                                                    </form>
+                                                @endif
+                                                <form action="{{ route('dashboard.atlet.destroy', $atlet->id) }}" method="post">
                                                     @csrf
                                                     @method('delete')
-                                                    <button class="button-red button-gap" data-tooltip="Hapus Dokumen" onclick="return confirm('Apakah kamu yakin ingin menghapus dokumen ini? ')">
-                                                        <i class='bx bx-xs bx-file'></i>
+                                                    <button class="button-red button-gap" data-tooltip="Hapus Atlet"onclick="return confirm('Apakah kamu yakin ingin menghapus atlet ini? ')">
+                                                        <i class='bx bx-xs bx-trash'></i>
                                                     </button>
                                                 </form>
-                                            @endif
-                                            <form action="{{ route('dashboard.atlet.destroy', $atlet->id) }}" method="post">
-                                                @csrf
-                                                @method('delete')
-                                                <button class="button-red button-gap" data-tooltip="Hapus Atlet"onclick="return confirm('Apakah kamu yakin ingin menghapus atlet ini? ')">
-                                                    <i class='bx bx-xs bx-trash'></i>
-                                                </button>
-                                            </form>
-                                        </div>
-                                    </td>
-                                </tr>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    @endif
                                 @endforeach
                             @else
                                 <tr><td colspan="7" style="text-align:center;">Belum ada data</td></tr>
