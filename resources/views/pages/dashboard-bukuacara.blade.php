@@ -50,9 +50,10 @@
                         @if ($competitions->isEmpty())
                             <tr><td colspan="4" style="text-align:center;">Belum ada data</td></tr>
                         @else
+                            @php $counter = 1; @endphp
                             @foreach ( $competitions as $competition ) 
                             <tr>
-                                <td>{{ $counter = isset($counter) ? $counter + 1 : 1 }}</td>
+                                <td>{{ $counter++ }}</td>
                                 <td>{{ $competition->nama }}</td>
                                 @if ( now() > $competition->waktu_kompetisi)
                                 <td><span class="status registration">Selesai</span></td>

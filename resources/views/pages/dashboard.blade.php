@@ -77,10 +77,11 @@
                                 @if ($atlets->isEmpty())
                                     <tr><td colspan="7" style="text-align:center;">Belum ada data</td></tr>
                                 @else
+                                @php $counter = 1; @endphp
                                     @foreach ($atlets as $atlet)
                                         @foreach ($atlet->acara as $acara)    
                                             <tr>
-                                                <td>{{ $counter = isset($counter) ? $counter + 1 : 1 }}</td>
+                                                <td>{{ $counter++}}</td>
                                                 <td>{{ $atlet->name }}</td>
                                                 <td>{{ $acara->kompetisi->nama }}</td>
                                                 <td>{{ $acara->nomor_lomba }}</td>
