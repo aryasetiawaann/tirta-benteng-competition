@@ -128,7 +128,7 @@ class KompetisiResmi implements FromCollection, WithMapping, ShouldAutoSize, Wit
 
                     // Merge untuk nama acara
                     $sheet->mergeCells("A$currentRow:F$currentRow");
-                    $sheet->setCellValue("A$currentRow", 'Acara ' . $acara->nomor_lomba . ' | '. $acara->nama);
+                    $sheet->setCellValue("A$currentRow", 'Acara ' . $acara->nomor_lomba . ' | '. $acara->nama . ' - ' . $acara->grup);
                     $sheet->getStyle("A$currentRow:F$currentRow")->applyFromArray($headerStyle);
 
                     $currentRow+=2;

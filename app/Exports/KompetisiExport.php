@@ -135,7 +135,7 @@ class KompetisiExport implements FromCollection, WithMapping, ShouldAutoSize, Wi
                 foreach ($this->acaras as $acara) {
                     // Merge untuk baris ACARA
                     $sheet->mergeCells("A$currentRow:G$currentRow");
-                    $sheet->setCellValue("A$currentRow", 'Acara ' . $acara->nomor_lomba . ' | '. $acara->nama);
+                    $sheet->setCellValue("A$currentRow", 'Acara ' . $acara->nomor_lomba . ' | '. $acara->nama . ' - ' . $acara->grup);
                     $sheet->getStyle("A$currentRow:G$currentRow")->applyFromArray($headerStyle);
 
                     $currentRow+=2;
