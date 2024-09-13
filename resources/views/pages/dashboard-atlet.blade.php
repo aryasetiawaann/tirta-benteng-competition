@@ -69,7 +69,7 @@
                             @if ( $atlets_count > 0)   
                                 @foreach ($atlets as $key => $atlet) 
                                 <tr>
-                                    <td>{{ $key + 1 }}</td>
+                                    <td>{{ $counter = isset($counter) ? $counter + 1 : 1 }}</td>
                                     <td>{{ $atlet->name }}</td>
                                     <td>{{ \Carbon\Carbon::parse($atlet->umur)->format('d M Y') }}</td>
                                     <td>{{ now()->diffInYears(\Carbon\Carbon::parse($atlet->umur)) }}</td>
