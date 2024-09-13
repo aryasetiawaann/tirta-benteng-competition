@@ -47,8 +47,10 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @if ($competitions->isEmpty())
-                            <tr><td colspan="4" style="text-align:center;">Belum ada data</td></tr>
+                            @if ($competitions->contains(function ($competition) {
+                                return is_null($competition->file_hasil);
+                            }) || $competitions->isEmpty())
+                                <tr><td colspan="4" style="text-align:center;">Belum ada data</td></tr>
                         @else
                             @foreach ( $competitions as $competition )
                             @if ($competition->file_hasil != NULL)    
