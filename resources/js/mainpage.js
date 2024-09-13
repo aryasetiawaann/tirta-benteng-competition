@@ -35,17 +35,25 @@ document.addEventListener('DOMContentLoaded', function () {
     const kompetisiContainers = document.querySelectorAll('.jadwal-container');
     const totalKompetisi = kompetisiContainers.length;
 
-    document.getElementById('jadPrevBtn').addEventListener('click', function () {
-        kompetisiContainers[currentIndex].style.display = 'none';
-        currentIndex = (currentIndex - 1 + totalKompetisi) % totalKompetisi;
-        kompetisiContainers[currentIndex].style.display = 'block';
-    });
 
-    document.getElementById('jadNextBtn').addEventListener('click', function () {
-        kompetisiContainers[currentIndex].style.display = 'none';
-        currentIndex = (currentIndex + 1) % totalKompetisi;
-        kompetisiContainers[currentIndex].style.display = 'block';
-    });
+    const prevBtn = document.getElementById('jadPrevBtn');
+    const nextBtn = document.getElementById('jadNextBtn');
+
+
+    if(prevBtn || nextBtn){
+
+        prevBtn.addEventListener('click', function () {
+            kompetisiContainers[currentIndex].style.display = 'none';
+            currentIndex = (currentIndex - 1 + totalKompetisi) % totalKompetisi;
+            kompetisiContainers[currentIndex].style.display = 'block';
+        });
+    
+        nextBtn.addEventListener('click', function () {
+            kompetisiContainers[currentIndex].style.display = 'none';
+            currentIndex = (currentIndex + 1) % totalKompetisi;
+            kompetisiContainers[currentIndex].style.display = 'block';
+        });
+    }
 
     const eventItems = document.querySelectorAll('.event-list li');
     const priceSections = document.querySelectorAll('.price');
@@ -71,13 +79,15 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
-    document.getElementById('termsLink').onclick = function() {
-        document.getElementById('termsOverlay').style.display = 'flex';
-    }
 
-    document.getElementById('closeOverlay').onclick = function() {
+    document.getElementById('termsLink').addEventListener('click', function() {
+        document.getElementById('termsOverlay').style.display = 'flex';
+    });
+
+    document.getElementById('closeOverlay').addEventListener('click', function() {
         document.getElementById('termsOverlay').style.display = 'none';
-    }
+    });
+
 
     window.onclick = function(event) {
         const overlay = document.getElementById('termsOverlay');
