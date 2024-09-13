@@ -230,7 +230,7 @@
     .card-left {
         display: flex;
         align-items: center;
-        height: 60px;
+        min-height: 60px;
     }
 
     .card-right {
@@ -512,6 +512,10 @@ input#dokumen {
     margin-bottom: 5px;
 }
 
+.card-info {
+    overflow: block;
+}
+
 .card-info p{
     margin-bottom: 5px;
 }   
@@ -524,6 +528,13 @@ input#dokumen {
     .main-content {
         margin-left: 0;
         padding: 0;
+    }
+
+    .all-card {
+        margin-bottom: 10px;
+    }
+    .breadcrumb {
+        margin: 10px 0 10px 0;
     }
 }
 

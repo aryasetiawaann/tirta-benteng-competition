@@ -44,12 +44,12 @@
                         @endif
                     </h3>
                     
-                    <p>Open Registration : {{ \Carbon\Carbon::parse($kompe->buka_pendaftaran)->format('d M Y') }}</p>
-                    <p>Closed Registration : {{ \Carbon\Carbon::parse($kompe->tutup_pendaftaran)->format('d M Y') }}</p>
-                    <p>Tech Meeting : {{ $kompe->waktu_techmeeting? \Carbon\Carbon::parse($kompe->waktu_techmeeting)->format('d M Y') : '-' }}</p>
-                    <p>Tanggal Kompetisi : {{ \Carbon\Carbon::parse($kompe->waktu_kompetisi)->format('d M Y') }}</p>
-                    <p>Lokasi : {{ $kompe->lokasi }}</p>
-                        <p style="margin-bottom: 1em;"></p>
+                    <p><strong>Open Registration :</strong> {{ \Carbon\Carbon::parse($kompe->buka_pendaftaran)->format('d M Y') }}</p>
+                    <p><strong>Closed Registration :</strong> {{ \Carbon\Carbon::parse($kompe->tutup_pendaftaran)->format('d M Y') }}</p>
+                    <p><strong>Tech Meeting :</strong> {{ $kompe->waktu_techmeeting ? \Carbon\Carbon::parse($kompe->waktu_techmeeting)->format('d M Y') : '-' }}</p>
+                    <p><strong>Tanggal Kompetisi :</strong> {{ \Carbon\Carbon::parse($kompe->waktu_kompetisi)->format('d M Y') }}</p>
+                    <p><strong>Lokasi :</strong> {{ $kompe->lokasi }}</p>
+                    <p style="margin-bottom: 1em;"></p>
                     <p>{!! $kompe->deskripsi !!}</p>
                 </div>
             </section>
