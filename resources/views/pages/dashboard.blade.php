@@ -124,7 +124,7 @@
                                 @else
                                 <span class="status buka smaller">Belum dibuka</span>
                                 @endif
-                                <p>Lokasi: {{ $kompetisi->lokasi }}</p>
+                                <p><strong>Lokasi:</strong> {{ $kompetisi->lokasi }}</p>
                                 <p>{!! $kompetisi->deskripsi !!}</p>
                             </div>
                             <div class="divider"></div>
