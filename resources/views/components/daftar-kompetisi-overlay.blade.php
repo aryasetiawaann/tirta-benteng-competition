@@ -1,11 +1,10 @@
 <div id="overlay" class="overlay">
-    <div class="all-container all-card overlay-container">
+    <div class="all-container all-card overlay-container w100">
         <header class="flex divider">
             <h2>Daftar Atlet</h2>
             <span id="closeOverlay" class="bx bx-md bx-x"></span>
         </header>
         <section>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolor, blanditiis. Nostrum voluptatum error, quisquam consequatur ipsa, doloribus alias cupiditate qui voluptatem distinctio animi. Beatae repellat ut, quibusdam hic rem consequatur!</p>
             <form class="atlet" method="POST" action="{{route('dashboard.acara.daftar')}}">
                 @csrf
                 <label for="atlet">Pilih Atlet</label>
