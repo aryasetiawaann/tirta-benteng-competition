@@ -72,7 +72,7 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     document.getElementById('termsLink').onclick = function() {
-    document.getElementById('termsOverlay').style.display = 'flex';
+        document.getElementById('termsOverlay').style.display = 'flex';
     }
 
     document.getElementById('closeOverlay').onclick = function() {
