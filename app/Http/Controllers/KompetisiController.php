@@ -4,8 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Kompetisi;
 use App\Models\Atlet;
-use App\Exports\KompetisiExport;
-use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
@@ -200,13 +198,6 @@ class KompetisiController extends Controller
 
         return $response;
 
-    }
-
-    public function downloadExcel($kompetisiId)
-    {
-        $kompetisi = Kompetisi::find($kompetisiId);
-
-        return Excel::download(new KompetisiExport($kompetisiId), $kompetisi->nama . '.xlsx');
     }
 
     public function update(Request $request)

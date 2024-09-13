@@ -10,8 +10,7 @@ use Maatwebsite\Excel\Concerns\WithEvents;
 use Maatwebsite\Excel\Events\AfterSheet;
 use PhpOffice\PhpSpreadsheet\Style\Border;  
 
-
-class KompetisiExport implements FromCollection, WithMapping, ShouldAutoSize, WithEvents
+class KompetisiResmi implements FromCollection, WithMapping, ShouldAutoSize, WithEvents
 {
     protected $acaras;
 
@@ -35,52 +34,45 @@ class KompetisiExport implements FromCollection, WithMapping, ShouldAutoSize, Wi
     {
         $rows = [];
 
-        // Tambahkan baris untuk ACARA
         $rows[] = [
             'ACARA ' . $acara->nomor_lomba,
             $acara->nama,
-            '', '', '', '', '', '', ''
+            '', '', '', '', ''
         ];
 
         $rows[] = [
-            'SERI', 'GRUP', 'LINT', 'NAMA', 'ASAL SEKOLAH / KLUB', 'QET', 'HASIL'
+            'SERI', 'LINT', 'NAMA', 'ASAL SEKOLAH / KLUB', 'QET', 'HASIL'
         ];
 
-        foreach ($acara->heats as $serieIndex => $heat) {
-            foreach ($heat as $groupIndex => $group) {
-                if($group) {
-                    foreach ($group as $laneIndex => $participant) {
-                        if ($participant) {
-                            $trackRecordFormatted = sprintf('%02d:%02d.%02d', 
-                            floor($participant['track_record'] / 60),  // Menit
-                            floor(fmod($participant['track_record'], 60)),  // Detik
-                            ceil(($participant['track_record'] - floor($participant['track_record'])) * 100) // Milisekon
-                            );
+        foreach ($acara->heats as $serieIndex => $heat)
+        {
+            foreach($heat as $laneIndex => $participant)
+            {
+                if($participant)
+                {
+                    $trackRecordFormatted = sprintf('%02d:%02d.%02d', 
+                        floor($participant['track_record'] / 60),  // Menit
+                        floor(fmod($participant['track_record'], 60)),  // Detik
+                        ceil(($participant['track_record'] - floor($participant['track_record'])) * 100) // Milisekon
+                        );
 
-                                // Jika kategori fun, tambahkan kolom GRUP
-                                $rows[] = [
-                                    $serieIndex + 1, // SERI
-                                    $groupIndex == 0 ? 'A' : 'B', // GRUP
-                                    $laneIndex + 1,  // LINT
-                                    $participant['name'],  // NAMA
-                                    $participant['club'],  // ASAL SEKOLAH / KLUB
-                                    $participant['track_record'] == 999 ? 'NT' : $trackRecordFormatted, // QET
-                                    '', // HASIL
-                                ];
-                        } else {
-                            // Jika tidak ada peserta
-                            
-                            $rows[] = [
-                                $serieIndex + 1, // SERI
-                                $groupIndex == 0 ? 'A' : 'B', // GRUP
-                                $laneIndex + 1,  // LINT
-                                '', '', '', '', // Kosong
-                            ];
-                        }
-                    }
+                    $rows[] = [
+                        $serieIndex + 1, // SERI
+                        $laneIndex + 1,  // LINT
+                        $participant['name'],  // NAMA
+                        $participant['club'],  // ASAL SEKOLAH / KLUB
+                        $participant['track_record'] == 999 ? 'NT' : $trackRecordFormatted, // QET
+                        '', // HASIL
+                    ];
+                }else {
+                    $rows[] = [
+                        $serieIndex + 1, // SERI
+                        $laneIndex + 1,  // LINT
+                        '', '', '', '', // Kosong
+                    ];
                 }
             }
-        }            
+        }
 
         $rows[] = [];
         
@@ -95,7 +87,7 @@ class KompetisiExport implements FromCollection, WithMapping, ShouldAutoSize, Wi
 
                 $sheet->getParent()->getDefaultStyle()->getFont()->setName('Courier New');
                 $sheet->getParent()->getDefaultStyle()->getFont()->setSize(12);
-
+                // Style untuk header biru
                 $headerStyle = [
                     'font' => [
                         'color' => ['argb' => 'FFFFFFFF'],
@@ -133,14 +125,13 @@ class KompetisiExport implements FromCollection, WithMapping, ShouldAutoSize, Wi
                 $currentRow = 1;
 
                 foreach ($this->acaras as $acara) {
-                    // Merge untuk baris ACARA
-                    $sheet->mergeCells("A$currentRow:G$currentRow");
+
+                    // Merge untuk nama acara
+                    $sheet->mergeCells("A$currentRow:F$currentRow");
                     $sheet->setCellValue("A$currentRow", 'Acara ' . $acara->nomor_lomba . ' | '. $acara->nama);
-                    $sheet->getStyle("A$currentRow:G$currentRow")->applyFromArray($headerStyle);
+                    $sheet->getStyle("A$currentRow:F$currentRow")->applyFromArray($headerStyle);
 
                     $currentRow+=2;
-                 
-                    $this->mergeGrupColumns($sheet, $currentRow);
 
                     // Proses heats dan seri
                     $serieIndex = 0;
@@ -158,42 +149,13 @@ class KompetisiExport implements FromCollection, WithMapping, ShouldAutoSize, Wi
                     }
 
                     // Terapkan style konten
-                    $sheet->getStyle("A$currentRow:G$currentRow")->applyFromArray($contentStyle);
+                    $sheet->getStyle("A$currentRow:F$currentRow")->applyFromArray($contentStyle);
                 }
 
                 // Custom width
                 $this->adjustColumnWidths($sheet);
             },
         ];
-    }
-
-    // Merge Grup A dan B
-    private function mergeGrupColumns($sheet, $currentRow)
-    {
-        // Grup A
-        $startGroupARow = $currentRow;
-        $endGroupARow = $startGroupARow + 3; // 4 baris untuk Grup A
-        $sheet->mergeCells("B$startGroupARow:B$endGroupARow");
-        $sheet->setCellValue("B$startGroupARow", 'A');
-        $sheet->getStyle("B$startGroupARow")->applyFromArray([
-            'alignment' => [
-                'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_TOP, // Vertikal di atas
-                'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_RIGHT, // Horizontal di kanan
-            ],
-        ]);
-
-        // Grup B
-        $startGroupBRow = $endGroupARow + 1;
-        $endGroupBRow = $startGroupBRow + 3; // 4 baris untuk Grup B
-        $sheet->mergeCells("B$startGroupBRow:B$endGroupBRow");
-        $sheet->setCellValue("B$startGroupBRow", 'B');
-        $sheet->getStyle("B$startGroupBRow")->applyFromArray([
-            'alignment' => [
-                'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_TOP, // Vertikal di atas
-                'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_RIGHT, // Horizontal di kanan
-            ],
-        ]);
-        
     }
 
     // Merge untuk SERI
@@ -215,12 +177,12 @@ class KompetisiExport implements FromCollection, WithMapping, ShouldAutoSize, Wi
     private function adjustColumnWidths($sheet)
     {
         $sheet->getColumnDimension('A')->setWidth(3); // SERI
-        $sheet->getColumnDimension('B')->setWidth(5);  // GRUP
-        $sheet->getColumnDimension('C')->setWidth(3);  // LINT
-        $sheet->getColumnDimension('D')->setWidth(30); // NAMA
-        $sheet->getColumnDimension('E')->setWidth(25); // ASAL SEKOLAH / KLUB
-        $sheet->getColumnDimension('F')->setWidth(10); // QET
-        $sheet->getColumnDimension('G')->setWidth(10); // HASIL
+        $sheet->getColumnDimension('B')->setWidth(3);  // LINT
+        $sheet->getColumnDimension('C')->setWidth(30); // NAMA
+        $sheet->getColumnDimension('D')->setWidth(25); // ASAL SEKOLAH / KLUB
+        $sheet->getColumnDimension('E')->setWidth(15); // QET
+        $sheet->getColumnDimension('F')->setWidth(20); // HASIL
     }
 
+    
 }

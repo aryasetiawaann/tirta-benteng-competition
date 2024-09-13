@@ -178,8 +178,8 @@
                                     <td class="age">&nbsp;</td>
                                     <td class="club">&nbsp;</td>
                                     <td class="record">&nbsp;</td>
-                                    <td class="finals">&nbsp;</td>
-                                    <td class="place">&nbsp;</td>
+                                    <td class="finals">____________</td>
+                                    <td class="place">____________</td>
                                 </tr>
                             @endif
                             @endforeach

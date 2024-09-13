@@ -6,6 +6,9 @@ use Illuminate\Http\Request;
 use App\Models\Kompetisi;
 use App\Models\Atlet;
 use App\Models\Acara;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\KompetisiExport;
+use App\Exports\KompetisiResmi;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Response;
@@ -259,6 +262,77 @@ class UnduhanController extends Controller
         $response->header("Content-Disposition", 'attachment; filename='.$kompetisi->nama.".pdf");
 
         return $response;
+    }
+
+    public function downloadExcel($id)
+    {
+        $acaras = Acara::where('kompetisi_id', $id)->get();
+
+        $kompetisi = Kompetisi::find($id);
+
+        if($kompetisi->kategori == "Fun"){
+
+            foreach($acaras as $acara) {
+                $participants = $acara->pesertaSelesai;
+    
+    
+                foreach ($participants as $participant) {
+                    $participant->club =  $participant->user->club ? $participant->user->club : '-';
+
+                    $trackRecord = $participant->trackRecords->firstWhere('nomor_lomba', $acara->jenis_lomba);
+
+                    if ($trackRecord) {
+                        $participant->track_record = $trackRecord->time;
+                    } else {
+                        $participant->track_record = 999;
+                    }
+                }
+    
+                // Membagi peserta ke dalam heat
+                $heats = $this->divideIntoHeats($participants->toArray());
+    
+                // Menambahkan data heat ke dalam acara
+                $acara->heats = $heats;
+            }
+    
+            return Excel::download(new KompetisiExport($acaras), $kompetisi->nama . '.xlsx');
+
+        }else{
+
+            foreach ($acaras as $acara) {
+                $participants = $acara->pesertaSelesai;
+            
+                // Setel club untuk setiap peserta
+                foreach ($participants as $participant) {
+                    $participant->club = $participant->user->club ? $participant->user->club : '-';
+
+                    $trackRecord = $participant->trackRecords->firstWhere('nomor_lomba', $acara->jenis_lomba);
+
+                    if ($trackRecord) {
+                        $participant->track_record = $trackRecord->time;
+                    } else {
+                        $participant->track_record = 999;
+                    }
+                }
+            
+                // Membagi peserta yang telah diurutkan ke dalam heat
+                $participantsArray = $participants->toArray();
+
+                // Membagi peserta yang telah diurutkan ke dalam heat
+                $heats = $this->divideIntoHeatsWithoutGroups($participantsArray);
+
+                // Mengurutkan peserta di setiap heat dengan logika sortMiddle
+                foreach ($heats as &$heat) {
+                    $heat = $this->sortMiddle($heat);
+                }
+            
+                // Menambahkan data heat ke dalam acara
+                $acara->heats = $heats;
+            }
+
+            return Excel::download(new KompetisiResmi($acaras), $kompetisi->nama . '.xlsx');
+        }
+
     }
 
 }
