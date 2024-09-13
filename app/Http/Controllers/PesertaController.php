@@ -22,7 +22,7 @@ class PesertaController extends Controller
         // Set your Merchant Server Key
         \Midtrans\Config::$serverKey = config('midtrans.server_key');
         // Set to Development/Sandbox Environment (default). Set to true for Production Environment (accept real transaction).
-        \Midtrans\Config::$isProduction = true;
+        \Midtrans\Config::$isProduction = false;
         // Set sanitization on (default)
         \Midtrans\Config::$isSanitized = true;
         // Set 3DS transaction for credit card to true
@@ -79,7 +79,7 @@ class PesertaController extends Controller
             // Set your Merchant Server Key
             \Midtrans\Config::$serverKey = config('midtrans.server_key');
             // Set to Development/Sandbox Environment (default). Set to true for Production Environment (accept real transaction).
-            \Midtrans\Config::$isProduction = true;
+            \Midtrans\Config::$isProduction = false;
             // Set sanitization on (default)
             \Midtrans\Config::$isSanitized = true;
             // Set 3DS transaction for credit card to true
@@ -105,23 +105,64 @@ class PesertaController extends Controller
         return view('pages.dashboard-tagihan', compact('atlets', 'totalHarga', 'snapToken'));
     }
 
-    public function pembayaranSukses($id){
+    // public function pembayaranSukses($id){
 
-        Peserta::find($id)->update(['status_pembayaran' => 'Selesai', 'waktu_pembayaran' => now()]);
+    //     Peserta::find($id)->update(['status_pembayaran' => 'Selesai', 'waktu_pembayaran' => now()]);
 
-        return redirect('/dashboard/riwayat-pembayaran');
+    //     return redirect('/dashboard/riwayat-pembayaran');
+    // }
+
+    // public function tagihanBayarSemua() {
+
+    //     $atletIds = Atlet::where('user_id', auth()->user()->id)->pluck('id');
+
+    //     Peserta::whereIn('atlet_id', $atletIds)
+    //     ->where('status_pembayaran', 'Menunggu')
+    //     ->update(['status_pembayaran' => 'Selesai', 'waktu_pembayaran' => now()]);
+
+    //     return redirect('/dashboard/riwayat-pembayaran');        
+    // }   
+
+
+    public function paymentCallback(Request $request)
+    {
+        $server_key = config('midtrans.server_key');
+        $hashed = hash('sha512', $request->order_id.$request->status_code.$request->gross_amount.$server_key);
+
+        if($hashed == $request->signature_key)
+        {
+            if($request->transaction_status == 'settlement' | $request->transaction_status == 'capture')
+            {
+                $peserta = Peserta::find($request->order_id);
+
+                if($peserta)
+                {
+                    $peserta->update(['status_pembayaran' => 'Selesai', 'waktu_pembayaran' => now()]);
+
+                }
+                else
+                {
+                    $atletIds = Atlet::where('user_id', auth()->user()->id)->pluck('id');
+
+                    Peserta::whereIn('atlet_id', $atletIds)
+                    ->where('status_pembayaran', 'Menunggu')
+                    ->update(['status_pembayaran' => 'Selesai', 'waktu_pembayaran' => now()]);
+                 
+                }
+            }
+            else if($request->transaction_status == 'expire')
+            {
+                Peserta::find($request->order_id)->delete();
+                
+            }
+            else if($request->transaction_status == 'refund')
+            {
+                Peserta::find($request->order_id)->update(['status_pembayaran' => 'Menunggu', 'waktu_pembayaran' => null]);
+            }
+        }
     }
 
-    public function tagihanBayarSemua() {
 
-        $atletIds = Atlet::where('user_id', auth()->user()->id)->pluck('id');
-
-        Peserta::whereIn('atlet_id', $atletIds)
-        ->where('status_pembayaran', 'Menunggu')
-        ->update(['status_pembayaran' => 'Selesai', 'waktu_pembayaran' => now()]);
-
-        return redirect('/dashboard/riwayat-pembayaran');        
-    }   
 
     public function tagihanRiwayat(){
 

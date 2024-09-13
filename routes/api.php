@@ -19,4 +19,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-// Route::post('/midtrans-callback', [PesertaController::class, 'tagihanCallback']);
+Route::middleware('auth:sanctum')->post('/midtrans-callback', [PesertaController::class, 'paymentCallback']);

@@ -96,16 +96,13 @@
 
             window.snap.pay(transactionToken, {
             onSuccess: function(result){
-              /* You may add your own implementation here */
-              window.location.href = "/dashboard/tagihan/" + transactionId;
+              window.location.href = "/dashboard/riwayat-pembayaran";
             },
             onPending: function(result){
               /* You may add your own implementation here */
-               console.log(result);
             },
             onError: function(result){
               /* You may add your own implementation here */
-               console.log(result);
             }
           });
         }
@@ -113,16 +110,13 @@
         function payAll() {
             window.snap.pay('{{ $snapToken }}', {
             onSuccess: function(result){
-              /* You may add your own implementation here */
-              window.location.href = "/dashboard/tagihan/bayar-semua";
+              window.location.href = "/dashboard/riwayat-pembayaran";
             },
             onPending: function(result){
               /* You may add your own implementation here */
-              console.log(result);
             },
             onError: function(result){
               /* You may add your own implementation here */
-              console.log(result);
             }
           });
         }

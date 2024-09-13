@@ -52,8 +52,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     
 
     Route::get('/dashboard/tagihan', [PesertaController::class,'tagihan'])->name('dashboard.tagihan');
-    Route::get('/dashboard/tagihan/bayar-semua', [PesertaController::class,'tagihanBayarSemua'])->name('dashboard.tagihan.bayar-semua');
-    Route::get('/dashboard/tagihan/{id}', [PesertaController::class,'pembayaranSukses'])->name('dashboard.tagihan.sukses');
+    // Route::get('/dashboard/tagihan/bayar-semua', [PesertaController::class,'tagihanBayarSemua'])->name('dashboard.tagihan.bayar-semua');
+    // Route::get('/dashboard/tagihan/{id}', [PesertaController::class,'pembayaranSukses'])->name('dashboard.tagihan.sukses');
     Route::get('/dashboard/riwayat-pembayaran', [PesertaController::class, 'tagihanRiwayat'])->name('dashboard.tagihan.riwayat');
     Route::delete('/dashboard/tagihan/delete/{id}', [PesertaController::class,'destroy'])->name('dashboard.tagihan.destroy');
 

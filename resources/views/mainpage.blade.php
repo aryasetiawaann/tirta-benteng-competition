@@ -179,13 +179,12 @@
                     <li><a href="#pengenalan">Pengenalan</a></li>
                     <li><a href="#jadwal">Jadwal</a></li>
                     <li><a href="#biaya">Biaya</a></li>
-                    <li><a href="#petunjuk">Petunjuk</a></li>
                     <li><a href="javascript:void(0)" id="termsLink">Terms & Conditions</a></li>
                 </ul>
             </div>
             <div class="footer-contact">
                 <h4>Hubungi Kami</h4>
-                <a href="tel:0812312312312"><i class="fa fa-phone"></i><span>0812312312312</span></a>
+                <a href="tel:0812312312312"><i class="fa fa-phone"></i><span>087864774431</span></a>
                 <a href="mailto:renangtangerang@gmail.com"><i class="fa fa-envelope"></i><span>info@tirtabentengcomp.com</span></a>
             </div>
         </div>
