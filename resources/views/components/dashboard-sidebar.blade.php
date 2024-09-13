@@ -112,7 +112,7 @@
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf
                     <a href="{{ route('logout') }}"
-                    onclick="event.preventDefault(); this.closest('form').submit();">
+                       onclick="event.preventDefault(); if (confirm('Apakah Anda yakin ingin keluar?')) { this.closest('form').submit(); }">
                         <i class="icon ph-bold ph-sign-out"></i>
                         <span class="text">{{ __('Log Out') }}</span>
                     </a>
