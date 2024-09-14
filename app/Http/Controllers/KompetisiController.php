@@ -261,6 +261,11 @@ class KompetisiController extends Controller
     public function downloadDokumen($id)
     {
         $kompetisi = Kompetisi::find($id);
+
+        if (!$kompetisi) {
+            return redirect()->back()->with('error', 'Kompetisi tidak ditemukan.');
+        }
+
         $acaras = $kompetisi->acara;
 
         $participantsExist = false;
@@ -287,6 +292,7 @@ class KompetisiController extends Controller
         // Buka zip file untuk ditulis
         if ($zip->open($zipFilePath, ZipArchive::CREATE) === TRUE) {
             
+            $hasFiles = false; 
 
             foreach ($acaras as $acara) {
                 $participants = $acara->peserta;
@@ -308,6 +314,11 @@ class KompetisiController extends Controller
             }
 
             $zip->close();
+        }
+
+        if (!$hasFiles) {
+            File::delete($zipFilePath); // Hapus file zip kosong
+            return redirect()->back()->with('error', 'Tidak ada dokumen yang tersedia untuk diunduh.');
         }
 
         return response()->download($zipFilePath)->deleteFileAfterSend(true);
