@@ -64,7 +64,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @if ( $records->count() > 0)   
+                            @if ( $records->count() > 0)  
                                 @foreach ($records as $key => $record) 
                                 <tr>
                                     <td>{{ $key + 1 }}</td>

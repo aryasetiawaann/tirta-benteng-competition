@@ -94,6 +94,7 @@ class PesertaController extends Controller
                     'first_name' => auth()->user()->name,
                     'email' => auth()->user()->email,
                 ),
+                'custom_field1' => auth()->user()->id,
             );
             
             $snapToken = \Midtrans\Snap::getSnapToken($params);
@@ -104,24 +105,6 @@ class PesertaController extends Controller
 
         return view('pages.dashboard-tagihan', compact('atlets', 'totalHarga', 'snapToken'));
     }
-
-    // public function pembayaranSukses($id){
-
-    //     Peserta::find($id)->update(['status_pembayaran' => 'Selesai', 'waktu_pembayaran' => now()]);
-
-    //     return redirect('/dashboard/riwayat-pembayaran');
-    // }
-
-    // public function tagihanBayarSemua() {
-
-    //     $atletIds = Atlet::where('user_id', auth()->user()->id)->pluck('id');
-
-    //     Peserta::whereIn('atlet_id', $atletIds)
-    //     ->where('status_pembayaran', 'Menunggu')
-    //     ->update(['status_pembayaran' => 'Selesai', 'waktu_pembayaran' => now()]);
-
-    //     return redirect('/dashboard/riwayat-pembayaran');        
-    // }   
 
 
     public function paymentCallback(Request $request)
@@ -135,14 +118,14 @@ class PesertaController extends Controller
             {
                 $peserta = Peserta::find($request->order_id);
 
-                if($peserta)
+                if($peserta != null)
                 {
                     $peserta->update(['status_pembayaran' => 'Selesai', 'waktu_pembayaran' => now()]);
 
                 }
                 else
                 {
-                    $atletIds = Atlet::where('user_id', auth()->user()->id)->pluck('id');
+                    $atletIds = Atlet::where('user_id', $request->custom_field1)->pluck('id');
 
                     Peserta::whereIn('atlet_id', $atletIds)
                     ->where('status_pembayaran', 'Menunggu')

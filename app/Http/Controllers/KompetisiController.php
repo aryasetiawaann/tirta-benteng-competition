@@ -261,12 +261,17 @@ class KompetisiController extends Controller
     public function downloadDokumen($id)
     {
         $kompetisi = Kompetisi::find($id);
+
+        if (!$kompetisi) {
+            return redirect()->back()->with('error', 'Kompetisi tidak ditemukan.');
+        }
+
         $acaras = $kompetisi->acara;
 
         $participantsExist = false;
 
         foreach ($acaras as $acara) {
-            if ($acara->pesertaSelesai()->exists()) {
+            if ($acara->pesertaSelesai->isNotEmpty()) {
                 $participantsExist = true;
                 break;
             }
@@ -287,26 +292,33 @@ class KompetisiController extends Controller
         // Buka zip file untuk ditulis
         if ($zip->open($zipFilePath, ZipArchive::CREATE) === TRUE) {
             
+            $hasFiles = false; 
 
             foreach ($acaras as $acara) {
-                $participants = $acara->pesertaSelesai;
+                $participants = $acara->peserta;
 
                 foreach ($participants as $participant) {
 
 
-                    if ($participant->dokumen != null) {
+                    if ($participant->dokumen != null && $participant->pivot->status_pembayaran == "Selesai") {
                         $filePath = public_path($participant->dokumen);
 
-
+                        
                         if (File::exists($filePath)) {
                             // Tambahkan file ke dalam zip dengan nama yang unik
                             $zip->addFile($filePath, $participant->name . '_' . basename($filePath));
+                            $hasFiles = true;
                         }
                     }
                 }
             }
 
             $zip->close();
+        }
+
+        if (!$hasFiles) {
+            File::delete($zipFilePath); // Hapus file zip kosong
+            return redirect()->back()->with('error', 'Tidak ada dokumen yang tersedia untuk diunduh.');
         }
 
         return response()->download($zipFilePath)->deleteFileAfterSend(true);
