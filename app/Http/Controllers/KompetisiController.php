@@ -303,12 +303,12 @@ class KompetisiController extends Controller
                     if ($participant->dokumen != null && $participant->pivot->status_pembayaran == "Selesai") {
                         $filePath = public_path($participant->dokumen);
 
-
+                        
                         if (File::exists($filePath)) {
                             // Tambahkan file ke dalam zip dengan nama yang unik
                             $zip->addFile($filePath, $participant->name . '_' . basename($filePath));
+                            $hasFiles = true;
                         }
-                        // Tes masuk
                     }
                 }
             }
