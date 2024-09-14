@@ -266,7 +266,7 @@ class KompetisiController extends Controller
         $participantsExist = false;
 
         foreach ($acaras as $acara) {
-            if ($acara->peserta->pivot->status_pembayaran == "Selesai") {
+            if ($acara->pesertaSelesai->exists()) {
                 $participantsExist = true;
                 break;
             }
