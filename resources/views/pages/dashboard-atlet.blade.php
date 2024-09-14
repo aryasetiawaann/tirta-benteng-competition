@@ -68,7 +68,7 @@
                         <tbody>
                             @if ( $atlets_count > 0)   
                             @php $counter = 1; @endphp
-                                @foreach ($atlets as $key => $atlet) 
+                                @foreach ($atlets as $atlet) 
                                     @if($atlet->user_id == auth()->user()->id)
                                     <tr>
                                         <td>{{ $counter++}}</td>
