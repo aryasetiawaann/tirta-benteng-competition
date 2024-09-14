@@ -3,7 +3,7 @@
         <div class="forgot-pass-head">
             <a href="{{ route('login') }}"><i class="fa fa-angle-left" aria-hidden="true"></i><span>Kembali</span></a>
             <div class="forgot-pass-head-logo">
-                <img src="{{ asset('assets/img/logo.png') }}" alt="logo">
+                <img src="{{ asset('assets/img/LogoWebHD.png') }}" alt="logo">
             </div>
             @if (session('status')) 
             <div class="forgot-pass-status-msg">

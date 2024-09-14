@@ -42,7 +42,7 @@
         <div class="reset-pass-head">
             <a href="{{ route('login') }}"><i class="fa fa-angle-left" aria-hidden="true"></i><span>Kembali</span></a>
             <div class="reset-pass-head-logo">
-                <img src="{{ asset('assets/img/logo.png') }}" alt="logo">
+                <img src="{{ asset('assets/img/LogoWebHD.png') }}" alt="logo">
             </div>
         </div>
         <div class="reset-pass-body">

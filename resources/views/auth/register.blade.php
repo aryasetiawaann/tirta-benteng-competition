@@ -3,7 +3,7 @@
         <div class="register-head">
             <a href="{{ route('main') }}"><i class="fa fa-angle-left" aria-hidden="true"></i><span>Kembali</span></a>
             <div class="register-head-logo">
-                <img src="{{ asset('assets/img/logo.png') }}" alt="logo">
+                <img src="{{ asset('assets/img/LogoWebHD.png') }}" alt="logo">
             </div>
         </div>
         <div class="register-body">
