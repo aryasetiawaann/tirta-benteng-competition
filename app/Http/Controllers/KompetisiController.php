@@ -266,7 +266,7 @@ class KompetisiController extends Controller
         $participantsExist = false;
 
         foreach ($acaras as $acara) {
-            if ($acara->pesertaSelesai->exists()) {
+            if ($acara->pesertaSelesai->isNotEmpty()) {
                 $participantsExist = true;
                 break;
             }
