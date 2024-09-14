@@ -28,7 +28,7 @@ class Kompetisi extends Model
     ];
 
     public function acara(){
-        return $this->hasMany(Acara::class, 'id');
+        return $this->hasMany(Acara::class, 'kompetisi_id');
     }
 
     public function logo(){

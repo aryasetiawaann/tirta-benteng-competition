@@ -99,7 +99,7 @@ class AtletController extends Controller
             'name.required' => 'Nama atlet wajib diisi.',
             'umur.required' => 'Tanggal lahir atlet wajib diisi.',
             'umur.date' => 'Tanggal lahir atlet harus berupa tanggal yang valid.',
-            'umur.before_or_equal' => 'Tanggal lahir tidak boleh sama atau lebih dari hari ini.',
+            'umur.before' => 'Tanggal lahir tidak boleh sama atau lebih dari hari ini.',
             'jenis_kelamin.required' => 'Jenis kelamin atlet wajib diisi.',
         ]);
 
@@ -169,7 +169,7 @@ class AtletController extends Controller
             'name.required' => 'Nama atlet wajib diisi.',
             'umur.required' => 'Tanggal lahir atlet wajib diisi.',
             'umur.date' => 'Tanggal lahir atlet harus berupa tanggal yang valid.',
-            'umur.before_or_equal' => 'Tanggal lahir tidak boleh sama atau lebih dari hari ini.',
+            'umur.before' => 'Tanggal lahir tidak boleh sama atau lebih dari hari ini.',
             'jenis_kelamin.required' => 'Jenis kelamin atlet wajib diisi.',
         ]);
 
