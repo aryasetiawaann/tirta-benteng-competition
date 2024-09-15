@@ -9,7 +9,8 @@ a:hover, span:hover {
 /* -------- REGISTRASI --------*/
 .register-container {
     background-color: #f2eee6;
-    width: 500px;
+    width: calc(100% - 80px);   
+    max-width: 500px;
     height: min-content;
     position: absolute;
     left: 0;
@@ -277,7 +278,8 @@ a:hover, span:hover {
 /* -------- FORGOT PASSWORD --------*/
 .forgot-pass-container {
     background-color: #f2eee6;
-    width: 500px;
+    width: calc(100% - 80px);   
+    max-width: 500px;
     height: min-content;
     position: absolute;
     left: 0;
