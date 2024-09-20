@@ -23,23 +23,23 @@
 
                 <label for="jenis_lomba">Jenis Lomba *</label>
                 <select name="jenis_lomba" id="jenis_lomba">
-                    <option value="50m gaya bebas">50m gaya bebas</option>
-                    <option value="100m gaya bebas">100m gaya bebas</option>
-                    <option value="200m gaya bebas">200m gaya bebas</option>
-                    <option value="400m gaya bebas">400m gaya bebas</option>
-                    <option value="800m gaya bebas">800m gaya bebas</option>
-                    <option value="1500m gaya bebas">1500m gaya bebas</option>
-                    <option value="50m gaya kupu-kupu">50m gaya kupu-kupu</option>
-                    <option value="100m gaya kupu-kupu">100m gaya kupu-kupu</option>
-                    <option value="200m gaya kupu-kupu">200m gaya kupu-kupu</option>
-                    <option value="50m gaya punggung">50m gaya punggung</option>
-                    <option value="100m gaya punggung">100m gaya punggung</option>
-                    <option value="200m gaya punggung">200m gaya punggung</option>
-                    <option value="50m gaya dada">50m gaya dada</option>
-                    <option value="100m gaya dada">100m gaya dada</option>
-                    <option value="200m gaya dada">200m gaya dada</option>
-                    <option value="200m gaya ganti">200m gaya ganti</option>
-                    <option value="400m gaya ganti">400m gaya ganti</option>
+                    <option value="50m gaya bebas">50m Gaya Bebas</option>
+                    <option value="100m gaya bebas">100m Gaya Bebas</option>
+                    <option value="200m gaya bebas">200m Gaya Bebas</option>
+                    <option value="400m gaya bebas">400m Gaya Bebas</option>
+                    <option value="800m gaya bebas">800m Gaya Bebas</option>
+                    <option value="1500m gaya bebas">1500m Gaya Bebas</option>
+                    <option value="50m gaya kupu-kupu">50m Gaya Kupu-Kupu</option>
+                    <option value="100m gaya kupu-kupu">100m Gaya Kupu-Kupu</option>
+                    <option value="200m gaya kupu-kupu">200m Gaya Kupu-Kupu</option>
+                    <option value="50m gaya punggung">50m Gaya Punggung</option>
+                    <option value="100m gaya punggung">100m Gaya Punggung</option>
+                    <option value="200m gaya punggung">200m Gaya Punggung</option>
+                    <option value="50m gaya dada">50m Gaya Dada</option>
+                    <option value="100m gaya dada">100m Gaya Dada</option>
+                    <option value="200m gaya dada">200m Gaya Dada</option>
+                    <option value="200m gaya ganti">200m Gaya Ganti</option>
+                    <option value="400m gaya ganti">400m Gaya Ganti</option>
                 </select>
 
                 <label for="harga">Harga*</label>

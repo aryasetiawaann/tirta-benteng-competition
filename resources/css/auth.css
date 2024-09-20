@@ -9,15 +9,12 @@ a:hover, span:hover {
 /* -------- REGISTRASI --------*/
 .register-container {
     background-color: #f2eee6;
-    width: calc(100% - 80px);   
+    width: calc(100% - 80px);
     max-width: 500px;
     height: min-content;
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: 0;
-    bottom: 0;
     margin: auto;
+    margin-top: 40px;
+    margin-bottom: 40px;
     padding: 30px;
     border-radius: 10px;
     border-top: 5px solid #008dda;
@@ -117,12 +114,9 @@ a:hover, span:hover {
     width: calc(100% - 80px);   
     max-width: 500px;
     height: min-content;
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: 0;
-    bottom: 0;
     margin: auto;
+    margin-top: 40px;
+    margin-bottom: 40px;
     padding: 30px;
     border-radius: 10px;
     border-top: 5px solid #008dda;
@@ -281,12 +275,9 @@ a:hover, span:hover {
     width: calc(100% - 80px);   
     max-width: 500px;
     height: min-content;
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: 0;
-    bottom: 0;
     margin: auto;
+    margin-top: 40px;
+    margin-bottom: 40px;
     padding: 30px;
     border-radius: 10px;
     border-top: 5px solid #008dda;
@@ -397,12 +388,9 @@ a:hover, span:hover {
     background-color: #f2eee6;
     width: 500px;
     height: min-content;
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: 0;
-    bottom: 0;
     margin: auto;
+    margin-top: 40px;
+    margin-bottom: 40px;
     padding: 30px;
     border-radius: 10px;
     border-top: 5px solid #008dda;
