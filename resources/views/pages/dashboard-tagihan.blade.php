@@ -56,7 +56,7 @@
                                     <td>{{ $atlet->name }}</td>
                                     <td>{{ $acara->kompetisi->nama }}</td>
                                     <td>{{ $acara->nomor_lomba }} - {{ $acara->nama }}</td>
-                                    <td><span class="status bayar">Rp.{{ number_format($acara->harga, 2, ',', '.') }}</span></td>
+                                    <td><span class="status bayar">Rp{{ number_format($acara->harga, 2, ',', '.') }}</span></td>
                                     <td>
                                         <div class="actions">
                                             <button onclick="payButton(this)" data-token="{{ $acara->pivot->snap_token }}" data-id="{{ $acara->pivot->id }}" class="button-gap pay-button" data-tooltip="Bayar"><i class='bx bx-xs bxs-credit-card'></i></button>
@@ -76,7 +76,7 @@
                 </table>
                 <div class="total-price">
                     @if ($totalHarga != 0)
-                        <p><b>Total: </b>Rp.{{ number_format($totalHarga, 2, ',', '.') }}</p>
+                        <p><b>Total: </b>Rp{{ number_format($totalHarga, 2, ',', '.') }}</p>
                         <button class="pay-all-button" onclick="payAll()">Bayar Semua</button>
                     @endif
                 </div>

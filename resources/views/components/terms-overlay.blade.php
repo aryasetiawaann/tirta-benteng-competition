@@ -1,6 +1,6 @@
 <div id="termsOverlay" class="overlay">
     <div class="overlay-container">
-        <span id="closeOverlay" class="overlay-close">&times;</span>
+        <span id="closeOverlay" class="bx bx-md bx-x"></span>
         <h2>Terms & Conditions</h2>
         <div class="terms-content">
             <h3>1. Terms of Use</h3>
