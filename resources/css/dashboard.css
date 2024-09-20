@@ -302,9 +302,11 @@
     }
 
     #closeOverlay {
-        float: right;
+        position: absolute;
+        top: 0;
+        right: 0;
+        margin: 15px 15px 0 0;
         cursor: pointer;
-        margin-bottom: 20px
     }
 
     #closeOverlay:hover {
@@ -484,6 +486,7 @@ input#dokumen {
 }
 
 .center {
+    display: flex;
     justify-content: center;
 }
 
