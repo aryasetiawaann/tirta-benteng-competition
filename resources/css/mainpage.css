@@ -556,16 +556,9 @@ a {
 .footer-container {
     display: flex;
     justify-content: space-around;
-    align-items: top;
     padding: 5%;
     background-color: #f2eee6;
-    text-align: justify;
-}
-
-.footer-left {
-    display: flex;
-    flex-direction: column;
-    align-items: left;
+    gap: 40px;
 }
 
 .footer-logo {
@@ -577,11 +570,12 @@ a {
     margin: 10px 0 0;
 }
 
+.footer-left,
 .footer-menu,
 .footer-contact {
     display: flex;
     flex-direction: column;
-    align-items: left;
+    overflow-wrap: break-word;
 }
 
 .footer-menu h4,
@@ -707,9 +701,9 @@ a {
 }
 
 /* ---------------- RESPONSIVE HANDPHONE ---------------- */
-@media screen and (max-width: 450px) {
+@media screen and (max-width: 580px) {
     .sidebar {
-        width: 100%;
+        width: 70%;
     }
 
     .hero-content h1 {
