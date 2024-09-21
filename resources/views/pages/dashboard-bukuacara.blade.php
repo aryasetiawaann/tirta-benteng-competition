@@ -58,12 +58,12 @@
                                 @if ( now() > $competition->waktu_kompetisi)
                                 <td><span class="status registration">Selesai</span></td>
                                 <td>
-                                    <a href="{{ route('dashboard.bukuacara.view', $competition->id) }}"><button class="button-green"><i class='fa fa-arrow-right'></i></button></a>
+                                    <a href="{{ route('dashboard.bukuacara.view', $competition->id) }}"><button class="button-green"><i class='bx bx-xs bx-download'></i></button></a>
                                 </td>
                                 @elseif (now() >= $competition->tutup_pendaftaran)
                                 <td><span class="status registration">Berjalan</span></td>
                                 <td>
-                                    <a href="{{ route('dashboard.bukuacara.view', $competition->id) }}"><button class="button-green"><i class='fa fa-arrow-right'></i></button></a>
+                                    <a href="{{ route('dashboard.bukuacara.view', $competition->id) }}"><button class="button-green"><i class='bx bx-xs bx-download'></i></button></a>
                                 </td>
                                 @else
                                 <td><span class="status registration">Registrasi</span></td>
