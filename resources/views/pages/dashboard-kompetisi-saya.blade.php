@@ -42,7 +42,7 @@
                         @if (now() > $kompetisi->waktu_kompetisi)
                         <p>Status: <span class="status tutup smaller">Selesai</span></p>
                         @elseif (now() >= $kompetisi->tutup_pendaftaran)
-                        <p>Status: <span class="status buka smaller">Berjalan</span></p>
+                        <p>Status: <span class="status buka smaller">Tutup Registrasi</span></p>
                         @else
                         <p>Status: <span class="status buka smaller">Menunggu</span></p>
                         @endif

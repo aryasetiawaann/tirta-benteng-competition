@@ -4,7 +4,6 @@ namespace App\Console;
 
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
-use App\Models\Peserta;
 
 class Kernel extends ConsoleKernel
 {
@@ -13,11 +12,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule): void
     {
-        // $schedule->command('inspire')->hourly();
-
-        $schedule->call(function(){
-            Peserta::where('created_at', '<', now())->where('status_pembayaran', 'Menunggu')->delete();
-        })->dailyAt("00:00");
+        $schedule->command('participants:cleanup')->dailyAt('00:00')->withoutOverlapping();
     }
 
     /**

@@ -40,7 +40,7 @@ class UnduhanController extends Controller
         $currentTime = Carbon::now(); // Mendapatkan waktu saat ini
         $time = $currentTime->format('g:i A d/m/Y');   
 
-        $acaras = Acara::where('kompetisi_id', $id)->get();
+        $acaras = Acara::where('kompetisi_id', $id)->orderBy('nomor_lomba', 'asc')->get();
 
         $kompetisi = Kompetisi::find($id);
 
@@ -266,7 +266,7 @@ class UnduhanController extends Controller
 
     public function downloadExcel($id)
     {
-        $acaras = Acara::where('kompetisi_id', $id)->get();
+        $acaras = Acara::where('kompetisi_id', $id)->orderBy('nomor_lomba', 'asc')->get();
 
         $kompetisi = Kompetisi::find($id);
 

@@ -34,12 +34,12 @@ class Acara extends Model
     }
 
     public function peserta(){
-        return $this->belongsToMany(Atlet::class)->withPivot(['status_pembayaran', 'snap_token', 'updated_at', 'id']);
+        return $this->belongsToMany(Atlet::class)->withPivot(['status_pembayaran', 'updated_at', 'id']);
     }
 
     public function pesertaSelesai(){
         return $this->belongsToMany(Atlet::class)
-        ->withPivot(['status_pembayaran', 'snap_token', 'updated_at', 'id', 'waktu_pembayaran'])
+        ->withPivot(['status_pembayaran', 'updated_at', 'id', 'waktu_pembayaran'])
         ->wherePivot('status_pembayaran', 'Selesai');
     }
 

@@ -17,32 +17,32 @@ class PesertaController extends Controller
             "atlet_id"=> $request->atlet,
         ];
         
-        $peserta = Peserta::create($data);
+        Peserta::create($data);
         
-        // Set your Merchant Server Key
-        \Midtrans\Config::$serverKey = config('midtrans.server_key');
-        // Set to Development/Sandbox Environment (default). Set to true for Production Environment (accept real transaction).
-        \Midtrans\Config::$isProduction = false;
-        // Set sanitization on (default)
-        \Midtrans\Config::$isSanitized = true;
-        // Set 3DS transaction for credit card to true
-        \Midtrans\Config::$is3ds = true;
+        // // Set your Merchant Server Key
+        // \Midtrans\Config::$serverKey = config('midtrans.server_key');
+        // // Set to Development/Sandbox Environment (default). Set to true for Production Environment (accept real transaction).
+        // \Midtrans\Config::$isProduction = false;
+        // // Set sanitization on (default)
+        // \Midtrans\Config::$isSanitized = true;
+        // // Set 3DS transaction for credit card to true
+        // \Midtrans\Config::$is3ds = true;
         
-        $params = array(
-            'transaction_details' => array(
-                'order_id' => $peserta->id,
-                'gross_amount' => $request->harga,
-            ),
-            'customer_details' => array(
-                'first_name' => auth()->user()->name,
-                'email' => auth()->user()->email,
-            ),
-        );
+        // $params = array(
+        //     'transaction_details' => array(
+        //         'order_id' => $peserta->id,
+        //         'gross_amount' => $request->harga,
+        //     ),
+        //     'customer_details' => array(
+        //         'first_name' => auth()->user()->name,
+        //         'email' => auth()->user()->email,
+        //     ),
+        // );
         
-        $snapToken = \Midtrans\Snap::getSnapToken($params);
+        // $snapToken = \Midtrans\Snap::getSnapToken($params);
 
-        $peserta->snap_token = $snapToken;
-        $peserta->save();
+        // $peserta->snap_token = $snapToken;
+        // $peserta->save();
         
         
         return redirect()->back()->with('success','Atlet berhasil ditambahkan');
@@ -52,8 +52,10 @@ class PesertaController extends Controller
 
         $currentDate = Carbon::now();
 
-        $acaraOpen = Acara::whereHas('kompetisi', function ($query) use ($currentDate) {
-            $query->where('tutup_pendaftaran', '>=', $currentDate);
+        $oneDayAgo = $currentDate->subDays(2);
+
+        $acaraOpen = Acara::whereHas('kompetisi', function ($query) use ($oneDayAgo) {
+            $query->where('tutup_pendaftaran', '>', $oneDayAgo);
         })->pluck('id');
 
         $atlets = Atlet::where('user_id', auth()->user()->id)
@@ -87,7 +89,7 @@ class PesertaController extends Controller
             
             $params = array(
                 'transaction_details' => array(
-                    'order_id' => rand(),
+                    'order_id' => 'M-' . uniqid(),
                     'gross_amount' => $totalHarga,
                 ),
                 'customer_details' => array(
@@ -106,6 +108,36 @@ class PesertaController extends Controller
         return view('pages.dashboard-tagihan', compact('atlets', 'totalHarga', 'snapToken'));
     }
 
+    public function generateSnapToken(Request $request)
+    {
+        $paymentId = $request->input('payment_id');
+        $paymentPrice = $request->input('payment_price');
+
+        // Set your Merchant Server Key
+        \Midtrans\Config::$serverKey = config('midtrans.server_key');
+        // Set to Development/Sandbox Environment (default). Set to true for Production Environment (accept real transaction).
+        \Midtrans\Config::$isProduction = false;
+        // Set sanitization on (default)
+        \Midtrans\Config::$isSanitized = true;
+        // Set 3DS transaction for credit card to true
+        \Midtrans\Config::$is3ds = true;
+        
+        $params = array(
+            'transaction_details' => array(
+                'order_id' => 'S-' . $paymentId,
+                'gross_amount' => $paymentPrice,
+            ),
+            'customer_details' => array(
+                'first_name' => auth()->user()->name,
+                'email' => auth()->user()->email,
+            ),
+        );
+
+        $snapToken = \Midtrans\Snap::getSnapToken($params);
+
+        return response()->json(['snap_token' => $snapToken]);
+    }
+
 
     public function paymentCallback(Request $request)
     {
@@ -116,7 +148,12 @@ class PesertaController extends Controller
         {
             if($request->transaction_status == 'settlement' || $request->transaction_status == 'capture')
             {
-                $peserta = Peserta::find($request->order_id);
+
+                $parts = explode('-', $request->order_id);
+
+                $id = $parts[1];
+
+                $peserta = Peserta::find($id);
 
                 if($peserta != null)
                 {
@@ -132,11 +169,6 @@ class PesertaController extends Controller
                     ->update(['status_pembayaran' => 'Selesai', 'waktu_pembayaran' => now()]);
                  
                 }
-            }
-            else if($request->transaction_status == 'expire')
-            {
-                Peserta::find($request->order_id)->delete();
-                
             }
             else if($request->transaction_status == 'refund')
             {

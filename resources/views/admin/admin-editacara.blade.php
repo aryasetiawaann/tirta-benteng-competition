@@ -25,6 +25,7 @@
 
                 <label for="jenis_lomba">Jenis Lomba *</label>
                 <select name="jenis_lomba" id="jenis_lomba">
+                    <option value="tidak ada" {{ $acara->jenis_lomba === "tidak ada" ? "selected" : "" }}>Tidak Ada</option>
                     <option value="50m gaya bebas" {{ $acara->jenis_lomba === "50m gaya bebas" ? "selected" : "" }}>50m gaya bebas</option>
                     <option value="100m gaya bebas" {{ $acara->jenis_lomba === "100m gaya bebas" ? "selected" : "" }}>100m gaya bebas</option>
                     <option value="200m gaya bebas" {{ $acara->jenis_lomba === "200m gaya bebas" ? "selected" : "" }}>200m gaya bebas</option>

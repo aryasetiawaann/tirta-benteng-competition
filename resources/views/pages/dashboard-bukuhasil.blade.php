@@ -64,7 +64,7 @@
                                     <a href="{{ route('dashboard.bukuhasil.download', $competition->id) }}"><button class="button-green"><i class='bx bx-xs bx-download'></i></button></a>
                                 </td>
                                 @elseif (now() >= $competition->tutup_pendaftaran)
-                                <td><span class="status registration">Berjalan</span></td>
+                                <td><span class="status registration">Tutup Registrasi</span></td>
                                 <td>
                                     <a href="{{ route('dashboard.bukuhasil.download', $competition->id) }}"><button class="button-green"><i class='bx bx-xs bx-download'></i></button></a>
                                 </td>

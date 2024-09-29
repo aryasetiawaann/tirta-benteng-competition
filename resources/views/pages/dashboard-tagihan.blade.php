@@ -59,7 +59,7 @@
                                     <td><span class="status bayar">Rp{{ number_format($acara->harga, 2, ',', '.') }}</span></td>
                                     <td>
                                         <div class="actions">
-                                            <button onclick="payButton(this)" data-token="{{ $acara->pivot->snap_token }}" data-id="{{ $acara->pivot->id }}" class="button-gap pay-button" data-tooltip="Bayar"><i class='bx bx-xs bxs-credit-card'></i></button>
+                                            <button onclick="payButton(this)" data-id="{{ $acara->pivot->id }}" data-harga="{{ $acara->harga }}" class="button-gap pay-button" data-tooltip="Bayar"><i class='bx bx-xs bxs-credit-card'></i></button>
                                             <form action="{{ route('dashboard.tagihan.destroy', $acara->pivot->id) }}" method="post">
                                                 @csrf
                                                 @method('delete')
@@ -92,20 +92,37 @@
     <script type="text/javascript">
         
         function payButton(element) {
-            var transactionToken = element.getAttribute('data-token');
-            var transactionId = element.getAttribute('data-id');
+            var paymentId = element.getAttribute('data-id');
+            var paymentPrice = element.getAttribute('data-harga');
 
-            window.snap.pay(transactionToken, {
-            onSuccess: function(result){
-              window.location.href = "/dashboard/riwayat-pembayaran";
-            },
-            onPending: function(result){
-              /* You may add your own implementation here */
-            },
-            onError: function(result){
-              /* You may add your own implementation here */
-            }
-          });
+            fetch("{{ route('dashboard.tagihan.generateSnapToken') }}", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                },
+                body: JSON.stringify({ payment_id: paymentId , payment_price: paymentPrice})
+            })
+            .then(response => response.json())
+            .then(data => {
+                if(data.snap_token){
+                    window.snap.pay(data.snap_token, {
+                        onSuccess: function(result){
+                            window.location.href = "/dashboard/riwayat-pembayaran";
+                        },
+                        onPending: function(result){
+                        },
+                        onError: function(result){
+                        }
+                    });
+                } else {
+                    alert('Gagal mendapatkan token pembayaran.');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Terjadi kesalahan saat memproses pembayaran.');
+            });
         }
 
         function payAll() {

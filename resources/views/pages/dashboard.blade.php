@@ -89,9 +89,9 @@
                                                 @if (now() > $acara->kompetisi->waktu_kompetisi)
                                                     <td><span class="status registration">Selesai</span></td>
                                                 @elseif (now() >= $acara->kompetisi->tutup_pendaftaran)
-                                                    <td><span class="status registration">Berjalan</span></td>
+                                                    <td><span class="status registration">Tutup Registrasi</span></td>
                                                 @else
-                                                    <td><span class="status registration">Menunggu</span></td>
+                                                    <td><span class="status registration">Registrasi</span></td>
                                                 @endif
                                             </tr>
                                         @endforeach
@@ -119,7 +119,7 @@
                                 @if(now() > $kompetisi->waktu_kompetisi)
                                 <span class="status tutup smaller">Selesai</span>
                                 @elseif (now() >= $kompetisi->tutup_pendaftaran)
-                                <span class="status buka smaller">Berjalan</span>
+                                <span class="status buka smaller">Tutup Registrasi</span>
                                 @elseif (now() >= $kompetisi->buka_pendaftaran && now() < $kompetisi->tutup_pendaftaran)
                                 <span class="status buka smaller">Registrasi</span>
                                 @else

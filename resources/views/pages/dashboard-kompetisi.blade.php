@@ -27,7 +27,7 @@
             <section class="all-container all-card">
                 <header class="flex divider">
                     <h2>{{ $kompe->nama }}</h2>
-                    @if (now() >= $kompe->buka_pendaftaran && now() < $kompe->tutup_pendaftaran)
+                    @if (now() >= $kompe->buka_pendaftaran && now()->subDay(2) < $kompe->tutup_pendaftaran)
                     <a href="{{ route('dashboard.acara', $kompe->id) }}"><button>Daftar</button></a>
                     @endif
                 </header>
@@ -36,7 +36,7 @@
                         @if(now() > $kompe->waktu_kompetisi)
                         <p>Status: <span class="status tutup smaller">Selesai</span></p>
                         @elseif (now() >= $kompe->tutup_pendaftaran)
-                        <p>Status: <span class="status buka smaller">Berjalan</span></p>
+                        <p>Status: <span class="status buka smaller">Tutup Registrasi</span></p>
                         @elseif (now() >= $kompe->buka_pendaftaran && now() < $kompe->tutup_pendaftaran)
                         <p>Status: <span class="status buka smaller">Registrasi</span></p>
                         @else

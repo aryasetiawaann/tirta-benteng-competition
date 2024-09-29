@@ -52,10 +52,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
     
 
     Route::get('/dashboard/tagihan', [PesertaController::class,'tagihan'])->name('dashboard.tagihan');
-    // Route::get('/dashboard/tagihan/bayar-semua', [PesertaController::class,'tagihanBayarSemua'])->name('dashboard.tagihan.bayar-semua');
-    // Route::get('/dashboard/tagihan/{id}', [PesertaController::class,'pembayaranSukses'])->name('dashboard.tagihan.sukses');
     Route::get('/dashboard/riwayat-pembayaran', [PesertaController::class, 'tagihanRiwayat'])->name('dashboard.tagihan.riwayat');
     Route::delete('/dashboard/tagihan/delete/{id}', [PesertaController::class,'destroy'])->name('dashboard.tagihan.destroy');
+    Route::post('/dashboard/generate-snap-token', [PesertaController::class, 'generateSnapToken'])->name('dashboard.tagihan.generateSnapToken');
 
     Route::get('/dashboard/bukuacara', [UnduhanController::class, 'userBukuAcara'])->name('dashboard.bukuacara');
     Route::get('/dashboard/bukuacara/view/{id}/pdf', [UnduhanController::class, 'showBukuAcara'])->name('dashboard.bukuacara.view');

@@ -109,7 +109,7 @@ class KompetisiExport implements FromCollection, WithMapping, ShouldAutoSize, Wi
                     ],
                     'borders' => [
                         'allBorders' => [
-                            'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN, // Border tipis
+                            'borderStyle' => Border::BORDER_THIN, // Border tipis
                         ],
                     ],
                 ];
@@ -125,7 +125,7 @@ class KompetisiExport implements FromCollection, WithMapping, ShouldAutoSize, Wi
                     ],
                     'borders' => [
                         'allBorders' => [
-                            'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN, // Border tipis
+                            'borderStyle' => Border::BORDER_THIN, // Border tipis
                         ],
                     ],
                 ];
@@ -140,7 +140,7 @@ class KompetisiExport implements FromCollection, WithMapping, ShouldAutoSize, Wi
 
                     $currentRow+=2;
                  
-                    $this->mergeGrupColumns($sheet, $currentRow);
+                    $this->mergeGrupColumns($sheet, $currentRow, $acara);
 
                     // Proses heats dan seri
                     $serieIndex = 0;
@@ -168,33 +168,51 @@ class KompetisiExport implements FromCollection, WithMapping, ShouldAutoSize, Wi
     }
 
     // Merge Grup A dan B
-    private function mergeGrupColumns($sheet, $currentRow)
+    // Merge Grup A dan B
+    private function mergeGrupColumns($sheet, $currentRow, $acara)
     {
+        // Periksa apakah ada peserta di Grup A
+        $groupAExists = false;
+        $groupBExists = false;
+        
+        foreach ($acara->heats as $heat) {
+            if (!empty($heat[0])) {  // Heat pertama untuk Grup A
+                $groupAExists = true;
+            }
+            if (!empty($heat[1])) {  // Heat kedua untuk Grup B
+                $groupBExists = true;
+            }
+        }
+
         // Grup A
-        $startGroupARow = $currentRow;
-        $endGroupARow = $startGroupARow + 3; // 4 baris untuk Grup A
-        $sheet->mergeCells("B$startGroupARow:B$endGroupARow");
-        $sheet->setCellValue("B$startGroupARow", 'A');
-        $sheet->getStyle("B$startGroupARow")->applyFromArray([
-            'alignment' => [
-                'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_TOP, // Vertikal di atas
-                'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_RIGHT, // Horizontal di kanan
-            ],
-        ]);
+        if ($groupAExists) {
+            $startGroupARow = $currentRow;
+            $endGroupARow = $startGroupARow + 3; // 4 baris untuk Grup A
+            $sheet->mergeCells("B$startGroupARow:B$endGroupARow");
+            $sheet->setCellValue("B$startGroupARow", 'A');
+            $sheet->getStyle("B$startGroupARow")->applyFromArray([
+                'alignment' => [
+                    'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_TOP, // Vertikal di atas
+                    'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_RIGHT, // Horizontal di kanan
+                ],
+            ]);
+        }
 
         // Grup B
-        $startGroupBRow = $endGroupARow + 1;
-        $endGroupBRow = $startGroupBRow + 3; // 4 baris untuk Grup B
-        $sheet->mergeCells("B$startGroupBRow:B$endGroupBRow");
-        $sheet->setCellValue("B$startGroupBRow", 'B');
-        $sheet->getStyle("B$startGroupBRow")->applyFromArray([
-            'alignment' => [
-                'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_TOP, // Vertikal di atas
-                'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_RIGHT, // Horizontal di kanan
-            ],
-        ]);
-        
+        if ($groupBExists) {
+            $startGroupBRow = isset($endGroupARow) ? $endGroupARow + 1 : $currentRow;
+            $endGroupBRow = $startGroupBRow + 3; // 4 baris untuk Grup B
+            $sheet->mergeCells("B$startGroupBRow:B$endGroupBRow");
+            $sheet->setCellValue("B$startGroupBRow", 'B');
+            $sheet->getStyle("B$startGroupBRow")->applyFromArray([
+                'alignment' => [
+                    'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_TOP, // Vertikal di atas
+                    'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_RIGHT, // Horizontal di kanan
+                ],
+            ]);
+        }
     }
+
 
     // Merge untuk SERI
     private function mergeSeriColumns($sheet, $currentRow, $serieIndex)
