@@ -79,6 +79,20 @@ class KompetisiResmi implements FromCollection, WithMapping, ShouldAutoSize, Wit
         return $rows;
     }
 
+    private function hasParticipants(Acara $acara): bool
+    {
+        foreach ($acara->heats as $heat) {
+            foreach ($heat as $group) {
+                foreach ($group as $participant) {
+                    if ($participant) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
     public function registerEvents(): array
     {
         return [
@@ -133,20 +147,27 @@ class KompetisiResmi implements FromCollection, WithMapping, ShouldAutoSize, Wit
 
                     $currentRow+=2;
 
-                    // Proses heats dan seri
-                    $serieIndex = 0;
-                    foreach ($acara->heats as $key => $heat) 
+                    if (this->hasParticipants($acara))
                     {
-                        $this->mergeSeriColumns($sheet, $currentRow, $serieIndex);
-                        
-                        if($key == count($acara->heats) - 1)
+                        $serieIndex = 0;
+                        foreach ($acara->heats as $key => $heat) 
                         {
-                            $currentRow += 9;
-                        }else{
-                            $currentRow += 8;
+                            $this->mergeSeriColumns($sheet, $currentRow, $serieIndex);
+                            
+                            if($key == count($acara->heats) - 1)
+                            {
+                                $currentRow += 9;
+                            }else{
+                                $currentRow += 8;
+                            }
+                            $serieIndex++;
                         }
-                        $serieIndex++;
                     }
+                    else
+                    {
+                        $currentRow += 1;
+                    }
+                    // Proses heats dan seri
 
                     // Terapkan style konten
                     $sheet->getStyle("A$currentRow:F$currentRow")->applyFromArray($contentStyle);

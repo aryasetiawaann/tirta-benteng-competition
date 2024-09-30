@@ -164,13 +164,14 @@ class KompetisiExport implements FromCollection, WithMapping, ShouldAutoSize, Wi
 
                     // Cek apakah acara memiliki peserta
                     if ($this->hasParticipants($acara)) {
-                        // Lakukan penggabungan kolom Grup
-                        $this->mergeGrupColumns($sheet, $currentRow, $acara);
-
+                        
                         // Proses heats dan seri
                         $serieIndex = 0;
                         foreach ($acara->heats as $key => $heat) {
                             $this->mergeSeriColumns($sheet, $currentRow, $serieIndex);
+
+                            // Lakukan penggabungan kolom Grup
+                            $this->mergeGrupColumns($sheet, $currentRow);
                             
                             if ($key == count($acara->heats) - 1) {
                                 $currentRow += 9;
@@ -196,23 +197,23 @@ class KompetisiExport implements FromCollection, WithMapping, ShouldAutoSize, Wi
     }
 
     // Merge Grup A dan B
-    private function mergeGrupColumns($sheet, $currentRow, $acara)
+    private function mergeGrupColumns($sheet, $currentRow)
     {
         // Periksa apakah ada peserta di Grup A
-        $groupAExists = false;
-        $groupBExists = false;
+        // $groupAExists = !empty($heat[0]);
+        // $groupBExists = !empty($heat[1]);
         
-        foreach ($acara->heats as $heat) {
-            if (!empty($heat[0])) {  // Heat pertama untuk Grup A
-                $groupAExists = true;
-            }
-            if (!empty($heat[1])) {  // Heat kedua untuk Grup B
-                $groupBExists = true;
-            }
-        }
+        // foreach ($acara->heats as $heat) {
+        //     if (!empty($heat[0])) {  // Heat pertama untuk Grup A
+        //         $groupAExists = true;
+        //     }
+        //     if (!empty($heat[1])) {  // Heat kedua untuk Grup B
+        //         $groupBExists = true;
+        //     }
+        // }
 
         // Grup A
-        if ($groupAExists) {
+        
             $startGroupARow = $currentRow;
             $endGroupARow = $startGroupARow + 3; // 4 baris untuk Grup A
             $sheet->mergeCells("B$startGroupARow:B$endGroupARow");
@@ -223,10 +224,10 @@ class KompetisiExport implements FromCollection, WithMapping, ShouldAutoSize, Wi
                     'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_RIGHT, // Horizontal di kanan
                 ],
             ]);
-        }
+        
 
         // Grup B
-        if ($groupBExists) {
+        
             $startGroupBRow = isset($endGroupARow) ? $endGroupARow + 1 : $currentRow;
             $endGroupBRow = $startGroupBRow + 3; // 4 baris untuk Grup B
             $sheet->mergeCells("B$startGroupBRow:B$endGroupBRow");
@@ -237,7 +238,7 @@ class KompetisiExport implements FromCollection, WithMapping, ShouldAutoSize, Wi
                     'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_RIGHT, // Horizontal di kanan
                 ],
             ]);
-        }
+        
     }
 
 
