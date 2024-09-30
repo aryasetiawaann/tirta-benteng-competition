@@ -87,15 +87,37 @@ class KompetisiExport implements FromCollection, WithMapping, ShouldAutoSize, Wi
         return $rows;
     }
 
+    /**
+     * Memeriksa apakah sebuah acara memiliki peserta.
+     *
+     * @param \App\Models\Acara $acara
+     * @return bool
+     */
+    private function hasParticipants(Acara $acara): bool
+    {
+        foreach ($acara->heats as $heat) {
+            foreach ($heat as $group) {
+                foreach ($group as $participant) {
+                    if ($participant) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
     public function registerEvents(): array
     {
         return [
             AfterSheet::class => function (AfterSheet $event) {
                 $sheet = $event->sheet->getDelegate();
 
+                // Atur gaya default
                 $sheet->getParent()->getDefaultStyle()->getFont()->setName('Courier New');
                 $sheet->getParent()->getDefaultStyle()->getFont()->setSize(12);
 
+                // Gaya untuk header
                 $headerStyle = [
                     'font' => [
                         'color' => ['argb' => 'FFFFFFFF'],
@@ -109,12 +131,12 @@ class KompetisiExport implements FromCollection, WithMapping, ShouldAutoSize, Wi
                     ],
                     'borders' => [
                         'allBorders' => [
-                            'borderStyle' => Border::BORDER_THIN, // Border tipis
+                            'borderStyle' => Border::BORDER_THIN,
                         ],
                     ],
                 ];
 
-                // Style untuk konten
+                // Gaya untuk konten
                 $contentStyle = [
                     'font' => [
                         'name' => 'Courier New',
@@ -125,7 +147,7 @@ class KompetisiExport implements FromCollection, WithMapping, ShouldAutoSize, Wi
                     ],
                     'borders' => [
                         'allBorders' => [
-                            'borderStyle' => Border::BORDER_THIN, // Border tipis
+                            'borderStyle' => Border::BORDER_THIN,
                         ],
                     ],
                 ];
@@ -135,39 +157,44 @@ class KompetisiExport implements FromCollection, WithMapping, ShouldAutoSize, Wi
                 foreach ($this->acaras as $acara) {
                     // Merge untuk baris ACARA
                     $sheet->mergeCells("A$currentRow:G$currentRow");
-                    $sheet->setCellValue("A$currentRow", 'Acara ' . $acara->nomor_lomba . ' | '. $acara->nama . ' - ' . $acara->grup);
+                    $sheet->setCellValue("A$currentRow", 'Acara ' . $acara->nomor_lomba . ' | ' . $acara->nama . ' - ' . $acara->grup);
                     $sheet->getStyle("A$currentRow:G$currentRow")->applyFromArray($headerStyle);
 
-                    $currentRow+=2;
-                 
-                    $this->mergeGrupColumns($sheet, $currentRow, $acara);
+                    $currentRow += 2;
 
-                    // Proses heats dan seri
-                    $serieIndex = 0;
-                    foreach ($acara->heats as $key => $heat) 
-                    {
-                        $this->mergeSeriColumns($sheet, $currentRow, $serieIndex);
-                        
-                        if($key == count($acara->heats) - 1)
-                        {
-                            $currentRow += 9;
-                        }else{
-                            $currentRow += 8;
+                    // Cek apakah acara memiliki peserta
+                    if ($this->hasParticipants($acara)) {
+                        // Lakukan penggabungan kolom Grup
+                        $this->mergeGrupColumns($sheet, $currentRow, $acara);
+
+                        // Proses heats dan seri
+                        $serieIndex = 0;
+                        foreach ($acara->heats as $key => $heat) {
+                            $this->mergeSeriColumns($sheet, $currentRow, $serieIndex);
+                            
+                            if ($key == count($acara->heats) - 1) {
+                                $currentRow += 9;
+                            } else {
+                                $currentRow += 8;
+                            }
+                            $serieIndex++;
                         }
-                        $serieIndex++;
+                    } else {
+                        // Jika tidak ada peserta, tambahkan baris kosong atau keterangan jika diperlukan
+                        // Misalnya, tambahkan baris kosong
+                        $currentRow += 1;
                     }
 
                     // Terapkan style konten
                     $sheet->getStyle("A$currentRow:G$currentRow")->applyFromArray($contentStyle);
                 }
 
-                // Custom width
+                // Sesuaikan lebar kolom
                 $this->adjustColumnWidths($sheet);
             },
         ];
     }
 
-    // Merge Grup A dan B
     // Merge Grup A dan B
     private function mergeGrupColumns($sheet, $currentRow, $acara)
     {
