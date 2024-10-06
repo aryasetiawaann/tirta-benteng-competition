@@ -82,11 +82,9 @@ class KompetisiResmi implements FromCollection, WithMapping, ShouldAutoSize, Wit
     private function hasParticipants(Acara $acara): bool
     {
         foreach ($acara->heats as $heat) {
-            foreach ($heat as $group) {
-                foreach ($group as $participant) {
-                    if ($participant) {
-                        return true;
-                    }
+            foreach ($heat as $participant) {
+                if ($participant) {
+                    return true;
                 }
             }
         }
