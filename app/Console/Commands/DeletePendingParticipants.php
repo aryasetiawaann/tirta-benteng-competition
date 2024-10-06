@@ -2,9 +2,8 @@
 
 namespace App\Console\Commands;
 
-use App\Models\Peserta;
 use Illuminate\Console\Command;
-use App\Models\Kompetisi; // Asumsikan model Acara mewakili kompetisi
+use App\Models\Kompetisi; 
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Log;
 

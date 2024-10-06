@@ -115,7 +115,7 @@ class KompetisiResmi implements FromCollection, WithMapping, ShouldAutoSize, Wit
                     ],
                     'borders' => [
                         'allBorders' => [
-                            'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN, // Border tipis
+                            'borderStyle' => Border::BORDER_THIN, // Border tipis
                         ],
                     ],
                 ];
@@ -131,7 +131,7 @@ class KompetisiResmi implements FromCollection, WithMapping, ShouldAutoSize, Wit
                     ],
                     'borders' => [
                         'allBorders' => [
-                            'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN, // Border tipis
+                            'borderStyle' => Border::BORDER_THIN, // Border tipis
                         ],
                     ],
                 ];
