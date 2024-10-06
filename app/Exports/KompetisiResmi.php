@@ -147,7 +147,7 @@ class KompetisiResmi implements FromCollection, WithMapping, ShouldAutoSize, Wit
 
                     $currentRow+=2;
 
-                    if (this->hasParticipants($acara))
+                    if ($this->hasParticipants($acara))
                     {
                         $serieIndex = 0;
                         foreach ($acara->heats as $key => $heat) 
