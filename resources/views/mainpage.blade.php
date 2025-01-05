@@ -3,7 +3,11 @@
         <nav class="navbar">
             <div class="navbar-left">
                 <a href="{{ route('main') }}">
-                    <img src="{{ asset('assets/img/LogoWebHD.png') }}" alt="Logo" class="logo">
+                    <img src="{{ asset('assets/img/LogoWebHD.png') }}" alt="Logo 1" class="logo">
+                </a>
+                <span class="logo-divider">x</span>
+                <a href="{{ route('main') }}">
+                    <img src="{{ asset('assets/img/LogoArea2.png') }}" alt="Logo 2" class="logo">
                 </a>
             </div>
             <div class="navbar-center">
@@ -170,9 +174,14 @@
     <footer>
         <div class="footer-container">
             <div class="footer-left">
-                <img src="{{ asset('assets/img/LogoWebHD.png') }}" alt="Logo" class="footer-logo">
+                <div class="footer-logos">
+                    <img src="{{ asset('assets/img/LogoWebHD.png') }}" alt="Logo 1" class="footer-logo">
+                    <span class="logo-divider">x</span>
+                    <img src="{{ asset('assets/img/LogoArea2.png') }}" alt="Logo 2" class="footer-logo">
+                </div>
                 <p>&#169 Swimming Competition Registration 2024</p>
             </div>
+
             <div class="footer-menu">
                 <h4>Menu</h4>
                 <ul>
