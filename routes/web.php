@@ -30,7 +30,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
     
     Route::get('/dashboard', [MainPageController::class, 'userDashboard'])->name('dashboard');
 
-
     Route::resource('/dashboard/atlet-saya', AtletController::class)->names('dashboard.atlet');
     Route::get('/dashboard/atlet-saya/{id}/dokumen/download', [AtletController::class, 'downloadDocument'])->name('dashboard.atlet.dokumen.download');
     Route::delete('/dashboard/edit/atlet-saya/{id}/dokumen/delete', [AtletController::class, 'deleteDocument'])->name('dashboard.atlet.dokumen.delete');
@@ -41,8 +40,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::put('/dashboard/atlet-saya/track-record/{id}/update', [TrackRecordController::class, 'update'])->name('dashboard.track-record.update');
     Route::delete('/dashboard/atlet-saya/track-record/{id}/delete', [TrackRecordController::class, 'destroy'])->name('dashboard.track-record.destroy');
     
-
     Route::get('/dashboard/daftar-kompetisi', [KompetisiController::class, 'index'])->name('dashboard.kompetisi');
+    # kelompk umur
+    Route::get('/dashboard/daftar-kompetisi-kelompok-umur',[KompetisiController::class, 'kelompokumur'])->name('dashboard.kompetisi.kelompokumur');
     Route::get('/dashboard/daftar-kompetisi/{id}', [AcaraController::class,'index'])->name('dashboard.acara');
     Route::get('/dashboard/daftar-kompetisi/acara/{id}', [AcaraController::class,'showPesertaUser'])->name('dashboard.acara.detail');
     Route::post('/dashboard/daftar-kompetisi/acara/daftar/', [PesertaController::class,'create'])->name('dashboard.acara.daftar');
@@ -50,7 +50,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard/kompetisi-saya/{id}', [AcaraController::class,'kompetisiSaya'])->name('dashboard.kompe-saya.acara');
     Route::get('/dashboard/kompetisi-saya/acara/{id}', [AcaraController::class,'kompetisiSayaDetail'])->name('dashboard.kompe-saya.acara.detail');
     
-
     Route::get('/dashboard/tagihan', [PesertaController::class,'tagihan'])->name('dashboard.tagihan');
     Route::get('/dashboard/riwayat-pembayaran', [PesertaController::class, 'tagihanRiwayat'])->name('dashboard.tagihan.riwayat');
     Route::delete('/dashboard/tagihan/delete/{id}', [PesertaController::class,'destroy'])->name('dashboard.tagihan.destroy');
@@ -61,7 +60,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::get('/dashboard/bukuhasil', [UnduhanController::class, 'showBukuHasil'])->name('dashboard.bukuhasil');
     Route::get('/admin/bukuhasil/{id}/download', [UnduhanController::class, 'downloadBukuHasil'])->name('dashboard.bukuhasil.download');
-
 
     Route::get('/dashboard/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::post('/dashboard/profile/', [ProfileController::class, 'update'])->name('profile.update');
@@ -86,7 +84,6 @@ Route::middleware(['auth','role:admin'])->group(function () {
     Route::put('/admin/dashboard/edit-kompetisi', [KompetisiController::class, 'update'])->name('dashboard.admin.updatekompetisi');
     Route::delete('/admin/dashboard/kompetisi/{id}/delete', [KompetisiController::class, 'destroy'])->name('dashboard.admin.kompetisi.destroy');
     Route::get('/admin/dashboard/{id}/edit-kompetisi', [KompetisiController::class, 'editKompetisi'])->name('dashboard.admin.editkompetisi');
-
 
     Route::get('/admin/dashboard/tambah-acara', [KompetisiController::class, 'showKompetisiAdmin'])->name('dashboard.admin.acara');
     Route::post('/admin/dashboard/tambah-acara',  [AcaraController::class, 'create'])->name('dashboard.admin.tambahacara');

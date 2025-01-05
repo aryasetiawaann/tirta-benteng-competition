@@ -22,7 +22,10 @@ class MainPageController extends Controller
 
         $currentDate = Carbon::now();
 
-        $kompetisis = Kompetisi::all()->sortByDesc('created_at');
+        $kompetisis = Kompetisi::where('waktu_kompetisi', '>', now())
+            ->orderBy('waktu_kompetisi', 'desc')
+            ->take(3)
+            ->get();
         $kompetisi_count = Kompetisi::where('waktu_kompetisi', '>', now())->where('buka_pendaftaran', '<=', now())->count();
         $atlet_count = Atlet::all()->where('user_id', auth()->user()->id)->count();
         $atlets = Atlet::whereHas('acara')->with('acara')->where('user_id', auth()->user()->id)->get()->sortByDesc('created_at');

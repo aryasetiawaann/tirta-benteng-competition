@@ -23,6 +23,13 @@ class KompetisiController extends Controller
         return view('pages.dashboard-kompetisi')->with(['kompetisi'=>$kompetisi]);
     }
 
+    public function kelompokumur()
+    {
+        $kompetisi = Kompetisi::where('kategori', 'Kelompok Umur')->get();
+
+        return view('pages.dashboard-kompetisi-kelompokumur')->with(['kompetisi'=>$kompetisi]);
+    }
+
     public function kompetisiSaya(){
         $acara_ids = Atlet::where('user_id', auth()->user()->id) // or auth()->user()->id
         ->with('acara') // eager load acara
@@ -51,7 +58,6 @@ class KompetisiController extends Controller
 
         return view('admin.admin-tambahacara', compact('kompetisi'));
     }
-
 
     public function tambahKompetisi(Request $request)
     {
