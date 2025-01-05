@@ -11,6 +11,7 @@
                     </div>
                     <div class="card-content">
                         <h1>Tagihan</h1>
+                        <h3 style="color: red">Informasi: Untuk saat ini belum dapat melakukan pembayaran</h3>
                     </div>
                 </div>
             </div>
@@ -59,7 +60,8 @@
                                     <td><span class="status bayar">Rp{{ number_format($acara->harga, 2, ',', '.') }}</span></td>
                                     <td>
                                         <div class="actions">
-                                            <button onclick="payButton(this)" data-id="{{ $acara->pivot->id }}" data-harga="{{ $acara->harga }}" class="button-gap pay-button" data-tooltip="Bayar"><i class='bx bx-xs bxs-credit-card'></i></button>
+                                            {{-- Hapus Style buat unable lagi --}}
+                                            <button onclick="payButton(this)" data-id="{{ $acara->pivot->id }}" data-harga="{{ $acara->harga }}" class="button-gap pay-button" data-tooltip="Bayar" style="display: none;"><i class='bx bx-xs bxs-credit-card'></i></button>
                                             <form action="{{ route('dashboard.tagihan.destroy', $acara->pivot->id) }}" method="post">
                                                 @csrf
                                                 @method('delete')
@@ -74,7 +76,8 @@
                         @endif
                     </tbody>
                 </table>
-                <div class="total-price">
+                {{-- Hapus Style buat unable lagi --}}
+                <div class="total-price" style="display: none">
                     @if ($totalHarga != 0)
                         <p><b>Total: </b>Rp{{ number_format($totalHarga, 2, ',', '.') }}</p>
                         <button class="pay-all-button" onclick="payAll()">Bayar Semua</button>

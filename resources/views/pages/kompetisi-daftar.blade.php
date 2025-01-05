@@ -55,7 +55,7 @@
                                 PUTRI
                             @elseif($aca->kategori == 'Pria')
                                 PUTRA
-                            @elseif($ac->kategori == 'Campuran')
+                            @elseif($aca->kategori == 'Campuran')
                                 CAMPURAN
                             @else
                                 {{ strtoupper($aca->kategori) }}
