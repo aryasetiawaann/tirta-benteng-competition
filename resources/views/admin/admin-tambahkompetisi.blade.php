@@ -22,6 +22,7 @@
             @endforeach
         </x-error-list>
     @endif
+
     <div class="admin-container tambah-kompetisi">
         <div class="all-container all-card w100">
             <header class="flex divider">
@@ -60,7 +61,7 @@
 
         <div class="all-container all-card w100">
             <header class="flex divider">
-                <h2>Tambah Logo PDF</h2>
+                <h2>Tambah Logo untuk PDF</h2>
             </header>
             <section>
                 <form class="tambah-container" enctype="multipart/form-data" method="POST" action="{{ route('dashboard.admin.kompetisi.logo.create') }}">
@@ -101,7 +102,7 @@
                 <form class="tambah-container" enctype="multipart/form-data" method="POST" action="{{ route('dashboard.admin.kompetisi.detail-harga.create') }}">
                     @csrf
     
-                    <label for="kompetisi">Pilih Kompetisi</label>
+                    <label for="kompetisi">Pilih Kompetisi*</label>
                     <select name="kompetisi" id="kompetisi">
                         @if ($kompetisis->count() > 0 )
                             @foreach ($kompetisis as $key => $kompetisi)
@@ -117,14 +118,14 @@
                     </select>
 
                     <label for="judul">Judul*</label>
-                    <p><i style="font-size: 12px">(Individu/Estafet)</i></p>
+                    <!-- <p><i style="font-size: 12px">(Individu/Estafet)</i></p> -->
                     <input type="text" name="judul" id="judul">
 
                     <label for="harga">Harga*</label>
                     <p><i style="font-size: 12px">(tanpa titik, contoh: 20.000 menjadi 20000)</i></p>
                     <input type="number" name="harga" id="harga">
 
-                    <label for="deskripsiHarga">Deskripsi</label>
+                    <label for="deskripsiHarga">Deskripsi <i style="font-size: 12px">bikin rusak bang jangan dipake</i></label>
                     <input id="deskripsiHarga" type="hidden" name="deskripsiHarga">
                     <trix-editor input="deskripsiHarga" style="height:200px;"></trix-editor>
 

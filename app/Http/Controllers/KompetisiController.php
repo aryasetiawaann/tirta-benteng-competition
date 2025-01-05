@@ -100,8 +100,7 @@ class KompetisiController extends Controller
         if ($validation->fails()) {
             return redirect()->back()
                 ->withErrors($validation)
-                ->withInput()
-                ->with('error', 'Validasi gagal, silakan periksa kembali input Anda.');
+                ->withInput();
         }
 
         Kompetisi::create($data);
@@ -247,8 +246,7 @@ class KompetisiController extends Controller
         if ($validation->fails()) {
             return redirect()->back()
                 ->withErrors($validation)
-                ->withInput()
-                ->with('error', 'Validasi gagal, silakan periksa kembali input Anda.');
+                ->withInput();
         }
 
         $kompetisi = Kompetisi::find($request->id);

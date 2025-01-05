@@ -54,10 +54,11 @@ a {
     list-style: none;
     text-align: left;
     color: #ffffff;
+    padding-left: 10px;
 }
 
 .sidebar-links li {
-    padding: 20px 0;
+    padding: 20px;
     margin-bottom: 10px;
 }
 
@@ -263,7 +264,6 @@ a {
 }
 
 .fa {
-    padding: 15px;
     font-size: 30px;
     width: 20px;
     text-align: center;
@@ -319,6 +319,7 @@ a {
 .pengenalan-content p {
     font-size: 16px;
     max-width: 500px;
+    text-align: justify;
 }
 
 /* Jadwal Section */
@@ -404,6 +405,7 @@ a {
 
 .event-list p {
     margin: 0;
+    font-size: 18px;
 }
 
 .event-list ul {
@@ -586,7 +588,7 @@ a {
     font-family: "Inter", sans-serif;
 }
 
-.footer-menu ul {
+ul {
     list-style-type: none;
     padding: 0;
 }
@@ -759,6 +761,7 @@ a {
         font-size: 18px;
         max-width: 500px;
         margin: 0;
+        text-align: justify;
     }
 
     #jadwal h2 {

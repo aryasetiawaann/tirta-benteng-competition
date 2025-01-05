@@ -107,7 +107,7 @@
                                                 <form action="{{ route('dashboard.atlet.destroy', $atlet->id) }}" method="post">
                                                     @csrf
                                                     @method('delete')
-                                                    <button class="button-red button-gap" data-tooltip="Hapus Atlet"onclick="return confirm('Apakah kamu yakin ingin menghapus atlet ini? ')">
+                                                    <button class="button-red button-gap" data-tooltip="Hapus Atlet"onclick="return confirm('Apakah kamu yakin ingin menghapus atlet ini? Menghapus atlet juga akan menghapus seluruh daftar kompetisi dan acara yang telah terdaftar atas nama atlet')">
                                                         <i class='bx bx-xs bx-trash'></i>
                                                     </button>
                                                 </form>

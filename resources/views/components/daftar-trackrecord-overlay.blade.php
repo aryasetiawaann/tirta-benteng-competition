@@ -1,7 +1,7 @@
 <div id="overlay" class="overlay">
     <div class="all-container all-card overlay-container w100">
         <header class="flex divider">
-            <h2>Tambah Atlet</h2>
+            <h2>Tambah Track Record</h2>
             <span id="closeOverlay" class="bx bx-md bx-x"></span>
         </header>
         <section>

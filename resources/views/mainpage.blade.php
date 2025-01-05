@@ -56,7 +56,7 @@
                 <div class="line"></div>
             </div>
             <h2>Swimming Competition</h2>
-                <p>Diadakan setiap tahun, Swimming Competition dirancang untuk menginspirasi atlet muda dan berbakat dalam mengejar mimpi mereka di arena olahraga. Dengan berbagai kategori lomba yang mencakup semua gaya renang dan kelompok umur, kompetisi ini memberikan kesempatan bagi semua orang untuk bersaing dan berkembang.
+                <p>Swimming Competition dirancang untuk menginspirasi atlet muda dan berbakat dalam mengejar mimpi mereka di arena olahraga. Dengan berbagai kategori lomba yang mencakup semua gaya renang dan kelompok umur, kompetisi ini memberikan kesempatan bagi semua orang untuk bersaing dan berkembang.
                 <br><br>Bersiaplah untuk menyaksikan pertarungan sengit di kolam renang, serta merasakan kegembiraan dan antusiasme yang membara. Mari bersama-sama menciptakan momen tak terlupakan dan mengukir prestasi terbaik di kejuaraan kali ini! </p>
             </div>
     </section>
@@ -103,7 +103,7 @@
             </div>
             @endif
         @else
-        <h2>Coming Soon!</h2>
+        <h2>Coming Soon</h2>
         <div class="jadwal-items"></div>
         @endif
         
@@ -147,7 +147,7 @@
             @endforeach
         </div>
         @else
-        <h2>Coming Soon!</h2>
+        <h2>Coming Soon</h2>
         @endif
     </section>
 
@@ -184,8 +184,10 @@
             </div>
             <div class="footer-contact">
                 <h4>Hubungi Kami</h4>
-                <a href="tel:0812312312312"><i class="fa fa-phone"></i><span>087864774431</span></a>
-                <a href="mailto:renangtangerang@gmail.com"><i class="fa fa-envelope"></i><span>info@tirtabentengcomp.com</span></a>
+                <ul>
+                    <li><a href="tel:+6287864774431"><i class="fa fa-phone"></i><span>087864774431 - Firza</span></a></li>
+                    <li><a href="tel:+6281311384000"><i class="fa fa-phone"></i><span>081311384000 - April</span></a></li>
+                </ul>
             </div>
         </div>
     </footer>

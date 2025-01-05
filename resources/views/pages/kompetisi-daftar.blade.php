@@ -66,7 +66,6 @@
                         <h3 class="mtopbot">
                             Harga : <span class="status harga smaller">Rp.{{ number_format($aca->harga, 2, ',', '.') }}</span>
                         </h3>
-                        <p><strong>Kuota :</strong> {{ $aca->peserta->count() }} / {{$aca->kuota}}</p>
                         <p><strong>Nomor Grup :</strong> {{ $aca->grup }}</p>
                         <p><strong>Min Umur :</strong> {{ $aca->min_umur }}</p>
                         <p><strong>Max Umur :</strong> {{ $aca->max_umur }}</p>
