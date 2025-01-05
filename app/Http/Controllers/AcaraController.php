@@ -150,8 +150,7 @@ class AcaraController extends Controller
         if ($validation->fails()) {
             return redirect()->back()
                 ->withErrors($validation)
-                ->withInput()
-                ->with('error', 'Validasi gagal, silakan periksa kembali input Anda.');
+                ->withInput();
         }
         
         Acara::create($data);
@@ -218,7 +217,7 @@ class AcaraController extends Controller
             "max_umur" => "required|integer|min:0",
             "min_umur" => "required|integer|min:0|lte:max_umur",
         ], [
-            'nomor_lomba.required' => 'Nomor lomba wajib diisi.',
+            'nomor_lomba.required' => 'Nomor acara wajib diisi.',
             'nama.required' => 'Nama wajib diisi.',
             'kategori.required' => 'Kategori wajib diisi.',
             'jenis_lomba.required' => 'Jenis lomba wajib diisi.',
@@ -249,8 +248,7 @@ class AcaraController extends Controller
         if ($validation->fails()) {
             return redirect()->back()
                 ->withErrors($validation)
-                ->withInput()
-                ->with('error', 'Validasi gagal, silakan periksa kembali input Anda.');
+                ->withInput();
         }
         
         $acara = Acara::find($request->id);

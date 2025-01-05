@@ -1,6 +1,27 @@
 @extends('admin.admin-dashboard-layout')
 @section('content')
 <div class="main-content">
+    @if (session('success'))
+            <x-success-list>
+                <x-success-item>{{ session('success') }}</x-success-item>
+            </x-success-list>
+        @endif
+
+        <!-- Menampilkan Pesan Error -->
+        @if (session('error'))
+            <x-error-list>
+                <x-error-item>{{ session('error') }}</x-error-item>
+            </x-error-list>
+        @endif
+
+        <!-- Menampilkan Validasi Error -->
+        @if ($errors->any())
+            <x-error-list>
+                @foreach ($errors->all() as $error)
+                    <x-error-item>{{ $error }}</x-error-item>
+                @endforeach
+            </x-error-list>
+    @endif
     <div class="all-container all-card w100">
         <header class="flex divider">
             <h2>Edit {{$acara->nama}}</h2>
