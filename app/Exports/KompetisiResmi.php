@@ -53,7 +53,7 @@ class KompetisiResmi implements FromCollection, WithMapping, ShouldAutoSize, Wit
                     $trackRecordFormatted = sprintf('%02d:%02d.%02d', 
                         floor($participant['track_record'] / 60),  // Menit
                         floor(fmod($participant['track_record'], 60)),  // Detik
-                        ceil(($participant['track_record'] - floor($participant['track_record'])) * 100) // Milisekon
+                        round(($participant['track_record'] - floor($participant['track_record'])) * 100) // Milisekon
                         );
 
                     $rows[] = [

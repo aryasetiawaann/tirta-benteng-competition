@@ -10,9 +10,9 @@
     
     <!-- MIDTRANS -->
     <script type="text/javascript"
-      src="https://app.sandbox.midtrans.com/snap/snap.js"
+      src="https://app.midtrans.com/snap/snap.js" 
       data-client-key={{ config('midtrans.client_key') }}></script>
-    <!-- Note: replace with src="https://app.midtrans.com/snap/snap.js" for Production environment -->
+    <!-- Note: replace with src="https://app.midtrans.com/snap/snap.js" for Production environment | for sandbox : https://app.sandbox.midtrans.com/snap/snap.js -->
 
     <link rel="icon" href="{{ asset('assets/img/LogoWebHD.png') }}" type="image/png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">

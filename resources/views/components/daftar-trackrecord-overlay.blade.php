@@ -9,7 +9,18 @@
                 @csrf
 
                 <label for="kompetisi">Kompetisi *</label>
-                <input type="text" id="kompetisi" name="kompetisi" placeholder="Nama Kompetisi">
+                <select name="kompetisi" id="kompetisi" onchange="toggleLainnyaInput()">
+                    <option value="" disabled selected>Pilih Kompetisi</option>
+                    @foreach ($competitions as $competition)
+                    <option value="{{ $competition->nama }}">{{ $competition->nama }}</option>
+                    @endforeach
+                    <option value="lainnya">Lainnya</option>
+                </select>
+
+                <div id="lainnyaInput" style="display: none; margin-top: 3px;">
+                    <label for="kompetisi_lainnya" style="margin-right: 60%">Nama Kompetisi</label>
+                    <input type="text" name="kompetisi_lainnya" id="kompetisi_lainnya" placeholder="Nama Kompetisi">
+                </div>
 
                 <label for="kategori">Nomor Lomba *</label>
                 <select name="kategori" id="kategori">
@@ -56,3 +67,17 @@
         </section>
     </div>
 </div>
+
+<script>
+    function toggleLainnyaInput() {
+        const kompetisiSelect = document.getElementById('kompetisi');
+        const lainnyaInput = document.getElementById('lainnyaInput');
+
+        // Tampilkan input jika opsi 'Lainnya' dipilih
+        if (kompetisiSelect.value === 'lainnya') {
+            lainnyaInput.style.display = 'block';
+        } else {
+            lainnyaInput.style.display = 'none';
+        }
+    }
+</script>

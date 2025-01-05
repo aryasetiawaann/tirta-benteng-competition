@@ -75,7 +75,7 @@
                                             {{ sprintf('%02d:%02d.%02d', 
                                                 floor($record->time / 60),  // Menit
                                                 floor(fmod($record->time, 60)),  // Detik
-                                                ceil(($record->time - floor($record->time)) * 100)  // Milidetik
+                                                round(($record->time - floor($record->time)) * 100)  // Milidetik
                                             ) }}
                                         </span>
                                     </td>

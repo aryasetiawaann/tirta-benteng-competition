@@ -26,7 +26,23 @@
                         @method('put')
 
                         <label for="kompetisi">Kompetisi *</label>
-                        <input type="text" id="kompetisi" name="kompetisi" placeholder="Nama Kompetisi" value="{{ $record->kompetisi }}">
+                        <select name="kompetisi" id="kompetisi" onchange="toggleLainnyaInput()">
+                            @foreach ($competitions as $competition)
+                            <option value="{{ $competition->nama }}"
+                                {{ $competition->nama == $selectedCompetition ? 'selected' : '' }}>
+                                {{ $competition->nama }}
+                            </option>
+                            @endforeach
+                            <option value="lainnya" {{ !in_array($selectedCompetition, $competitions->pluck('nama')->toArray()) ? 'selected' : '' }}>
+                                Lainnya
+                            </option>
+                        </select>
+
+                        <div id="lainnyaInput" style="margin-top: 3px; {{ !in_array($selectedCompetition, $competitions->pluck('nama')->toArray()) ? '' : 'display: none;' }}">
+                            <label for="kompetisi_lainnya" style="margin-right: 60%">Nama Kompetisi</label>
+                            <input type="text" name="kompetisi_lainnya" id="kompetisi_lainnya" placeholder="Nama Kompetisi"
+                            value="{{ !in_array($selectedCompetition, $competitions->pluck('nama')->toArray()) ? $selectedCompetition : '' }}">
+                        </div>
 
                         <label for="kategori">Nomor Lomba *</label>
                         <select name="kategori" id="kategori">
@@ -61,7 +77,7 @@
                             <div class="record">
                                 <input value="{{ floor($record->time / 60) }}"  type="number" id="record_minute" name="record_minute" placeholder="Menit" min="0" step="1" style="width: 30%;">
                                 <input value="{{ floor(fmod($record->time, 60)) }}" type="number" id="record_second" name="record_second" placeholder="Detik" min="0" max="59" step="1" style="width: 30%;">
-                                <input value="{{ ceil(($record->time - floor($record->time)) * 100) }}" type="number" id="record_millisecond" name="record_millisecond" placeholder="Milidetik" min="0" max="99" step="1" style="width: 30%;">
+                                <input value="{{ round(($record->time - floor($record->time)) * 100) }}" type="number" id="record_millisecond" name="record_millisecond" placeholder="Milidetik" min="0" max="99" step="1" style="width: 30%;">
                             </div>
 
                         <input type="hidden" name="atlet_id" value="{{ $record->atlet->id }}">
@@ -74,4 +90,19 @@
             </section>
         </div>
     </div>
+
+    <script>
+        function toggleLainnyaInput() {
+            const kompetisiSelect = document.getElementById('kompetisi');
+            const lainnyaInput = document.getElementById('lainnyaInput');
+    
+            // Tampilkan input jika opsi 'Lainnya' dipilih
+            if (kompetisiSelect.value === 'lainnya') {
+                lainnyaInput.style.display = 'block';
+            } else {
+                lainnyaInput.style.display = 'none';
+                document.getElementById('kompetisi_lainnya').value = '';
+            }
+        }
+    </script>
 @endsection
