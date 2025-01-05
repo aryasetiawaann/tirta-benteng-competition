@@ -13,18 +13,25 @@
 
                 <label for="kategori">Nomor Lomba *</label>
                 <select name="kategori" id="kategori">
+                    <option value="25m papan gaya bebas">25m Papan Gaya Bebas</option>
+                    <option value="25m fins gaya bebas">25m Fins Gaya Bebas</option>
+                    <option value="25m gaya bebas">25m Gaya Bebas</option>
                     <option value="50m gaya bebas">50m Gaya Bebas</option>
                     <option value="100m gaya bebas">100m Gaya Bebas</option>
                     <option value="200m gaya bebas">200m Gaya Bebas</option>
                     <option value="400m gaya bebas">400m Gaya Bebas</option>
                     <option value="800m gaya bebas">800m Gaya Bebas</option>
                     <option value="1500m gaya bebas">1500m Gaya Bebas</option>
+                    <option value="25m fins gaya kupu-kupu">25m Fins Gaya Kupu-Kupu</option>
+                    <option value="25m gaya kupu-kupu">25m Gaya Kupu-Kupu</option>
                     <option value="50m gaya kupu-kupu">50m Gaya Kupu-Kupu</option>
                     <option value="100m gaya kupu-kupu">100m Gaya Kupu-Kupu</option>
                     <option value="200m gaya kupu-kupu">200m Gaya Kupu-Kupu</option>
+                    <option value="25m gaya punggung">25m Gaya Punggung</option>
                     <option value="50m gaya punggung">50m Gaya Punggung</option>
                     <option value="100m gaya punggung">100m Gaya Punggung</option>
                     <option value="200m gaya punggung">200m Gaya Punggung</option>
+                    <option value="25m gaya dada">25m Gaya Dada</option>
                     <option value="50m gaya dada">50m Gaya Dada</option>
                     <option value="100m gaya dada">100m Gaya Dada</option>
                     <option value="200m gaya dada">200m Gaya Dada</option>

@@ -30,18 +30,25 @@
 
                         <label for="kategori">Nomor Lomba *</label>
                         <select name="kategori" id="kategori">
+                            <option value="25m papan gaya bebas" {{ $record->nomor_lomba === "25m papan gaya bebas" ? "selected" : "" }}>25m Papan Gaya Bebas</option>
+                            <option value="25m fins gaya bebas" {{ $record->nomor_lomba === "25m fins gaya bebas" ? "selected" : "" }}>25m Fins Gaya Bebas</option>
+                            <option value="25m gaya bebas" {{ $record->nomor_lomba === "25m gaya bebas" ? "selected" : "" }}>25m Gaya Bebas</option>
                             <option value="50m gaya bebas" {{ $record->nomor_lomba === "50m gaya bebas" ? "selected" : "" }}>50m Gaya Bebas</option>
                             <option value="100m gaya bebas" {{ $record->nomor_lomba === "100m gaya bebas" ? "selected" : "" }}>100m Gaya Bebas</option>
                             <option value="200m gaya bebas" {{ $record->nomor_lomba === "200m gaya bebas" ? "selected" : "" }}>200m Gaya Bebas</option>
                             <option value="400m gaya bebas" {{ $record->nomor_lomba === "400m gaya bebas" ? "selected" : "" }}>400m Gaya Bebas</option>
                             <option value="800m gaya bebas" {{ $record->nomor_lomba === "800m gaya bebas" ? "selected" : "" }}>800m Gaya Bebas</option>
                             <option value="1500m gaya bebas" {{ $record->nomor_lomba === "1500m gaya bebas" ? "selected" : "" }}>1500m Gaya Bebas</option>
+                            <option value="25m fins gaya kupu-kupu" {{ $record->nomor_lomba === "25m fins gaya kupu-kupu" ? "selected" : "" }}>25m Fins Gaya Kupu-Kupu</option>
+                            <option value="25m gaya kupu-kupu" {{ $record->nomor_lomba === "25m gaya kupu-kupu" ? "selected" : "" }}>25m Gaya Kupu-Kupu</option>
                             <option value="50m gaya kupu-kupu" {{ $record->nomor_lomba === "50m gaya kupu-kupu" ? "selected" : "" }}>50m Gaya Kupu-Kupu</option>
                             <option value="100m gaya kupu-kupu" {{ $record->nomor_lomba === "100m gaya kupu-kupu" ? "selected" : "" }}>100m Gaya Kupu-Kupu</option>
                             <option value="200m gaya kupu-kupu" {{ $record->nomor_lomba === "200m gaya kupu-kupu" ? "selected" : "" }}>200m Gaya Kupu-Kupu</option>
+                            <option value="25m gaya punggung" {{ $record->nomor_lomba === "25m gaya punggung" ? "selected" : "" }}>25m Gaya Punggung</option>
                             <option value="50m gaya punggung" {{ $record->nomor_lomba === "50m gaya punggung" ? "selected" : "" }}>50m Gaya Punggung</option>
                             <option value="100m gaya punggung" {{ $record->nomor_lomba === "100m gaya punggung" ? "selected" : "" }}>100m Gaya Punggung</option>
                             <option value="200m gaya punggung" {{ $record->nomor_lomba === "200m gaya punggung" ? "selected" : "" }}>200m Gaya Punggung</option>
+                            <option value="25m gaya dada" {{ $record->nomor_lomba === "25m gaya dada" ? "selected" : "" }}>25m Gaya Dada</option>
                             <option value="50m gaya dada" {{ $record->nomor_lomba === "50m gaya dada" ? "selected" : "" }}>50m Gaya Dada</option>
                             <option value="100m gaya dada" {{ $record->nomor_lomba === "100m gaya dada" ? "selected" : "" }}>100m Gaya Dada</option>
                             <option value="200m gaya dada" {{ $record->nomor_lomba === "200m gaya dada" ? "selected" : "" }}>200m Gaya Dada</option>
