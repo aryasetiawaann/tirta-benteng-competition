@@ -589,11 +589,10 @@ a {
 }
 
 .logo-divider {
-    font-size: 24px; 
-    font-weight: bold;
-    color: #000;
+    font-size: 24px !important; 
+    font-weight: normal !important;
+    text-decoration: none !important;
 }
-
 
 .footer-left p {
     margin: 10px 0 0;
