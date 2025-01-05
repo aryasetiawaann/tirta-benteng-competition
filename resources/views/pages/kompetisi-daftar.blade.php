@@ -49,7 +49,7 @@
             @foreach ($acara as $aca)
                 <section class="all-container all-card">
                     <header class="flex divider">
-                        <h2>{{ $aca->nomor_lomba }} - {{ $aca->nama }} - {{ $aca->grup }}</h2>
+                        <h2>{{ $aca->nomor_lomba }} - {{ $aca->nama }} - KU {{ $aca->grup }}</h2>
 
                         @if ($aca->peserta->count() < $aca->kuota)
                         <a href="{{ route('dashboard.acara.detail', $aca->id) }}"><button>Daftar</button></a>

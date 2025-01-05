@@ -48,7 +48,7 @@
             @foreach ($acaras as $acara)
             <section class="all-container all-card">
                 <header class="flex divider">
-                    <h2>{{ $acara->nomor_lomba }} - {{ $acara->nama }} - {{ $acara->grup }}</h2>
+                    <h2>{{ $acara->nomor_lomba }} - {{ $acara->nama }} - KU {{ $acara->grup }}</h2>
                     <a href="{{ route('dashboard.kompe-saya.acara.detail', $acara->id) }}"><button>Lihat</button></a>
                 </header>
                 <div>

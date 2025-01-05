@@ -81,7 +81,7 @@
         @foreach ($acara as $ac)
             <section class="all-container all-card">
                 <header class="flex divider">
-                    <h2>{{ $ac->nomor_lomba }} - {{ $ac->nama }} - {{ $ac->grup }}</h2>
+                    <h2>{{ $ac->nomor_lomba }} - {{ $ac->nama }} - KU {{ $ac->grup }}</h2>
                 </header>
                 <div class="info">
                     <h3 class="mtopbot">
