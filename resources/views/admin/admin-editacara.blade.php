@@ -32,7 +32,7 @@
                 @method('put')
 
                 <label for="nomor">Nomor Acara*</label>
-                <input type="number" id="nomor" name="nomor" placeholder="Nomor acara" value="{{ $acara->jenis_lomba }}">
+                <input type="number" id="nomor" name="nomor" placeholder="Nomor acara" value="{{ $acara->nomor_lomba }}">
 
                 <label for="nama">Nama Acara*</label>
                 <input type="text" id="nama" name="nama" placeholder="Nama acara" value="{{ $acara->nama }}">
