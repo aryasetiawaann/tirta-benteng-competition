@@ -717,9 +717,14 @@ ul {
         display: none;
     }
 
+    .navbar {
+        display: flex;
+        justify-content: space-between;
+    }
+
     .nav-burger {
         display: block;
-        margin-left: 60%;
+        margin: 0 20px;
     }
 
     .hero-content h1 {
