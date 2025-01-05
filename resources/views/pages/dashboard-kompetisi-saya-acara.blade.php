@@ -48,7 +48,19 @@
             @foreach ($acaras as $acara)
             <section class="all-container all-card">
                 <header class="flex divider">
-                    <h2>{{ $acara->nomor_lomba }} - {{ $acara->nama }} - KU {{ $acara->grup }}</h2>
+                    <h2>
+                        {{ strtoupper($acara->nomor_lomba) }} - {{ strtoupper($acara->nama) }} 
+                        @if($acara->kategori == 'Wanita')
+                            PUTRI
+                        @elseif($acara->kategori == 'Pria')
+                            PUTRA
+                        @elseif($acara->kategori == 'Campuran')
+                            CAMPURAN
+                        @else
+                            {{ strtoupper($acara->kategori) }}
+                        @endif    
+                        - KU {{ strtoupper($acara->grup) }}
+                    </h2>
                     <a href="{{ route('dashboard.kompe-saya.acara.detail', $acara->id) }}"><button>Lihat</button></a>
                 </header>
                 <div>

@@ -49,7 +49,19 @@
             @foreach ($acara as $aca)
                 <section class="all-container all-card">
                     <header class="flex divider">
-                        <h2>{{ $aca->nomor_lomba }} - {{ $aca->nama }} - KU {{ $aca->grup }}</h2>
+                        <h2>
+                            {{ strtoupper($aca->nomor_lomba) }} - {{ strtoupper($aca->nama) }} 
+                            @if($aca->kategori == 'Wanita')
+                                PUTRI
+                            @elseif($aca->kategori == 'Pria')
+                                PUTRA
+                            @elseif($ac->kategori == 'Campuran')
+                                CAMPURAN
+                            @else
+                                {{ strtoupper($aca->kategori) }}
+                            @endif
+                            - KU {{ strtoupper($aca->grup) }}
+                        </h2>
 
                         @if ($aca->peserta->count() < $aca->kuota)
                         <a href="{{ route('dashboard.acara.detail', $aca->id) }}"><button>Daftar</button></a>

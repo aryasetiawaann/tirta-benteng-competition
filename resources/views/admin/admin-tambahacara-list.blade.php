@@ -81,7 +81,19 @@
         @foreach ($acara as $ac)
             <section class="all-container all-card">
                 <header class="flex divider">
-                    <h2>{{ $ac->nomor_lomba }} - {{ $ac->nama }} - KU {{ $ac->grup }}</h2>
+                    <h2>
+                        {{ strtoupper($ac->nomor_lomba) }} - {{ strtoupper($ac->nama) }}
+                        @if($ac->kategori == 'Wanita')
+                            PUTRI
+                        @elseif($ac->kategori == 'Pria')
+                            PUTRA
+                        @elseif($ac->kategori == 'Campuran')
+                            CAMPURAN
+                        @else
+                            {{ strtoupper($ac->kategori) }}
+                        @endif
+                        - KU {{ strtoupper($ac->grup) }}
+                    </h2>
                 </header>
                 <div class="info">
                     <h3 class="mtopbot">
