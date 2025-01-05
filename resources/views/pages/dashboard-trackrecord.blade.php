@@ -69,7 +69,7 @@
                                 <tr>
                                     <td>{{ $key + 1 }}</td>
                                     <td>{{ $record->kompetisi }}</td>
-                                    <td>{{ $record->nomor_lomba }}</td>
+                                    <td class="capitalize">{{ $record->nomor_lomba }}</td>
                                     <td>
                                         <span class="status registration">
                                             {{ sprintf('%02d:%02d.%02d', 

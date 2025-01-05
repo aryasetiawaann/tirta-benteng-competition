@@ -465,6 +465,10 @@ input#dokumen {
     padding-bottom: 10px;
 }
 
+.capitalize {
+    text-transform: capitalize;
+}
+
 .tagihan-text {
     margin-top: 15px;
     margin-bottom: 20px;
