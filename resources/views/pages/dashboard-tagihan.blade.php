@@ -11,7 +11,8 @@
                     </div>
                     <div class="card-content">
                         <h1>Tagihan</h1>
-                        <h3 style="color: red">Informasi: Untuk saat ini belum dapat melakukan pembayaran</h3>
+                        {{-- INI BUAT PENGUMUMAN --}}
+                        {{-- <h3 style="color: red">Informasi: Untuk saat ini belum dapat melakukan pembayaran</h3> --}}
                     </div>
                 </div>
             </div>
@@ -61,7 +62,7 @@
                                     <td>
                                         <div class="actions">
                                             {{-- Hapus Style buat unable lagi --}}
-                                            <button onclick="payButton(this)" data-id="{{ $acara->pivot->id }}" data-harga="{{ $acara->harga }}" class="button-gap pay-button" data-tooltip="Bayar" style="display: none;"><i class='bx bx-xs bxs-credit-card'></i></button>
+                                            <button onclick="payButton(this)" data-id="{{ $acara->pivot->id }}" data-harga="{{ $acara->harga }}" class="button-gap pay-button" data-tooltip="Bayar"><i class='bx bx-xs bxs-credit-card'></i></button>
                                             <form action="{{ route('dashboard.tagihan.destroy', $acara->pivot->id) }}" method="post">
                                                 @csrf
                                                 @method('delete')
@@ -77,7 +78,7 @@
                     </tbody>
                 </table>
                 {{-- Hapus Style buat unable lagi --}}
-                <div class="total-price" style="display: none">
+                <div class="total-price">
                     @if ($totalHarga != 0)
                         <p><b>Total: </b>Rp{{ number_format($totalHarga, 2, ',', '.') }}</p>
                         <button class="pay-all-button" onclick="payAll()">Bayar Semua</button>
@@ -123,8 +124,10 @@
                 }
             })
             .catch(error => {
-                console.error('Error:', error);
-                alert('Terjadi kesalahan saat memproses pembayaran.');
+                // console.log('Payment ID:', paymentId);
+                // console.log('Payment Price:', paymentPrice);
+                // console.error('Error:', error);
+                alert('Harap untuk mendaftarkan ulang atlet anda.');
             });
         }
 

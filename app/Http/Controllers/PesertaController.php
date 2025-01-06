@@ -135,6 +135,7 @@ class PesertaController extends Controller
 
         $snapToken = \Midtrans\Snap::getSnapToken($params);
 
+
         return response()->json(['snap_token' => $snapToken]);
     }
 
