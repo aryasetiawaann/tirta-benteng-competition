@@ -127,7 +127,7 @@
                 // console.log('Payment ID:', paymentId);
                 // console.log('Payment Price:', paymentPrice);
                 // console.error('Error:', error);
-                alert('Harap untuk mendaftarkan ulang atlet anda.');
+                alert('Harap untuk cek pesan masuk pada email anda.');
             });
         }
 
