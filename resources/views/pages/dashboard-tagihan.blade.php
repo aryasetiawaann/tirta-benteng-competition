@@ -12,7 +12,7 @@
                     <div class="card-content">
                         <h1>Tagihan</h1>
                         {{-- INI BUAT PENGUMUMAN --}}
-                        {{-- <h3 style="color: red">Informasi: Untuk saat ini belum dapat melakukan pembayaran</h3> --}}
+                        <h4 style="color: green">Informasi: Untuk pembayaran silahkan kontak melalui <a href="tel:+6281311384000">081311384000</a> - April</h4>
                     </div>
                 </div>
             </div>
@@ -62,7 +62,7 @@
                                     <td>
                                         <div class="actions">
                                             {{-- Hapus Style buat unable lagi --}}
-                                            <button onclick="payButton(this)" data-id="{{ $acara->pivot->id }}" data-harga="{{ $acara->harga }}" class="button-gap pay-button" data-tooltip="Bayar"><i class='bx bx-xs bxs-credit-card'></i></button>
+                                            <button onclick="payButton(this)" data-id="{{ $acara->pivot->id }}" data-harga="{{ $acara->harga }}" class="button-gap pay-button" data-tooltip="Bayar" style='display:none;'><i class='bx bx-xs bxs-credit-card'></i></button>
                                             <form action="{{ route('dashboard.tagihan.destroy', $acara->pivot->id) }}" method="post">
                                                 @csrf
                                                 @method('delete')
@@ -78,7 +78,7 @@
                     </tbody>
                 </table>
                 {{-- Hapus Style buat unable lagi --}}
-                <div class="total-price">
+                <div class="total-price" style='display:none;'>
                     @if ($totalHarga != 0)
                         <p><b>Total: </b>Rp{{ number_format($totalHarga, 2, ',', '.') }}</p>
                         <button class="pay-all-button" onclick="payAll()">Bayar Semua</button>
