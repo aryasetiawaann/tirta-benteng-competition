@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Kompetisi;
 use App\Models\Atlet;
+use App\Models\Acara;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
@@ -23,11 +24,16 @@ class KompetisiController extends Controller
         return view('pages.dashboard-kompetisi')->with(['kompetisi'=>$kompetisi]);
     }
 
-    public function kelompokumur()
+    public function kelompokUmur($id)
     {
-        $kompetisi = Kompetisi::where('kategori', 'Kelompok Umur')->get();
+        $acara = Acara::all()->where("kompetisi_id", $id)->sortBy("grup");
 
-        return view('pages.dashboard-kompetisi-kelompokumur')->with(['kompetisi'=>$kompetisi]);
+        $grupList = $acara->pluck('grup')->unique()->sort();
+        
+        $nama_kompetisi = Kompetisi::find($id)->nama;
+        $id_kompetisi = Kompetisi::find($id)->id;
+
+        return view('pages.dashboard-kompetisi-kelompokumur', compact('grupList', 'nama_kompetisi', 'id_kompetisi'));
     }
 
     public function kompetisiSaya(){

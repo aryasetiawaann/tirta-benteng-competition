@@ -18,13 +18,13 @@ class AcaraController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index($id)
+    public function index($kelompok, $id)
     {
-        $acara = Acara::all()->where("kompetisi_id", $id)->sortBy("nomor_lomba");
+        $acara = Acara::all()->where("kompetisi_id", $id)->where("grup", $kelompok);
         
         $nama_kompetisi = Kompetisi::find($id)->nama;
         $id_kompetisi = Kompetisi::find($id)->id;
-        return view('pages.kompetisi-daftar')->with(['acara'=> $acara, 'nama_kompetisi'=> $nama_kompetisi, 'id_kompetisi' => $id_kompetisi]);
+        return view('pages.kompetisi-daftar')->with(['acara'=> $acara, 'nama_kompetisi'=> $nama_kompetisi, 'id_kompetisi' => $id_kompetisi, 'kelompok' => $kelompok]);
     }
 
     public function kompetisiSaya($id){
@@ -48,13 +48,12 @@ class AcaraController extends Controller
 
     public function kompetisiSayaDetail($id){
         $acara = Acara::find($id);
-        $acara_id = $acara->id;
         $atlets = $acara->peserta()->where('user_id', auth()->user()->id)->get()->sortBy('name');        
 
-        return view('pages.dashboard-kompetisi-saya-acara2')->with(['acaras' => $acara,'atlets'=> $atlets, 'acara_id'=> $acara_id]);
+        return view('pages.dashboard-kompetisi-saya-acara2')->with(['acara' => $acara,'atlets'=> $atlets]);
     }
 
-    public function showPesertaUser($id){
+    public function showPesertaUser($kelompok, $id){
         $acara = Acara::find($id);
         $acaraId = $acara->id;
         $currentDate = Carbon::now();
@@ -76,7 +75,7 @@ class AcaraController extends Controller
             $atlets = $atlets->where('jenis_kelamin', 'Wanita');
         }
 
-        return view('pages.kompetisi-daftar2')->with(['acara'=> $acara, 'atlets'=> $atlets]);
+        return view('pages.kompetisi-daftar2')->with(['acara'=> $acara, 'atlets'=> $atlets, 'kelompok' => $kelompok]);
     }
 
     public function indexAdmin($id){

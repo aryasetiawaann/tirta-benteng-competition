@@ -28,7 +28,7 @@
                 <header class="flex divider">
                     <h2>{{ $kompe->nama }}</h2>
                     @if (now() >= $kompe->buka_pendaftaran && now() < $kompe->tutup_pendaftaran)
-                    <a href="{{ route('dashboard.acara', $kompe->id) }}"><button>Daftar</button></a>
+                    <a href="{{ route('dashboard.kompetisi.kelompokumur', $kompe->id) }}"><button>Daftar</button></a>
                     @endif
                 </header>
                 <div class="card-info">

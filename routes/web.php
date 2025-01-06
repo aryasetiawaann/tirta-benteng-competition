@@ -42,9 +42,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
     
     Route::get('/dashboard/daftar-kompetisi', [KompetisiController::class, 'index'])->name('dashboard.kompetisi');
     # kelompk umur
-    Route::get('/dashboard/daftar-kompetisi-kelompok-umur',[KompetisiController::class, 'kelompokumur'])->name('dashboard.kompetisi.kelompokumur');
-    Route::get('/dashboard/daftar-kompetisi/{id}', [AcaraController::class,'index'])->name('dashboard.acara');
-    Route::get('/dashboard/daftar-kompetisi/acara/{id}', [AcaraController::class,'showPesertaUser'])->name('dashboard.acara.detail');
+    Route::get('/dashboard/daftar-kompetisi-kelompok-umur/{id}',[KompetisiController::class, 'kelompokUmur'])->name('dashboard.kompetisi.kelompokumur');
+    Route::get('/dashboard/daftar-kompetisi/{kelompok}/{id}', [AcaraController::class,'index'])->name('dashboard.acara');
+    Route::get('/dashboard/daftar-kompetisi/{kelompok}/acara/{id}', [AcaraController::class,'showPesertaUser'])->name('dashboard.acara.detail');
     Route::post('/dashboard/daftar-kompetisi/acara/daftar/', [PesertaController::class,'create'])->name('dashboard.acara.daftar');
     Route::get('/dashboard/kompetisi-saya', [KompetisiController::class,'kompetisiSaya'])->name('dashboard.kompe-saya');
     Route::get('/dashboard/kompetisi-saya/{id}', [AcaraController::class,'kompetisiSaya'])->name('dashboard.kompe-saya.acara');

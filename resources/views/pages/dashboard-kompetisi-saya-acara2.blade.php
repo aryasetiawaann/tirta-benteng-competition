@@ -8,8 +8,8 @@
                     <div class="card-icon">
                         <i class="bx bxs-grid-alt"></i>
                     </div>
-                    <div class="card-content" id="acara-detail" data-acara-detail="{{ $acaras->nama }}">
-                        <h1>{{ $acaras->kompetisi->nama }} - {{ $acaras->nama }}</h1>
+                    <div class="card-content" id="acara-detail" data-acara-detail="{{ $acara->nama }}">
+                        <h1>{{ $acara->kompetisi->nama }} - {{ $acara->nama }}</h1>
                     </div>
                 </div>
             </div>
@@ -18,8 +18,8 @@
             <ul>
                 <li>Kompetisi</li>
                 <li><a href="{{ route('dashboard.kompe-saya') }}">Kompetisi Saya</a></li>
-                <li><a href="{{ route('dashboard.kompe-saya.acara', $acaras->kompetisi->id) }}">{{ $acaras->kompetisi->nama }}</a></li>
-                <li><a href="{{ route('dashboard.kompe-saya.acara.detail', $acaras->id) }}">{{ $acaras->nama }}</a></li>
+                <li><a href="{{ route('dashboard.kompe-saya.acara', $acara->kompetisi->id) }}">{{ $acara->kompetisi->nama }}</a></li>
+                <li><a href="{{ route('dashboard.kompe-saya.acara.detail', $acara->id) }}">{{ $acara->nama }}</a></li>
             </ul>
         </nav>
         <div class="bottom-container">
@@ -50,16 +50,12 @@
                         </thead>
                         <tbody>
                             @foreach ($atlets as $key => $peserta) 
-                            @foreach ( $peserta->acara as $acara)
-                            @if ($acara->id == $acara_id)
-                            <tr>
-                                <td>{{ $key + 1 }}</td>
-                                <td>{{ $peserta->name }}</td>
-                                <td>{{ now()->diffInYears(\Carbon\Carbon::parse($peserta->umur)) }}</td>
-                                <td>{{ $peserta->jenis_kelamin }}</td>
-                            </tr>
-                            @endif   
-                            @endforeach
+                                <tr>
+                                    <td>{{ $key + 1 }}</td>
+                                    <td>{{ $peserta->name }}</td>
+                                    <td>{{ now()->diffInYears(\Carbon\Carbon::parse($peserta->umur)) }}</td>
+                                    <td>{{ $peserta->jenis_kelamin }}</td>
+                                </tr> 
                             @endforeach
                         </tbody>
                     </table>

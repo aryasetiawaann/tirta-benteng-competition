@@ -19,8 +19,9 @@
             <ul>
                 <li>Kompetisi</li>
                 <li><a href="{{ route('dashboard.kompetisi') }}">Daftar</a></li>
-                <li><a href="{{ route('dashboard.acara', $acara->kompetisi->id) }}">{{ $acara->kompetisi->nama }}</a></li>
-                <li><a href="{{ route('dashboard.acara.detail', $acara->id) }}">{{ $acara->nama }}</a></li>
+                <li><a href="{{ route('dashboard.kompetisi.kelompokumur', $acara->kompetisi->id) }}">Kelompok Umur</a></li>
+                <li><a href="{{ route('dashboard.acara', ['kelompok'=> $kelompok, 'id' => $acara->kompetisi->id]) }}">KU {{ $kelompok }}</a></li>
+                <li><a href="{{ route('dashboard.acara.detail', ['kelompok'=> $kelompok, 'id' => $acara->id]) }}">{{ $acara->nama }}</a></li>
             </ul>
         </nav>
         @if ($errors->any())

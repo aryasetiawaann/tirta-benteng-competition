@@ -33,7 +33,7 @@
                         <i class="bx bxs-grid-alt"></i>
                     </div>
                     <div class="card-content" id="acara" data-acara-name="{{ $nama_kompetisi }}">
-                        <h1>{{ $nama_kompetisi }} </h1>
+                        <h1>{{ $kelompok }} - {{ $nama_kompetisi }} </h1>
                     </div>
                 </div>
             </div>
@@ -42,7 +42,8 @@
             <ul>
                 <li>Kompetisi</li>
                 <li><a href="{{ route('dashboard.kompetisi') }}">Daftar</a></li>
-                <li><a href="{{ route('dashboard.acara', $id_kompetisi) }}">{{ $nama_kompetisi }}</a></li>
+                <li><a href="{{ route('dashboard.kompetisi.kelompokumur', $id_kompetisi) }}">Kelompok Umur</a></li>
+                <li><a href="{{ route('dashboard.acara', ['kelompok'=> $kelompok, 'id' => $id_kompetisi]) }}">KU {{ $kelompok }}</a></li>
             </ul>
         </nav>
         <div class="bottom-container grid">
@@ -64,7 +65,7 @@
                         </h2>
 
                         @if ($aca->peserta->count() < $aca->kuota)
-                        <a href="{{ route('dashboard.acara.detail', $aca->id) }}"><button>Daftar</button></a>
+                        <a href="{{ route('dashboard.acara.detail', ['kelompok' => $kelompok, 'id' => $aca->id]) }}"><button>Daftar</button></a>
                         @endif
                     </header>
                     <div class="card-info">
