@@ -12,8 +12,7 @@ class AdminController extends Controller
       
       $kompetisis = Kompetisi::whereNull('file_hasil')->get();
       $kompetisi_file = Kompetisi::whereNotNull('file_hasil')->orderByDesc('waktu_kompetisi')->get();
-      $kompetisi = Kompetisi::all()->sortByDesc('created_at');
-      
+      $kompetisi = Kompetisi::all()->sortByDesc('waktu_kompetisi');
 
 
       return view('admin.admin-dashboard', compact('kompetisis', 'kompetisi_file', 'kompetisi'));
