@@ -37,10 +37,10 @@
 
             footer {
                 position: fixed; 
-                bottom: -160px; 
+                bottom: -175px; 
                 left: 0px; 
                 right: 0px;
-                height: 150px; 
+                height: 130px; 
 
                 /** Extra personal styles **/
                 text-align: center;
@@ -56,7 +56,7 @@
             }
 
             .table-footer tr img {
-                width: 70px;
+                width: 60px;
             }
 
             main {
@@ -114,7 +114,7 @@
     </head>
     <body>
         <header>
-            <p>TIRTA BENTENG SWIMMING CLUB - {{$time}}</p>
+            <p>TIRTA BENTENG COMPETITION - {{$time}}</p>
             <h1>{{$kompetisi->nama}} - {{ \Carbon\Carbon::parse($kompetisi->waktu_kompetisi)->format('d/m/Y') }} Meet Program</h1>
         </header>
 
@@ -158,61 +158,48 @@
                     </tr>
                     <tbody>
                             @foreach($acara->heats as $heatIndex => $heat)
-                            <tr>
-                                <td style="text-align: left;" colspan="8"><h4>Heat {{ $heatIndex + 1 }} of {{ count($acara->heats) }} Timed Finals</h4></td>
-                            </tr>
-                            @foreach($heat as $groupKey => $group)
-                                @foreach($group as $key => $participant)
-                                @if ($participant)
-                                    
-                                    <tr>
-                                        @if (($groupKey + 1) % 2 != 0)
-                                            @if ($key == 0)
-                                                <td rowspan="4" class="grup">A</td>
-                                            @endif
+                                <tr>
+                                    <td style="text-align: left;" colspan="8"><h4>Heat {{ $heatIndex + 1 }} of {{ count($acara->heats) }} Timed Finals</h4></td>
+                                </tr>
+                                @foreach($heat as $groupKey => $group)
+                                    @foreach($group as $key => $participant)
+                                        @if ($participant)
+                                            <tr>
+                                                @if ($key == 0)
+                                                    <td rowspan="4" class="grup">{{ $groups[$groupKey % count($groups)] }}</td>
+                                                @endif
+                                                <td class="line">{{ $key + 1 }}</td>
+                                                <td class="name">{{ $participant['name'] }}</td>
+                                                <td class="age">{{ now()->diffInYears(\Carbon\Carbon::parse($participant['umur'])) }}</td>
+                                                <td class="club">{{ $participant['club'] }}</td>
+                                                @if ($participant['track_record'] == 999)
+                                                    <td class="record">NT</td>
+                                                @else
+                                                    <td class="record">{{ sprintf('%02d:%02d.%02d', 
+                                                        floor($participant['track_record'] / 60),  
+                                                        floor(fmod($participant['track_record'], 60)),  
+                                                        round(($participant['track_record'] - floor($participant['track_record'])) * 100)
+                                                    ) }}</td>
+                                                @endif
+                                                <td class="finals">____________</td>
+                                                <td class="place">____________</td>
+                                            </tr>
                                         @else
-                                            @if ($key == 0)
-                                                <td rowspan="4" class="grup">B</td>
-                                            @endif
+                                            <tr>
+                                                @if ($key == 0)
+                                                    <td rowspan="4" class="grup">{{ $groups[$groupKey % count($groups)] }}</td>
+                                                @endif
+                                                <td class="line">{{ $key + 1 }}</td>
+                                                <td class="name">&nbsp;</td>
+                                                <td class="age">&nbsp;</td>
+                                                <td class="club">&nbsp;</td>
+                                                <td class="record">&nbsp;</td>
+                                                <td class="finals">____________</td>
+                                                <td class="place">____________</td>
+                                            </tr>
                                         @endif
-                                        <td class="line">{{ $key+1 }}</td>
-                                        <td class="name">{{ $participant['name'] }}</td>
-                                        <td class="age">{{ now()->diffInYears(\Carbon\Carbon::parse($participant['umur'])) }}</td>
-                                        <td class="club">{{ $participant['club']}}</td>
-                                        @if ($participant['track_record'] == 999)
-                                            <td class="record">NT</td>
-                                        @else
-                                            <td class="record">{{ sprintf('%02d:%02d.%02d', 
-                                                floor($participant['track_record'] / 60),  // Menit
-                                                floor(fmod($participant['track_record'], 60)),  // Detik
-                                                round(($participant['track_record'] - floor($participant['track_record'])) * 100)  // Milidetik
-                                            ) }}</td>
-                                        @endif
-                                        <td class="finals">____________</td>
-                                        <td class="place">____________</td>
-                                    </tr>
-                                @else
-                                    <tr>
-                                        @if (($groupKey + 1) % 2 != 0)
-                                            @if ($key == 0)
-                                                <td rowspan="4" class="grup">A</td>
-                                            @endif
-                                        @else
-                                            @if ($key == 0)
-                                                <td rowspan="4" class="grup">B</td>
-                                            @endif
-                                        @endif
-                                        <td class="line">{{ $key+1 }}</td>
-                                        <td class="name">&nbsp;</td>
-                                        <td class="age">&nbsp;</td>
-                                        <td class="club">&nbsp;</td>
-                                        <td class="record">&nbsp;</td>
-                                        <td class="finals">____________</td>
-                                        <td class="place">____________</td>
-                                    </tr>
-                                @endif
+                                    @endforeach
                                 @endforeach
-                            @endforeach
                             @endforeach
                     </tbody>
                 </table>

@@ -174,9 +174,9 @@ class KompetisiExport implements FromCollection, WithMapping, ShouldAutoSize, Wi
                             $this->mergeGrupColumns($sheet, $currentRow);
                             
                             if ($key == count($acara->heats) - 1) {
-                                $currentRow += 9;
+                                $currentRow += 17;
                             } else {
-                                $currentRow += 8;
+                                $currentRow += 16;
                             }
                             $serieIndex++;
                         }
@@ -196,66 +196,45 @@ class KompetisiExport implements FromCollection, WithMapping, ShouldAutoSize, Wi
         ];
     }
 
-    // Merge Grup A dan B
+    // Merge Grup A, B, C, dan D
     private function mergeGrupColumns($sheet, $currentRow)
     {
-        // Periksa apakah ada peserta di Grup A
-        // $groupAExists = !empty($heat[0]);
-        // $groupBExists = !empty($heat[1]);
-        
-        // foreach ($acara->heats as $heat) {
-        //     if (!empty($heat[0])) {  // Heat pertama untuk Grup A
-        //         $groupAExists = true;
-        //     }
-        //     if (!empty($heat[1])) {  // Heat kedua untuk Grup B
-        //         $groupBExists = true;
-        //     }
-        // }
+        $groupNames = ['A', 'B', 'C', 'D']; // Nama grup
+        $groupRowCount = 4; // Jumlah baris per grup
 
-        // Grup A
-        
-            $startGroupARow = $currentRow;
-            $endGroupARow = $startGroupARow + 3; // 4 baris untuk Grup A
-            $sheet->mergeCells("B$startGroupARow:B$endGroupARow");
-            $sheet->setCellValue("B$startGroupARow", 'A');
-            $sheet->getStyle("B$startGroupARow")->applyFromArray([
+        foreach ($groupNames as $index => $groupName) {
+            $startGroupRow = $currentRow + ($index * $groupRowCount); // Baris awal grup
+            $endGroupRow = $startGroupRow + $groupRowCount - 1; // Baris akhir grup
+
+            // Merge kolom untuk grup
+            $sheet->mergeCells("B$startGroupRow:B$endGroupRow");
+            $sheet->setCellValue("B$startGroupRow", $groupName);
+            $sheet->getStyle("B$startGroupRow")->applyFromArray([
                 'alignment' => [
-                    'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_TOP, // Vertikal di atas
-                    'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_RIGHT, // Horizontal di kanan
+                    'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_TOP,
+                    'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER,
                 ],
             ]);
-        
-
-        // Grup B
-        
-            $startGroupBRow = isset($endGroupARow) ? $endGroupARow + 1 : $currentRow;
-            $endGroupBRow = $startGroupBRow + 3; // 4 baris untuk Grup B
-            $sheet->mergeCells("B$startGroupBRow:B$endGroupBRow");
-            $sheet->setCellValue("B$startGroupBRow", 'B');
-            $sheet->getStyle("B$startGroupBRow")->applyFromArray([
-                'alignment' => [
-                    'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_TOP, // Vertikal di atas
-                    'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_RIGHT, // Horizontal di kanan
-                ],
-            ]);
-        
+        }
     }
+  
 
 
     // Merge untuk SERI
     private function mergeSeriColumns($sheet, $currentRow, $serieIndex)
     {
-        $startSeriRow = $currentRow; // Setelah header
-        $endSeriRow = $startSeriRow + 7; // 8 baris per SERI
+        $startSeriRow = $currentRow; // Baris awal seri
+        $endSeriRow = $startSeriRow + 15; // Total 16 baris (4 grup × 4 baris)
         $sheet->mergeCells("A$startSeriRow:A$endSeriRow");
         $sheet->setCellValue("A$startSeriRow", $serieIndex + 1);
         $sheet->getStyle("A$startSeriRow")->applyFromArray([
             'alignment' => [
-                'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_TOP, // Vertikal di atas
-                'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_RIGHT, // Horizontal di kanan
+                'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_TOP,
+                'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER,
             ],
         ]);
     }
+
 
     // Custom lebar kolom
     private function adjustColumnWidths($sheet)

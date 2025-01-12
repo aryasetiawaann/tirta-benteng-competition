@@ -68,8 +68,10 @@ class UnduhanController extends Controller
                 // Menambahkan data heat ke dalam acara
                 $acara->heats = $heats;
             }
+
+            $groups = ['A', 'B', 'C', 'D'];
     
-            $pdf = Pdf::loadView('layouts.print-layout-bukuacara' , compact('acaras', 'kompetisi', 'time'))->setPaper('a4', 'potrait');
+            $pdf = Pdf::loadView('layouts.print-layout-bukuacara' , compact('acaras', 'kompetisi', 'time', 'groups'))->setPaper('a4', 'potrait');
 
         }else{
 
@@ -152,8 +154,6 @@ class UnduhanController extends Controller
         return $result; // Return the sorted array
     }
 
-    
-
 
     private function divideIntoHeatsWithoutGroups($participants, $maxLanes = 8)
     {
@@ -172,8 +172,11 @@ class UnduhanController extends Controller
         return $heats;
     }
 
-    private function divideIntoHeats($participants, $maxLanes = 8)
+    private function divideIntoHeats($participants, $totalGroups = 4, $participantsPerGroup = 4)
     {
+        // Hitung jumlah peserta per heat (total grup * peserta per grup)
+        $maxLanes = $totalGroups * $participantsPerGroup;
+
         // Step 1: Pisahkan peserta berdasarkan club
         $participantsByClub = [];
         foreach ($participants as $participant) {
@@ -190,7 +193,8 @@ class UnduhanController extends Controller
             foreach ($heats as &$heat) {
                 // Isi dengan null jika kurang dari $maxLanes peserta
                 $heat = array_merge($heat, array_fill(0, $maxLanes - count($heat), null));
-                $heat = array_chunk($heat, 4); // Membagi setiap heat menjadi 2 grup (4 peserta per grup)
+                // Membagi setiap heat menjadi grup (sesuai jumlah grup dan peserta per grup)
+                $heat = array_chunk($heat, $participantsPerGroup);
             }
 
             return $heats;
@@ -212,17 +216,20 @@ class UnduhanController extends Controller
             }
         }
 
-        // Step 4: Membagi peserta yang telah diacak ke dalam heat, maksimal 8 peserta per heat
+        // Step 4: Membagi peserta yang telah diacak ke dalam heat, maksimal peserta per heat
         $heats = array_chunk($shuffledParticipants, $maxLanes);
 
         // Step 5: Isi setiap heat dengan null jika kurang dari $maxLanes peserta
         foreach ($heats as &$heat) {
             $heat = array_merge($heat, array_fill(0, $maxLanes - count($heat), null));
-            $heat = array_chunk($heat, 4); // Membagi setiap heat menjadi 2 grup (4 peserta per grup)
+            // Membagi setiap heat menjadi grup (sesuai jumlah grup dan peserta per grup)
+            $heat = array_chunk($heat, $participantsPerGroup);
         }
 
         return $heats;
     }
+
+
 
 
     public function showBukuHasil(){
