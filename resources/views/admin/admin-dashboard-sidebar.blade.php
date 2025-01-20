@@ -42,7 +42,7 @@
                     <li>
                         <a href="{{ route('dashboard.admin.acara') }}">
                             <i class="icon ph-bold ph-trophy"></i>
-                            <span class="text">Edit Acara</span>
+                            <span class="text">Tambah Acara</span>
                         </a>
                     </li>
                 </ul>

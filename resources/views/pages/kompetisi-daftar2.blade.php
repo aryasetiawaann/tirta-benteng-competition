@@ -69,8 +69,8 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @if ($acara->peserta->count() > 0)
-                                @foreach ($acara->peserta as $key => $peserta) 
+                            @if ($atletsList->count() > 0)
+                                @foreach ($atletsList as $key => $peserta) 
                                 <tr>
                                     <td>{{ $key + 1 }}</td>
                                     <td>{{ $peserta->name }}</td>

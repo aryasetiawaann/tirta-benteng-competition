@@ -37,7 +37,7 @@
                     <i class='bx bx-swim'></i>
                 </div>
                 <div class="card-content">
-                    <h1>Tambah Acara Kompetisi</h1>
+                    <h1>Daftar Kompetisi</h1>
                 </div>
             </div>
         </div>

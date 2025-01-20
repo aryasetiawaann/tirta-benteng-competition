@@ -75,7 +75,9 @@ class AcaraController extends Controller
             $atlets = $atlets->where('jenis_kelamin', 'Wanita');
         }
 
-        return view('pages.kompetisi-daftar2')->with(['acara'=> $acara, 'atlets'=> $atlets, 'kelompok' => $kelompok]);
+        $atletList = $acara->peserta()->where('user_id', auth()->user()->id)->get()->sortBy('name');
+
+        return view('pages.kompetisi-daftar2')->with(['acara'=> $acara, 'atlets'=> $atlets, 'kelompok' => $kelompok, 'atletsList' => $atletList]);
     }
 
     public function indexAdmin($id){

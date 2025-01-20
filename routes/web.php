@@ -101,7 +101,6 @@ Route::middleware(['auth','role:admin'])->group(function () {
     Route::get('/admin/dashboard/file/{id}/download', [UnduhanController::class, 'downloadExcel'])->name('dashboard.admin.excel.download');
     
     Route::get('/admin/dashboard/dokumen-peserta/{id}/download', [KompetisiController::class, 'downloadDokumen'])->name('dashboard.admin.dokumen.download');
-
 });
 
 

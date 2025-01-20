@@ -49,14 +49,20 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($atlets as $key => $peserta) 
+                            @if ($atlets->count() > 0)
+                                @foreach ($atlets as $key => $peserta) 
+                                    <tr>
+                                        <td>{{ $key + 1 }}</td>
+                                        <td>{{ $peserta->name }}</td>
+                                        <td>{{ now()->diffInYears(\Carbon\Carbon::parse($peserta->umur)) }}</td>
+                                        <td>{{ $peserta->jenis_kelamin }}</td>
+                                    </tr> 
+                                @endforeach
+                            @else
                                 <tr>
-                                    <td>{{ $key + 1 }}</td>
-                                    <td>{{ $peserta->name }}</td>
-                                    <td>{{ now()->diffInYears(\Carbon\Carbon::parse($peserta->umur)) }}</td>
-                                    <td>{{ $peserta->jenis_kelamin }}</td>
-                                </tr> 
-                            @endforeach
+                                    <td colspan="5" style="text-align:center;">Belum ada data</td>
+                                </tr>
+                            @endif
                         </tbody>
                     </table>
                     <div class="pagination">
