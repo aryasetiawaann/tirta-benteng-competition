@@ -47,29 +47,67 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @if ($competitions->isEmpty())
-                            <tr><td colspan="4" style="text-align:center;">Belum ada data</td></tr>
+                        @if (Auth::user()->role != 'admin')
+                            
+                            @if ($competitions->isEmpty())
+                                <tr><td colspan="4" style="text-align:center;">Belum ada data</td></tr>
+                            @else
+                                @php $counter = 1; @endphp
+                                @foreach ( $competitions as $competition ) 
+                                <tr>
+                                    <td>{{ $counter++ }}</td>
+                                    <td>{{ $competition->nama }}</td>
+                                    @if ( now() > $competition->waktu_kompetisi)
+                                    <td><span class="status registration">Selesai</span></td>
+                                    <td>
+                                        <a href="{{ route('dashboard.bukuacara.view', $competition->id) }}"><button class="button-green"><i class='bx bx-xs bx-download'></i></button></a>
+                                    </td>
+                                    @elseif (now() >= $competition->tutup_pendaftaran)
+                                    <td><span class="status registration">Tutup Registrasi</span></td>
+                                    <td>
+                                        <a href="{{ route('dashboard.bukuacara.view', $competition->id) }}"><button class="button-green"><i class='bx bx-xs bx-download'></i></button></a>
+                                    </td>
+                                    @else
+                                    <td><span class="status registration">Registrasi</span></td>
+                                        @if (Auth::user()->role == 'admin')
+                                        <td>
+                                            <a href="{{ route('dashboard.bukuacara.view', $competition->id) }}"><button class="button-green"><i class='bx bx-xs bx-download'></i></button></a>
+                                        </td>
+                                        @endif
+                                    @endif
+                                </tr>
+                                @endforeach
+                            @endif
                         @else
-                            @php $counter = 1; @endphp
-                            @foreach ( $competitions as $competition ) 
-                            <tr>
-                                <td>{{ $counter++ }}</td>
-                                <td>{{ $competition->nama }}</td>
-                                @if ( now() > $competition->waktu_kompetisi)
-                                <td><span class="status registration">Selesai</span></td>
-                                <td>
-                                    <a href="{{ route('dashboard.bukuacara.view', $competition->id) }}"><button class="button-green"><i class='bx bx-xs bx-download'></i></button></a>
-                                </td>
-                                @elseif (now() >= $competition->tutup_pendaftaran)
-                                <td><span class="status registration">Tutup Registrasi</span></td>
-                                <td>
-                                    <a href="{{ route('dashboard.bukuacara.view', $competition->id) }}"><button class="button-green"><i class='bx bx-xs bx-download'></i></button></a>
-                                </td>
-                                @else
-                                <td><span class="status registration">Registrasi</span></td>
-                                @endif
-                            </tr>
-                            @endforeach
+                            @if ($allCompetitions->isEmpty())
+                                <tr><td colspan="4" style="text-align:center;">Belum ada data</td></tr>
+                            @else
+                                @php $counter = 1; @endphp
+                                @foreach ( $allCompetitions as $competition ) 
+                                <tr>
+                                    <td>{{ $counter++ }}</td>
+                                    <td>{{ $competition->nama }}</td>
+                                    @if ( now() > $competition->waktu_kompetisi)
+                                    <td><span class="status registration">Selesai</span></td>
+                                    <td>
+                                        <a href="{{ route('dashboard.bukuacara.view', $competition->id) }}"><button class="button-green"><i class='bx bx-xs bx-download'></i></button></a>
+                                    </td>
+                                    @elseif (now() >= $competition->tutup_pendaftaran)
+                                    <td><span class="status registration">Tutup Registrasi</span></td>
+                                    <td>
+                                        <a href="{{ route('dashboard.bukuacara.view', $competition->id) }}"><button class="button-green"><i class='bx bx-xs bx-download'></i></button></a>
+                                    </td>
+                                    @else
+                                    <td><span class="status registration">Registrasi</span></td>
+                                        @if (Auth::user()->role == 'admin')
+                                        <td>
+                                            <a href="{{ route('dashboard.bukuacara.view', $competition->id) }}"><button class="button-green"><i class='bx bx-xs bx-download'></i></button></a>
+                                        </td>
+                                        @endif
+                                    @endif
+                                </tr>
+                                @endforeach
+                            @endif
                         @endif
                     </tbody>
                 </table>

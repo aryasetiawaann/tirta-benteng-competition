@@ -29,9 +29,11 @@ class UnduhanController extends Controller
 
         $competitions = Kompetisi::whereHas('acara', function ($query) use ($acara_ids) {
             $query->whereIn('id', $acara_ids);
-        })->orderBy('created_at', 'desc')->get();
+        })->orderBy('waktu_kompetisi', 'desc')->get();
 
-        return view('pages.dashboard-bukuacara', compact('competitions'));
+        $allCompetitions = Kompetisi::all()->sortByDesc('waktu_kompetisi');
+
+        return view('pages.dashboard-bukuacara', compact('competitions', 'allCompetitions'));
     }
 
     public function showBukuAcara($id){
@@ -69,7 +71,7 @@ class UnduhanController extends Controller
                 $acara->heats = $heats;
             }
 
-            $groups = ['A', 'B', 'C', 'D'];
+            $groups = ['A', 'B', 'C'];
     
             $pdf = Pdf::loadView('layouts.print-layout-bukuacara' , compact('acaras', 'kompetisi', 'time', 'groups'))->setPaper('a4', 'potrait');
 
@@ -172,7 +174,7 @@ class UnduhanController extends Controller
         return $heats;
     }
 
-    private function divideIntoHeats($participants, $totalGroups = 4, $participantsPerGroup = 4)
+    private function divideIntoHeats($participants, $totalGroups = 3, $participantsPerGroup = 4)
     {
         // Hitung jumlah peserta per heat (total grup * peserta per grup)
         $maxLanes = $totalGroups * $participantsPerGroup;

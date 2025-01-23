@@ -15,6 +15,7 @@ class KompetisiExport implements FromCollection, WithMapping, ShouldAutoSize, Wi
 {
     protected $acaras;
 
+
     public function __construct($acaras)
     {
         $this->acaras = $acaras;
@@ -174,9 +175,9 @@ class KompetisiExport implements FromCollection, WithMapping, ShouldAutoSize, Wi
                             $this->mergeGrupColumns($sheet, $currentRow);
                             
                             if ($key == count($acara->heats) - 1) {
-                                $currentRow += 17;
+                                $currentRow += 13;
                             } else {
-                                $currentRow += 16;
+                                $currentRow += 12;
                             }
                             $serieIndex++;
                         }
@@ -199,7 +200,7 @@ class KompetisiExport implements FromCollection, WithMapping, ShouldAutoSize, Wi
     // Merge Grup A, B, C, dan D
     private function mergeGrupColumns($sheet, $currentRow)
     {
-        $groupNames = ['A', 'B', 'C', 'D']; // Nama grup
+        $groupNames = ['A', 'B', 'C']; // Nama grup
         $groupRowCount = 4; // Jumlah baris per grup
 
         foreach ($groupNames as $index => $groupName) {
@@ -224,7 +225,7 @@ class KompetisiExport implements FromCollection, WithMapping, ShouldAutoSize, Wi
     private function mergeSeriColumns($sheet, $currentRow, $serieIndex)
     {
         $startSeriRow = $currentRow; // Baris awal seri
-        $endSeriRow = $startSeriRow + 15; // Total 16 baris (4 grup × 4 baris)
+        $endSeriRow = $startSeriRow + 11; // Total 16 baris (4 grup × 4 baris)
         $sheet->mergeCells("A$startSeriRow:A$endSeriRow");
         $sheet->setCellValue("A$startSeriRow", $serieIndex + 1);
         $sheet->getStyle("A$startSeriRow")->applyFromArray([
