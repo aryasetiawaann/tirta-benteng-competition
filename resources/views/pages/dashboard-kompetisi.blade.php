@@ -16,19 +16,33 @@
                 </div>
             </div>
         </div>
+
+        <!-- Pengumuman jika nomor telepon belum diisi -->
+        @if (auth()->user()->phone == null)
+            <div class="alert alert-warning">
+                <strong>Perhatian!</strong> Anda belum bisa mendaftar kompetisi karena belum mengisi nomor telepon. Silakan isi nomor telepon anda pada halaman <a href="{{ route('profile.edit') }}">profil</a>
+            </div>
+        @endif
+
         <nav class="breadcrumb">
             <ul>
                 <li>Kompetisi</li>
                 <li><a href="{{ route('dashboard.kompetisi') }}">Daftar</a></li>
             </ul>
         </nav>
+        
         <div class="bottom-container grid">
             @foreach ($kompetisi as $kompe)
             <section class="all-container all-card">
                 <header class="flex divider">
                     <h2>{{ $kompe->nama }}</h2>
                     @if (now() >= $kompe->buka_pendaftaran && now() < $kompe->tutup_pendaftaran)
-                    <a href="{{ route('dashboard.kompetisi.kelompokumur', $kompe->id) }}"><button>Daftar</button></a>
+                        <!-- Menonaktifkan tombol jika nomor telepon belum diisi -->
+                        @if (auth()->user()->phone == null)
+                            <button disabled>Daftar</button>
+                        @else
+                            <a href="{{ route('dashboard.kompetisi.kelompokumur', $kompe->id) }}"><button>Daftar</button></a>
+                        @endif
                     @endif
                 </header>
                 <div class="card-info">
