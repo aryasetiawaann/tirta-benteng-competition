@@ -334,7 +334,41 @@ body, html {
         opacity: 0.7;
     }
 
-/* Custom */
+/* Alert */
+    .alert {
+        position: relative;
+        padding: 15px 20px;
+        margin: 0 20px 20px 20px;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 5px;
+        font-size: 16px;
+        line-height: 1.5;
+    }
+
+    .alert a {
+        color: inherit;
+        text-decoration: underline;
+        font-weight: 600;
+        transition: opacity 0.2s ease;
+        display: inline-block;
+    }
+
+    .alert a:hover {
+        opacity: 0.8;
+    }
+
+    .alert-warning {
+        background-color: #fff3cd;
+        border: 1px solid #ffecb5;
+        color: #664d03;
+    }
+
+    .alert-warning strong {
+        font-weight: 600;
+    }
 
 /* Error */
     .error-list {
@@ -566,6 +600,12 @@ input#dokumen {
     .breadcrumb {
         margin: 10px 0 10px 0;
     }
+
+    .alert {
+        margin: 15px;
+        text-align: center;
+        flex-direction: column;
+    }
 }
 
 /* width main dikurangin sidebar */
@@ -594,11 +634,17 @@ input#dokumen {
     .top-card {
         flex: 1 1 calc(50% - 40px);
     }
+
 }
 
 @media (max-width: 628px) {
     .top-card {
         flex: 1 1 calc(100% - 40px);
+    }
+
+    .alert {
+        margin: 10px;
+        padding: 12px 15px;
     }
 }
 

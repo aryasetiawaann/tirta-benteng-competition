@@ -41,6 +41,14 @@
             </div>
         </div>
     </div>
+
+    <!-- Pengumuman jika nomor telepon belum diisi -->
+    @if (auth()->user()->phone == null)
+        <div class="alert alert-warning">
+            <strong>Perhatian!</strong> Anda belum mengisi nomor telepon. Silakan isi nomor telepon anda pada halaman <a href="{{ route('profile.edit') }}">profil</a>
+        </div>
+    @endif
+
     <div class="bottom-container">
             <div class="left-container">
                 <section class="all-container all-card">

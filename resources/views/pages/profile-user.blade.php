@@ -55,6 +55,11 @@
                             <input id="club" type="text" name="club" value="{{ auth()->user()->club }}" placeholder="Contoh: Tirta Benteng Club">
                         </div>
 
+                        <div>
+                            <label for="phone">Nomor Telepon</label>
+                            <input id="phone" type="text" name="phone" value="{{ auth()->user()->phone }}" placeholder="Masukkan nomor telepon">
+                        </div>
+
                         <button type="submit">Simpan</button>
                     </form>
                 </div>

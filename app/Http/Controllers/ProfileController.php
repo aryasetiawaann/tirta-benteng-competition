@@ -26,15 +26,18 @@ class ProfileController extends Controller
      */
     public function update(Request $request)
     {
-        $data = [ "name"=> $request->name,
-        "email"=> $request->email,
-        "club"=> $request->club,
-        "foto"=> $request->foto,
+        $data = [
+            "name" => $request->name,
+            "email" => $request->email,
+            "club" => $request->club,
+            "phone" => $request->phone,
+            "foto" => $request->foto,
         ];
 
         $validation = Validator::make($data, [
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users,email,' . Auth::id(),
+            'phone' => 'required|string|regex:/^(0)[8][1-9][0-9]{6,11}$/| max:15',
         ]);
 
         if ($validation->fails()) {
@@ -43,8 +46,8 @@ class ProfileController extends Controller
 
         $user = User::find(Auth::user()->id);
 
+        // Mengganti foto jika ada
         if ($request->hasFile('foto')) {
-
             if ($user->foto && File::exists(public_path($user->foto))) {
                 File::delete(public_path($user->foto));
             }
@@ -57,11 +60,12 @@ class ProfileController extends Controller
         $user->name = $data['name'];
         $user->email = $data['email'];
         $user->club = $data['club'];
+        $user->phone = $data['phone'];
         $user->save();
 
-        return redirect()->back()->with('success','Profil berhasil diperbaharui');
-
+        return redirect()->back()->with('success', 'Profil berhasil diperbaharui');
     }
+
 
     public function deletePhoto()
     {

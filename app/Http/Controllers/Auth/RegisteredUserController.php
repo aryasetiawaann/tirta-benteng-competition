@@ -32,9 +32,10 @@ class RegisteredUserController extends Controller
     {
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
+            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . User::class, 'regex:/^[a-zA-Z0-9._%+-]+@(gmail\.com|yahoo\.com)$/'],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
             'club' => ['nullable', 'string', 'max:255'], // Updated to make 'club' optional
+            'phone' => ['required', 'string', 'regex:/^(0)[8][1-9][0-9]{6,11}$/', 'max:15'],
         ]);
 
         $user = User::create([
@@ -42,6 +43,7 @@ class RegisteredUserController extends Controller
             'email' => $request->email,
             'password' => Hash::make($request->password),
             'club' => $request->club,
+            'phone' => $request->phone,
         ]);
 
         event(new Registered($user));

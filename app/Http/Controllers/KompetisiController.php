@@ -19,9 +19,17 @@ class KompetisiController extends Controller
      */
     public function index()
     {
+        // Ambil semua kompetisi yang aktif berdasarkan tanggal tutup pendaftaran
         $kompetisi = Kompetisi::all()->sortByDesc("tutup_pendaftaran");
 
-        return view('pages.dashboard-kompetisi')->with(['kompetisi'=>$kompetisi]);
+        // Cek apakah user sudah mengisi nomor telepon
+        $userHasPhone = auth()->user()->phone != null;
+
+        // Kirim data kompetisi dan status nomor telepon user ke view
+        return view('pages.dashboard-kompetisi')->with([
+            'kompetisi' => $kompetisi,
+            'userHasPhone' => $userHasPhone
+        ]);
     }
 
     public function kelompokUmur($id)
