@@ -26,6 +26,7 @@ class Acara extends Model
         'grup',
         'min_umur',
         'max_umur',
+        'tahun',
     ];
 
     public function kompetisi(){

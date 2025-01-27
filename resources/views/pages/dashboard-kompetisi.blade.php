@@ -39,7 +39,7 @@
                     @if (now() >= $kompe->buka_pendaftaran && now() < $kompe->tutup_pendaftaran)
                         <!-- Menonaktifkan tombol jika nomor telepon belum diisi -->
                         @if (auth()->user()->phone == null)
-                            <button disabled>Daftar</button>
+                            <button disabled style="background-color: grey; cursor:not-allowed;">Daftar</button>
                         @else
                             <a href="{{ route('dashboard.kompetisi.kelompokumur', $kompe->id) }}"><button>Daftar</button></a>
                         @endif
