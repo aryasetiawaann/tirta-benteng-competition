@@ -1,176 +1,232 @@
-document.addEventListener('DOMContentLoaded', function() {
-    const errorList = document.getElementById('error-list');
+document.addEventListener('DOMContentLoaded', function () {
+    // Handle error and success messages
+    handleMessages('error-list');
+    handleMessages('success-list');
 
-    setTimeout(() => {
-        errorList.classList.add('show');
-    }, 100);
+    // Handle window resize
+    handleResize();
+    window.addEventListener('resize', handleResize);
 
-    setTimeout(() => {
-        errorList.classList.remove('show');
-    }, 10000);
+    // Handle overlay functionality
+    setupOverlay('openOverlay', 'overlay');
+    setupOverlay('openOverlay2', 'overlay2');
+    closeOverlay('closeOverlay', 'overlay');
+    closeOverlayOnClickOutside('overlay', '.overlay-container');
 
-    // Hide the error list when clicking outside of it
-    document.addEventListener('click', function(event) {
-        if (!errorList.contains(event.target)) {
-            errorList.classList.remove('show');
-        }
-    });
-
-    const successList = document.getElementById('success-list');
-    
-    setTimeout(() => {
-        successList.classList.add('show');
-    }, 100);
-    
-    setTimeout(() => {
-        successList.classList.remove('show');
-    }, 10000);
-    
-    // Hide the success list when clicking outside of it
-    document.addEventListener('click', function(event) {
-        if (!successList.contains(event.target)) {
-            successList.classList.remove('show');
-        }
-    });
+    // Initialize table functionality
+    if (document.querySelector('table')) {
+        initializeTable();
+    }
 });
 
+// Function to handle error and success messages
+function handleMessages(elementId) {
+    const messageList = document.getElementById(elementId);
+    if (!messageList) return;
+
+    setTimeout(() => messageList.classList.add('show'), 100);
+    setTimeout(() => messageList.classList.remove('show'), 10000);
+
+    // Hide the message list when clicking outside of it
+    document.addEventListener('click', function (event) {
+        if (!messageList.contains(event.target)) {
+            messageList.classList.remove('show');
+        }
+    });
+}
+
+// Function to handle window resize
 function handleResize() {
-    if ($(window).width() <= 1024) {
-        $('.main-content').addClass('main-content_sidebar-hide');
-        $('.sidebar').addClass('active');
+    const windowWidth = window.innerWidth;
+    const mainContent = document.querySelector('.main-content');
+    const sidebar = document.querySelector('.sidebar');
+
+    if (!mainContent || !sidebar) return;
+
+    if (windowWidth <= 1024) {
+        mainContent.classList.add('main-content_sidebar-hide');
+        sidebar.classList.add('active');
     } else {
-        $('.main-content').removeClass('main-content_sidebar-hide');
-        $('.sidebar').removeClass('active');
+        mainContent.classList.remove('main-content_sidebar-hide');
+        sidebar.classList.remove('active');
     }
-    if ($(window).width() <= 768) {
-        $('.main-content').removeClass('main-content_sidebar-hide');
-        $('.sidebar').removeClass('active');
+
+    if (windowWidth <= 768) {
+        mainContent.classList.remove('main-content_sidebar-hide');
+        sidebar.classList.remove('active');
     }
 }
 
-// Initial check
-handleResize();
+// Function to set up overlay functionality
+function setupOverlay(openButtonId, overlayId) {
+    const openButton = document.getElementById(openButtonId);
+    const overlay = document.getElementById(overlayId);
 
-// Check on window resize
-$(window).resize(handleResize);
+    if (!openButton || !overlay) return;
 
-$('#openOverlay').click(function() {
-    $(window).scrollTop(0);
-    $('#overlay').css('display', 'flex');
-    $('body').css('overflow', 'hidden');
-});
+    openButton.addEventListener('click', function () {
+        window.scrollTo(0, 0);
+        overlay.style.display = 'flex';
+        document.body.style.overflow = 'hidden';
+    });
+}
 
-$('#openOverlay2').click(function() {
-    $(window).scrollTop(0);
-    $('#overlay2').css('display', 'flex');
-    $('body').css('overflow', 'hidden');
-    alert('et')
-});
+// Function to close overlay
+function closeOverlay(closeButtonId, overlayId) {
+    const closeButton = document.getElementById(closeButtonId);
+    const overlay = document.getElementById(overlayId);
 
-$('#closeOverlay').click(function() {
-    $('#overlay').css('display', 'none');
-    $('body').css('overflow', 'auto');
-});
+    if (!closeButton || !overlay) return;
 
-$('#overlay').click(function(e) {
-    var overlayContainer = $('.overlay-container');
-    if (!overlayContainer.is(e.target) && overlayContainer.has(e.target).length === 0) {
-        $('#overlay').css('display', 'none');
-        $('body').css('overflow', 'auto');
-    }
-});
+    closeButton.addEventListener('click', function () {
+        overlay.style.display = 'none';
+        document.body.style.overflow = 'auto';
+    });
+}
 
-// Prevent overlay from closing when clicking inside overlay-content
-$('.overlay-container').click(function(e) {
-    e.stopPropagation();
-});
+// Function to close overlay when clicking outside
+function closeOverlayOnClickOutside(overlayId, containerSelector) {
+    const overlay = document.getElementById(overlayId);
+    const container = document.querySelector(containerSelector);
 
+    if (!overlay || !container) return;
 
-$(document).ready(function() {
-    const rows = $('table tbody tr');
-    const entriesDropdown = $('#entries');
-    const searchInput = $('#search');
-    const prevButton = $('.prev');
-    const nextButton = $('.next');
-    const pageNumbersDiv = $('.page-numbers');
+    overlay.addEventListener('click', function (event) {
+        if (!container.contains(event.target)) {
+            overlay.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+    });
+
+    // Prevent overlay from closing when clicking inside the container
+    container.addEventListener('click', function (event) {
+        event.stopPropagation();
+    });
+}
+
+function initializeTable() {
+    const rows = document.querySelectorAll('table tbody tr');
+    const entriesDropdown = document.getElementById('entries');
+    const searchInput = document.getElementById('search');
+    const prevButton = document.querySelector('.prev');
+    const nextButton = document.querySelector('.next');
+    const pageNumbersDiv = document.querySelector('.page-numbers');
 
     let currentPage = 1;
-    let rowsPerPage = parseInt(entriesDropdown.val());
+    let rowsPerPage = parseInt(entriesDropdown.value);
 
+    // Function to update the table based on search and pagination
     function updateTable() {
-        const searchTerm = searchInput.val().toLowerCase();
-        const filteredRows = rows.filter(function() {
-            const text = $(this).text().toLowerCase();
+        const searchTerm = searchInput.value.toLowerCase();
+        const filteredRows = Array.from(rows).filter(row => {
+            const text = row.textContent.toLowerCase();
             return text.includes(searchTerm);
         });
 
         const totalRows = filteredRows.length;
         const totalPages = Math.ceil(totalRows / rowsPerPage);
 
-        // Update pagination visibility
-        prevButton.prop('disabled', currentPage === 1);
-        nextButton.prop('disabled', currentPage === totalPages);
+        // Update pagination buttons
+        prevButton.disabled = currentPage === 1;
+        nextButton.disabled = currentPage === totalPages;
 
         // Hide all rows and show only the current page's rows
-        rows.hide();
-        filteredRows.slice((currentPage - 1) * rowsPerPage, currentPage * rowsPerPage).show();
+        rows.forEach(row => row.style.display = 'none'); // Hide all rows first
+        filteredRows.slice((currentPage - 1) * rowsPerPage, currentPage * rowsPerPage).forEach(row => {
+            row.style.display = ''; // Show rows for the current page
+        });
 
         // Update page numbers
         updatePagination(totalPages);
     }
 
+    // Function to update pagination numbers dynamically
     function updatePagination(totalPages) {
-        pageNumbersDiv.empty();
+        pageNumbersDiv.innerHTML = ''; // Clear existing page numbers
 
-        for (let i = 1; i <= totalPages; i++) {
-            const pageNumber = $('<span class="page-number"></span>').text(i);
+        // Always show the first page
+        addPageNumber(1);
 
-            if (i === currentPage) {
-                pageNumber.addClass('current');
-            }
+        // Show ellipsis if there are pages before the current page
+        if (currentPage > 3) {
+            pageNumbersDiv.appendChild(createEllipsis());
+        }
 
-            pageNumber.on('click', function() {
-                currentPage = i;
-                updateTable();
-            });
+        // Show current page and its neighbors
+        for (let i = Math.max(2, currentPage - 1); i <= Math.min(totalPages - 1, currentPage + 1); i++) {
+            addPageNumber(i);
+        }
 
-            pageNumbersDiv.append(pageNumber);
+        // Show ellipsis if there are pages after the current page
+        if (currentPage < totalPages - 2) {
+            pageNumbersDiv.appendChild(createEllipsis());
+        }
+
+        // Always show the last page if there is more than one page
+        if (totalPages > 1) {
+            addPageNumber(totalPages);
         }
     }
 
-    entriesDropdown.on('change', function() {
-        rowsPerPage = parseInt($(this).val());
-        currentPage = 1;
-        updateTable();
+    // Helper function to add a page number
+    function addPageNumber(page) {
+        const pageNumber = document.createElement('span');
+        pageNumber.className = 'page-number';
+        pageNumber.textContent = page;
+
+        if (page === currentPage) {
+            pageNumber.classList.add('current'); // Highlight the current page
+        }
+
+        pageNumber.addEventListener('click', function () {
+            currentPage = page; // Update the current page
+            updateTable(); // Refresh the table
+        });
+
+        pageNumbersDiv.appendChild(pageNumber);
+    }
+
+    // Helper function to create an ellipsis
+    function createEllipsis() {
+        const ellipsis = document.createElement('span');
+        ellipsis.className = 'ellipsis';
+        ellipsis.textContent = '…';
+        return ellipsis;
+    }
+
+    // Event listeners
+    entriesDropdown.addEventListener('change', function () {
+        rowsPerPage = parseInt(this.value); // Update rows per page
+        currentPage = 1; // Reset to the first page
+        updateTable(); // Refresh the table
     });
 
-    searchInput.on('keyup', function() {
-        currentPage = 1;
-        updateTable();
+    searchInput.addEventListener('keyup', function () {
+        currentPage = 1; // Reset to the first page when searching
+        updateTable(); // Refresh the table
     });
 
-    prevButton.on('click', function() {
+    prevButton.addEventListener('click', function () {
         if (currentPage > 1) {
-            currentPage--;
-            updateTable();
+            currentPage--; // Go to the previous page
+            updateTable(); // Refresh the table
         }
     });
 
-    nextButton.on('click', function() {
-        const searchTerm = searchInput.val().toLowerCase();
-        const filteredRows = rows.filter(function() {
-            const text = $(this).text().toLowerCase();
+    nextButton.addEventListener('click', function () {
+        const searchTerm = searchInput.value.toLowerCase();
+        const filteredRows = Array.from(rows).filter(row => {
+            const text = row.textContent.toLowerCase();
             return text.includes(searchTerm);
         });
-        const totalRows = filteredRows.length;
-        const totalPages = Math.ceil(totalRows / rowsPerPage);
+        const totalPages = Math.ceil(filteredRows.length / rowsPerPage);
 
         if (currentPage < totalPages) {
-            currentPage++;
-            updateTable();
+            currentPage++; // Go to the next page
+            updateTable(); // Refresh the table
         }
     });
 
-    // Initialize table
+    // Initialize table on page load
     updateTable();
-});
+}

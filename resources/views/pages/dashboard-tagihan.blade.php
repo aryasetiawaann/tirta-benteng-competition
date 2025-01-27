@@ -12,8 +12,8 @@
                     <div class="card-content">
                         <h1>Tagihan</h1>
                         {{-- INI BUAT PENGUMUMAN --}}
-                        <h4 style="color: green">Informasi: Untuk pembayaran silahkan kontak melalui <a href="tel:+6281311384000">081311384000</a> - April</h4>
-                    </div>
+                        <h4 style="color: green">Informasi: Untuk pembayaran silahkan kontak melalui <a href="tel:+6281311384000">081311384000</a> - April | BCA : 5710104923 a/n Apriliani</h4>
+                    </div>  
                 </div>
             </div>
         </div>

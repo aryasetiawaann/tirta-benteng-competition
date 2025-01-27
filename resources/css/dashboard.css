@@ -118,7 +118,7 @@
 /* Pagination */
     .pagination {
         display: flex;
-        justify-content: space-between;
+        justify-content: center;
         align-items: center;
         gap: 10px;
     }
@@ -437,6 +437,7 @@ input#dokumen {
     /* Firefox */
     input[type=number] {
     -moz-appearance: textfield;
+    appearance: textfield;
     }
 
 .search {
