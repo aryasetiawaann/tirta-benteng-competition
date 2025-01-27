@@ -602,9 +602,7 @@ input#dokumen {
     }
 
     .alert {
-        margin: 15px;
-        text-align: center;
-        flex-direction: column;
+        margin: 20px;
     }
 }
 
@@ -643,8 +641,7 @@ input#dokumen {
     }
 
     .alert {
-        margin: 10px;
-        padding: 12px 15px;
+        margin: 20px;
     }
 }
 
