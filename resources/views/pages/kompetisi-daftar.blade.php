@@ -80,8 +80,7 @@
                             Harga : <span class="status harga smaller">Rp.{{ number_format($aca->harga, 2, ',', '.') }}</span>
                         </h3>
                         <p><strong>Nomor Grup :</strong> {{ $aca->grup }}</p>
-                        <p><strong>Min Umur :</strong> {{ $aca->min_umur }}</p>
-                        <p><strong>Max Umur :</strong> {{ $aca->max_umur }}</p>
+                        <p><strong>Tahun :</strong> {{ $aca->max_umur != null ? $aca->min_umur . ' - ' . $aca->max_umur : $aca->min_umur }}</p>
                     </div>
                 </section>
             @endforeach

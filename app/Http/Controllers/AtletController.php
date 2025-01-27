@@ -95,14 +95,15 @@ class AtletController extends Controller
 
         $validation = Validator::make($data, [
             "name" => "required",
-            "umur" => "required|date|before:today",
+            "umur" => "required|date|before:today|unique:atlets,umur,NULL,id,name," . $data['name'],
             "jenis_kelamin" => "required",
         ], [
             'name.required' => 'Nama atlet wajib diisi.',
             'umur.required' => 'Tanggal lahir atlet wajib diisi.',
             'umur.date' => 'Tanggal lahir atlet harus berupa tanggal yang valid.',
             'umur.before' => 'Tanggal lahir tidak boleh sama atau lebih dari hari ini.',
-            'jenis_kelamin.required' => 'Jenis kelamin atlet wajib diisi.',
+            'umur.unique' => 'Atlet sudah terdaftar dengan nama yang sama.',
+            'jenis_kelamin.required' => 'Jenis kelamin atlet wajib diisi.', 
         ]);
 
         if ($validation->fails()) {

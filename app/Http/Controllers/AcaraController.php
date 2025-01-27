@@ -56,28 +56,48 @@ class AcaraController extends Controller
     public function showPesertaUser($kelompok, $id){
         $acara = Acara::find($id);
         $acaraId = $acara->id;
-        $currentDate = Carbon::now();
 
-        $atlets = Atlet::where('user_id', auth()->user()->id)
+        // Ambil tahun dari min_umur dan max_umur
+        $minYear = $acara->min_umur;
+        $maxYear = $acara->max_umur;
+
+        // Ambil atlit yang belum terdaftar di acara ini
+            $atlets = Atlet::where('user_id', auth()->user()->id)
             ->whereDoesntHave('acara', function ($query) use ($acaraId) {
                 $query->where('acara_id', $acaraId);
             })
             ->with('acara')
             ->get()
-            ->filter(function ($atlet) use ($currentDate, $acara) {
-                $age = $currentDate->diffInYears(Carbon::parse($atlet->umur));
-                return $age >= $acara->min_umur && $age <= $acara->max_umur;
+            ->filter(function ($atlet) use ($minYear, $maxYear) {
+                // Mengambil tahun lahir atlet
+                $birthYear = Carbon::parse($atlet->umur)->year;
+
+                // Memfilter atlit berdasarkan tahun lahir
+                if ($maxYear !== null) {
+                    // Jika max_umur ada, atlit harus memiliki tahun lahir antara min_umur dan max_umur
+                    return $birthYear >= $minYear && $birthYear <= $maxYear;
+                } else {
+                    // Jika max_umur null, atlit hanya boleh memiliki tahun lahir sama dengan min_umur
+                    return $birthYear == $minYear;
+                }
             });
 
+        // Menyaring atlit berdasarkan kategori (Pria/Wanita)
         if ($acara->kategori == 'Pria') {
             $atlets = $atlets->where('jenis_kelamin', 'Pria');
         } elseif ($acara->kategori == 'Wanita') {
             $atlets = $atlets->where('jenis_kelamin', 'Wanita');
         }
 
+        // Mengambil daftar peserta yang sudah terdaftar untuk acara ini
         $atletList = $acara->peserta()->where('user_id', auth()->user()->id)->get()->sortBy('name');
 
-        return view('pages.kompetisi-daftar2')->with(['acara'=> $acara, 'atlets'=> $atlets, 'kelompok' => $kelompok, 'atletsList' => $atletList]);
+        return view('pages.kompetisi-daftar2')->with([
+            'acara' => $acara, 
+            'atlets' => $atlets, 
+            'kelompok' => $kelompok, 
+            'atletsList' => $atletList
+        ]);
     }
 
     public function indexAdmin($id){
@@ -102,8 +122,8 @@ class AcaraController extends Controller
         "harga" => $request->harga,
         "kuota" => $request->kuota,
         "grup" => $request->grup,
-        "max_umur" => $request->maxumur,
-        "min_umur" => $request->minumur];
+        "min_umur" => $request->minumur,
+        "max_umur" => $request->maxumur];
 
 
         $validation = Validator::make($data, [
@@ -115,8 +135,8 @@ class AcaraController extends Controller
             "harga" => "required|numeric|min:0",
             "kuota" => "required|integer|min:1",
             "grup" => "required",
-            "max_umur" => "required|integer|min:0",
-            "min_umur" => "required|integer|min:0|lte:max_umur",
+            "min_umur" => "required|integer|min:0",
+            "max_umur" => "nullable|integer|min:0",
         ], [
             'kompetisi_id.required' => 'Kompetisi ID wajib diisi.',
             'kompetisi_id.exists' => 'Kompetisi tidak ditemukan.',
@@ -131,19 +151,17 @@ class AcaraController extends Controller
             'kuota.integer' => 'Kuota harus berupa angka.',
             'kuota.min' => 'Kuota harus lebih besar dari 0.',
             'grup.required' => 'Kelompok umur wajib diisi.',
-            'max_umur.required' => 'Maksimal umur wajib diisi.',
-            'max_umur.integer' => 'Maksimal umur harus berupa angka.',
-            'max_umur.min' => 'Maksimal umur tidak boleh kurang dari 0.',
-            'min_umur.required' => 'Minimal umur wajib diisi.',
-            'min_umur.integer' => 'Minimal umur harus berupa angka.',
-            'min_umur.min' => 'Minimal umur tidak boleh kurang dari 0.',
-            'min_umur.lte' => 'Minimal umur harus kurang dari atau sama dengan maksimal umur.',
+            'max_umur.integer' => 'Maksimal tahun harus berupa angka.',
+            'max_umur.min' => 'Maksimal tahun tidak boleh kurang dari 0.',
+            'min_umur.required' => 'Minimal tahun wajib diisi.',
+            'min_umur.integer' => 'Minimal tahun harus berupa angka.',
+            'min_umur.min' => 'Minimal tahun tidak boleh kurang dari 0.',
         ]);
 
         $validation->after(function($validator) use ($data) {
             if (isset($data['max_umur']) && isset($data['min_umur'])) {
-                if ($data['max_umur'] < $data['min_umur']) {
-                    $validator->errors()->add('max_umur', 'Maksimal umur harus lebih besar dari atau sama dengan minimal umur.');
+                if ($data['max_umur'] > $data['min_umur']) {
+                    $validator->errors()->add('max_umur', 'Maksimal tahun harus lebih kecil dari atau sama dengan minimal tahun.');
                 }
             }
         });
@@ -203,8 +221,8 @@ class AcaraController extends Controller
         "harga" => $request->harga,
         "kuota" => $request->kuota,
         "grup" => $request->grup,
-        "max_umur" => $request->maxumur,
-        "min_umur" => $request->minumur];
+        "min_umur" => $request->minumur,
+        "max_umur" => $request->maxumur];
 
 
         $validation = Validator::make($data, [
@@ -215,8 +233,8 @@ class AcaraController extends Controller
             "harga" => "required|numeric|min:0",
             "kuota" => "required|integer|min:1",
             "grup" => "required",
-            "max_umur" => "required|integer|min:0",
-            "min_umur" => "required|integer|min:0|lte:max_umur",
+            "min_umur" => "required|integer|min:0",
+            "max_umur" => "nullable|integer|min:0",
         ], [
             'nomor_lomba.required' => 'Nomor acara wajib diisi.',
             'nama.required' => 'Nama wajib diisi.',
@@ -229,19 +247,17 @@ class AcaraController extends Controller
             'kuota.integer' => 'Kuota harus berupa angka.',
             'kuota.min' => 'Kuota harus lebih besar dari 0.',
             'grup.required' => 'Kelompok Umur wajib diisi.',
-            'max_umur.required' => 'Maksimal umur wajib diisi.',
-            'max_umur.integer' => 'Maksimal umur harus berupa angka.',
-            'max_umur.min' => 'Maksimal umur tidak boleh kurang dari 0.',
-            'min_umur.required' => 'Minimal umur wajib diisi.',
-            'min_umur.integer' => 'Minimal umur harus berupa angka.',
-            'min_umur.min' => 'Minimal umur tidak boleh kurang dari 0.',
-            'min_umur.lte' => 'Minimal umur harus kurang dari atau sama dengan maksimal umur.',
+            'max_umur.integer' => 'Maksimal tahun harus berupa angka.',
+            'max_umur.min' => 'Maksimal tahun tidak boleh kurang dari 0.',
+            'min_umur.required' => 'Minimal tahun wajib diisi.',
+            'min_umur.integer' => 'Minimal tahun harus berupa angka.',
+            'min_umur.min' => 'Minimal tahun tidak boleh kurang dari 0.',
         ]);
 
         $validation->after(function($validator) use ($data) {
             if (isset($data['max_umur']) && isset($data['min_umur'])) {
                 if ($data['max_umur'] < $data['min_umur']) {
-                    $validator->errors()->add('max_umur', 'Maksimal umur harus lebih besar dari atau sama dengan minimal umur.');
+                    $validator->errors()->add('max_umur', 'Maksimal tahun harus lebih besar dari atau sama dengan minimal tahun.');
                 }
             }
         });

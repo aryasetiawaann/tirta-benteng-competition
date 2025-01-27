@@ -101,8 +101,8 @@
                     </h3>
                     <p>Kuota: {{ $ac->peserta->count() }} / {{$ac->kuota}}</p>
                     <p>Nomor Grup: {{ $ac->grup }}</p>
-                    <p>Min Umur: {{ $ac->min_umur }}</p>
-                    <p>Max Umur: {{ $ac->max_umur }}</p>
+                    <p>Tahun: {{ $ac->max_umur != null ? $ac->min_umur . ' - ' . $ac->max_umur : $ac->min_umur }}</p>
+
                 </div>
                 <div class="actions">
                     <a href="{{ route('dashboard.admin.editacara', $ac->id) }}">

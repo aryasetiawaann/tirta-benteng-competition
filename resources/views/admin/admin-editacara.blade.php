@@ -81,10 +81,10 @@
 
                 <label for="grup">Kelompok Umur*</label>
                 <input type="text" id="grup" name="grup" placeholder="Grup" value="{{ $acara->grup }}">
-                <label for="minumur">Min Umur Peserta*</label>
-                <input type="number" id="minumur" name="minumur" placeholder="Minimal umur peserta" value="{{ $acara->min_umur }}">
-                <label for="maxumur">Max Umur Peserta*</label>
-                <input type="number" id="maxumur" name="maxumur" placeholder="Maximal umur peserta" value="{{ $acara->max_umur }}">
+                <label for="minumur">Min. Tahun*</label>
+                <input type="number" id="minumur" name="minumur" placeholder="Minimal tahun lahir peserta" value="{{ $acara->min_umur }}">
+                <label for="maxumur">Max. Tahun (opsional)</label>
+                <input type="number" id="maxumur" name="maxumur" placeholder="Maximal tahun lahir peserta" value="{{ $acara->max_umur }}">
                 <input type="hidden" name="kompe_id" value="{{ $acara->kompetisi->id }}">
                 <input type="hidden" name="id" value="{{ $acara->id }}">
 
