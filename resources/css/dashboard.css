@@ -15,13 +15,19 @@
 
 /* Table */
     .table-container {
-        overflow-x: auto;
         position: relative;
+        overflow: hidden;
+        width: 100%;
     }
 
-    .table-container label {
-        display: block;
-        margin-bottom: 10px;
+    .table-scroll {
+        overflow-x: auto;
+        width: 100%;
+    }
+
+    .table-container table th,
+    .table-container table td {
+        white-space: nowrap;
     }
 
     #entries {
@@ -38,8 +44,9 @@
 
     table {
         width: 100%;
+        overflow-x: auto;
+        display: table;
         border-collapse: collapse;
-        margin-bottom: 20px;
     }
 
     table, th, td {
@@ -121,6 +128,7 @@
         justify-content: center;
         align-items: center;
         gap: 20px;
+        margin-top: 10px;
     }
 
     .pagination button, button {
@@ -263,6 +271,10 @@
     @media screen and (max-width: 768px) {
         .overlay-container {
             width: 90%;
+        }
+
+        .pagination {
+            gap: 10px;
         }
         
     }

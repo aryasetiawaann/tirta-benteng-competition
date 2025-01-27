@@ -143,28 +143,37 @@ function initializeTable() {
     // Function to update pagination numbers dynamically
     function updatePagination(totalPages) {
         pageNumbersDiv.innerHTML = ''; // Clear existing page numbers
-
-        // Always show the first page
-        addPageNumber(1);
-
-        // Show ellipsis if there are pages before the current page
-        if (currentPage > 3) {
-            pageNumbersDiv.appendChild(createEllipsis());
-        }
-
-        // Show current page and its neighbors
-        for (let i = Math.max(2, currentPage - 1); i <= Math.min(totalPages - 1, currentPage + 1); i++) {
-            addPageNumber(i);
-        }
-
-        // Show ellipsis if there are pages after the current page
-        if (currentPage < totalPages - 2) {
-            pageNumbersDiv.appendChild(createEllipsis());
-        }
-
-        // Always show the last page if there is more than one page
-        if (totalPages > 1) {
-            addPageNumber(totalPages);
+    
+        const windowWidth = window.innerWidth;
+    
+        if (windowWidth <= 768) {
+            // For small screens, show only 3 middle pages
+            const startPage = Math.max(1, currentPage - 1); // Start from one page before the current page
+            const endPage = Math.min(totalPages, currentPage + 1); // End at one page after the current page
+    
+            for (let i = startPage; i <= endPage; i++) {
+                addPageNumber(i); // Add the 3 middle pages
+            }
+        } else {
+            // For larger screens, show the full pagination
+            addPageNumber(1); // Always show the first page
+    
+            if (currentPage > 3) {
+                pageNumbersDiv.appendChild(createEllipsis()); // Show ellipsis if there are pages before the current page
+            }
+    
+            // Show current page and its neighbors
+            for (let i = Math.max(2, currentPage - 1); i <= Math.min(totalPages - 1, currentPage + 1); i++) {
+                addPageNumber(i);
+            }
+    
+            if (currentPage < totalPages - 2) {
+                pageNumbersDiv.appendChild(createEllipsis()); // Show ellipsis if there are pages after the current page
+            }
+    
+            if (totalPages > 1) {
+                addPageNumber(totalPages); // Always show the last page if there is more than one page
+            }
         }
     }
 
@@ -225,6 +234,11 @@ function initializeTable() {
             currentPage++; // Go to the next page
             updateTable(); // Refresh the table
         }
+    });
+
+    // Refresh table and pagination on window resize
+    window.addEventListener('resize', function () {
+        updateTable(); // Refresh the table and pagination
     });
 
     // Initialize table on page load

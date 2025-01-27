@@ -62,43 +62,45 @@
                         {{-- <div class="loading-overlay" id="loading-overlay">
                             <div class="spinner"></div>
                         </div> --}}
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>#</th>
-                                    <th>Nama</th>
-                                    <th>Kompetisi</th>
-                                    <th>Nomor Lomba</th>
-                                    <th>Status Pembayaran</th>
-                                    <th>Status Kompetisi</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @if ($atlets->isEmpty())
-                                    <tr><td colspan="7" style="text-align:center;">Belum ada data</td></tr>
-                                @else
-                                @php $counter = 1; @endphp
-                                    @foreach ($atlets as $atlet)
-                                        @foreach ($atlet->acara as $acara)    
-                                            <tr>
-                                                <td>{{ $counter++}}</td>
-                                                <td>{{ $atlet->name }}</td>
-                                                <td>{{ $acara->kompetisi->nama }}</td>
-                                                <td>{{ $acara->nomor_lomba }}</td>
-                                                <td><span class="status waiting">{{ $acara->pivot->status_pembayaran }}</span></td>
-                                                @if (now() > $acara->kompetisi->waktu_kompetisi)
-                                                    <td><span class="status registration">Selesai</span></td>
-                                                @elseif (now() >= $acara->kompetisi->tutup_pendaftaran)
-                                                    <td><span class="status registration">Tutup Registrasi</span></td>
-                                                @else
-                                                    <td><span class="status registration">Registrasi</span></td>
-                                                @endif
-                                            </tr>
+                        <div class="table-scroll">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Nama</th>
+                                        <th>Kompetisi</th>
+                                        <th>Nomor Lomba</th>
+                                        <th>Status Pembayaran</th>
+                                        <th>Status Kompetisi</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @if ($atlets->isEmpty())
+                                        <tr><td colspan="7" style="text-align:center;">Belum ada data</td></tr>
+                                    @else
+                                    @php $counter = 1; @endphp
+                                        @foreach ($atlets as $atlet)
+                                            @foreach ($atlet->acara as $acara)    
+                                                <tr>
+                                                    <td>{{ $counter++}}</td>
+                                                    <td>{{ $atlet->name }}</td>
+                                                    <td>{{ $acara->kompetisi->nama }}</td>
+                                                    <td>{{ $acara->nomor_lomba }}</td>
+                                                    <td><span class="status waiting">{{ $acara->pivot->status_pembayaran }}</span></td>
+                                                    @if (now() > $acara->kompetisi->waktu_kompetisi)
+                                                        <td><span class="status registration">Selesai</span></td>
+                                                    @elseif (now() >= $acara->kompetisi->tutup_pendaftaran)
+                                                        <td><span class="status registration">Tutup Registrasi</span></td>
+                                                    @else
+                                                        <td><span class="status registration">Registrasi</span></td>
+                                                    @endif
+                                                </tr>
+                                            @endforeach
                                         @endforeach
-                                    @endforeach
-                                @endif
-                            </tbody>
-                        </table>
+                                    @endif
+                                </tbody>
+                            </table>
+                        </div>
                         <div class="pagination">
                             <button class="prev" disabled>Sebelumnya</button>
                             <div class="page-numbers"></div>
