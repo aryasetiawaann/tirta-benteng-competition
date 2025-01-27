@@ -1,3 +1,10 @@
+body, html {
+    overflow-x: hidden;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+
 /* Main Content */
     .main-content {
         position: relative;
@@ -7,6 +14,7 @@
         width: 100%;
         transition: all 0.1s;
         padding: 10px;
+        box-sizing: border-box;
     }
 
     .main-content_sidebar-hide {
@@ -560,6 +568,19 @@ input#dokumen {
     }
 }
 
+/* width main dikurangin sidebar */
+@media screen and (min-width: 769px) {
+    .main-content {
+        width: calc(100% - 92px);
+    }
+}
+
+@media screen and (min-width: 1055px) {
+    .main-content {
+        width: calc(100% - 256px);
+    }
+}
+
 @media screen and (max-width: 1054px) {
     .left-container {
         width: 100%;
@@ -580,8 +601,6 @@ input#dokumen {
         flex: 1 1 calc(100% - 40px);
     }
 }
-
-
 
 .maxwd {
     max-width: 768px;

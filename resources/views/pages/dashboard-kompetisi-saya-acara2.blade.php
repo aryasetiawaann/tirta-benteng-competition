@@ -39,6 +39,7 @@
                         entri
                     </label>
                     <input type="text" id="search" placeholder="Cari...">
+                    <div class="table-scroll">
                     <table>
                         <thead>
                             <tr>
@@ -65,6 +66,7 @@
                             @endif
                         </tbody>
                     </table>
+                    </div>
                     <div class="pagination">
                         <button class="prev" disabled>Sebelumnya</button>
                         <div class="page-numbers"></div>

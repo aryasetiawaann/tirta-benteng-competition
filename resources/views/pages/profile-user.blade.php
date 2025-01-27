@@ -13,8 +13,17 @@
                 </div>
             </div>
         </div>
-        @if (session('status'))
-            <p>{{ session('status') }}</p>
+        @if ($errors->any())
+        <x-error-list>
+            @foreach ($errors->all() as $error)
+                <x-error-item>{{ $error }}</x-error-item>
+            @endforeach
+        </x-error-list>
+        @endif
+        @if (session('success'))
+            <x-success-list>
+                <x-success-item>{{ session('success') }}</x-success-item>
+            </x-success-list>
         @endif
         <div class="profile-bottom-container">
             <section class="profile-section profile-form">

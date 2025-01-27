@@ -37,41 +37,43 @@
                         entri
                     </label>
                     <input type="text" id="search" placeholder="Cari...">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>Nama</th>
-                            <th>Kompetisi</th>
-                            <th>Nomor Lomba</th>
-                            <th>Jumlah Pembayaran</th>
-                            <th>Status Pembayaran</th>
-                            <th>Waktu Pembayaran</th>
-                        </tr>
-                    </thead>
-                    <tbody>                            
-                        @if ($atlets->isEmpty())
-                        <tr><td colspan="7" style="text-align:center;">Belum ada data</td></tr>
-                        @else
-                        @php $counter = 1; @endphp
-                        @foreach ($atlets as $atlet)
-                            @foreach ($atlet->acara as $acara)
-                            @if ($acara->pivot->status_pembayaran == 'Selesai')   
-                            <tr>
-                                <td>{{ $counter++}}</td>
-                                <td>{{ $atlet->name }}</td>
-                                <td>{{ $acara->kompetisi->nama }}</td>
-                                <td>{{ $acara->nomor_lomba }} - {{$acara->nama}}</td>
-                                <td><span class="status bayar">Rp.{{ number_format($acara->harga, 2, ',', '.') }}</span></td>
-                                <td><span class="status bayar">{{ $acara->pivot->status_pembayaran }}</span></td>
-                                <td>{{ \Carbon\Carbon::parse($acara->pivot->waktu_pembayaran)->format('d-m-Y') }}</td>
-                            </tr>
-                            @endif
-                            @endforeach
-                        @endforeach
-                        @endif
-                    </tbody>
-                </table>
+                    <div class="table-scroll">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Nama</th>
+                                    <th>Kompetisi</th>
+                                    <th>Nomor Lomba</th>
+                                    <th>Jumlah Pembayaran</th>
+                                    <th>Status Pembayaran</th>
+                                    <th>Waktu Pembayaran</th>
+                                </tr>
+                            </thead>
+                            <tbody>                            
+                                @if ($atlets->isEmpty())
+                                <tr><td colspan="7" style="text-align:center;">Belum ada data</td></tr>
+                                @else
+                                @php $counter = 1; @endphp
+                                @foreach ($atlets as $atlet)
+                                    @foreach ($atlet->acara as $acara)
+                                    @if ($acara->pivot->status_pembayaran == 'Selesai')   
+                                    <tr>
+                                        <td>{{ $counter++}}</td>
+                                        <td>{{ $atlet->name }}</td>
+                                        <td>{{ $acara->kompetisi->nama }}</td>
+                                        <td>{{ $acara->nomor_lomba }} - {{$acara->nama}}</td>
+                                        <td><span class="status bayar">Rp.{{ number_format($acara->harga, 2, ',', '.') }}</span></td>
+                                        <td><span class="status bayar">{{ $acara->pivot->status_pembayaran }}</span></td>
+                                        <td>{{ \Carbon\Carbon::parse($acara->pivot->waktu_pembayaran)->format('d-m-Y') }}</td>
+                                    </tr>
+                                    @endif
+                                    @endforeach
+                                @endforeach
+                                @endif
+                            </tbody>
+                        </table>
+                    </div>
                 <div class="pagination">
                     <button class="prev" disabled>Sebelumnya</button>
                     <div class="page-numbers"></div>

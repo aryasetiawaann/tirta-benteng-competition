@@ -34,62 +34,65 @@
                         entri
                     </label>
                     <input type="text" id="search" placeholder="Cari...">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>Nama</th>
-                            <th>Kompetisi</th>
-                            <th>Nomor Lomba</th>
-                            <th>Jumlah Pembayaran</th>
-                            <th>Aksi</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @if ($atlets->isEmpty())
-                            <tr><td colspan="7" style="text-align:center;">Belum ada data</td></tr>
-                        @else
-                        @php $counter = 1; @endphp
-                            @foreach ($atlets as $atlet)
-                                @foreach ($atlet->acara as $acara)
-                                @if($acara->pivot->status_pembayaran == "Menunggu")
+                    <div class="table-scroll">
+                        <table>
+                            <thead>
                                 <tr>
-                                    <td>{{ $counter++ }}</td>
-                                    <td>{{ $atlet->name }}</td>
-                                    <td>{{ $acara->kompetisi->nama }}</td>
-                                    <td>{{ $acara->nomor_lomba }} - {{ $acara->nama }}</td>
-                                    <td><span class="status bayar">Rp{{ number_format($acara->harga, 2, ',', '.') }}</span></td>
-                                    <td>
-                                        <div class="actions">
-                                            {{-- Hapus Style buat unable lagi --}}
-                                            <button onclick="payButton(this)" data-id="{{ $acara->pivot->id }}" data-harga="{{ $acara->harga }}" class="button-gap pay-button" data-tooltip="Bayar" style='display:none;'><i class='bx bx-xs bxs-credit-card'></i></button>
-                                            <form action="{{ route('dashboard.tagihan.destroy', $acara->pivot->id) }}" method="post">
-                                                @csrf
-                                                @method('delete')
-                                                <a onclick="return confirm('Apakah kamu yakin ingin menghapus? ')"><button class="button-red button-gap" data-tooltip="Hapus Tagihan"><i class='bx bx-xs bxs-trash' ></i></button></a>
-                                            </form>
-                                        </div>
-                                    </td>
+                                    <th>#</th>
+                                    <th>Nama</th>
+                                    <th>Kompetisi</th>
+                                    <th>Nomor Lomba</th>
+                                    <th>Jumlah Pembayaran</th>
+                                    <th>Aksi</th>
                                 </tr>
+                            </thead>
+                            <tbody>
+                                @if ($atlets->isEmpty())
+                                    <tr><td colspan="7" style="text-align:center;">Belum ada data</td></tr>
+                                @else
+                                @php $counter = 1; @endphp
+                                    @foreach ($atlets as $atlet)
+                                        @foreach ($atlet->acara as $acara)
+                                        @if($acara->pivot->status_pembayaran == "Menunggu")
+                                        <tr>
+                                            <td>{{ $counter++ }}</td>
+                                            <td>{{ $atlet->name }}</td>
+                                            <td>{{ $acara->kompetisi->nama }}</td>
+                                            <td>{{ $acara->nomor_lomba }} - {{ $acara->nama }}</td>
+                                            <td><span class="status bayar">Rp{{ number_format($acara->harga, 2, ',', '.') }}</span></td>
+                                            <td>
+                                                <div class="actions">
+                                                    {{-- Hapus Style buat unable lagi --}}
+                                                    <button onclick="payButton(this)" data-id="{{ $acara->pivot->id }}" data-harga="{{ $acara->harga }}" class="button-gap pay-button" data-tooltip="Bayar" style='display:none;'><i class='bx bx-xs bxs-credit-card'></i></button>
+                                                    <form action="{{ route('dashboard.tagihan.destroy', $acara->pivot->id) }}" method="post">
+                                                        @csrf
+                                                        @method('delete')
+                                                        <a onclick="return confirm('Apakah kamu yakin ingin menghapus? ')"><button class="button-red button-gap" data-tooltip="Hapus Tagihan"><i class='bx bx-xs bxs-trash' ></i></button></a>
+                                                    </form>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        @endif
+                                        @endforeach
+                                    @endforeach
                                 @endif
-                                @endforeach
-                            @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                    {{-- Hapus Style buat unable lagi --}}
+                    <div class="total-price" style='display:none;'>
+                        @if ($totalHarga != 0)
+                            <p><b>Total: </b>Rp{{ number_format($totalHarga, 2, ',', '.') }}</p>
+                            <button class="pay-all-button" onclick="payAll()">Bayar Semua</button>
                         @endif
-                    </tbody>
-                </table>
-                {{-- Hapus Style buat unable lagi --}}
-                <div class="total-price" style='display:none;'>
-                    @if ($totalHarga != 0)
-                        <p><b>Total: </b>Rp{{ number_format($totalHarga, 2, ',', '.') }}</p>
-                        <button class="pay-all-button" onclick="payAll()">Bayar Semua</button>
-                    @endif
+                    </div>
+                    <div class="pagination">
+                        <button class="prev" disabled>Sebelumnya</button>
+                        <div class="page-numbers"></div>
+                        <button class="next" disabled>Selanjutnya</button>
+                    </div>
                 </div>
-                <div class="pagination">
-                    <button class="prev" disabled>Sebelumnya</button>
-                    <div class="page-numbers"></div>
-                    <button class="next" disabled>Selanjutnya</button>
-                </div>
-            </div>
+            </section>
         </div>
     </div>
 

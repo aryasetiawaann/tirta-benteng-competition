@@ -58,34 +58,36 @@
                         entri
                     </label>
                     <input type="text" id="search" placeholder="Cari...">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>#</th>
-                                <th>Nama</th>
-                                <th>Umur</th>
-                                <th>Jenis Kelamin</th>
-                                {{-- <th>Club</th> --}}
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @if ($atletsList->count() > 0)
-                                @foreach ($atletsList as $key => $peserta) 
+                    <div class="table-scroll">
+                        <table>
+                            <thead>
                                 <tr>
-                                    <td>{{ $key + 1 }}</td>
-                                    <td>{{ $peserta->name }}</td>
-                                    <td>{{ now()->diffInYears(\Carbon\Carbon::parse($peserta->umur)) }}</td>
-                                    <td>{{ $peserta->jenis_kelamin }}</td>
-                                    {{-- <td>{{ $peserta->user->club }}</td> --}}
+                                    <th>#</th>
+                                    <th>Nama</th>
+                                    <th>Umur</th>
+                                    <th>Jenis Kelamin</th>
+                                    {{-- <th>Club</th> --}}
                                 </tr>
-                                @endforeach
-                            @else
-                                <tr>
-                                    <td colspan="5" style="text-align:center;">Belum ada data</td>
-                                </tr>
-                            @endif
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody>
+                                @if ($atletsList->count() > 0)
+                                    @foreach ($atletsList as $key => $peserta) 
+                                    <tr>
+                                        <td>{{ $key + 1 }}</td>
+                                        <td>{{ $peserta->name }}</td>
+                                        <td>{{ now()->diffInYears(\Carbon\Carbon::parse($peserta->umur)) }}</td>
+                                        <td>{{ $peserta->jenis_kelamin }}</td>
+                                        {{-- <td>{{ $peserta->user->club }}</td> --}}
+                                    </tr>
+                                    @endforeach
+                                @else
+                                    <tr>
+                                        <td colspan="5" style="text-align:center;">Belum ada data</td>
+                                    </tr>
+                                @endif
+                            </tbody>
+                        </table>
+                    </div>
                     <div class="pagination">
                         <button class="prev" disabled>Sebelumnya</button>
                         <div class="page-numbers"></div>

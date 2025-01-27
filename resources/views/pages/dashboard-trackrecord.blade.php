@@ -53,54 +53,56 @@
                         entri
                     </label>
                     <input type="text" id="search" placeholder="Cari...">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>#</th>
-                                <th>Kompetisi</th>
-                                <th>Nomor Lomba</th>
-                                <th>Durasi Renang</th>
-                                <th>Aksi</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @if ( $records->count() > 0)  
-                                @foreach ($records as $key => $record) 
+                    <div class="table-scroll">
+                        <table>
+                            <thead>
                                 <tr>
-                                    <td>{{ $key + 1 }}</td>
-                                    <td>{{ $record->kompetisi }}</td>
-                                    <td class="capitalize">{{ $record->nomor_lomba }}</td>
-                                    <td>
-                                        <span class="status registration">
-                                            {{ sprintf('%02d:%02d.%02d', 
-                                                floor($record->time / 60),  // Menit
-                                                floor(fmod($record->time, 60)),  // Detik
-                                                round(($record->time - floor($record->time)) * 100)  // Milidetik
-                                            ) }}
-                                        </span>
-                                    </td>
-                                    <td>
-                                        <div class="actions">
-                                            <a href="{{ route('dashboard.track-record.edit', $record->id) }}">
-                                                <button class="button-gap"><i class='bx bx-xs bx-edit'></i></button>
-                                            </a>
-                            
-                                            <form action="{{ route('dashboard.track-record.destroy', $record->id) }}" method="post">
-                                                @csrf
-                                                @method('delete')
-                                                <button class="button-red button-gap" onclick="return confirm('Apakah kamu yakin ingin menghapus track record ini? ')">
-                                                    <i class='bx bx-xs bx-trash'></i>
-                                                </button>
-                                            </form>
-                                        </div>
-                                    </td>
+                                    <th>#</th>
+                                    <th>Kompetisi</th>
+                                    <th>Nomor Lomba</th>
+                                    <th>Durasi Renang</th>
+                                    <th>Aksi</th>
                                 </tr>
-                                @endforeach
-                            @else
-                                <tr><td colspan="7" style="text-align:center;">Belum ada data</td></tr>
-                            @endif 
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody>
+                                @if ( $records->count() > 0)  
+                                    @foreach ($records as $key => $record) 
+                                    <tr>
+                                        <td>{{ $key + 1 }}</td>
+                                        <td>{{ $record->kompetisi }}</td>
+                                        <td class="capitalize">{{ $record->nomor_lomba }}</td>
+                                        <td>
+                                            <span class="status registration">
+                                                {{ sprintf('%02d:%02d.%02d', 
+                                                    floor($record->time / 60),  // Menit
+                                                    floor(fmod($record->time, 60)),  // Detik
+                                                    round(($record->time - floor($record->time)) * 100)  // Milidetik
+                                                ) }}
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <div class="actions">
+                                                <a href="{{ route('dashboard.track-record.edit', $record->id) }}">
+                                                    <button class="button-gap"><i class='bx bx-xs bx-edit'></i></button>
+                                                </a>
+                                
+                                                <form action="{{ route('dashboard.track-record.destroy', $record->id) }}" method="post">
+                                                    @csrf
+                                                    @method('delete')
+                                                    <button class="button-red button-gap" onclick="return confirm('Apakah kamu yakin ingin menghapus track record ini? ')">
+                                                        <i class='bx bx-xs bx-trash'></i>
+                                                    </button>
+                                                </form>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    @endforeach
+                                @else
+                                    <tr><td colspan="7" style="text-align:center;">Belum ada data</td></tr>
+                                @endif 
+                            </tbody>
+                        </table>
+                    </div>
                     <div class="pagination">
                         <button class="prev" disabled>Sebelumnya</button>
                         <div class="page-numbers"></div>

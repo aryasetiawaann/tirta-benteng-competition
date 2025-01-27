@@ -43,7 +43,7 @@ function handleResize() {
 
     if (!mainContent || !sidebar) return;
 
-    if (windowWidth <= 1024) {
+    if (windowWidth <= 1054) {
         mainContent.classList.add('main-content_sidebar-hide');
         sidebar.classList.add('active');
     } else {

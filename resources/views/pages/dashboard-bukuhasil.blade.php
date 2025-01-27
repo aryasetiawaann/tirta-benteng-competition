@@ -37,52 +37,55 @@
                         entri
                     </label>
                     <input type="text" id="search" placeholder="Cari...">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>Kompetisi</th>
-                            <th>Status</th>
-                            <th>Aksi</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                            @if ($competitions->contains(function ($competition) {
-                                return is_null($competition->file_hasil);
-                            }) || $competitions->isEmpty())
-                                <tr><td colspan="4" style="text-align:center;">Belum ada data</td></tr>
-                        @else
-                        @php $counter = 1; @endphp
-                            @foreach ( $competitions as $competition )
-                            @if ($competition->file_hasil != NULL)    
-                            <tr>
-                                <td>{{ $counter++}}</td>
-                                <td>{{ $competition->nama }}</td>
-                                @if ( now() > $competition->waktu_kompetisi)
-                                <td><span class="status registration">Selesai</span></td>
-                                <td>
-                                    <a href="{{ route('dashboard.bukuhasil.download', $competition->id) }}"><button class="button-green"><i class='bx bx-xs bx-download'></i></button></a>
-                                </td>
-                                @elseif (now() >= $competition->tutup_pendaftaran)
-                                <td><span class="status registration">Tutup Registrasi</span></td>
-                                <td>
-                                    <a href="{{ route('dashboard.bukuhasil.download', $competition->id) }}"><button class="button-green"><i class='bx bx-xs bx-download'></i></button></a>
-                                </td>
+                    <div class="table-scroll">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Kompetisi</th>
+                                    <th>Status</th>
+                                    <th>Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                    @if ($competitions->contains(function ($competition) {
+                                        return is_null($competition->file_hasil);
+                                    }) || $competitions->isEmpty())
+                                        <tr><td colspan="4" style="text-align:center;">Belum ada data</td></tr>
                                 @else
-                                <td><span class="status registration">Registrasi</span></td>
+                                @php $counter = 1; @endphp
+                                    @foreach ( $competitions as $competition )
+                                    @if ($competition->file_hasil != NULL)    
+                                    <tr>
+                                        <td>{{ $counter++}}</td>
+                                        <td>{{ $competition->nama }}</td>
+                                        @if ( now() > $competition->waktu_kompetisi)
+                                        <td><span class="status registration">Selesai</span></td>
+                                        <td>
+                                            <a href="{{ route('dashboard.bukuhasil.download', $competition->id) }}"><button class="button-green"><i class='bx bx-xs bx-download'></i></button></a>
+                                        </td>
+                                        @elseif (now() >= $competition->tutup_pendaftaran)
+                                        <td><span class="status registration">Tutup Registrasi</span></td>
+                                        <td>
+                                            <a href="{{ route('dashboard.bukuhasil.download', $competition->id) }}"><button class="button-green"><i class='bx bx-xs bx-download'></i></button></a>
+                                        </td>
+                                        @else
+                                        <td><span class="status registration">Registrasi</span></td>
+                                        @endif
+                                    </tr>
+                                    @endif
+                                    @endforeach
                                 @endif
-                            </tr>
-                            @endif
-                            @endforeach
-                        @endif
-                    </tbody>
-                </table>
-                <div class="pagination">
-                    <button class="prev" disabled>Sebelumnya</button>
-                    <div class="page-numbers"></div>
-                    <button class="next" disabled>Selanjutnya</button>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="pagination">
+                        <button class="prev" disabled>Sebelumnya</button>
+                        <div class="page-numbers"></div>
+                        <button class="next" disabled>Selanjutnya</button>
+                    </div>
                 </div>
-            </div>
+            </section>
         </div>
     </div>
 @endsection

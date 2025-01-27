@@ -37,86 +37,89 @@
                         entri
                     </label>
                     <input type="text" id="search" placeholder="Cari...">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>Kompetisi</th>
-                            <th>Status</th>
-                            <th>Aksi</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @if (Auth::user()->role != 'admin')
-                            
-                            @if ($competitions->isEmpty())
-                                <tr><td colspan="4" style="text-align:center;">Belum ada data</td></tr>
-                            @else
-                                @php $counter = 1; @endphp
-                                @foreach ( $competitions as $competition ) 
+                    <div class="table-scroll">
+                        <table>
+                            <thead>
                                 <tr>
-                                    <td>{{ $counter++ }}</td>
-                                    <td>{{ $competition->nama }}</td>
-                                    @if ( now() > $competition->waktu_kompetisi)
-                                    <td><span class="status registration">Selesai</span></td>
-                                    <td>
-                                        <a href="{{ route('dashboard.bukuacara.view', $competition->id) }}"><button class="button-green"><i class='bx bx-xs bx-download'></i></button></a>
-                                    </td>
-                                    @elseif (now() >= $competition->tutup_pendaftaran)
-                                    <td><span class="status registration">Tutup Registrasi</span></td>
-                                    <td>
-                                        <a href="{{ route('dashboard.bukuacara.view', $competition->id) }}"><button class="button-green"><i class='bx bx-xs bx-download'></i></button></a>
-                                    </td>
-                                    @else
-                                    <td><span class="status registration">Registrasi</span></td>
-                                        @if (Auth::user()->role == 'admin')
-                                        <td>
-                                            <a href="{{ route('dashboard.bukuacara.view', $competition->id) }}"><button class="button-green"><i class='bx bx-xs bx-download'></i></button></a>
-                                        </td>
-                                        @endif
-                                    @endif
+                                    <th>#</th>
+                                    <th>Kompetisi</th>
+                                    <th>Status</th>
+                                    <th>Aksi</th>
                                 </tr>
-                                @endforeach
-                            @endif
-                        @else
-                            @if ($allCompetitions->isEmpty())
-                                <tr><td colspan="4" style="text-align:center;">Belum ada data</td></tr>
-                            @else
-                                @php $counter = 1; @endphp
-                                @foreach ( $allCompetitions as $competition ) 
-                                <tr>
-                                    <td>{{ $counter++ }}</td>
-                                    <td>{{ $competition->nama }}</td>
-                                    @if ( now() > $competition->waktu_kompetisi)
-                                    <td><span class="status registration">Selesai</span></td>
-                                    <td>
-                                        <a href="{{ route('dashboard.bukuacara.view', $competition->id) }}"><button class="button-green"><i class='bx bx-xs bx-download'></i></button></a>
-                                    </td>
-                                    @elseif (now() >= $competition->tutup_pendaftaran)
-                                    <td><span class="status registration">Tutup Registrasi</span></td>
-                                    <td>
-                                        <a href="{{ route('dashboard.bukuacara.view', $competition->id) }}"><button class="button-green"><i class='bx bx-xs bx-download'></i></button></a>
-                                    </td>
+                            </thead>
+                            <tbody>
+                                @if (Auth::user()->role != 'admin')
+                                    
+                                    @if ($competitions->isEmpty())
+                                        <tr><td colspan="4" style="text-align:center;">Belum ada data</td></tr>
                                     @else
-                                    <td><span class="status registration">Registrasi</span></td>
-                                        @if (Auth::user()->role == 'admin')
-                                        <td>
-                                            <a href="{{ route('dashboard.bukuacara.view', $competition->id) }}"><button class="button-green"><i class='bx bx-xs bx-download'></i></button></a>
-                                        </td>
-                                        @endif
+                                        @php $counter = 1; @endphp
+                                        @foreach ( $competitions as $competition ) 
+                                        <tr>
+                                            <td>{{ $counter++ }}</td>
+                                            <td>{{ $competition->nama }}</td>
+                                            @if ( now() > $competition->waktu_kompetisi)
+                                            <td><span class="status registration">Selesai</span></td>
+                                            <td>
+                                                <a href="{{ route('dashboard.bukuacara.view', $competition->id) }}"><button class="button-green"><i class='bx bx-xs bx-download'></i></button></a>
+                                            </td>
+                                            @elseif (now() >= $competition->tutup_pendaftaran)
+                                            <td><span class="status registration">Tutup Registrasi</span></td>
+                                            <td>
+                                                <a href="{{ route('dashboard.bukuacara.view', $competition->id) }}"><button class="button-green"><i class='bx bx-xs bx-download'></i></button></a>
+                                            </td>
+                                            @else
+                                            <td><span class="status registration">Registrasi</span></td>
+                                                @if (Auth::user()->role == 'admin')
+                                                <td>
+                                                    <a href="{{ route('dashboard.bukuacara.view', $competition->id) }}"><button class="button-green"><i class='bx bx-xs bx-download'></i></button></a>
+                                                </td>
+                                                @endif
+                                            @endif
+                                        </tr>
+                                        @endforeach
                                     @endif
-                                </tr>
-                                @endforeach
-                            @endif
-                        @endif
-                    </tbody>
-                </table>
-                <div class="pagination">
-                    <button class="prev" disabled>Sebelumnya</button>
-                    <div class="page-numbers"></div>
-                    <button class="next" disabled>Selanjutnya</button>
+                                @else
+                                    @if ($allCompetitions->isEmpty())
+                                        <tr><td colspan="4" style="text-align:center;">Belum ada data</td></tr>
+                                    @else
+                                        @php $counter = 1; @endphp
+                                        @foreach ( $allCompetitions as $competition ) 
+                                        <tr>
+                                            <td>{{ $counter++ }}</td>
+                                            <td>{{ $competition->nama }}</td>
+                                            @if ( now() > $competition->waktu_kompetisi)
+                                            <td><span class="status registration">Selesai</span></td>
+                                            <td>
+                                                <a href="{{ route('dashboard.bukuacara.view', $competition->id) }}"><button class="button-green"><i class='bx bx-xs bx-download'></i></button></a>
+                                            </td>
+                                            @elseif (now() >= $competition->tutup_pendaftaran)
+                                            <td><span class="status registration">Tutup Registrasi</span></td>
+                                            <td>
+                                                <a href="{{ route('dashboard.bukuacara.view', $competition->id) }}"><button class="button-green"><i class='bx bx-xs bx-download'></i></button></a>
+                                            </td>
+                                            @else
+                                            <td><span class="status registration">Registrasi</span></td>
+                                                @if (Auth::user()->role == 'admin')
+                                                <td>
+                                                    <a href="{{ route('dashboard.bukuacara.view', $competition->id) }}"><button class="button-green"><i class='bx bx-xs bx-download'></i></button></a>
+                                                </td>
+                                                @endif
+                                            @endif
+                                        </tr>
+                                        @endforeach
+                                    @endif
+                                @endif
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="pagination">
+                        <button class="prev" disabled>Sebelumnya</button>
+                        <div class="page-numbers"></div>
+                        <button class="next" disabled>Selanjutnya</button>
+                    </div>
                 </div>
-            </div>
+            </section>
         </div>
     </div>
 @endsection
