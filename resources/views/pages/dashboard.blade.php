@@ -109,13 +109,14 @@
                                         @endforeach
                                         @if ($showMessage)
                                             <tr>
-                                                <td colspan="5" style="text-align:center;">Belum ada peserta pada kompetisi aktif.</td>
+                                                <td colspan="5" style="text-align:center;">Belum ada peserta pada kompetisi aktif</td>
                                             </tr>
                                         @endif
                                     @endif
                                 </tbody>
                             </table>
                         </div>
+                        
                         <div class="pagination">
                             <button class="prev" disabled>Sebelumnya</button>
                             <div class="page-numbers"></div>

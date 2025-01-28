@@ -48,7 +48,7 @@
                             </thead>
                             <tbody>
                                 @if ($atlets->isEmpty())
-                                    <tr><td colspan="7" style="text-align:center;">Belum ada data</td></tr>
+                                    <tr><td colspan="7" style="text-align:center;">Belum ada tagihan</td></tr>
                                 @else
                                 @php $counter = 1; @endphp
                                     @foreach ($atlets as $atlet)
