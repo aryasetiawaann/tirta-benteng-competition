@@ -62,7 +62,7 @@
                                     <th>Umur</th>
                                     <th>Jenis Kelamin</th>
                                     <th>Track Record</th>
-                                    <th>Kelengkapan Dokumen</th>
+                                    <th>Dokumen</th>
                                     <th>Aksi</th>
                                 </tr>
                             </thead>
@@ -79,32 +79,39 @@
                                             <td>{{ $atlet->jenis_kelamin }}</td>
                                             <td>
                                                 <a href="{{ route('dashboard.track-record.index', $atlet->id) }}">
-                                                    <button class="button-gap" data-tooltip="Track Record"><i class='bx bx-xs bx-timer'></i></button>
+                                                    <button class="button-gap" data-tooltip="Lihat Track Record">
+                                                        <i class='bx bx-xs bx-timer'></i>
+                                                    </button>
                                                 </a>
                                             </td>
 
                                             @if ($atlet->dokumen != NULL)
-                                                <td>Lengkap</td>  
-                                            @else
-                                                <td>Tidak Lengkap</td>
-                                            @endif
-                                            <td>
-                                                <div class="actions">
-                                                    <a href="{{ route('dashboard.atlet.edit', $atlet->id) }}">
-                                                        <button class="button-gap" data-tooltip="Edit Atlet"><i class='bx bx-xs bx-edit'></i></button>
-                                                    </a>
-                                                    @if ($atlet->dokumen != NULL)
+                                                <td>
+                                                    <div class="dokumen">
                                                         <a href="{{ route('dashboard.atlet.dokumen.download', $atlet->id) }}">
-                                                            <button class="button-gap button-green" data-tooltip="Unduh Dokumen"><i class='bx bx-xs bx-file'></i></button>
+                                                            <button class="button-gap button-green" data-tooltip="Unduh Dokumen">
+                                                                <i class='bx bx-xs bx-download'></i>
+                                                            </button>
                                                         </a>
                                                         <form action="{{ route('dashboard.atlet.dokumen.delete', $atlet->id) }}" method="post">
                                                             @csrf
                                                             @method('delete')
                                                             <button class="button-red button-gap" data-tooltip="Hapus Dokumen" onclick="return confirm('Apakah kamu yakin ingin menghapus dokumen ini? ')">
-                                                                <i class='bx bx-xs bx-file'></i>
+                                                                <i class='bx bx-xs bx-trash'></i>
                                                             </button>
                                                         </form>
-                                                    @endif
+                                                    </div>
+                                                </td>
+                                            @else
+                                                <td>Tidak ada dokumen</td>
+                                            @endif
+                                            <td>
+                                                <div class="actions">
+                                                    <a href="{{ route('dashboard.atlet.edit', $atlet->id) }}">
+                                                        <button class="button-gap" data-tooltip="Edit Atlet">
+                                                            <i class='bx bx-xs bx-edit'></i>
+                                                        </button>
+                                                    </a>
                                                     <form action="{{ route('dashboard.atlet.destroy', $atlet->id) }}" method="post">
                                                         @csrf
                                                         @method('delete')
@@ -118,7 +125,7 @@
                                         @endif
                                     @endforeach
                                 @else
-                                    <tr><td colspan="7" style="text-align:center;">Belum ada data</td></tr>
+                                    <tr><td colspan="7" style="text-align:center;">Belum ada atlet</td></tr>
                                 @endif 
                             </tbody>
                         </table>
