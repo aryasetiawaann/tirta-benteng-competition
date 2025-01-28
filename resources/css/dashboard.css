@@ -33,11 +33,6 @@ body, html {
         width: 100%;
     }
 
-    .table-container table th,
-    .table-container table td {
-        white-space: nowrap;
-    }
-
     #entries {
         margin-left: 5px;
         padding: 5px;

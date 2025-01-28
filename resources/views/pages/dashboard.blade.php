@@ -79,12 +79,11 @@
                                         <th>Kompetisi</th>
                                         <th>Nomor Lomba</th>
                                         <th>Status Pembayaran</th>
-                                        <th>Status Kompetisi</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @if ($atlets->isEmpty())
-                                        <tr><td colspan="7" style="text-align:center;">Belum ada data</td></tr>
+                                        <tr><td colspan="7" style="text-align:center;">Belum ada peserta</td></tr>
                                     @else
                                     @php $counter = 1; @endphp
                                         @foreach ($atlets as $atlet)
@@ -95,13 +94,6 @@
                                                     <td>{{ $acara->kompetisi->nama }}</td>
                                                     <td>{{ $acara->nomor_lomba }}</td>
                                                     <td><span class="status waiting">{{ $acara->pivot->status_pembayaran }}</span></td>
-                                                    @if (now() > $acara->kompetisi->waktu_kompetisi)
-                                                        <td><span class="status registration">Selesai</span></td>
-                                                    @elseif (now() >= $acara->kompetisi->tutup_pendaftaran)
-                                                        <td><span class="status registration">Tutup Registrasi</span></td>
-                                                    @else
-                                                        <td><span class="status registration">Registrasi</span></td>
-                                                    @endif
                                                 </tr>
                                             @endforeach
                                         @endforeach
