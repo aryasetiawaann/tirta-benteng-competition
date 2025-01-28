@@ -160,8 +160,8 @@ class AcaraController extends Controller
 
         $validation->after(function($validator) use ($data) {
             if (isset($data['max_umur']) && isset($data['min_umur'])) {
-                if ($data['max_umur'] > $data['min_umur']) {
-                    $validator->errors()->add('max_umur', 'Maksimal tahun harus lebih kecil dari atau sama dengan minimal tahun.');
+                if ($data['max_umur'] < $data['min_umur']) {
+                    $validator->errors()->add('max_umur', 'Maksimal tahun harus lebih besar dari atau sama dengan minimal tahun.');
                 }
             }
         });
