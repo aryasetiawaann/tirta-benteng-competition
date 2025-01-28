@@ -51,7 +51,7 @@
                                 @if (Auth::user()->role != 'admin')
                                     
                                     @if ($competitions->isEmpty())
-                                        <tr><td colspan="4" style="text-align:center;">Belum ada data</td></tr>
+                                        <tr><td colspan="4" style="text-align:center;">Belum ada buku acara</td></tr>
                                     @else
                                         @php $counter = 1; @endphp
                                         @foreach ( $competitions as $competition ) 

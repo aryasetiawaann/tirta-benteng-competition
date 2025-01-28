@@ -51,7 +51,7 @@
                                     @if ($competitions->contains(function ($competition) {
                                         return is_null($competition->file_hasil);
                                     }) || $competitions->isEmpty())
-                                        <tr><td colspan="4" style="text-align:center;">Belum ada data</td></tr>
+                                        <tr><td colspan="4" style="text-align:center;">Belum ada buku hasil</td></tr>
                                 @else
                                 @php $counter = 1; @endphp
                                     @foreach ( $competitions as $competition )
