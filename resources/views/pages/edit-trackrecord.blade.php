@@ -39,8 +39,8 @@
                         </select>
 
                         <div id="lainnyaInput" style="margin-top: 3px; {{ !in_array($selectedCompetition, $competitions->pluck('nama')->toArray()) ? '' : 'display: none;' }}">
-                            <label for="kompetisi_lainnya" style="margin-right: 60%">Nama Kompetisi</label>
-                            <input type="text" name="kompetisi_lainnya" id="kompetisi_lainnya" placeholder="Nama Kompetisi"
+                            <label for="kompetisi_lainnya" style="display: flex">Nama Kompetisi *</label>
+                            <input type="text" name="kompetisi_lainnya" id="kompetisi_lainnya" placeholder="Nama Kompetisi" style="width: 100%"
                             value="{{ !in_array($selectedCompetition, $competitions->pluck('nama')->toArray()) ? $selectedCompetition : '' }}">
                         </div>
 

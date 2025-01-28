@@ -17,9 +17,9 @@
                     <option value="lainnya">Lainnya</option>
                 </select>
 
-                <div id="lainnyaInput" style="display: none; margin-top: 3px;">
-                    <label for="kompetisi_lainnya" style="margin-right: 60%">Nama Kompetisi</label>
-                    <input type="text" name="kompetisi_lainnya" id="kompetisi_lainnya" placeholder="Nama Kompetisi">
+                <div id="lainnyaInput">
+                    <label for="kompetisi_lainnya" style="display: flex">Nama Kompetisi *</label>
+                    <input type="text" name="kompetisi_lainnya" id="kompetisi_lainnya" placeholder="Nama Kompetisi" style="width: 100%">
                 </div>
 
                 <label for="kategori">Nomor Lomba *</label>

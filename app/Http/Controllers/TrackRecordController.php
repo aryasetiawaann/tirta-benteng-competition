@@ -25,13 +25,30 @@ class TrackRecordController extends Controller
 
     public function create(Request $request)
     {
-        // Validasi input awal
-        $request->validate([
+        // Definisi pesan error dalam Bahasa Indonesia
+        $messages = [
+            'atlet_id.required' => 'ID atlet wajib diisi.',
+            'atlet_id.exists' => 'Atlet yang dipilih tidak valid.',
+            'kategori.required' => 'Kategori lomba wajib diisi.',
+            'kompetisi.required' => 'Kolom kompetisi wajib diisi.',
+            'kompetisi_lainnya.required_if' => 'Nama kompetisi wajib diisi jika memilih "Lainnya".',
+            'kompetisi_lainnya.max' => 'Kolom kompetisi lainnya tidak boleh lebih dari 255 karakter.',
+        ];
+
+        // Validasi request dengan pesan custom
+        $validator = Validator::make($request->all(), [
             'atlet_id' => 'required|exists:atlets,id',
             'kategori' => 'required',
             'kompetisi' => 'required',
-            'kompetisi_lainnya' => 'nullable|string|max:255',
-        ]);
+            'kompetisi_lainnya' => 'required_if:kompetisi,lainnya|nullable|string|max:255',
+        ], $messages);
+
+        // Cek jika validasi gagal
+        if ($validator->fails()) {
+            return redirect()->back()
+                            ->withErrors($validator) // Kirim kembali error
+                            ->withInput(); // Kirim kembali data input
+        }
 
         // Tentukan kompetisi yang akan disimpan
         $kompetisi = $request->kompetisi;
