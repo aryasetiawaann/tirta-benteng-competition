@@ -54,7 +54,7 @@
                         @elseif (now() >= $kompe->buka_pendaftaran && now() < $kompe->tutup_pendaftaran)
                         <p>Status: <span class="status buka smaller">Registrasi</span></p>
                         @else
-                        <p>Status: <span class="status buka smaller">Belum dibuka</span></p>
+                        <p>Status: <span class="status belum-buka smaller">Belum dibuka</span></p>
                         @endif
                     </h3>
                     

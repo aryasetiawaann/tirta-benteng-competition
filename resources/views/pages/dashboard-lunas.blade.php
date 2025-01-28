@@ -46,8 +46,6 @@
                                     <th>Kompetisi</th>
                                     <th>Nomor Lomba</th>
                                     <th>Jumlah Pembayaran</th>
-                                    <th>Status Pembayaran</th>
-                                    <th>Waktu Pembayaran</th>
                                 </tr>
                             </thead>
                             <tbody>                            
@@ -64,8 +62,6 @@
                                         <td>{{ $acara->kompetisi->nama }}</td>
                                         <td>{{ $acara->nomor_lomba }} - {{$acara->nama}}</td>
                                         <td><span class="status bayar">Rp.{{ number_format($acara->harga, 2, ',', '.') }}</span></td>
-                                        <td><span class="status bayar">{{ $acara->pivot->status_pembayaran }}</span></td>
-                                        <td>{{ \Carbon\Carbon::parse($acara->pivot->waktu_pembayaran)->format('d-m-Y') }}</td>
                                     </tr>
                                     @endif
                                     @endforeach

@@ -44,7 +44,7 @@
                         @elseif (now() >= $kompetisi->tutup_pendaftaran)
                         <p>Status: <span class="status buka smaller">Tutup Registrasi</span></p>
                         @else
-                        <p>Status: <span class="status buka smaller">Menunggu</span></p>
+                        <p>Status: <span class="status buka smaller">Terdaftar</span></p>
                         @endif
                     </h3>
                     

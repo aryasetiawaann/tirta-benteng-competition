@@ -83,20 +83,35 @@
                                 </thead>
                                 <tbody>
                                     @if ($atlets->isEmpty())
-                                        <tr><td colspan="7" style="text-align:center;">Belum ada peserta</td></tr>
+                                        <tr>
+                                            <td colspan="5" style="text-align:center;">Belum ada peserta</td>
+                                        </tr>
                                     @else
-                                    @php $counter = 1; @endphp
+                                        @php 
+                                            $counter = 1; 
+                                            $showMessage = false;
+                                        @endphp
+
                                         @foreach ($atlets as $atlet)
-                                            @foreach ($atlet->acara as $acara)    
-                                                <tr>
-                                                    <td>{{ $counter++}}</td>
-                                                    <td>{{ $atlet->name }}</td>
-                                                    <td>{{ $acara->kompetisi->nama }}</td>
-                                                    <td>{{ $acara->nomor_lomba }}</td>
-                                                    <td><span class="status waiting">{{ $acara->pivot->status_pembayaran }}</span></td>
-                                                </tr>
+                                            @foreach ($atlet->acara as $acara)
+                                                @if (now() < $acara->kompetisi->waktu_kompetisi)
+                                                    <tr>
+                                                        <td>{{ $counter++ }}</td>
+                                                        <td>{{ $atlet->name }}</td>
+                                                        <td>{{ $acara->kompetisi->nama }}</td>
+                                                        <td>{{ $acara->nomor_lomba }}</td>
+                                                        <td><span class="status waiting">{{ $acara->pivot->status_pembayaran }}</span></td>
+                                                    </tr>
+                                                @else (now() >= $acara->kompetisi->tutup_pendaftaran)
+                                                    @php $showMessage = true; @endphp
+                                                @endif
                                             @endforeach
                                         @endforeach
+                                        @if ($showMessage)
+                                            <tr>
+                                                <td colspan="5" style="text-align:center;">Belum ada peserta pada kompetisi aktif.</td>
+                                            </tr>
+                                        @endif
                                     @endif
                                 </tbody>
                             </table>
@@ -121,11 +136,11 @@
                                 @if(now() > $kompetisi->waktu_kompetisi)
                                 <span class="status tutup smaller">Selesai</span>
                                 @elseif (now() >= $kompetisi->tutup_pendaftaran)
-                                <span class="status buka smaller">Tutup Registrasi</span>
+                                <span class="status tutup smaller">Tutup Registrasi</span>
                                 @elseif (now() >= $kompetisi->buka_pendaftaran && now() < $kompetisi->tutup_pendaftaran)
                                 <span class="status buka smaller">Registrasi</span>
                                 @else
-                                <span class="status buka smaller">Belum dibuka</span>
+                                <span class="status belum-buka smaller">Belum dibuka</span>
                                 @endif
                                 <p><strong>Lokasi:</strong> {{ $kompetisi->lokasi }}</p>
                                 <p>{!! $kompetisi->deskripsi !!}</p>
