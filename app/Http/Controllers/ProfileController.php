@@ -38,6 +38,19 @@ class ProfileController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users,email,' . Auth::id(),
             'phone' => 'required|string|regex:/^(0)[8][1-9][0-9]{6,11}$/| max:15',
+        ], [
+            'name.required' => 'Nama wajib diisi.',
+            'name.string' => 'Nama harus berupa string.',
+            'name.max' => 'Nama tidak boleh lebih dari 255 karakter.',
+            'email.required' => 'Email wajib diisi.',
+            'email.string' => 'Email harus berupa string.',
+            'email.email' => 'Format email tidak valid.',
+            'email.max' => 'Email tidak boleh lebih dari 255 karakter.',
+            'email.unique' => 'Email sudah terdaftar.',
+            'phone.required' => 'Nomor telepon wajib diisi.',
+            'phone.string' => 'Nomor telepon harus berupa string.',
+            'phone.regex' => 'Format nomor telepon tidak valid.',
+            'phone.max' => 'Nomor telepon tidak boleh lebih dari 15 karakter.',
         ]);
 
         if ($validation->fails()) {
