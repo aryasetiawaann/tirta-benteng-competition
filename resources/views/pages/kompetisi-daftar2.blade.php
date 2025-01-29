@@ -81,7 +81,7 @@
                                     @endforeach
                                 @else
                                     <tr>
-                                        <td colspan="5" style="text-align:center;">Belum ada data</td>
+                                        <td colspan="5" style="text-align:center;">Belum ada atlet terdaftar</td>
                                     </tr>
                                 @endif
                             </tbody>
