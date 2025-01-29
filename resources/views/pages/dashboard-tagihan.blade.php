@@ -20,7 +20,7 @@
         <div class="bottom-container">
             <section class="all-container all-card w100">
                 <header class="divider flex">
-                    <h1>Daftar Tagihan Belum Dibayarkan</h1>
+                    <h1>Daftar Tagihan</h1>
                 </header>
                 <div class="table-container">
                     <label for="entries">Tampilkan

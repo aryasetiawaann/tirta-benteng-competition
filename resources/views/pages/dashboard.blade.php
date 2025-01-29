@@ -96,7 +96,11 @@
                                                     <td>{{ $atlet->name }}</td>
                                                     <td>{{ $acara->kompetisi->nama }}</td>
                                                     <td>{{ $acara->nomor_lomba }}</td>
-                                                    <td><span class="status waiting">{{ $acara->pivot->status_pembayaran }}</span></td>
+                                                    <td>
+                                                        <span class="status {{ $acara->pivot->status_pembayaran === 'Menunggu' ? 'waiting' : 'bayar' }}">
+                                                            {{ $acara->pivot->status_pembayaran }}
+                                                        </span>
+                                                    </td>
                                                 </tr>
                                             @endif
                                         @endforeach
