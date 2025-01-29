@@ -35,7 +35,7 @@
   position: fixed;
   left: 0;
   width: 256px;
-  height: 100vh;
+  height: 100dvh;
   display: flex;
   flex-direction: column;
   gap: 20px;
