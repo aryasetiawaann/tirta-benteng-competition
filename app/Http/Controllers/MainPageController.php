@@ -21,7 +21,7 @@ class MainPageController extends Controller
     public function userDashboard()
     {
         $currentDate = Carbon::now();
-        $kompetisi_current = [3,10]; // Define multiple kompetisi_id
+        $kompetisi_current = [10]; // Define multiple kompetisi_id
 
         // Fetch kompetisi data
         $kompetisis = Kompetisi::where('waktu_kompetisi', '>', now())
