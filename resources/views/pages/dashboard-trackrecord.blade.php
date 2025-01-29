@@ -98,7 +98,7 @@
                                     </tr>
                                     @endforeach
                                 @else
-                                    <tr><td colspan="7" style="text-align:center;">Belum ada data</td></tr>
+                                    <tr><td colspan="7" style="text-align:center;">Belum ada track record</td></tr>
                                 @endif 
                             </tbody>
                         </table>

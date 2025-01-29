@@ -81,37 +81,31 @@
                                         <th>Status Pembayaran</th>
                                     </tr>
                                 </thead>
-                                <tbody>
-                                    @if ($atlets->isEmpty())
-                                        <tr>
-                                            <td colspan="5" style="text-align:center;">Belum ada peserta</td>
-                                        </tr>
-                                    @else
-                                        @php 
-                                            $counter = 1; 
-                                            $showMessage = false;
-                                        @endphp
+                                    <tbody>
+                                    @php 
+                                        $counter = 1; 
+                                        $showMessage = true; // Assume no data first
+                                    @endphp
 
-                                        @foreach ($atlets as $atlet)
-                                            @foreach ($atlet->acara as $acara)
-                                                @if (now() < $acara->kompetisi->waktu_kompetisi)
-                                                    <tr>
-                                                        <td>{{ $counter++ }}</td>
-                                                        <td>{{ $atlet->name }}</td>
-                                                        <td>{{ $acara->kompetisi->nama }}</td>
-                                                        <td>{{ $acara->nomor_lomba }}</td>
-                                                        <td><span class="status waiting">{{ $acara->pivot->status_pembayaran }}</span></td>
-                                                    </tr>
-                                                @else (now() >= $acara->kompetisi->tutup_pendaftaran)
-                                                    @php $showMessage = true; @endphp
-                                                @endif
-                                            @endforeach
+                                    @foreach ($atlets as $atlet)
+                                        @foreach ($atlet->acara as $acara)
+                                            @if (now() < $acara->kompetisi->waktu_kompetisi)
+                                                @php $showMessage = false; @endphp <!-- Set to false when data exists -->
+                                                <tr>
+                                                    <td>{{ $counter++ }}</td>
+                                                    <td>{{ $atlet->name }}</td>
+                                                    <td>{{ $acara->kompetisi->nama }}</td>
+                                                    <td>{{ $acara->nomor_lomba }}</td>
+                                                    <td><span class="status waiting">{{ $acara->pivot->status_pembayaran }}</span></td>
+                                                </tr>
+                                            @endif
                                         @endforeach
-                                        @if ($showMessage)
-                                            <tr>
-                                                <td colspan="5" style="text-align:center;">Belum ada peserta pada kompetisi aktif</td>
-                                            </tr>
-                                        @endif
+                                    @endforeach
+
+                                    @if ($showMessage)
+                                        <tr>
+                                            <td colspan="5" style="text-align:center;">Belum ada peserta pada kompetisi aktif</td>
+                                        </tr>
                                     @endif
                                 </tbody>
                             </table>
@@ -149,7 +143,7 @@
                             <div class="divider"></div>
                         @endforeach
                     @else
-                    <p>Belum ada kompetisi</p>
+                        <p>Belum ada kompetisi</p>
                     @endif
                 </div>
             </div>
