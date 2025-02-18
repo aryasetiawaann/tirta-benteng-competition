@@ -67,6 +67,7 @@ class AcaraController extends Controller
                 $query->where('acara_id', $acaraId);
             })
             ->with('acara')
+            ->orderBy('name', 'asc')
             ->get()
             ->filter(function ($atlet) use ($minYear, $maxYear) {
                 // Mengambil tahun lahir atlet

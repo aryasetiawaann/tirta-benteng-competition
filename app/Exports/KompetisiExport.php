@@ -116,16 +116,16 @@ class KompetisiExport implements FromCollection, WithMapping, ShouldAutoSize, Wi
 
                 // Atur gaya default
                 $sheet->getParent()->getDefaultStyle()->getFont()->setName('Courier New');
-                $sheet->getParent()->getDefaultStyle()->getFont()->setSize(12);
+                $sheet->getParent()->getDefaultStyle()->getFont()->setSize(13);
 
                 // Gaya untuk header
                 $headerStyle = [
                     'font' => [
-                        'color' => ['argb' => 'FFFFFFFF'],
+                        'color' => ['argb' => '000000'],
                     ],
                     'fill' => [
                         'fillType' => \PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID,
-                        'startColor' => ['argb' => '008DDA'],
+                        'startColor' => ['argb' => 'FFFFFFFF'],
                     ],
                     'alignment' => [
                         'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER,
@@ -141,24 +141,31 @@ class KompetisiExport implements FromCollection, WithMapping, ShouldAutoSize, Wi
                 $contentStyle = [
                     'font' => [
                         'name' => 'Courier New',
-                        'size' => 12,
+                        'size' => 13,
                     ],
                     'alignment' => [
                         'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER,
-                    ],
-                    'borders' => [
-                        'allBorders' => [
-                            'borderStyle' => Border::BORDER_THIN,
-                        ],
                     ],
                 ];
 
                 $currentRow = 1;
 
                 foreach ($this->acaras as $acara) {
+
+                    $kategori = strtoupper($acara->kategori); // Default uppercase kategori
+                    if ($acara->kategori == 'Wanita') {
+                        $kategori = 'PUTRI';
+                    } elseif ($acara->kategori == 'Pria') {
+                        $kategori = 'PUTRA';
+                    } elseif ($acara->kategori == 'Campuran') {
+                        $kategori = 'CAMPURAN';
+                    }
+
+
                     // Merge untuk baris ACARA
                     $sheet->mergeCells("A$currentRow:G$currentRow");
-                    $sheet->setCellValue("A$currentRow", 'Acara ' . $acara->nomor_lomba . ' | ' . $acara->nama . ' - ' . $acara->grup);
+                    $sheet->setCellValue("A$currentRow", 'Acara ' . $acara->nomor_lomba . ' | ' . $acara->nama . ' - ' . strtoupper($acara->grup)
+                    . ' '. $kategori);
                     $sheet->getStyle("A$currentRow:G$currentRow")->applyFromArray($headerStyle);
 
                     $currentRow += 2;
@@ -175,9 +182,9 @@ class KompetisiExport implements FromCollection, WithMapping, ShouldAutoSize, Wi
                             $this->mergeGrupColumns($sheet, $currentRow);
                             
                             if ($key == count($acara->heats) - 1) {
-                                $currentRow += 13;
+                                $currentRow += 17;
                             } else {
-                                $currentRow += 12;
+                                $currentRow += 16;
                             }
                             $serieIndex++;
                         }
@@ -200,7 +207,7 @@ class KompetisiExport implements FromCollection, WithMapping, ShouldAutoSize, Wi
     // Merge Grup A, B, C, dan D
     private function mergeGrupColumns($sheet, $currentRow)
     {
-        $groupNames = ['A', 'B', 'C']; // Nama grup
+        $groupNames = ['A', 'B', 'C', 'D']; // Nama grup
         $groupRowCount = 4; // Jumlah baris per grup
 
         foreach ($groupNames as $index => $groupName) {
@@ -216,6 +223,18 @@ class KompetisiExport implements FromCollection, WithMapping, ShouldAutoSize, Wi
                     'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER,
                 ],
             ]);
+            $sheet->getStyle("B$startGroupRow:B$endGroupRow")->applyFromArray([
+                'borders' => [
+                    'outline' => [
+                        'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+                        'color' => ['argb' => '000000'], // Warna hitam
+                    ],
+                    'inside' => [
+                        'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+                        'color' => ['argb' => '000000'],
+                    ],
+                ],
+            ]);
         }
     }
   
@@ -225,7 +244,7 @@ class KompetisiExport implements FromCollection, WithMapping, ShouldAutoSize, Wi
     private function mergeSeriColumns($sheet, $currentRow, $serieIndex)
     {
         $startSeriRow = $currentRow; // Baris awal seri
-        $endSeriRow = $startSeriRow + 11; // Total 16 baris (4 grup × 4 baris)
+        $endSeriRow = $startSeriRow + 15; // Total 16 baris (4 grup × 4 baris)
         $sheet->mergeCells("A$startSeriRow:A$endSeriRow");
         $sheet->setCellValue("A$startSeriRow", $serieIndex + 1);
         $sheet->getStyle("A$startSeriRow")->applyFromArray([

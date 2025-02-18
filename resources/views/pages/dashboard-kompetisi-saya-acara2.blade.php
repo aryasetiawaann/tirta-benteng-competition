@@ -51,11 +51,11 @@
                         </thead>
                         <tbody>
                             @if ($atlets->count() > 0)
-                                @foreach ($atlets as $key => $peserta) 
+                                @foreach ($atlets as $peserta) 
                                     <tr>
-                                        <td>{{ $key + 1 }}</td>
+                                        <td>{{ $loop->iteration }}</td>
                                         <td>{{ $peserta->name }}</td>
-                                        <td>{{ now()->diffInYears(\Carbon\Carbon::parse($peserta->umur)) }}</td>
+                                        <td>{{ \Carbon\Carbon::parse($peserta->umur)->year }}</td>
                                         <td>{{ $peserta->jenis_kelamin }}</td>
                                     </tr> 
                                 @endforeach

@@ -48,7 +48,8 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @if (Auth::user()->role != 'admin')
+                                <tr><td colspan="4" style="text-align:center;">Belum ada buku acara</td></tr>
+                                {{-- @if (Auth::user()->role != 'admin')
                                     
                                     @if ($competitions->isEmpty())
                                         <tr><td colspan="4" style="text-align:center;">Belum ada buku acara</td></tr>
@@ -109,7 +110,7 @@
                                         </tr>
                                         @endforeach
                                     @endif
-                                @endif
+                                @endif --}}
                             </tbody>
                         </table>
                     </div>
