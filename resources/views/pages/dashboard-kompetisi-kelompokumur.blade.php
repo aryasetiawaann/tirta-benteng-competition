@@ -27,8 +27,8 @@
             <section class="all-container all-card">
             @foreach ($grupList as $grup )
                 <header class="flex divider">
-                    <h2>KU {{ $grup }}</h2>
-                    <a href="{{ route('dashboard.acara', ['kelompok' => $grup, 'id' => $id_kompetisi]) }}"><button>Daftar</button></a>
+                    <h2>KU {{ $grup['grup'] }} ({{ $grup['max_umur'] != null ? $grup['min_umur'] . ' - ' . $grup['max_umur'] : $grup['min_umur'] }})</h2>
+                    <a href="{{ route('dashboard.acara', ['kelompok' => $grup['grup'], 'id' => $id_kompetisi]) }}"><button>Daftar</button></a>
                 </header>
             @endforeach
             </section>

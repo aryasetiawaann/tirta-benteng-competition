@@ -36,7 +36,13 @@ class KompetisiController extends Controller
     {
         $acara = Acara::all()->where("kompetisi_id", $id)->sortBy("grup");
 
-        $grupList = $acara->pluck('grup')->unique()->sort();
+        $grupList = $acara->map(function ($item){
+            return [
+                'grup' => $item->grup,
+                'max_umur' => $item->max_umur,
+                'min_umur' => $item->min_umur,
+            ];
+        })->unique('grup')->sortBy('grup')->values();
         
         $nama_kompetisi = Kompetisi::find($id)->nama;
         $id_kompetisi = Kompetisi::find($id)->id;

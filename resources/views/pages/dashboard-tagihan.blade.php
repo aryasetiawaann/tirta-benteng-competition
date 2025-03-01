@@ -12,7 +12,7 @@
                     <div class="card-content">
                         <h1>Tagihan</h1>
                         {{-- INI BUAT PENGUMUMAN --}}
-                        <h4 style="color: green">Informasi: Untuk pembayaran silahkan kontak melalui <a href="tel:+6281311384000">081311384000</a> - April | BCA : 5710104923 a/n Apriliani</h4>
+                        {{-- <h4 style="color: green">Informasi: Untuk pembayaran silahkan kontak melalui <a href="tel:+6281311384000">081311384000</a> - April | BCA : 5710104923 a/n Apriliani</h4> --}}
                     </div>  
                 </div>
             </div>
@@ -23,6 +23,7 @@
                     <h1>Daftar Tagihan</h1>
                 </header>
                 <div class="table-container">
+                    
                     <label for="entries">Tampilkan
                         <select id="entries" name="entries">
                             <option value="5">5</option>
@@ -38,6 +39,7 @@
                         <table>
                             <thead>
                                 <tr>
+                                    <th><input type="checkbox" name="" id="select_all_id"></th>
                                     <th>#</th>
                                     <th>Nama</th>
                                     <th>Kompetisi</th>
@@ -47,24 +49,20 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @if ($atlets->isEmpty())
+                                @if ($pesertas->isEmpty())
                                     <tr><td colspan="6" style="text-align:center;">Belum ada tagihan</td></tr>
                                 @else
-                                @php $counter = 1; @endphp
-                                    @foreach ($atlets as $atlet)
-                                        @foreach ($atlet->acara as $acara)
-                                        @if($acara->pivot->status_pembayaran == "Menunggu")
+                                    @foreach ($pesertas as $peserta)
                                         <tr>
-                                            <td>{{ $counter++ }}</td>
-                                            <td>{{ $atlet->name }}</td>
-                                            <td>{{ $acara->kompetisi->nama }}</td>
-                                            <td>{{ $acara->nomor_lomba }} - {{ $acara->nama }}</td>
-                                            <td><span class="status bayar">Rp{{ number_format($acara->harga, 2, ',', '.') }}</span></td>
+                                            <td><input type="checkbox" name="ids" class="checkbox_ids" value="{{ $peserta->id }}" data-harga={{ $peserta->getAcara->harga }}></td>
+                                            <td>{{ $loop->iteration }}</td>
+                                            <td>{{ $peserta->getAtlet->name }}</td>
+                                            <td>{{ $peserta->getAcara->kompetisi->nama }}</td>
+                                            <td>{{ $peserta->getAcara->nomor_lomba }} - {{ $peserta->getAcara->nama }}</td>
+                                            <td><span class="status bayar">Rp{{ number_format($peserta->getAcara->harga, 2, ',', '.') }}</span></td>
                                             <td>
                                                 <div class="actions">
-                                                    {{-- Hapus Style buat unable lagi --}}
-                                                    <button onclick="payButton(this)" data-id="{{ $acara->pivot->id }}" data-harga="{{ $acara->harga }}" class="button-gap pay-button" data-tooltip="Bayar" style='display:none;'><i class='bx bx-xs bxs-credit-card'></i></button>
-                                                    <form action="{{ route('dashboard.tagihan.destroy', $acara->pivot->id) }}" method="post">
+                                                    <form action="{{ route('dashboard.tagihan.destroy', $peserta->id) }}" method="post">
                                                         @csrf
                                                         @method('delete')
                                                         <a onclick="return confirm('Apakah kamu yakin ingin menghapus? ')"><button class="button-red button-gap" data-tooltip="Hapus Tagihan"><i class='bx bx-xs bxs-trash' ></i></button></a>
@@ -72,19 +70,14 @@
                                                 </div>
                                             </td>
                                         </tr>
-                                        @endif
-                                        @endforeach
                                     @endforeach
                                 @endif
                             </tbody>
                         </table>
                     </div>
-                    {{-- Hapus Style buat unable lagi --}}
-                    <div class="total-price" style='display:none;'>
-                        @if ($totalHarga != 0)
-                            <p><b>Total: </b>Rp{{ number_format($totalHarga, 2, ',', '.') }}</p>
-                            <button class="pay-all-button" onclick="payAll()">Bayar Semua</button>
-                        @endif
+                    <div class="total-price">
+                        <p><b>Total Pembayaran: Rp.</b><span id="total_harga">0,00</span></p>
+                        <button class="pay-all-button" id="payButton" style="display: none">Bayar</button>
                     </div>
                     <div class="pagination">
                         <button class="prev" disabled>Sebelumnya</button>
@@ -96,57 +89,95 @@
         </div>
     </div>
 
-    <script type="text/javascript">
-        
-        function payButton(element) {
-            var paymentId = element.getAttribute('data-id');
-            var paymentPrice = element.getAttribute('data-harga');
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const selectAllCheckbox = document.getElementById("select_all_id");
+            const checkboxes = document.querySelectorAll(".checkbox_ids");
+            const totalHargaElement = document.getElementById("total_harga");
+            const payButton = document.getElementById("payButton");
 
-            fetch("{{ route('dashboard.tagihan.generateSnapToken') }}", {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                },
-                body: JSON.stringify({ payment_id: paymentId , payment_price: paymentPrice})
-            })
-            .then(response => response.json())
-            .then(data => {
-                if(data.snap_token){
-                    window.snap.pay(data.snap_token, {
-                        onSuccess: function(result){
-                            window.location.href = "/dashboard/riwayat-pembayaran";
-                        },
-                        onPending: function(result){
-                        },
-                        onError: function(result){
-                        }
-                    });
-                } else {
-                    alert('Gagal mendapatkan token pembayaran.');
-                }
-            })
-            .catch(error => {
-                // console.log('Payment ID:', paymentId);
-                // console.log('Payment Price:', paymentPrice);
-                // console.error('Error:', error);
-                alert('Harap untuk cek pesan masuk pada email anda.');
+            selectAllCheckbox.addEventListener("click", function() {
+                checkboxes.forEach(checkbox => {
+                    checkbox.checked = selectAllCheckbox.checked;
+                    updateTotalHarga();
+                });
             });
-        }
 
-        function payAll() {
-            window.snap.pay('{{ $snapToken }}', {
-            onSuccess: function(result){
-              window.location.href = "/dashboard/riwayat-pembayaran";
-            },
-            onPending: function(result){
-              /* You may add your own implementation here */
-            },
-            onError: function(result){
-              /* You may add your own implementation here */
+            checkboxes.forEach(checkbox => {
+                checkbox.addEventListener("change", updateTotalHarga);
+            });
+
+            payButton.addEventListener("click", function(){
+                let selectedIds = [];
+                let checkedCheckboxes = document.querySelectorAll(".checkbox_ids:checked");
+
+                checkedCheckboxes.forEach(checkbox => {
+                    selectedIds.push(checkbox.value);
+                });
+
+                if (selectedIds.length === 0) {
+                    alert("Atlets Ids is Empty");
+                    return;
+                }
+
+                fetch("{{ route('dashboard.tagihan.generateSnapToken') }}" ,{
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "X-CSRF-TOKEN": "{{ csrf_token() }}"
+                    },
+                    body: JSON.stringify({ peserta_ids: selectedIds })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.snap_token) {
+                        snap.pay(data.snap_token, {
+                            onSuccess: function(result) {
+                                // Redirect ke halaman sukses setelah pembayaran berhasil
+                                window.location.href = "/dashboard/riwayat-pembayaran";
+                            },
+                            onPending: function(result) {
+                                // Redirect ke halaman menunggu jika pembayaran masih pending
+                                window.location.href = "/dashboard/riwayat-pembayaran";
+                            },
+                            onError: function(result) {
+                                // Redirect ke halaman gagal jika ada kesalahan saat pembayaran
+                                window.location.href = "/dashboard/riwayat-pembayaran";
+                            },
+                            onClose: function() {
+                                // Jika pengguna menutup tanpa menyelesaikan pembayaran, arahkan ke halaman tertentu
+                                window.location.href = "/dashboard/riwayat-pembayaran";
+                            }
+                        });
+                    } else {
+                        alert("Gagal mendapatkan token pembayaran.");
+                    }
+                })
+                .catch(error => console.error("Error:", error));
+            });
+
+
+            function updateTotalHarga() {
+                let total = 0;
+                let checkedCheckboxes = document.querySelectorAll(".checkbox_ids:checked");
+                let totalAtlet = checkedCheckboxes.length;
+
+                checkedCheckboxes.forEach(checkbox => {
+                    total += parseFloat(checkbox.getAttribute("data-harga"));
+                });
+
+                totalHargaElement.textContent = total.toLocaleString("id-ID", { minimumFractionDigits: 2 });
+
+                // Tampilkan tombol bayar jika ada atlet yang dipilih
+                if (totalAtlet > 0) {
+                    payButton.style.display = "block";
+                    payButton.textContent = `Bayar (${totalAtlet})`; // Tambahkan jumlah atlet ke tombol
+                } else {
+                    payButton.style.display = "none";
+                }
             }
-          });
-        }
+        });
+
     </script>
 
 @endsection

@@ -42,29 +42,48 @@
                             <thead>
                                 <tr>
                                     <th>#</th>
-                                    <th>Nama</th>
-                                    <th>Kompetisi</th>
-                                    <th>Nomor Lomba</th>
-                                    <th>Jumlah Pembayaran</th>
+                                    <th>Order ID</th>
+                                    <th>Metode</th>
+                                    <th>Detail</th>
+                                    <th>Total</th>
+                                    <th>Status</th>
+                                    <th>Aksi</th>
                                 </tr>
                             </thead>
                             <tbody>                            
-                                @if ($atlets->isEmpty())
+                                @if ($pembayaran->isEmpty())
                                 <tr><td colspan="5" style="text-align:center;">Belum ada riwayat pembayaran</td></tr>
                                 @else
-                                @php $counter = 1; @endphp
-                                @foreach ($atlets as $atlet)
-                                    @foreach ($atlet->acara as $acara)
-                                    @if ($acara->pivot->status_pembayaran == 'Selesai')   
+                                @foreach ($pembayaran as $bayar)
                                     <tr>
-                                        <td>{{ $counter++}}</td>
-                                        <td>{{ $atlet->name }}</td>
-                                        <td>{{ $acara->kompetisi->nama }}</td>
-                                        <td>{{ $acara->nomor_lomba }} - {{$acara->nama}}</td>
-                                        <td><span class="status bayar">Rp.{{ number_format($acara->harga, 2, ',', '.') }}</span></td>
+                                        <td>{{ $loop->iteration}}</td>
+                                        <td>{{ $bayar->midtrans_order_id }}</td>
+                                        <td>{{ $bayar->metode_pembayaran }}</td>
+                                        <td>
+                                            
+                                            @foreach ($bayar->groupedPeserta as $atletName => $pesertaList)
+                                                <b>{{ $atletName }}</b> <br> 
+                                                @foreach ($pesertaList as $peserta)
+                                                    - {{ $peserta->getAcara->nomor_lomba }} {{ $peserta->getAcara->nama }} 
+                                                    {{ $peserta->getAcara->grup }} <br>
+                                                @endforeach
+                                                <br>
+                                            @endforeach
+                                        </td>
+                                        <td><span class="status bayar">Rp.{{ number_format($bayar->total_harga, 2, ',', '.') }}</span></td>
+                                        @if ($bayar->status == 'Menunggu')
+                                            <td>
+                                                <span class="status" style="background-color: rgb(248, 164, 9)">{{ $bayar->status }}</span>
+                                            </td>
+                                            <td><button class="payButton" data-token={{ $bayar->snap_token }}>Bayar</button></td>
+                                        @elseif ($bayar->status == 'Berhasil')
+                                            <td><span class="status bayar" >{{ $bayar->status }}</span></td>
+                                        @elseif ($bayar->status == 'Gagal')
+                                            <td><span class="status" style="background-color: rgb(224, 17, 17)">{{ $bayar->status }}</span></td>
+                                        @elseif ($bayar->status == 'Kedaluarsa')
+                                            <td><span class="status" style="background-color: rgb(224, 17, 17)" >{{ $bayar->status }}</span></td>
+                                        @endif
                                     </tr>
-                                    @endif
-                                    @endforeach
                                 @endforeach
                                 @endif
                             </tbody>
@@ -78,4 +97,40 @@
             </div>
         </div>
     </div>
+
+    <script type="text/javascript">
+        document.addEventListener("DOMContentLoaded", function() {
+            const payButtons = document.querySelectorAll(".payButton");
+
+            payButtons.forEach(button => {
+                button.addEventListener("click", function() {
+                    const snapToken = this.getAttribute("data-token");
+
+                    if (!snapToken) {
+                        alert("Token pembayaran tidak tersedia!");
+                        return;
+                    }
+
+                    snap.pay(snapToken, {
+                        onSuccess: function(result) {
+                            // Redirect ke halaman sukses setelah pembayaran berhasil
+                            window.location.href = "/dashboard/riwayat-pembayaran";
+                        },
+                        onPending: function(result) {
+                            // Redirect ke halaman menunggu jika pembayaran masih pending
+                            window.location.href = "/dashboard/riwayat-pembayaran";
+                        },
+                        onError: function(result) {
+                            // Redirect ke halaman gagal jika ada kesalahan saat pembayaran
+                            window.location.href = "/dashboard/riwayat-pembayaran";
+                        },
+                        onClose: function() {
+                            // Jika pengguna menutup tanpa menyelesaikan pembayaran, arahkan ke halaman tertentu
+                            window.location.href = "/dashboard/riwayat-pembayaran";
+                        }
+                    });
+                });
+            });
+        });
+    </script>
 @endsection
