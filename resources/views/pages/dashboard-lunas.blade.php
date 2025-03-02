@@ -32,7 +32,7 @@
                             <option value="50">50</option>
                             <option value="100">100</option>
                         </select> 
-                        entri
+                        riwayat
                     </label>
                     <input type="text" id="search" placeholder="Cari...">
                     <div class="table-scroll">

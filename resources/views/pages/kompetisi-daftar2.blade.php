@@ -39,7 +39,7 @@
         <div class="bottom-container">
             <section class="all-container all-card w100">
                 <header class="divider flex">
-                    <h1>Daftar Atlet</h1>
+                    <h1>Daftar Peserta</h1>
                     @if ($acara->peserta->count() < $acara->kuota)
                     <a id="openOverlay"><button>Daftar</button></a>
                     @else
@@ -55,7 +55,7 @@
                             <option value="50">50</option>
                             <option value="100">100</option>
                         </select> 
-                        entri
+                        peserta
                     </label>
                     <input type="text" id="search" placeholder="Cari...">
                     <div class="table-scroll">
