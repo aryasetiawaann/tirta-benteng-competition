@@ -168,6 +168,7 @@ class PesertaController extends Controller
     public function tagihanRiwayat(){
 
         $pembayaran = Pembayaran::with('pendaftaran.getAtlet', 'pendaftaran.getAcara')
+        ->where('user_id', auth()->user()->id)
         ->orderBy('created_at', 'desc')->get();
 
         $pembayaran->each(function ($bayar) {
