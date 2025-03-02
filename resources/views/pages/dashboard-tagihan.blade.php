@@ -11,11 +11,13 @@
                     </div>
                     <div class="card-content">
                         <h1>Tagihan</h1>
-                        {{-- INI BUAT PENGUMUMAN --}}
-                        {{-- <h4 style="color: green">Informasi: Untuk pembayaran silahkan kontak melalui <a href="tel:+6281311384000">081311384000</a> - April | BCA : 5710104923 a/n Apriliani</h4> --}}
+
                     </div>  
                 </div>
             </div>
+        </div>
+        <div class="alert alert-warning" style="font-size: 20px">
+            <strong>Perhatian! Jika sudah melakukan pembayaran tidak dapat melakukan refund dan mengganti nomor acara. Dimohon di cek kembali sebelum melakukan pembayaran</strong>
         </div>
         <div class="bottom-container">
             <section class="all-container all-card w100">

@@ -15,11 +15,9 @@
                 </div>
             </div>
         </div>
-        <!-- <div class="nav-page nav-card">
-            <p>
-                <a href="#">#</a> / 
-            </p>
-        </div> -->
+        <div class="alert alert-warning" style="font-size: 20px">
+            <strong>Perhatian! Jika sudah melakukan pembayaran tidak dapat melakukan refund dan mengganti nomor acara. Dimohon di cek kembali sebelum melakukan pembayaran</strong>
+        </div>
         <div class="bottom-container">
             <section class="all-container all-card w100">
                 <header class="divider flex">
