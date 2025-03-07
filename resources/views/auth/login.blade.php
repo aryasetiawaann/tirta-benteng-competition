@@ -45,7 +45,7 @@
                     
                     <button>{{ __('Masuk') }}</button>
                     <a class="" href="{{ route('register') }}">
-                        {{ __('Belum memiliki akun?') }}
+                        {{ __('Belum memiliki akun? ') }} <span style="color:red">{{ __('Daftar disini') }}</span>
                     </a>
                 </div>
 

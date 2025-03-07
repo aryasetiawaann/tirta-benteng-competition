@@ -478,6 +478,20 @@ a:hover, span:hover {
     background-color: #005ec2;
 }
 
+.login-head a, 
+.register-head a, 
+.reset-pass-head a, 
+.forgot-pass-head a {
+    margin-left:15px
+}
+
+.login-head span, 
+.register-head span, 
+.reset-pass-head span, 
+.forgot-pass-head span {
+    margin-left:5px
+}
+
 @media screen and (max-width: 450px) {
     .register-container {
         width: 100%;
@@ -485,7 +499,7 @@ a:hover, span:hover {
         bottom: unset;
         margin: 0;
         padding: 15px 0;
-        border-radius: 10px;
+        border-radius: 0px;
         border-top: none;
     }
 
@@ -495,7 +509,7 @@ a:hover, span:hover {
         bottom: unset;
         margin: 0;
         padding: 15px 0;
-        border-radius: 10px;
+        border-radius: 0px;
         border-top: none;
     }
 
@@ -505,7 +519,7 @@ a:hover, span:hover {
         bottom: unset;
         margin: 0;
         padding: 15px 0;
-        border-radius: 10px;
+        border-radius: 0px;
         border-top: none;
     }
 
@@ -519,7 +533,7 @@ a:hover, span:hover {
         bottom: unset;
         margin: 0;
         padding: 15px 0;
-        border-radius: 10px;
+        border-radius: 0px;
         border-top: none;
     }
 }
