@@ -71,7 +71,7 @@ class UnduhanController extends Controller
                 $acara->heats = $heats;
             }
 
-            $groups = ['A', 'B', 'C'];
+            $groups = ['A', 'B'];
     
             $pdf = Pdf::loadView('layouts.print-layout-bukuacara' , compact('acaras', 'kompetisi', 'time', 'groups'))->setPaper('a4', 'potrait');
 
@@ -174,7 +174,7 @@ class UnduhanController extends Controller
         return $heats;
     }
 
-    private function divideIntoHeats($participants, $totalGroups = 4, $participantsPerGroup = 4)
+    private function divideIntoHeats($participants, $totalGroups = 2, $participantsPerGroup = 4) // jumlah grup per seri nya
     {
         // Hitung jumlah peserta per heat (total grup * peserta per grup)
         $maxLanes = $totalGroups * $participantsPerGroup;
