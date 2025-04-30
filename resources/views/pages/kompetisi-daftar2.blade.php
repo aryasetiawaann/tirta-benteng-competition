@@ -15,6 +15,14 @@
                 </div>
             </div>
         </div>
+
+
+        <div class="alert alert-warning">
+            <strong>Perhatian!</strong> Silahkan mengisi dokumen pada <a href="{{ route('dashboard.atlet.index') }}">halaman atlet</a> untuk dapat mendaftarkan atlet
+        </div>
+
+
+
         <nav class="breadcrumb">
             <ul>
                 <li>Kompetisi</li>

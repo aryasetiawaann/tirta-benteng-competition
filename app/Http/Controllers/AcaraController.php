@@ -90,6 +90,9 @@ class AcaraController extends Controller
             $atlets = $atlets->where('jenis_kelamin', 'Wanita');
         }
 
+        // Menyaring atlet yang sudah verified
+        $atlets = $atlets->where('is_verified', 'verified');
+
         // Mengambil daftar peserta yang sudah terdaftar untuk acara ini
         $atletList = $acara->peserta()->where('user_id', auth()->user()->id)->get()->sortBy('name');
 

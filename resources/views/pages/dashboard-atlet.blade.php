@@ -16,6 +16,11 @@
                 </div>
             </div>
         </div>
+
+        <div class="alert alert-warning">
+            <strong>Pengumuman.</strong> Harap menunggu dokumen diverifikasi oleh admin untuk dapat mendaftarkan atlet.
+        </div>
+
         <nav class="breadcrumb">
             <ul>
                 <li>Atlet Saya</li>
@@ -61,6 +66,7 @@
                                     <th>Tanggal Lahir</th>
                                     <th>Umur</th>
                                     <th>Jenis Kelamin</th>
+                                    <th>status</th>
                                     <th>Track Record</th>
                                     <th>Dokumen</th>
                                     <th>Aksi</th>
@@ -77,6 +83,17 @@
                                             <td>{{ \Carbon\Carbon::parse($atlet->umur)->format('d M Y') }}</td>
                                             <td>{{ now()->diffInYears(\Carbon\Carbon::parse($atlet->umur)) }}</td>
                                             <td>{{ $atlet->jenis_kelamin }}</td>
+
+                                            @if ($atlet->is_verified == 'not verified')
+                                                <td>
+                                                    <p>belum terverifikasi</p>
+                                                </td>
+                                            @else
+                                                <td>
+                                                    <p>terverifikasi</p>
+                                                </td>
+                                            @endif
+
                                             <td>
                                                 <a href="{{ route('dashboard.track-record.index', $atlet->id) }}">
                                                     <button class="button-gap" data-tooltip="Lihat Track Record">
@@ -93,15 +110,17 @@
                                                                 <i class='bx bx-xs bx-download'></i>
                                                             </button>
                                                         </a>
-                                                        <form action="{{ route('dashboard.atlet.dokumen.delete', $atlet->id) }}" method="post">
-                                                            @csrf
-                                                            @method('delete')
-                                                            <button class="button-red button-gap" data-tooltip="Hapus Dokumen" onclick="return confirm('Apakah kamu yakin ingin menghapus dokumen ini? ')">
-                                                                <i class='bx bx-xs bx-trash'></i>
-                                                            </button>
-                                                        </form>
+                                                        @if ($atlet->is_verified == 'not verified') 
+                                                            <form action="{{ route('dashboard.atlet.dokumen.delete', $atlet->id) }}" method="post">
+                                                                @csrf
+                                                                @method('delete')
+                                                                <button class="button-red button-gap" data-tooltip="Hapus Dokumen" onclick="return confirm('Apakah kamu yakin ingin menghapus dokumen ini? ')">
+                                                                    <i class='bx bx-xs bx-trash'></i>
+                                                                </button>
+                                                            </form>
+                                                        @endif
                                                     </div>
-                                                </td>
+                                                </td>  
                                             @else
                                                 <td>Tidak ada dokumen</td>
                                             @endif

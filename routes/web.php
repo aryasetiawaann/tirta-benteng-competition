@@ -32,6 +32,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::resource('/dashboard/atlet-saya', AtletController::class)->names('dashboard.atlet');
     Route::get('/dashboard/atlet-saya/{id}/dokumen/download', [AtletController::class, 'downloadDocument'])->name('dashboard.atlet.dokumen.download');
+    Route::get('/dashboard/atlet-saya/{id}/dokumen/view', [AtletController::class, 'viewDocument'])->name('dashboard.atlet.dokumen.view');
     Route::delete('/dashboard/edit/atlet-saya/{id}/dokumen/delete', [AtletController::class, 'deleteDocument'])->name('dashboard.atlet.dokumen.delete');
     
     Route::get('/dashboard/atlet-saya/{id}/track-record', [TrackRecordController::class, 'index'])->name('dashboard.track-record.index');
@@ -74,6 +75,7 @@ Route::middleware(['auth','role:admin'])->group(function () {
     Route::delete('/admin/dashboard/profile/delete', [ProfileController::class, 'adminDestroy'])->name('profile.admin.destroy');
     
     Route::get('/admin/dashboard',[AdminController::class,'dashboard'])->name('admin.dashboard');
+    Route::post('/admin/dashboard/verified-atlet/{id}',[AtletController::class,'acceptAtletDoc'])->name('admin.dashboard.verified');
 
     Route::get('/admin/dashboard/tambah-kompetisi', [KompetisiController::class, 'adminIndex'])->name('dashboard.admin.kompetisi');
     Route::post('/admin/dashboard/tambah-kompetisi', [KompetisiController::class, 'tambahKompetisi'])->name('dashboard.admin.tambahkompetisi');

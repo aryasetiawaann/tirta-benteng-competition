@@ -2,6 +2,7 @@
     <div class="all-container all-card overlay-container w100">
         <header class="flex divider">
             <h2>Daftar Atlet</h2>
+            <p>Silahkan mengisi dokumen di <a href={{route('dashboard.atlet.index')}}>halaman atlet</a> jika nama atlet tidak tersedia</p>
             <span id="closeOverlay" class="bx bx-md bx-x"></span>
         </header>
         <section>

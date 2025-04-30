@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Kompetisi;
+use App\Models\Atlet;
 use Illuminate\Http\Request;
 
 class AdminController extends Controller
@@ -14,7 +15,9 @@ class AdminController extends Controller
       $kompetisi_file = Kompetisi::whereNotNull('file_hasil')->orderByDesc('waktu_kompetisi')->get();
       $kompetisi = Kompetisi::all()->sortByDesc('waktu_kompetisi');
 
+      $notVerAtlets = Atlet::whereNotNull('dokumen')->where('is_verified', 'not verified')->get()->sortBy('updated_at');
 
-      return view('admin.admin-dashboard', compact('kompetisis', 'kompetisi_file', 'kompetisi'));
+
+      return view('admin.admin-dashboard', compact('kompetisis', 'kompetisi_file', 'kompetisi', 'notVerAtlets'));
     }
 }

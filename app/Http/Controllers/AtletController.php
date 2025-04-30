@@ -62,6 +62,27 @@ class AtletController extends Controller
 
     }
 
+    public function viewDocument($id)
+    {
+        $atlet = Atlet::find($id);
+
+        $path = public_path($atlet->dokumen);
+
+        if (!File::exists($path)) {
+            abort(404);
+        }
+
+        $file = File::get($path);
+        $type = File::mimeType($path);
+
+        $response = Response::make($file, 200);
+        $response->header("Content-Type", $type);
+
+        $response->header("Content-Disposition", 'inline; filename=Dokumen_' . $atlet->name . ".pdf");
+
+        return $response;
+    }
+
     /**
      * Show the form for creating a new resource.
      */
@@ -158,22 +179,20 @@ class AtletController extends Controller
 
         $data = [
             "name" => $request->nama,
-            "umur" => $request->umur,
-            "jenis_kelamin" => $request->jenisKelamin,
-            "user_id" => auth()->user()->id,
+            "umur" => $request->umur ? $request->umur : $atlet->umur,
+            "jenis_kelamin" => $request->jenisKelamin ? $request->jenisKelamin : $atlet->jenis_kelamin,
+            "user_id" => $atlet->user_id,
             "dokumen" => $dokumen
         ];
 
         $validation = Validator::make($data, [
             "name" => "required",
-            "umur" => "required|date|before:today",
-            "jenis_kelamin" => "required",
+            "umur" => "nullable|date|before:today",
+            "jenis_kelamin" => "nullable",
         ], [
             'name.required' => 'Nama atlet wajib diisi.',
-            'umur.required' => 'Tanggal lahir atlet wajib diisi.',
             'umur.date' => 'Tanggal lahir atlet harus berupa tanggal yang valid.',
             'umur.before' => 'Tanggal lahir tidak boleh sama atau lebih dari hari ini.',
-            'jenis_kelamin.required' => 'Jenis kelamin atlet wajib diisi.',
         ]);
 
         if ($validation->fails()) {
@@ -185,6 +204,16 @@ class AtletController extends Controller
         return redirect('/dashboard/atlet-saya')->with('success', 'Atlet berhasil diperbaharui');
     }
 
+    public function acceptAtletDoc($id){
+        
+        $atlet = Atlet::find($id);
+
+        $atlet->is_verified = 'verified';
+
+        $atlet->save();
+
+        return redirect('/admin/dashboard')->with('success', 'Atlet berhasil diperbaharui');
+    }
 
     /**
      * Remove the specified resource from storage.

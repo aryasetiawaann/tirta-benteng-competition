@@ -18,6 +18,7 @@ class Atlet extends Model
         'jenis_kelamin',
         'user_id',
         'dokumen',
+        'is_verified',
     ];
 
 

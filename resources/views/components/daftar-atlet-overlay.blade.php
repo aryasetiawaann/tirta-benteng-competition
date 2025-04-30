@@ -20,7 +20,7 @@
                 <label for="dokumen">Dokumen</label>
                 <p><i style="font-size: 12px">(Akte / KTP .pdf)</i></p>
                 <input type="file" name="dokumen" id="dokumen" accept=".pdf">
-                <div class="flex center" style="margin-top: 20px;">   
+                <div class="flex center" style="margin-top: 20px;">
                     <button type="submit" class="submit-button">Kirim</button>
                 </div>
             </form>
