@@ -73,7 +73,7 @@ class PesertaController extends Controller
 
         $itemDetails[] = [
             'id'        => 'tax',
-            'price'     => $totaltax,
+            'price'     => round($totaltax),
             'quantity'  => $pesertas->count(),  
             'name'      => "Pajak Layanan ({$taxPercentage}%)",
         ];
