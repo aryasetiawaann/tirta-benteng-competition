@@ -67,6 +67,19 @@ class PesertaController extends Controller
             $totalHarga += $peserta->getAcara->harga ?? 0;
         }
 
+        // Untuk Perpajakan
+        $taxPercentage = 6; // ubah nilai ini untuk mengganti persentase
+        $totaltax = $totalHarga * ($taxPercentage / 100);
+
+        $itemDetails[] = [
+            'id'        => 'tax',
+            'price'     => $totaltax,
+            'quantity'  => $pesertas->count(),  
+            'name'      => "Pajak Layanan ({$taxPercentage}%)",
+        ];
+
+        $totalHarga += $totaltax;
+
         // Simpan pembayaran ke database
         $pembayaran = Pembayaran::create([
             'user_id'                 => $user->id,
@@ -77,7 +90,7 @@ class PesertaController extends Controller
         ]);
 
         if (!$pembayaran) {
-            return response()->json(['error' => 'Gagal menyimpan pembayaran'], 500);
+            return response()->json(['error' => 'Gagal menyimpan pembayaran'], status: 500);
         }
 
         // Update peserta dengan pembayaran_id
