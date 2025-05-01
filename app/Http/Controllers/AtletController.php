@@ -212,7 +212,7 @@ class AtletController extends Controller
 
         $atlet->save();
 
-        return redirect('/admin/dashboard')->with('success', 'Atlet berhasil diperbaharui');
+        return redirect()->back()->with('success', 'Atlet berhasil terverifikasi');
     }
 
     /**

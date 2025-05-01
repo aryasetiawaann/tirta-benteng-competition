@@ -45,6 +45,12 @@
                             <span class="text">Tambah Acara</span>
                         </a>
                     </li>
+                    <li>
+                        <a href="{{ route('admin.verifikasi') }}">
+                            <i class="icon ph-bold ph-trophy"></i>
+                            <span class="text">Verifikasi Atlet</span>
+                        </a>
+                    </li>
                 </ul>
             </div>
         </div>

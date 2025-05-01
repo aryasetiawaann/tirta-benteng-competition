@@ -15,9 +15,12 @@ class AdminController extends Controller
       $kompetisi_file = Kompetisi::whereNotNull('file_hasil')->orderByDesc('waktu_kompetisi')->get();
       $kompetisi = Kompetisi::all()->sortByDesc('waktu_kompetisi');
 
+
+      return view('admin.admin-dashboard', compact('kompetisis', 'kompetisi_file', 'kompetisi'));
+    }
+
+    public function verification(){
       $notVerAtlets = Atlet::whereNotNull('dokumen')->where('is_verified', 'not verified')->get()->sortBy('updated_at');
-
-
-      return view('admin.admin-dashboard', compact('kompetisis', 'kompetisi_file', 'kompetisi', 'notVerAtlets'));
+      return view('admin.admin-verifikasi-atlet', compact('notVerAtlets'));
     }
 }

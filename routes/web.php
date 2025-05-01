@@ -75,6 +75,7 @@ Route::middleware(['auth','role:admin'])->group(function () {
     Route::delete('/admin/dashboard/profile/delete', [ProfileController::class, 'adminDestroy'])->name('profile.admin.destroy');
     
     Route::get('/admin/dashboard',[AdminController::class,'dashboard'])->name('admin.dashboard');
+    Route::get('/admin/dashboard/verifikasi',[AdminController::class,'verification'])->name('admin.verifikasi');
     Route::post('/admin/dashboard/verified-atlet/{id}',[AtletController::class,'acceptAtletDoc'])->name('admin.dashboard.verified');
 
     Route::get('/admin/dashboard/tambah-kompetisi', [KompetisiController::class, 'adminIndex'])->name('dashboard.admin.kompetisi');

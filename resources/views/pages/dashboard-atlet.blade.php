@@ -140,7 +140,7 @@
                                         @endif
                                     @endforeach
                                 @else
-                                    <tr><td colspan="7" style="text-align:center;">Belum ada atlet</td></tr>
+                                    <tr><td colspan="9" style="text-align:center;">Belum ada atlet</td></tr>
                                 @endif 
                             </tbody>
                         </table>

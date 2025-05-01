@@ -68,7 +68,7 @@ class PesertaController extends Controller
         }
 
         // Untuk Perpajakan
-        $taxPercentage = 6; // ubah nilai ini untuk mengganti persentase
+        $taxPercentage = 2; // ubah nilai ini untuk mengganti persentase
         $totaltax = $totalHarga * ($taxPercentage / 100);
 
         $itemDetails[] = [

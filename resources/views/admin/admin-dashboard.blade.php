@@ -40,19 +40,6 @@
     @endif
 
     <div class="admin-container">
-        <div class="card100">
-            <div class="all-container all-card w100">
-                <header class="flex divider">
-                    <h2>Welcome! {{ auth()->user()->name }}</h2>
-                </header>
-                <section>
-                    <p>{{ \Carbon\Carbon::now()->format('l') }}, {{ \Carbon\Carbon::now()->format('d F Y') }}</p>
-                </section>
-            </div>
-        </div>
-    </div>
-
-    <div class="admin-container">
         <div class="download card">
             <div class="all-container all-card w100">
                 <header class="flex divider">
@@ -216,47 +203,6 @@
                     </div>
                 </section>
             </div>
-        </div>
-    </div>
-
-    <div>
-        <h2>Daftar Verifikasi Dokumen Peserta</h2>
-        <div>
-            <table>
-                <tr>
-                    <th>No</th>
-                    <th>Nama</th>
-                    <th>Tanggal Lahir</th>
-                    <th>Jenis Kelamin</th>
-                    <th>Dokumen</th>
-                    <th></th>
-                </tr>
-                @foreach ($notVerAtlets as $atlet)
-                    <tr>
-                        <td>{{ $loop->iteration}}</td>
-                        <td>{{ $atlet->name}}</td>
-                        <td>{{ \Carbon\Carbon::parse($atlet->umur)->format('d M Y') }}</td>
-                        <td>{{ $atlet->jenis_kelamin }}</td>
-                        <td>
-                            <a href="{{ route('dashboard.atlet.dokumen.view', $atlet->id) }}">
-                            <button class="button-gap button-green" data-tooltip="Lihat Dokumen">
-                                <i class='bx bx-xs bx-download'></i>
-                            </button>
-                            </a>
-                        </td>
-                        <td>
-                            <div class="actions">
-                                <form action="{{ route('admin.dashboard.verified', $atlet->id) }}" method="post">
-                                    @csrf
-                                    @method('post')
-                                    <a onclick="return confirm('Apakah kamu yakin ingin menerima atlet ini? ')"><button class="button-green button-gap" data-tooltip="Terima Atlet"><i class='bx bx-xs bxs-check' ></i></button></a>
-                                </form>
-                            </div>
-                        </td>
-                    </tr>
-                @endforeach
-
-            </table>
         </div>
     </div>
 </div>
