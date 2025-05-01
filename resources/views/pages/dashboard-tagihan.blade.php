@@ -16,8 +16,8 @@
                 </div>
             </div>
         </div>
-        <div class="alert alert-warning" style="font-size: 18px; margin-bottom: 0px;">
-            <strong>Perhatian! Jika sudah melakukan pembayaran tidak dapat melakukan refund dan mengganti nomor acara. Dimohon di cek kembali sebelum melakukan pembayaran</strong>
+        <div class="alert alert-warning" style="margin-bottom: 0px;">
+            <strong>Perhatian!</strong> Jika sudah melakukan pembayaran tidak dapat melakukan refund dan mengganti nomor acara. Dimohon di cek kembali sebelum melakukan pembayaran
         </div>
 
         <div class="bottom-container">
@@ -68,7 +68,7 @@
                             </thead>
                             <tbody>
                                 @if ($pesertas->isEmpty())
-                                    <tr><td colspan="6" style="text-align:center;">Belum ada tagihan</td></tr>
+                                    <tr><td colspan="7" style="text-align:center;">Belum ada tagihan</td></tr>
                                 @else
                                     @foreach ($pesertas as $peserta)
                                         <tr>
