@@ -15,10 +15,26 @@
                 </div>
             </div>
         </div>
-        <div class="alert alert-warning" style="font-size: 20px">
+        <div class="alert alert-warning" style="font-size: 18px; margin-bottom: 0px;">
             <strong>Perhatian! Jika sudah melakukan pembayaran tidak dapat melakukan refund dan mengganti nomor acara. Dimohon di cek kembali sebelum melakukan pembayaran</strong>
         </div>
+
         <div class="bottom-container">
+            <section class="all-container all-card w100 community-card">
+                <header class="divider flex community-card-header">
+                    <div class="community-card-icon-container">
+                        <i class='bx bxl-whatsapp community-card-icon'></i>
+                        <div class="community-card-text">
+                            <h2>Yuk, Gabung Grup Peserta!</h2>
+                            <p>Dapatkan informasi terbaru terkait perlombaan.</p>
+                        </div>
+                    </div>
+                    <a href="https://chat.whatsapp.com/Bf8Cqva3vYgI04hsEA5RwW" target="_blank" class="button community-card-button">
+                        Join Grup WhatsApp
+                    </a>
+                </header>
+            </section>
+
             <section class="all-container all-card w100">
                 <header class="divider flex">
                     <h1>Daftar Riwayat Pembayaran</h1>

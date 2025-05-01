@@ -17,8 +17,11 @@
             </div>
         </div>
 
-        <div class="alert alert-warning">
-            <strong>Pengumuman.</strong> Harap menunggu dokumen diverifikasi oleh admin untuk dapat mendaftarkan atlet.
+        <div class="alert alert-urgent-warning">
+            <i class="ph ph-warning"></i>
+            <span>
+                <strong>Penting!</strong>  Harap menunggu dokumen diverifikasi oleh admin sebelum dapat didaftarkan ke kompetisi.
+            </span>
         </div>
 
         <nav class="breadcrumb">
@@ -66,7 +69,7 @@
                                     <th>Tanggal Lahir</th>
                                     <th>Umur</th>
                                     <th>Jenis Kelamin</th>
-                                    <th>status</th>
+                                    <th>Status</th>
                                     <th>Track Record</th>
                                     <th>Dokumen</th>
                                     <th>Aksi</th>
@@ -86,11 +89,11 @@
 
                                             @if ($atlet->is_verified == 'not verified')
                                                 <td>
-                                                    <p>belum terverifikasi</p>
+                                                    <p>Belum Terverifikasi</p>
                                                 </td>
                                             @else
                                                 <td>
-                                                    <p>terverifikasi</p>
+                                                    <p>Terverifikasi</p>
                                                 </td>
                                             @endif
 

@@ -17,7 +17,8 @@
         </div>
 
 
-        <div class="alert alert-warning">
+        <div class="alert alert-urgent-warning">
+            <i class="ph ph-warning"></i>
             <strong>Perhatian!</strong> Silahkan mengisi dokumen pada <a href="{{ route('dashboard.atlet.index') }}">halaman atlet</a> untuk dapat mendaftarkan atlet
         </div>
 
