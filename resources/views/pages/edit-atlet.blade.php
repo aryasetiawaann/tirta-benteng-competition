@@ -49,7 +49,7 @@
                         <label for="nama">Nama Atlet *</label>
                         <input type="text" id="nama" name="nama" placeholder="Nama Atlet" value="{{ $atlet->name }}">
 
-                        @if ($atlet->is_verified == 'not verified')
+                        @if ($atlet->is_verified == 'not verified' || $atlet->is_verified == 'need revision')
                             <label for="umur">Umur *</label>
                             <input type="date" id="umur" name="umur" placeholder="Umur" value="{{ $atlet->umur }}">
                             <label for="jenisKelamin">Jenis Kelamin *</label>

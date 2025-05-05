@@ -539,6 +539,14 @@ i {
     background-color: #09993b;
 }
 
+.button-orange {
+    background-color: #ffcc00;
+}
+
+.button-orange:hover {
+    background-color: #cc9900;
+}
+
 /* input {
     cursor: pointer;
 } */

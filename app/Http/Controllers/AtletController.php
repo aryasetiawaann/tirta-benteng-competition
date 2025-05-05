@@ -215,6 +215,17 @@ class AtletController extends Controller
         return redirect()->back()->with('success', 'Atlet berhasil terverifikasi');
     }
 
+    public function flagAtletDoc($id){
+        
+        $atlet = Atlet::find($id);
+
+        $atlet->is_verified = 'need revision';
+
+        $atlet->save();
+
+        return redirect()->back()->with('success', 'Atlet berhasil ditandai untuk revisi');
+    }
+
     /**
      * Remove the specified resource from storage.
      */

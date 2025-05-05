@@ -21,6 +21,7 @@ class AdminController extends Controller
 
     public function verification(){
       $notVerAtlets = Atlet::with('user')->whereNotNull('dokumen')->where('is_verified', 'not verified')->get()->sortBy('updated_at');
-      return view('admin.admin-verifikasi-atlet', compact('notVerAtlets'));
+      $flagAtlets = Atlet::with('user')->whereNotNull('dokumen')->where('is_verified', 'need revision')->get()->sortBy('updated_at');
+      return view('admin.admin-verifikasi-atlet', compact('notVerAtlets', 'flagAtlets'));
     }
 }

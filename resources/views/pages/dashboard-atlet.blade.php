@@ -91,6 +91,10 @@
                                                 <td>
                                                     <p>Belum Terverifikasi</p>
                                                 </td>
+                                            @elseif ($atlet->is_verified == 'need revision')
+                                                <td>
+                                                    <p>Butuh Revisi</p>
+                                                </td>
                                             @else
                                                 <td>
                                                     <p>Terverifikasi</p>
