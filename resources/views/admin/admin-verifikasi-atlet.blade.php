@@ -42,6 +42,7 @@
                         <th>Nama</th>
                         <th>Tanggal Lahir</th>
                         <th>Jenis Kelamin</th>
+                        <th>No Telepon</th>
                         <th>Dokumen</th>
                         <th>Aksi</th>
                     </tr>
@@ -54,6 +55,7 @@
                       <td>{{ $atlet->name }}</td>
                       <td>{{ \Carbon\Carbon::parse($atlet->umur)->format('d M Y') }}</td>
                       <td>{{ $atlet->jenis_kelamin }}</td>
+                      <td>{{ $atlet->user->phone ?? 'Tidak Ada' }}</td>
                       <td>
                         <a href="{{ route('dashboard.atlet.dokumen.view', $atlet->id) }}" target="_blank" rel="noopener noreferrer">
                           <button class="button-gap" data-tooltip="Lihat Dokumen">
@@ -75,7 +77,7 @@
                     </tr>
                   @empty
                     <tr>
-                      <td colspan="6" style="text-align:center;">Belum ada atlet dengan dokumen</td>
+                      <td colspan="7" style="text-align:center;">Belum ada atlet dengan dokumen</td>
                     </tr>
                   @endforelse
                 </tbody>
