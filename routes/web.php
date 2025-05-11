@@ -76,7 +76,11 @@ Route::middleware(['auth','role:admin'])->group(function () {
     
     Route::get('/admin/dashboard',[AdminController::class,'dashboard'])->name('admin.dashboard');
 
+    Route::get('/admin/dashboard/atlet',[AdminController::class,'atletList'])->name('admin.atlet.list');
     Route::get('/admin/dashboard/verifikasi',[AdminController::class,'verification'])->name('admin.verifikasi');
+    Route::get('/admin/dashboard/revisi',[AdminController::class,'revision'])->name('admin.revisi');
+    Route::get('/admin/dashboard/atlet/{id}/edit', [AtletController::class, 'adminEdit'])->name('admin.atlet.edit');
+    Route::put('/admin/dashboard/atlet', [AtletController::class, 'adminUpdate'])->name('admin.atlet.update');
     Route::post('/admin/dashboard/verified-atlet/{id}',[AtletController::class,'acceptAtletDoc'])->name('admin.dashboard.verified');
     Route::post('/admin/dashboard/flag-atlet/{id}',[AtletController::class,'flagAtletDoc'])->name('admin.dashboard.flagged');
 

@@ -12,7 +12,7 @@ return new class extends Migration
     public function up()
 {
     Schema::table('atlets', function (Blueprint $table) {
-        $table->enum('is_verified', ['not verified', 'verified', 'need revision'])->default('not verified')->after('dokumen');
+        $table->enum('is_verified', ['not verified', 'verified'])->default('not verified')->after('dokumen');
     });
 }
 

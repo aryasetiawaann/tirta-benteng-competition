@@ -1,7 +1,6 @@
-@extends('layouts.dashboard-layout')
+@extends('admin.admin-dashboard-layout')
 @section('title', 'Atlet Saya')
 @section('content')
-@include('components.daftar-atlet-overlay')
     <div class="main-content">
         <div class="top-container">
             <div class="top-card all-card flex">
@@ -42,7 +41,7 @@
                     <h1>Edit {{ $atlet->name}}</h1>
                 </header>
                 <div>
-                    <form class="edit-atlet" method="POST" action="{{ route('dashboard.atlet.update', $atlet->id) }}" enctype="multipart/form-data">
+                    <form class="edit-atlet" method="POST" action="{{ route('admin.atlet.update', $atlet->id) }}" enctype="multipart/form-data">
                         @csrf
                         @method('put')
 

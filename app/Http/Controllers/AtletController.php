@@ -155,6 +155,13 @@ class AtletController extends Controller
        return view('pages.edit-atlet')->with(['atlet'=>$atlet]);
     }
 
+    public function adminEdit($id)
+    {
+       $atlet = Atlet::find($id);
+
+       return view('admin.admin-edit-atlet')->with(['atlet'=>$atlet]);
+    }
+
     /**
      * Update the specified resource in storage.
      */
@@ -204,6 +211,52 @@ class AtletController extends Controller
         return redirect('/dashboard/atlet-saya')->with('success', 'Atlet berhasil diperbaharui');
     }
 
+    public function adminUpdate(Request $request)
+    {
+        $atlet = Atlet::find($request->atlet_id);
+
+        $dokumen = $atlet->dokumen;
+        
+        if ($request->hasFile('dokumen')) {
+            if ($atlet->dokumen && File::exists(public_path($atlet->dokumen))) {
+                File::delete(public_path($atlet->dokumen));
+            }
+
+            $fileName = time() . '.' . $request->dokumen->extension();
+            $request->dokumen->move(public_path('assets/dokumen'), $fileName);
+            $dokumen = 'assets/dokumen/' . $fileName;
+        }
+
+        // Menggabungkan track record
+        // $track_record = ($request->record_minute * 60) + $request->record_second + ($request->record_millisecond / 100);
+
+        $data = [
+            "name" => $request->nama,
+            "umur" => $request->umur ? $request->umur : $atlet->umur,
+            "jenis_kelamin" => $request->jenisKelamin ? $request->jenisKelamin : $atlet->jenis_kelamin,
+            "user_id" => $atlet->user_id,
+            "dokumen" => $dokumen
+        ];
+
+        $validation = Validator::make($data, [
+            "name" => "required",
+            "umur" => "nullable|date|before:today",
+            "jenis_kelamin" => "nullable",
+        ], [
+            'name.required' => 'Nama atlet wajib diisi.',
+            'umur.date' => 'Tanggal lahir atlet harus berupa tanggal yang valid.',
+            'umur.before' => 'Tanggal lahir tidak boleh sama atau lebih dari hari ini.',
+        ]);
+
+        if ($validation->fails()) {
+            return redirect()->back()->withErrors($validation)->withInput();
+        }
+
+        $atlet->update($data);
+
+        return redirect('/admin/dashboard/atlet')->with('success', 'Atlet berhasil diperbaharui');
+    }
+
     public function acceptAtletDoc($id){
         
         $atlet = Atlet::find($id);
@@ -233,8 +286,8 @@ class AtletController extends Controller
     {
         $atlet = Atlet::find($id);
 
-        if ($atlet->dokumeun && File::exists(public_path($atlet->dokumeun))) {
-            File::delete(public_path($atlet->dokumeun));
+        if ($atlet->dokumen && File::exists(public_path($atlet->dokumen))) {
+            File::delete(public_path($atlet->dokumen));
         }
 
         $atlet->delete();

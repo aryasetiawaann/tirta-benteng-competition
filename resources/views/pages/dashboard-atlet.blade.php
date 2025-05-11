@@ -117,7 +117,7 @@
                                                                 <i class='bx bx-xs bx-download'></i>
                                                             </button>
                                                         </a>
-                                                        @if ($atlet->is_verified == 'not verified') 
+                                                        @if ($atlet->is_verified != 'verified') 
                                                             <form action="{{ route('dashboard.atlet.dokumen.delete', $atlet->id) }}" method="post">
                                                                 @csrf
                                                                 @method('delete')
@@ -132,6 +132,7 @@
                                                 <td>Tidak ada dokumen</td>
                                             @endif
                                             <td>
+                                                @if ($atlet->is_verified != 'verified' )                      
                                                 <div class="actions">
                                                     <a href="{{ route('dashboard.atlet.edit', $atlet->id) }}">
                                                         <button class="button-gap" data-tooltip="Edit Atlet">
@@ -139,6 +140,7 @@
                                                         </button>
                                                     </a>
                                                 </div>
+                                                @endif
                                             </td>
                                         </tr>
                                         @endif

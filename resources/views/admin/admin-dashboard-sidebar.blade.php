@@ -46,10 +46,28 @@
                         </a>
                     </li>
                     <li>
-                        <a href="{{ route('admin.verifikasi') }}">
+                        <a href="#">
                             <i class="icon ph-bold ph-trophy"></i>
-                            <span class="text">Verifikasi Atlet</span>
+                            <span class="text">Atlet</span>
+                            <i class="arrow ph-bold ph-caret-down"></i>
                         </a>
+                        <ul class="sub-menu">
+                            <li>
+                                <a href="{{ route('admin.atlet.list') }}">
+                                    <span class="text">List Atlet</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ route('admin.verifikasi') }}">
+                                    <span class="text">Verifikasi Dokumen</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ route('admin.revisi') }}">
+                                    <span class="text">Revisi Dokumen</span>
+                                </a>
+                            </li>
+                        </ul>
                     </li>
                 </ul>
             </div>

@@ -18,9 +18,10 @@
             @endforeach
         </x-error-list>
     @endif
+
 <section class="all-container all-card w100">
     <header class="divider flex">
-        <h1>Verifikasi Dokumen Atlet</h1>
+        <h1>Atlet Butuh Revisi Dokumen</h1>
     </header>
     <div class="table-container">
         <label for="entries">Tampilkan
@@ -49,7 +50,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                  @forelse ($notVerAtlets as $atlet)
+                  @forelse ($flagAtlets as $atlet)
                     <tr>
                       <td>{{ $loop->iteration }}</td>
                       <td>{{ $atlet->name }}</td>
@@ -67,14 +68,11 @@
                       <td>
                         <div class="actions">
                           <form action="{{ route('admin.dashboard.verified', $atlet->id) }}" method="post">
-                              @csrf
-                              @method('post')
-                              <button class="button-green button-gap" data-tooltip="Terima Atlet" onclick="return confirm('Apakah kamu yakin ingin menerima atlet ini?')">
-                                <i class='bx bx-xs bx-check'></i>
-                              </button>
-                              <button class="button-orange button-gap" data-tooltip="Tandai Atlet" formaction="{{ route('admin.dashboard.flagged', $atlet->id) }}" onclick="return confirm('Apakah kamu yakin ingin menandai atlet ini?')">
-                                <i class='bx bx-xs bxs-flag-alt'></i>
-                              </button>
+                            @csrf
+                            @method('post')
+                            <button class="button-green button-gap" data-tooltip="Terima Atlet" onclick="return confirm('Apakah kamu yakin ingin menerima atlet ini?')">
+                              <i class='bx bx-xs bx-check'></i>
+                            </button>
                           </form>
                         </div>
                       </td>

@@ -20,8 +20,22 @@ class AdminController extends Controller
     }
 
     public function verification(){
+
       $notVerAtlets = Atlet::with('user')->whereNotNull('dokumen')->where('is_verified', 'not verified')->get()->sortBy('updated_at');
+
+      return view('admin.admin-verifikasi-atlet', compact('notVerAtlets'));
+    }
+
+    public function revision(){
       $flagAtlets = Atlet::with('user')->whereNotNull('dokumen')->where('is_verified', 'need revision')->get()->sortBy('updated_at');
-      return view('admin.admin-verifikasi-atlet', compact('notVerAtlets', 'flagAtlets'));
+
+      return view('admin.admin-revisi-atlet', compact('flagAtlets'));
+    }
+
+    public function atletList() {
+
+      $atlets = Atlet::orderByDesc('created_at')->get();
+
+      return view('admin.admin-list-atlet', compact('atlets'));
     }
 }
