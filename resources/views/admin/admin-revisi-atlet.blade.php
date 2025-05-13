@@ -22,6 +22,9 @@
 <section class="all-container all-card w100">
     <header class="divider flex">
         <h1>Atlet Butuh Revisi Dokumen</h1>
+        <a href="{{ route('admin.revisi.print') }}" target="_blank">
+          <button>Cetak Atlet</button>
+        </a>
     </header>
     <div class="table-container">
         <label for="entries">Tampilkan

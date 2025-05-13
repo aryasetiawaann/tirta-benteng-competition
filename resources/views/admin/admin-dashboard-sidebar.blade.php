@@ -47,7 +47,7 @@
                     </li>
                     <li>
                         <a href="#">
-                            <i class="icon ph-bold ph-trophy"></i>
+                            <i class="icon ph-bold ph-person-simple-swim"></i>
                             <span class="text">Atlet</span>
                             <i class="arrow ph-bold ph-caret-down"></i>
                         </a>
@@ -68,6 +68,12 @@
                                 </a>
                             </li>
                         </ul>
+                    </li>
+                    <li>
+                        <a href="{{ route('admin.payment.list') }}">
+                            <i class="icon ph-bold ph-trophy"></i>
+                            <span class="text">Pembayaran</span>
+                        </a>
                     </li>
                 </ul>
             </div>

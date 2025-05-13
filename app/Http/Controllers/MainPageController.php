@@ -21,47 +21,50 @@ class MainPageController extends Controller
     public function userDashboard()
     {
         $currentDate = Carbon::now();
-        $kompetisi_current = [12]; // Define multiple kompetisi_id
+        $user = auth()->user()->id;
 
         // Fetch kompetisi data
-        $kompetisis = Kompetisi::where('waktu_kompetisi', '>', now())
+        $kompetisis = Kompetisi::where('waktu_kompetisi', '>', $currentDate)
             ->orderBy('waktu_kompetisi', 'desc')
             ->take(3)
             ->get();
 
         // Count kompetisi
-        $kompetisi_count = Kompetisi::where('waktu_kompetisi', '>', now())
-            ->where('buka_pendaftaran', '<=', now())
-            ->count();
+        $kompetisi_count = $kompetisis->count();
+
+        $kompetisi_ids = $kompetisis->pluck('id');
+
 
         // Count atlets for the authenticated user
-        $atlet_count = Atlet::where('user_id', auth()->user()->id)->count();
+        $atlet_count = Atlet::where('user_id', $user)->count();
 
         // Fetch atlets with their acara for the authenticated user
-        $atlets = Atlet::whereHas('acara', function ($query) use ($kompetisi_current) {
-                $query->whereIn('kompetisi_id', $kompetisi_current); // Use `whereIn` for multiple IDs
-            })
-            ->with(['acara' => function ($query) use ($kompetisi_current) {
-                $query->whereIn('kompetisi_id', $kompetisi_current); // Filter acara by multiple kompetisi_id
-            }])
-            ->where('user_id', auth()->user()->id)
-            ->get()
-            ->sortByDesc(function ($atlet) {
-                return $atlet->acara->max('kompetisi_id');
-            });
+        $atlets = Atlet::where('user_id', $user)
+                ->whereHas('acara.kompetisi', function ($query) use ($kompetisi_ids) {
+                    $query->whereIn('id', $kompetisi_ids);
+                })
+                ->with('acara.kompetisi')
+                ->get();
 
-        // Fetch acaras for the authenticated user that belong to the specified kompetisi_ids
-        $acaras = Acara::whereHas('peserta', function ($query) {
-                $query->where('user_id', auth()->user()->id);
-            })
-            ->whereHas('kompetisi', function ($query) use ($currentDate, $kompetisi_current) {
-                $query->where('waktu_kompetisi', '>', $currentDate)
-                    ->whereIn('id', $kompetisi_current); // Use `whereIn` for multiple IDs
-            })
-            ->get();
+        // $atlets = Atlet::whereHas('acara', function ($query) use ($kompetisi_current) {
+        //         $query->whereIn('kompetisi_id', $kompetisi_current); // Use `whereIn` for multiple IDs
+        //     })
+        //     ->with(['acara' => function ($query) use ($kompetisi_current) {
+        //         $query->whereIn('kompetisi_id', $kompetisi_current); // Filter acara by multiple kompetisi_id
+        //     }])
+        //     ->where('user_id', auth()->user()->id)
+        //     ->get()
+        //     ->sortByDesc(function ($atlet) {
+        //         return $atlet->acara->max('kompetisi_id');
+        //     });
 
         // Count acaras
-        $acara_count = $acaras->count();
+        $acara_count = $atlets->flatMap(function ($atlet) {
+                    return $atlet->acara; // asumsikan relasi acara sudah di-load dengan with('acara.kompetisi')
+                })
+                ->unique('id') // filter acara yang duplikat berdasarkan id
+                ->count();
+
 
         // Calculate totalTagihan and tagihanSelesai for multiple kompetisi_id
         $totalTagihan = 0;
@@ -69,7 +72,7 @@ class MainPageController extends Controller
 
         foreach ($atlets as $atlet) {
             foreach ($atlet->acara as $acara) {
-                if (in_array($acara->kompetisi_id, $kompetisi_current)) { // Check if acara belongs to kompetisi_current
+                if (in_array($acara->kompetisi_id, $kompetisi_ids->toArray())) { // Check if acara belongs to kompetisi_current
                     if ($acara->pivot->status_pembayaran == "Selesai") {
                         $tagihanSelesai += 1;
                     }

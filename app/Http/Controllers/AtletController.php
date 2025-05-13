@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\File;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class AtletController extends Controller
 {
@@ -81,6 +82,14 @@ class AtletController extends Controller
         $response->header("Content-Disposition", 'inline; filename=Dokumen_' . $atlet->name . ".pdf");
 
         return $response;
+    }
+
+    public function printAtletRevisi() {
+        $atlets = Atlet::with('user')->whereNotNull('dokumen')->where('is_verified', 'need revision')->get()->sortBy('updated_at');
+
+        $pdf = Pdf::loadView('layouts.print-layout-atlet-revision', compact('atlets'));
+
+        return $pdf->stream('daftar-atlet-revisi-dokumen.pdf');
     }
 
     /**

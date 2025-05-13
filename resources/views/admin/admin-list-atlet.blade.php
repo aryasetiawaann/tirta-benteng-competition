@@ -45,7 +45,7 @@
                         <th>Umur</th>
                         <th>Jenis Kelamin</th>
                         <th>Nama Club</th>
-                        <th>Nama Akun</th>
+                        <th>Email Akun</th>
                         <th>Aksi</th>
                     </tr>
                 </thead>
@@ -58,7 +58,7 @@
                       <td>{{ now()->diffInYears(\Carbon\Carbon::parse($atlet->umur)) }}</td>
                       <td>{{ $atlet->jenis_kelamin }}</td>
                       <td>{{ $atlet->user->club ?? 'Tidak Ada' }}</td>
-                      <td>{{ $atlet->user->name ?? 'Tidak Ada' }}</td>
+                      <td>{{ $atlet->user->email ?? 'Tidak Ada' }}</td>
                       <td>
                         <div class="actions">
                           <a href="{{ route('admin.atlet.edit', $atlet->id) }}">
