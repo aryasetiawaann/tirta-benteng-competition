@@ -12,7 +12,8 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule): void
     {
-        $schedule->command('participants:cleanup')->dailyAt('00:00')->withoutOverlapping();
+        // $schedule->command('participants:cleanup')->dailyAt('00:00')->withoutOverlapping();
+        $schedule->command('laporan:verifikasi')->hourly();
     }
 
     /**
