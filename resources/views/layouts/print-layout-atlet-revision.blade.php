@@ -55,15 +55,17 @@
                 <th>Nama</th>
                 <th>Club</th>
                 <th>Email</th>
+                <th>No. HP</th>
             </tr>
         </thead>
         <tbody>
-            @foreach($atlets as $index => $atlet)
+            @foreach($atlets as $atlet)
                 <tr>
-                    <td style="text-align: center;">{{ $index + 1 }}</td>
+                    <td style="text-align: center;">{{ $loop->iteration }}</td>
                     <td>{{ $atlet->name }}</td>
                     <td>{{ $atlet->user->club }}</td>
                     <td>{{ $atlet->user->email }}</td>
+                    <td>{{ $atlet->user->phone ?? '-' }}</td>
                 </tr>
             @endforeach
         </tbody>
