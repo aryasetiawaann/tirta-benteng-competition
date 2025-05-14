@@ -188,10 +188,12 @@ class AtletController extends Controller
             $fileName = time() . '.' . $request->dokumen->extension();
             $request->dokumen->move(public_path('assets/dokumen'), $fileName);
             $dokumen = 'assets/dokumen/' . $fileName;
+            
+            $atlet->is_verified = 'not verified';
+            $atlet->save();
+
         }
 
-        // Menggabungkan track record
-        // $track_record = ($request->record_minute * 60) + $request->record_second + ($request->record_millisecond / 100);
 
         $data = [
             "name" => $request->nama,
