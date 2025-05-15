@@ -35,6 +35,7 @@ class AtletController extends Controller
         if ($atlet->dokumen && File::exists(public_path($atlet->dokumen))) {
             File::delete(public_path($atlet->dokumen));
             $atlet->dokumen = null;
+            $atlet->is_verified = 'not verified';
             $atlet->save();
         }
 
