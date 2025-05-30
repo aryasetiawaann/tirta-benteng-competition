@@ -13,10 +13,12 @@ use PhpOffice\PhpSpreadsheet\Style\Border;
 class KompetisiResmi implements FromCollection, WithMapping, ShouldAutoSize, WithEvents
 {
     protected $acaras;
+    protected $maxLanes;
 
-    public function __construct($acaras)
+    public function __construct($acaras, $maxLanes)
     {
         $this->acaras = $acaras;
+        $this->maxLanes = $maxLanes;
     }
 
     /**
@@ -61,7 +63,7 @@ class KompetisiResmi implements FromCollection, WithMapping, ShouldAutoSize, Wit
                         $laneIndex + 1,  // LINT
                         $participant['name'],  // NAMA
                         $participant['club'],  // ASAL SEKOLAH / KLUB
-                        $participant['track_record'] == 999 ? 'NT' : $trackRecordFormatted, // QET
+                        $participant['track_record'] == 999 ? '-' : $trackRecordFormatted, // QET
                         '', // HASIL
                     ];
                 }else {
@@ -97,23 +99,25 @@ class KompetisiResmi implements FromCollection, WithMapping, ShouldAutoSize, Wit
             AfterSheet::class => function (AfterSheet $event) {
                 $sheet = $event->sheet->getDelegate();
 
-                $sheet->getParent()->getDefaultStyle()->getFont()->setName('Courier New');
+                $sheet->getParent()->getDefaultStyle()->getFont()->setName('Arial');
                 $sheet->getParent()->getDefaultStyle()->getFont()->setSize(12);
                 // Style untuk header biru
                 $headerStyle = [
                     'font' => [
-                        'color' => ['argb' => 'FFFFFFFF'],
+                        'name' => 'Arial',
+                        'size' => 12,
+                        'color' => ['argb' => '000000'],
                     ],
                     'fill' => [
                         'fillType' => \PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID,
-                        'startColor' => ['argb' => '008DDA'],
+                        'startColor' => ['argb' => 'FFFFFFFF'],
                     ],
                     'alignment' => [
                         'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER,
                     ],
                     'borders' => [
                         'allBorders' => [
-                            'borderStyle' => Border::BORDER_THIN, // Border tipis
+                            'borderStyle' => Border::BORDER_THIN,
                         ],
                     ],
                 ];
@@ -121,16 +125,11 @@ class KompetisiResmi implements FromCollection, WithMapping, ShouldAutoSize, Wit
                 // Style untuk konten
                 $contentStyle = [
                     'font' => [
-                        'name' => 'Courier New',
+                        'name' => 'Arial',
                         'size' => 12,
                     ],
                     'alignment' => [
                         'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER,
-                    ],
-                    'borders' => [
-                        'allBorders' => [
-                            'borderStyle' => Border::BORDER_THIN, // Border tipis
-                        ],
                     ],
                 ];
 
@@ -154,9 +153,9 @@ class KompetisiResmi implements FromCollection, WithMapping, ShouldAutoSize, Wit
                             
                             if($key == count($acara->heats) - 1)
                             {
-                                $currentRow += 9;
+                                $currentRow += ($this->maxLanes + 1);
                             }else{
-                                $currentRow += 8;
+                                $currentRow += $this->maxLanes;
                             }
                             $serieIndex++;
                         }
@@ -181,7 +180,7 @@ class KompetisiResmi implements FromCollection, WithMapping, ShouldAutoSize, Wit
     private function mergeSeriColumns($sheet, $currentRow, $serieIndex)
     {
         $startSeriRow = $currentRow; // Setelah header
-        $endSeriRow = $startSeriRow + 7; // 8 baris per SERI
+        $endSeriRow = $startSeriRow + ($this->maxLanes - 1); // baris per SERI
         $sheet->mergeCells("A$startSeriRow:A$endSeriRow");
         $sheet->setCellValue("A$startSeriRow", $serieIndex + 1);
         $sheet->getStyle("A$startSeriRow")->applyFromArray([

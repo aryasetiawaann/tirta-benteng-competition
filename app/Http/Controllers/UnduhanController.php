@@ -17,6 +17,9 @@ use Illuminate\Support\Facades\File;
 
 class UnduhanController extends Controller
 {
+
+    public $officialMaxLanes = 10;
+
     public function userBukuAcara(){
 
         $acara_ids = Atlet::where('user_id', auth()->user()->id) 
@@ -76,36 +79,8 @@ class UnduhanController extends Controller
             $pdf = Pdf::loadView('layouts.print-layout-bukuacara' , compact('acaras', 'kompetisi', 'time', 'groups'))->setPaper('a4', 'potrait');
 
         }else{
-
             foreach ($acaras as $acara) {
-                $participants = $acara->pesertaSelesai;
-            
-                // Setel club untuk setiap peserta
-                foreach ($participants as $participant) {
-                    $participant->club = $participant->user->club ? $participant->user->club : '-';
-
-                    $trackRecord = $participant->trackRecords->firstWhere('nomor_lomba', $acara->jenis_lomba);
-
-                    if ($trackRecord) {
-                        $participant->track_record = $trackRecord->time;
-                    } else {
-                        $participant->track_record = 999;
-                    }
-                }
-            
-                // Membagi peserta yang telah diurutkan ke dalam heat
-                $participantsArray = $participants->toArray();
-
-                // Membagi peserta yang telah diurutkan ke dalam heat
-                $heats = $this->divideIntoHeatsWithoutGroups($participantsArray);
-
-                // Mengurutkan peserta di setiap heat dengan logika sortMiddle
-                foreach ($heats as &$heat) {
-                    $heat = $this->sortMiddle($heat);
-                }
-            
-                // Menambahkan data heat ke dalam acara
-                $acara->heats = $heats;
+                $acara = $this->generateResmi($acara, $this->officialMaxLanes);
             }
 
             $pdf = Pdf::loadView('layouts.print-layout-bukuacara-resmi', compact('acaras', 'kompetisi', 'time'))->setPaper('a4', 'potrait');
@@ -115,64 +90,6 @@ class UnduhanController extends Controller
         return $pdf->stream('Buku Acara ' . $kompetisi->nama . '.pdf');
     }
 
-    private function sortMiddle($participants)
-    {
-        // Ensure all participants have a track record, set default if not set
-        $participants = array_filter($participants, function($participant) {
-            return $participant !== null; // Filter out null participants
-        });
-    
-        // Ensure all remaining participants have a valid track record
-        $participants = array_map(function($participant) {
-            if (!isset($participant['track_record']) || $participant['track_record'] == 0) {
-                $participant['track_record'] = 999; // Default value
-            }
-            return $participant;
-        }, $participants);
-
-        // Sort participants by 'track_record' in ascending order
-        usort($participants, function($a, $b) {
-            $trackRecordA = $a['track_record'];
-            $trackRecordB = $b['track_record'];
-            return $trackRecordA <=> $trackRecordB;
-        });
-    
-        $result = array_fill(0, 8, null); // Initialize array with 8 null elements
-        
-        $middleIndex = intdiv(8, 2); // Middle position in an 8-element array
-        $leftIndex = $middleIndex - 1;
-        $rightIndex = $middleIndex;
-        
-        foreach ($participants as $i => $participant) {
-            if ($i % 2 == 0) {
-                // Place participant in the middle and downwards
-                $result[$leftIndex--] = $participant;
-            } else {
-                // Place participant in the middle and upwards
-                $result[$rightIndex++] = $participant;
-            }
-        }
-
-        return $result; // Return the sorted array
-    }
-
-
-    private function divideIntoHeatsWithoutGroups($participants, $maxLanes = 8)
-    {
-        // Membagi peserta ke dalam heat
-        $heats = array_chunk($participants, $maxLanes);
-
-        // Menambahkan baris kosong di setiap heat sehingga memiliki 8 baris
-        foreach ($heats as &$heat) {
-            $count = count($heat);
-            if ($count < $maxLanes) {
-                // Menambahkan elemen kosong jika peserta kurang dari 8
-                $heat = array_merge($heat, array_fill($count, $maxLanes - $count, null));
-            }
-        }
-
-        return $heats;
-    }
 
     private function divideIntoHeats($participants, $totalGroups = 2, $participantsPerGroup = 4) // jumlah grup per seri nya
     {
@@ -309,39 +226,137 @@ class UnduhanController extends Controller
         }else{
 
             foreach ($acaras as $acara) {
-                $participants = $acara->pesertaSelesai;
-            
-                // Setel club untuk setiap peserta
-                foreach ($participants as $participant) {
-                    $participant->club = $participant->user->club ? $participant->user->club : '-';
+                $acara = $this->generateResmi($acara, $this->officialMaxLanes);
 
-                    $trackRecord = $participant->trackRecords->firstWhere('nomor_lomba', $acara->jenis_lomba);
-
-                    if ($trackRecord) {
-                        $participant->track_record = $trackRecord->time;
-                    } else {
-                        $participant->track_record = 999;
-                    }
-                }
-            
-                // Membagi peserta yang telah diurutkan ke dalam heat
-                $participantsArray = $participants->toArray();
-
-                // Membagi peserta yang telah diurutkan ke dalam heat
-                $heats = $this->divideIntoHeatsWithoutGroups($participantsArray);
-
-                // Mengurutkan peserta di setiap heat dengan logika sortMiddle
-                foreach ($heats as &$heat) {
-                    $heat = $this->sortMiddle($heat);
-                }
-            
-                // Menambahkan data heat ke dalam acara
-                $acara->heats = $heats;
             }
 
-            return Excel::download(new KompetisiResmi($acaras), $kompetisi->nama . '.xlsx');
+            return Excel::download(new KompetisiResmi($acaras, $this->officialMaxLanes), $kompetisi->nama . '.xlsx');
         }
 
+    }
+
+    // ----------------- Untuk kompetisi resmi -----------------
+    public function generateResmi($acara, $maxLanes) 
+    {
+        $participants = $acara->pesertaSelesai;
+        
+        // Setel club untuk setiap peserta
+        foreach ($participants as $participant) {
+            $participant->club = $participant->user->club ? $participant->user->club : '-';
+
+            $trackRecord = $participant->trackRecords->firstWhere('nomor_lomba', $acara->jenis_lomba);
+
+            if ($trackRecord && $trackRecord->time > 5.00) {
+                $participant->track_record = $trackRecord->time;
+            } else {
+                $participant->track_record = 999;
+            }
+        }
+            
+        // Membagi peserta yang telah diurutkan ke dalam heat
+        $participantsArray = $participants->toArray();
+
+        usort($participantsArray, function($a, $b) {
+            return $a['track_record'] <=> $b['track_record'];
+        });
+
+        // Membagi peserta yang telah diurutkan ke dalam heat
+        $heats = array_chunk($participantsArray, $maxLanes);
+
+        $heats = array_values(array_reverse($heats));
+
+        
+        // Menambahkan baris kosong di setiap heat
+        foreach ($heats as $index => &$heat) {
+            $count = count($heat);
+            
+            // Jika hanya ada 1 peserta, cari 3 peserta terlama dari heat sebelumnya
+            if ($count == 1 && $index == 0) {
+                
+                if (isset($heats[$index + 1]) && is_array($heats[$index + 1])) {
+                    $nextHeat =& $heats[$index + 1];
+    
+                    // Urutkan nextHeat berdasarkan track_record (terbesar ke terkecil = paling lambat dulu)
+                    usort($nextHeat, function ($a, $b) {
+                        return $b['track_record'] <=> $a['track_record'];
+                    });
+    
+                    // Ambil 3 peserta paling lambat
+                    $slowestParticipants = array_slice($nextHeat, 0, 3);
+    
+                    // Tambahkan ke heat ini
+                    $heat = array_merge($heat, $slowestParticipants);
+    
+                    // Replace peserta terlama di nextHeat jadi null
+                    foreach ($slowestParticipants as $sp) {
+                        foreach ($nextHeat as $key => $participant) {
+                            if (isset($participant['id']) && $participant['id'] === $sp['id']) {
+                                $nextHeat[$key] = null;
+                            }
+                        }
+                    }
+    
+                    $count += 3;
+                }
+            }
+
+            if ($count < $maxLanes) {
+                // Menambahkan elemen kosong jika peserta kurang dari maxLanes
+                $heat = array_merge($heat, array_fill($count, $maxLanes - $count, null));
+            }
+        }
+         
+        // Mengurutkan peserta di setiap heat dengan logika sortMiddle
+        foreach ($heats as &$heat) {
+            $heat = $this->sortMiddle($heat, $maxLanes);
+        }
+            
+        // Menambahkan data heat ke dalam acara
+        $acara->heats = $heats;
+
+        return $acara;
+    }
+
+    // ----------- Untuk sorting peserta pada kompetisi resmi -----------
+    private function sortMiddle($participants, $maxLanes)
+    {
+        // Ensure all participants have a track record, set default if not set
+        $participants = array_filter($participants, function($participant) {
+            return $participant !== null; // Filter out null participants
+        });
+    
+        // Ensure all remaining participants have a valid track record
+        $participants = array_map(function($participant) {
+            if (!isset($participant['track_record']) || $participant['track_record'] == 0) {
+                $participant['track_record'] = 999; // Default value
+            }
+            return $participant;
+        }, $participants);
+
+        // Sort participants by 'track_record' in ascending order
+        usort($participants, function($a, $b) {
+            $trackRecordA = $a['track_record'];
+            $trackRecordB = $b['track_record'];
+            return $trackRecordA <=> $trackRecordB;
+        });
+    
+        $result = array_fill(0, $maxLanes, null);
+        
+        $middleIndex = intdiv($maxLanes, 2);
+        $leftIndex = $middleIndex - 1;
+        $rightIndex = $middleIndex;
+        
+        foreach ($participants as $i => $participant) {
+            if ($i % 2 == 0) {
+                // Place participant in the middle and downwards
+                $result[$leftIndex--] = $participant;
+            } else {
+                // Place participant in the middle and upwards
+                $result[$rightIndex++] = $participant;
+            }
+        }
+
+        return $result; // Return the sorted array
     }
 
 }
