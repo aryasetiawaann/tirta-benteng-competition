@@ -336,13 +336,871 @@ a {
     text-align: justify;
 }
 
+/* ====================================================================
+   RIWAYAT PERLOMBAAN
+   ==================================================================== */
+
+#riwayat {
+    position: relative;
+    padding: 80px 0 0;
+    background: #f8f4ea;
+    color: #2c3e50;
+    overflow: hidden;
+    z-index: 1;
+}
+
+.riwayat-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px 60px;
+    position: relative;
+    z-index: 2;
+}
+
+/* Riwayat Header */
+.riwayat-header {
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.riwayat-header h2 {
+    font-family: "Inter", sans-serif;
+    font-size: 38px;
+    font-weight: 800;
+    text-transform: uppercase;
+    color: #2c3e50;
+    margin: 20px 0;
+    position: relative;
+}
+
+.riwayat-header h2::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 4px;
+    background: linear-gradient(90deg, #008dda, #00c4f7);
+    border-radius: 2px;
+}
+
+.custom-center-subheader {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.custom-center-subheader .line {
+    min-width: 45px;
+    max-height: 0;
+    border-top: 1px solid rgba(0, 0, 0, 0.3);
+}
+
+.custom-center-subheader h3 {
+    text-transform: uppercase;
+    text-align: center;
+    font-size: 18px;
+    font-weight: 800;
+    color: #008dda;
+    margin: 0;
+}
+
+/* Carousel Riwayat */
+.riwayat-carousel-container {
+    position: relative;
+    margin: 40px 0;
+    padding: 0 70px;
+    overflow: hidden;
+    contain: layout style paint;
+}
+
+.riwayat-carousel {
+    overflow: hidden;
+    width: 100%;
+    position: relative;
+}
+
+.riwayat-carousel-track {
+    display: flex;
+    gap: 30px;
+    transition: transform 0.5s ease;
+    padding: 20px 0;
+    width: max-content;
+    will-change: transform;
+    cursor: grab;
+    backface-visibility: hidden;
+    perspective: 1000px;
+}
+
+.riwayat-carousel-track:active,
+.riwayat-carousel-track.dragging {
+    cursor: grabbing;
+    user-select: none;
+}
+
+/* Carousel Navigation Buttons */
+.carousel-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: linear-gradient(135deg, #008dda, #00c4f7);
+    border: none;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    color: white;
+    font-size: 18px;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(0, 141, 218, 0.3);
+    transition: all 0.3s ease;
+    z-index: 10;
+    opacity: 1;
+}
+
+.carousel-btn:hover {
+    background: white;
+    color: #008dda;
+    transform: translateY(-50%) scale(1.1);
+    box-shadow: 0 6px 20px rgba(0, 141, 218, 0.4);
+}
+
+.carousel-btn:focus {
+    outline: 3px solid rgba(0, 141, 218, 0.3);
+    outline-offset: 2px;
+}
+
+.carousel-btn:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+.carousel-prev {
+    left: 10px;
+}
+
+.carousel-next {
+    right: 10px;
+}
+
+/* Auto-play indicators */
+.carousel-auto-play-indicator {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 20px;
+    position: absolute;
+    bottom: -20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 5;
+}
+
+.auto-play-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: rgba(0, 141, 218, 0.3);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.auto-play-dot.active,
+.auto-play-dot:hover {
+    background-color: #008dda;
+    transform: scale(1.2);
+}
+
+/* Background Particles */
+.riwayat-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    overflow: hidden;
+}
+
+.riwayat-particle {
+    position: absolute;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+.riwayat-particle-1 {
+    width: 300px;
+    height: 300px;
+    top: -150px;
+    right: 10%;
+    animation: floatSlow 20s infinite alternate ease-in-out;
+}
+
+.riwayat-particle-2 {
+    width: 500px;
+    height: 500px;
+    bottom: -250px;
+    left: -100px;
+    opacity: 0.03;
+}
+
+.riwayat-particle-3 {
+    width: 200px;
+    height: 200px;
+    top: 30%;
+    right: -100px;
+    opacity: 0.04;
+    animation: floatSlow 15s infinite alternate-reverse ease-in-out;
+    animation-delay: -5s;
+}
+
+/* Card Styles */
+.carousel-card {
+    min-width: 350px;
+    max-width: 350px;
+    flex-shrink: 0;
+    flex-grow: 0;
+    position: relative;
+}
+
+.riwayat-card {
+    background-color: white;
+    border: 1px solid rgba(0, 141, 218, 0.1);
+    border-radius: 15px;
+    padding: 30px;
+    height: 400px;
+    display: flex;
+    flex-direction: column;
+    transition: all 0.3s ease;
+    position: relative;
+    box-shadow: 0 10px 30px rgba(0, 141, 218, 0.1);
+    transform-style: preserve-3d;
+    backface-visibility: hidden;
+    overflow: hidden;
+}
+
+.riwayat-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: linear-gradient(90deg, #008dda, #00c4f7);
+    transition: all 0.3s ease;
+}
+
+.riwayat-card:hover {
+    transform: translateY(-10px) scale(1.02);
+    box-shadow: 0 20px 40px rgba(0, 141, 218, 0.2);
+}
+
+.riwayat-card:hover::before {
+    height: 6px;
+    background: linear-gradient(90deg, #00c4f7, #008dda);
+}
+
+/* Card Content */
+.riwayat-year {
+    display: inline-block;
+    background: linear-gradient(135deg, #008dda, #00c4f7);
+    color: white;
+    padding: 8px 20px;
+    text-align: center;
+    border-radius: 25px;
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 15px rgba(0, 141, 218, 0.3);
+}
+
+.riwayat-title {
+    font-family: "Inter", sans-serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: #2c3e50;
+    margin-bottom: 15px;
+    line-height: 1.3;
+}
+
+.riwayat-details {
+    margin-bottom: 20px;
+    flex-grow: 1;
+}
+
+.riwayat-detail-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    font-size: 15px;
+    color: #5a6c7d;
+}
+
+.riwayat-detail-item i {
+    color: #008dda;
+    width: 20px;
+    margin-right: 12px;
+    font-size: 14px;
+}
+
+/* Hasil Acara Section */
+.hasil-acara {
+    background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+    padding: 15px;
+    border-radius: 10px;
+    border-left: 4px solid #008dda;
+    margin-top: auto;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    text-align: center;
+}
+
+.hasil-acara::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(0, 141, 218, 0.1), transparent);
+    transition: left 0.5s ease;
+}
+
+.hasil-acara:hover::before {
+    left: 100%;
+}
+
+.hasil-acara:hover {
+    background: linear-gradient(135deg, #008dda, #00c4f7);
+    color: white;
+    transform: scale(1.02) translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 141, 218, 0.3);
+}
+
+.hasil-acara:focus {
+    outline: 2px solid #008dda;
+    outline-offset: 2px;
+}
+
+.hasil-acara-title {
+    font-weight: 600;
+    color: #008dda;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 5px;
+    transition: color 0.3s ease;
+    position: relative;
+    z-index: 2;
+}
+
+.hasil-acara-desc {
+    color: #2c3e50;
+    font-size: 15px;
+    line-height: 1.4;
+    transition: color 0.3s ease;
+    position: relative;
+    z-index: 2;
+}
+
+.hasil-acara:hover .hasil-acara-title,
+.hasil-acara:hover .hasil-acara-desc {
+    color: white;
+}
+
+/* See More Card */
+.see-more-card {
+    background: linear-gradient(135deg, #008dda, #00c4f7);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    border: none;
+    overflow: hidden;
+    position: relative;
+}
+
+.see-more-card::before {
+    background: rgba(255, 255, 255, 0.1);
+    height: 4px;
+}
+
+.see-more-card::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s ease;
+}
+
+.see-more-card:hover::after {
+    left: 100%;
+}
+
+.see-more-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    z-index: 2;
+    position: relative;
+}
+
+.see-more-icon {
+    font-size: 48px;
+    margin-bottom: 20px;
+    opacity: 0.9;
+    animation: pulse 2s ease-in-out infinite;
+}
+
+.see-more-title {
+    font-family: "Inter", sans-serif;
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 15px;
+    color: white;
+}
+
+.see-more-desc {
+    font-size: 16px;
+    margin-bottom: 25px;
+    opacity: 0.9;
+    line-height: 1.4;
+}
+
+.btn-see-more-all {
+    background: white;
+    color: #008dda;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 25px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.btn-see-more-all:hover {
+    background: rgba(255, 255, 255, 0.95);
+    transform: scale(1.05) translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+}
+
+/* Bottom Action */
+.riwayat-bottom-action {
+    text-align: center;
+    margin: 30px 0 20px 0;
+}
+
+.btn-lihat-selengkapnya {
+    background: linear-gradient(135deg, #008dda, #00c4f7);
+    color: white;
+    border: none;
+    padding: 15px 40px;
+    border-radius: 30px;
+    font-size: 18px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 141, 218, 0.3);
+}
+
+.btn-lihat-selengkapnya:hover {
+    background: linear-gradient(135deg, #0066cc, #008dda);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 141, 218, 0.4);
+}
+
+.btn-lihat-selengkapnya i {
+    margin-right: 10px;
+}
+
+/* Statistics Section */
+.riwayat-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    margin-top: 40px;
+    margin-bottom: 0;
+    padding: 40px;
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 141, 218, 0.1);
+}
+
+.stat-item {
+    text-align: center;
+    padding: 20px;
+    border-radius: 10px;
+    transition: all 0.3s ease;
+}
+
+.stat-item:hover {
+    background: linear-gradient(135deg, #f8f9fa, #ffffff);
+    transform: translateY(-5px);
+}
+
+.stat-number {
+    font-family: "Inter", sans-serif;
+    font-size: 36px;
+    font-weight: 800;
+    color: #008dda;
+    display: block;
+    line-height: 1;
+}
+
+.stat-label {
+    font-size: 14px;
+    color: #5a6c7d;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-top: 8px;
+}
+
+/* Animations */
+@keyframes pulse {
+    0%, 100% { 
+        transform: scale(1); 
+        opacity: 0.9; 
+    }
+    50% { 
+        transform: scale(1.1); 
+        opacity: 1; 
+    }
+}
+
+@keyframes slideInFromRight {
+    from {
+        opacity: 0;
+        transform: translateX(50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes slideInFromLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.carousel-card.slide-in-right {
+    animation: slideInFromRight 0.5s ease-out;
+}
+
+.carousel-card.slide-in-left {
+    animation: slideInFromLeft 0.5s ease-out;
+}
+
+.carousel-loading {
+    pointer-events: none;
+}
+
+.carousel-loading .carousel-btn {
+    opacity: 0.6;
+}
+
+@media screen and (max-width: 850px) {
+    #riwayat {
+        padding: 60px 0;
+    }
+
+    .riwayat-header h2 {
+        font-size: 32px;
+    }
+
+    .riwayat-carousel-container {
+        padding: 0 60px;
+    }
+    
+    .carousel-card {
+        min-width: 320px;
+        max-width: 320px;
+    }
+    
+    .carousel-btn {
+        width: 45px;
+        height: 45px;
+        font-size: 16px;
+    }
+    
+    .carousel-prev {
+        left: 5px;
+    }
+    
+    .carousel-next {
+        right: 5px;
+    }
+
+    .riwayat-stats {
+        grid-template-columns: 1fr;
+        gap: 15px;
+        padding: 30px 20px;
+    }
+
+    .stat-number {
+        font-size: 28px;
+    }
+
+    .carousel-auto-play-indicator {
+        bottom: -35px;
+    }
+
+    .riwayat-bottom-action {
+        margin: 50px 0 30px;
+    }
+}
+
+@media screen and (max-width: 580px) {
+    #riwayat {
+        padding: 40px 0;
+    }
+
+    .riwayat-container {
+        padding: 0 15px; 
+    }
+
+    .riwayat-header h2 {
+        font-size: 28px; 
+        margin: 20px 0;
+    }
+    
+    .riwayat-carousel-container {
+        padding: 0 55px; 
+        overflow: visible;
+        margin: 40px 0;
+    }
+
+    .riwayat-carousel {
+        overflow: visible;
+    }
+    
+    .carousel-card {
+        min-width: calc(100vw - 130px); 
+        max-width: calc(100vw - 130px);
+        height: 420px; 
+    }
+    
+    .riwayat-card {
+        padding: 25px 20px;
+        height: 100%;
+        box-sizing: border-box;
+    }
+    
+    .carousel-btn {
+        width: 40px;
+        height: 40px;
+        font-size: 14px;
+    }
+    
+    .riwayat-year {
+        font-size: 13px;
+        padding: 8px 18px;
+        margin-bottom: 18px;
+    }
+    
+    .riwayat-title {
+        font-size: 18px;
+        overflow: visible;
+        text-overflow: unset;
+        display: block;
+    }
+    
+    .riwayat-detail-item {
+        margin-bottom: 12px;
+        font-size: 14px;
+        overflow: visible;
+        text-overflow: unset;
+        white-space: normal;
+    }
+    
+    .riwayat-detail-item i {
+        flex-shrink: 0;
+    }
+    
+    .riwayat-detail-item span {
+        overflow: visible;
+        text-overflow: unset;
+        display: block;
+        max-width: none;
+        line-height: 1.4;
+    }
+    
+    .hasil-acara-title {
+        font-size: 13px;
+    }
+    
+    .hasil-acara-desc {
+        font-size: 14px;
+        overflow: visible;
+        text-overflow: unset;
+        display: block;
+    }
+    
+    .see-more-content {
+        padding: 20px;
+    }
+    
+    .see-more-icon {
+        font-size: 40px;
+    }
+    
+    .see-more-title {
+        font-size: 20px;
+    }
+    
+    .see-more-desc {
+        font-size: 14px;
+    }
+    
+    .btn-see-more-all {
+        font-size: 14px;
+    }
+    
+    .carousel-auto-play-indicator {
+        bottom: -50px;
+    }
+    
+    .auto-play-dot {
+        width: 8px;
+        height: 8px;
+    }
+    
+    .riwayat-stats {
+        padding: 30px 20px;
+    }
+    
+    .stat-number {
+        font-size: 32px;
+    }
+    
+    .stat-label {
+        font-size: 12px;
+    }
+    
+    .btn-lihat-selengkapnya {
+        padding: 15px 30px;
+        font-size: 16px;
+    }
+    
+    .riwayat-bottom-action {
+        margin: 40px 0 20px 0;
+    }
+}
+
+@media screen and (max-width: 400px) {
+    .riwayat-carousel-container {
+        padding: 0 50px;
+    }
+
+    .carousel-card {
+        min-width: calc(100vw - 120px);
+        max-width: calc(100vw - 120px);
+        height: 400px; 
+    }
+
+    .riwayat-card {
+        padding: 20px 15px;
+    }
+
+    .carousel-prev {
+        left: 3px;
+    }
+    
+    .carousel-next {
+        right: 3px;
+    }
+
+    .riwayat-title {
+        font-size: 16px;
+    }
+
+    .riwayat-detail-item {
+        font-size: 13px;
+    }
+
+    .see-more-title {
+        font-size: 18px;
+    }
+
+    .see-more-icon {
+        font-size: 36px;
+    }
+}
+
+/* ====================================================================
+   LANDSCAPE ORIENTATION
+   ==================================================================== */
+
+@media screen and (max-width: 850px) and (orientation: landscape) {
+    .carousel-card {
+        min-width: calc(50vw - 80px);
+        max-width: calc(50vw - 80px);
+        height: 350px;
+    }
+    
+    .riwayat-carousel-track {
+        gap: 20px;
+    }
+
+    .riwayat-stats {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media print {
+    #riwayat {
+        background: white;
+        padding: 20px 0;
+    }
+
+    #riwayat::before {
+        display: none;
+    }
+
+    .carousel-btn,
+    .carousel-auto-play-indicator,
+    .btn-lihat-selengkapnya {
+        display: none;
+    }
+
+    .riwayat-carousel-track {
+        transform: none !important;
+        flex-wrap: wrap;
+    }
+
+    .carousel-card {
+        min-width: 300px;
+        max-width: 300px;
+        margin-bottom: 20px;
+    }
+}
+
 /* Jadwal Section */
 #jadwal {
-    background-color: #f8f4ea;
+    background-color: #FFFFFF;
     display: flex;
     flex-direction: column;
     align-items: center;
     padding: 50px 0;
+    margin-top: 0;
 }
 
 #jadwal h2 {
@@ -363,7 +1221,7 @@ a {
     display: flex;
     justify-content: space-evenly;
     width: 100%;
-    overflow-x: scroll;
+    overflow-x: visible;
 }
 
 .jadwal-item {
@@ -463,6 +1321,7 @@ a {
     flex-direction: column;
     align-items: center;
     padding: 50px 0;
+    background-color: #f8f4ea;
 }
 
 #biaya h2 {
@@ -472,6 +1331,7 @@ a {
     font-size: 34px;
     max-width: 700px;
     text-align: center;
+    color: #000;
 }
 
 .price-list {
@@ -573,7 +1433,7 @@ a {
     display: flex;
     justify-content: space-around;
     padding: 5%;
-    background-color: #f2eee6;
+    background-color: #2a5394;
     gap: 40px;
 }
 
@@ -596,6 +1456,7 @@ a {
 
 .footer-left p {
     margin: 10px 0 0;
+    color: #ffffff;
 }
 
 .footer-left,
@@ -626,7 +1487,7 @@ ul {
 
 .footer-menu ul li a,
 .footer-contact a span {
-    color: #000;
+    color: #ffffff;
     text-decoration: none;
 }
 
