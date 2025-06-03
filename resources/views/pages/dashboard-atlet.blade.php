@@ -132,15 +132,19 @@
                                                 <td>Tidak ada dokumen</td>
                                             @endif
                                             <td>
-                                                @if ($atlet->is_verified != 'verified' )                      
                                                 <div class="actions">
+                                                    @if ($atlet->is_verified != 'verified')
                                                     <a href="{{ route('dashboard.atlet.edit', $atlet->id) }}">
                                                         <button class="button-gap" data-tooltip="Edit Atlet">
                                                             <i class='bx bx-xs bx-edit'></i>
                                                         </button>
                                                     </a>
+                                                    @else
+                                                    <button class="button-gap" data-tooltip="Atlet Sudah Terverifikasi" disabled>
+                                                        <i class='bx bx-xs bx-edit'></i>
+                                                    </button>
+                                                    @endif
                                                 </div>
-                                                @endif
                                             </td>
                                         </tr>
                                         @endif
