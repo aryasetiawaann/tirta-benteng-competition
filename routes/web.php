@@ -12,6 +12,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RiwayatController;
 use App\Http\Controllers\UnduhanController;
 use App\Http\Controllers\TrackRecordController;
+use App\Http\Controllers\DaftarPesertaController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -41,6 +42,9 @@ Route::get('/riwayat/{eventId}/hasil-perlombaan/{nomorAcara}/view', [RiwayatCont
 Route::get('/riwayat/{eventId}/sertifikat/{nomorAcara}/detail/{pesertaId}', [RiwayatController::class, 'detailSertifikat'])->name('riwayat.detail-sertifikat');
 Route::get('/riwayat/{eventId}/sertifikat/{nomorAcara}/download/{pesertaId}', [RiwayatController::class, 'downloadCertificate'])->name('riwayat.download-certificate');
 Route::get('/riwayat/{eventId}/surat-keterangan/{nomorAcara}/download/{pesertaId}', [RiwayatController::class, 'downloadSK'])->name('riwayat.download-sk');
+
+// Daftar Peserta
+Route::get('/{kompetisiId}/daftar-peserta', [DaftarPesertaController::class, 'show']);
 
 Route::middleware(['auth', 'verified'])->group(function () {
     
