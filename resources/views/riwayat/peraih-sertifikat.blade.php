@@ -53,13 +53,9 @@
                                 <p class="winner-club">{{ $winner['klub'] }}</p>
                             </div>
                             <div class="winner-actions horizontal">
-                                <a href="{{ route('riwayat.view-certificate', ['eventId' => $kejuaraan['id'], 'nomorAcara' => urlencode($nomorAcara)]) }}" class="btn-view-certificate" target="_blank">
+                                <a href="{{ route('riwayat.detail-sertifikat', ['eventId' => $kejuaraan['id'], 'nomorAcara' => urlencode($nomorAcara), 'pesertaId' => $winner['id']]) }}" class="btn-view-certificate">
                                     <i class="bx bx-show"></i>
                                     <span>Lihat</span>
-                                </a>
-                                <a href="{{ route('riwayat.view-certificate', ['eventId' => $kejuaraan['id'], 'nomorAcara' => urlencode($nomorAcara)]) }}" class="btn-download-certificate" download>
-                                    <i class="bx bx-download"></i>
-                                    <span>Unduh</span>
                                 </a>
                             </div>
                         </div>

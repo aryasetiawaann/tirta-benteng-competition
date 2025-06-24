@@ -74,36 +74,18 @@
                             <i class="bx bxs-badge-check"></i>
                         </div>
                         <div class="card-content">
-                            <h3>Sertifikat Pemenang</h3>
-                            <p>Unduh sertifikat untuk para pemenang kejuaraan</p>
+                            <h3>Sertifikat dan Surat Keterangan</h3>
+                            <p>Unduh sertifikat untuk para pemenang dan surat keterangan resmi kejuaraan.</p>
                         </div>
                         <div class="card-action">
                             <a href="{{ route('riwayat.sertifikat', $kejuaraan['id']) }}" class="btn-category">
-                                <span>Lihat Sertifikat</span>
-                                <i class="bx bx-chevron-right"></i>
-                            </a>
-                        </div>
-                    </div>
-
-                    <!-- Surat Keterangan Card -->
-                    <div class="category-card surat-keterangan-card">
-                        <div class="card-icon">
-                            <i class="bx bxs-file-doc"></i>
-                        </div>
-                        <div class="card-content">
-                            <h3>Surat Keterangan</h3>
-                            <p>Dokumen surat keterangan resmi kejuaraan</p>
-                        </div>
-                        <div class="card-action">
-                            <a href="{{ route('riwayat.surat-keterangan', $kejuaraan['id']) }}" class="btn-category">
-                                <span>Lihat Surat</span>
+                                <span>Lihat Dokumen</span>
                                 <i class="bx bx-chevron-right"></i>
                             </a>
                         </div>
                     </div>
                 </div>
                 
-                <!-- Back Button -->
                 <div class="back-section">
                     <a href="{{ route('riwayat.index') }}" class="btn-back">
                         <i class="bx bx-chevron-left"></i>

@@ -240,6 +240,31 @@ class RiwayatController extends Controller
             return abort(500, 'Terjadi kesalahan sistem');
         }
     }
+    
+    public function detailSertifikat($eventId, $nomorAcara, $pesertaId)
+    {
+        try {
+            // Decode URL-encoded nomor acara
+            $nomorAcara = urldecode($nomorAcara);
+            
+            $kejuaraan = collect($this->getKejuaraanData())->firstWhere('id', (int)$eventId);
+            $pemenangList = $this->getPemenangData($eventId, $nomorAcara);
+            $pemenang = collect($pemenangList)->firstWhere('id', (int)$pesertaId);
+            
+            if (!$kejuaraan) {
+                abort(404, 'Kejuaraan tidak ditemukan');
+            }
+            
+            if (!$pemenang) {
+                abort(404, 'Data peserta tidak ditemukan');
+            }
+
+            return view('riwayat.detail-sertifikat', compact('kejuaraan', 'nomorAcara', 'pemenang'));
+        } catch (\Exception $e) {
+            \Log::error('Error in RiwayatController@detailSertifikat: ' . $e->getMessage());
+            return abort(500, 'Terjadi kesalahan sistem');
+        }
+    }
 
     public function viewSuratKeterangan($eventId, $nomorAcara)
     {
@@ -279,6 +304,70 @@ class RiwayatController extends Controller
             return response()->file($path);
         } catch (\Exception $e) {
             \Log::error('Error in RiwayatController@viewHasilPerlombaan: ' . $e->getMessage());
+            return abort(500, 'Terjadi kesalahan sistem');
+        }
+    }
+
+    public function downloadCertificate($eventId, $nomorAcara, $pesertaId)
+    {
+        try {
+            // Decode URL-encoded nomor acara
+            $nomorAcara = urldecode($nomorAcara);
+            
+            // Dapatkan data pemenang untuk nama file yang lebih spesifik
+            $pemenangList = $this->getPemenangData($eventId, $nomorAcara);
+            $pemenang = collect($pemenangList)->firstWhere('id', (int)$pesertaId);
+            
+            if (!$pemenang) {
+                abort(404, 'Data peserta tidak ditemukan');
+            }
+            
+            // Path ke file PDF sertifikat
+            $filename = "sertifikat_event_{$eventId}_" . str_replace(' ', '_', $nomorAcara) . ".pdf";
+            $path = storage_path("app/public/certificates/{$filename}");
+
+            if (!file_exists($path)) {
+                abort(404, 'File sertifikat tidak ditemukan');
+            }
+
+            // Nama file yang akan diunduh oleh pengguna
+            $downloadName = "Sertifikat_{$pemenang['nama']}_{$nomorAcara}.pdf";
+            
+            return response()->download($path, $downloadName);
+        } catch (\Exception $e) {
+            \Log::error('Error in RiwayatController@downloadCertificate: ' . $e->getMessage());
+            return abort(500, 'Terjadi kesalahan sistem');
+        }
+    }
+
+    public function downloadSK($eventId, $nomorAcara, $pesertaId)
+    {
+        try {
+            // Decode URL-encoded nomor acara
+            $nomorAcara = urldecode($nomorAcara);
+            
+            // Dapatkan data pemenang untuk nama file yang lebih spesifik
+            $pemenangList = $this->getPemenangData($eventId, $nomorAcara);
+            $pemenang = collect($pemenangList)->firstWhere('id', (int)$pesertaId);
+            
+            if (!$pemenang) {
+                abort(404, 'Data peserta tidak ditemukan');
+            }
+            
+            // Path ke file PDF surat keterangan
+            $filename = "surat_keterangan_event_{$eventId}_" . str_replace(' ', '_', $nomorAcara) . ".pdf";
+            $path = storage_path("app/public/surat-keterangan/{$filename}");
+
+            if (!file_exists($path)) {
+                abort(404, 'File surat keterangan tidak ditemukan');
+            }
+
+            // Nama file yang akan diunduh oleh pengguna
+            $downloadName = "Surat_Keterangan_{$pemenang['nama']}_{$nomorAcara}.pdf";
+            
+            return response()->download($path, $downloadName);
+        } catch (\Exception $e) {
+            \Log::error('Error in RiwayatController@downloadSK: ' . $e->getMessage());
             return abort(500, 'Terjadi kesalahan sistem');
         }
     }

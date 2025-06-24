@@ -1,53 +1,60 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // Elements
-    const yearFilter = document.getElementById('yearFilter');
-    const searchInput = document.getElementById('searchInput');
-    const kejuaraanGrid = document.getElementById('kejuaraanGrid');
-    const noResults = document.getElementById('noResults');
-    const kejuaraanCards = document.querySelectorAll('.kejuaraan-card');
-
-    // Function to filter kejuaraan cards
-    function filterKejuaraan() {
-        const selectedYear = yearFilter.value.toLowerCase();
-        const searchTerm = searchInput.value.toLowerCase();
-        let visibleCount = 0;
-
-        kejuaraanCards.forEach(card => {
-            const cardYear = card.getAttribute('data-year').toLowerCase();
-            const cardTitle = card.getAttribute('data-title').toLowerCase();
-            
-            const matchesYear = selectedYear === '' || cardYear === selectedYear;
-            const matchesSearch = searchTerm === '' || cardTitle.includes(searchTerm);
-            
-            if (matchesYear && matchesSearch) {
-                card.style.display = 'block';
-                visibleCount++;
-            } else {
-                card.style.display = 'none';
-            }
-        });
-
-        // Show/hide no results message
-        if (visibleCount === 0) {
-            noResults.style.display = 'block';
-        } else {
-            noResults.style.display = 'none';
-        }
-    }
-
-    // Event listeners
+    // Filter kejuaraan cards based on year
+    const yearFilter = document.getElementById('year-filter');
     if (yearFilter) {
-        yearFilter.addEventListener('change', filterKejuaraan);
+        yearFilter.addEventListener('change', function() {
+            const selectedYear = this.value;
+            const cards = document.querySelectorAll('.kejuaraan-card');
+            
+            cards.forEach(card => {
+                const cardYear = card.getAttribute('data-year');
+                
+                if (selectedYear === 'all' || cardYear === selectedYear) {
+                    card.style.display = 'flex';
+                    setTimeout(() => {
+                        card.classList.add('visible');
+                    }, 10);
+                } else {
+                    card.classList.remove('visible');
+                    setTimeout(() => {
+                        card.style.display = 'none';
+                    }, 300); // Match this with your CSS transition time
+                }
+            });
+        });
     }
     
+    // Search functionality
+    const searchInput = document.getElementById('search-input');
     if (searchInput) {
-        searchInput.addEventListener('input', filterKejuaraan);
-    }
-
-    // Initialize animations with delay for smoother page load
-    setTimeout(() => {
-        document.querySelectorAll('.kejuaraan-card, .category-card').forEach(card => {
-            card.style.opacity = '1';
+        searchInput.addEventListener('input', function() {
+            const searchTerm = this.value.toLowerCase();
+            const cards = document.querySelectorAll('.kejuaraan-card');
+            
+            cards.forEach(card => {
+                const cardTitle = card.querySelector('.kejuaraan-title').textContent.toLowerCase();
+                const cardLocation = card.querySelector('.kejuaraan-location').textContent.toLowerCase();
+                
+                if (cardTitle.includes(searchTerm) || cardLocation.includes(searchTerm)) {
+                    card.style.display = 'flex';
+                    setTimeout(() => {
+                        card.classList.add('visible');
+                    }, 10);
+                } else {
+                    card.classList.remove('visible');
+                    setTimeout(() => {
+                        card.style.display = 'none';
+                    }, 300); // Match this with your CSS transition time
+                }
+            });
         });
-    }, 100);
+    }
+    
+    // Certificate detail page animation
+    const certificateCard = document.querySelector('.certificate-card');
+    if (certificateCard) {
+        setTimeout(() => {
+            certificateCard.classList.add('animated');
+        }, 100);
+    }
 });

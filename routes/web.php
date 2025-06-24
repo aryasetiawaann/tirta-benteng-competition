@@ -31,13 +31,16 @@ Route::get('/', [MainPageController::class, 'mainpage'])->name('main');
 Route::get('/riwayat', [RiwayatController::class, 'index'])->name('riwayat.index');
 Route::get('/riwayat/{id}', [RiwayatController::class, 'show'])->name('riwayat.show');
 Route::get('/riwayat/{id}/sertifikat', [RiwayatController::class, 'sertifikat'])->name('riwayat.sertifikat');
-Route::get('/riwayat/{id}/surat-keterangan', [RiwayatController::class, 'suratKeterangan'])->name('riwayat.surat-keterangan');
+// Route::get('/riwayat/{id}/surat-keterangan', [RiwayatController::class, 'suratKeterangan'])->name('riwayat.surat-keterangan');
 Route::get('/riwayat/{id}/hasil-perlombaan', [RiwayatController::class, 'hasilPerlombaan'])->name('riwayat.hasil-perlombaan');
 Route::get('/riwayat/{eventId}/sertifikat/{nomorAcara}', [RiwayatController::class, 'peraihSertifikat'])->name('riwayat.peraih-sertifikat');
-Route::get('/riwayat/{eventId}/surat-keterangan/{nomorAcara}', [RiwayatController::class, 'peraihSK'])->name('riwayat.peraih-sk');
+// Route::get('/riwayat/{eventId}/surat-keterangan/{nomorAcara}', [RiwayatController::class, 'peraihSK'])->name('riwayat.peraih-sk');
 Route::get('/riwayat/{eventId}/sertifikat/{nomorAcara}/view', [RiwayatController::class, 'viewCertificate'])->name('riwayat.view-certificate');
 Route::get('/riwayat/{eventId}/surat-keterangan/{nomorAcara}/view', [RiwayatController::class, 'viewSuratKeterangan'])->name('riwayat.view-surat-keterangan');
 Route::get('/riwayat/{eventId}/hasil-perlombaan/{nomorAcara}/view', [RiwayatController::class, 'viewHasilPerlombaan'])->name('riwayat.view-hasil-perlombaan');
+Route::get('/riwayat/{eventId}/sertifikat/{nomorAcara}/detail/{pesertaId}', [RiwayatController::class, 'detailSertifikat'])->name('riwayat.detail-sertifikat');
+Route::get('/riwayat/{eventId}/sertifikat/{nomorAcara}/download/{pesertaId}', [RiwayatController::class, 'downloadCertificate'])->name('riwayat.download-certificate');
+Route::get('/riwayat/{eventId}/surat-keterangan/{nomorAcara}/download/{pesertaId}', [RiwayatController::class, 'downloadSK'])->name('riwayat.download-sk');
 
 Route::middleware(['auth', 'verified'])->group(function () {
     
