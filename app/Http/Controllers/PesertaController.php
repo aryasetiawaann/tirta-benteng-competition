@@ -62,7 +62,7 @@ class PesertaController extends Controller
                 'id'       => $peserta->id,
                 'price'    => $peserta->getAcara->harga ?? 0,
                 'quantity' => 1,
-                'name'     => "{$peserta->getAtlet->name} - {$peserta->getAcara->nomor_lomba} - {$peserta->getAcara->nama}",
+                'name'     => Str::limit("{$peserta->getAtlet->name} - {$peserta->getAcara->nomor_lomba}", 50),
             ];
             $totalHarga += $peserta->getAcara->harga ?? 0;
         }
@@ -147,6 +147,10 @@ class PesertaController extends Controller
 
         if (!$pembayaran) {
             return response()->json(['message' => 'Order not found'], 404);
+        }
+
+        if ($pembayaran->status === 'Berhasil') {
+            return response()->json(['message' => 'Pembayaran sudah berhasil, tidak diproses ulang.'], 200);
         }
 
         // Perbarui status pembayaran
