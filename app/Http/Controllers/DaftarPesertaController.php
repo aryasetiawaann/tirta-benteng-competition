@@ -14,6 +14,10 @@ class DaftarPesertaController extends Controller
             abort(404, 'PDF not found.');
         }
 
-        return response()->file(storage_path("app/public/{$path}"));
+        return response()->file(storage_path("app/public/{$path}"), [
+        'Cache-Control' => 'no-store, no-cache, must-revalidate, max-age=0',
+        'Pragma' => 'no-cache',
+        'Expires' => '0',
+    ]);
     }
 }

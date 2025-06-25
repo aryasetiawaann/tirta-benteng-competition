@@ -17,7 +17,7 @@ export default defineConfig({
                 "resources/js/mainpage.js",
                 "resources/js/profile.js",
                 "resources/js/sidebar.js",
-                "resources/css/riwayat.js",
+                "resources/js/riwayat.js",
             ],
             refresh: true,
         }),
