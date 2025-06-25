@@ -13,6 +13,7 @@ use App\Http\Controllers\RiwayatController;
 use App\Http\Controllers\UnduhanController;
 use App\Http\Controllers\TrackRecordController;
 use App\Http\Controllers\DaftarPesertaController;
+use App\Http\Controllers\WinnerController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -39,7 +40,7 @@ Route::get('/riwayat/{eventId}/sertifikat/{nomorAcara}', [RiwayatController::cla
 Route::get('/riwayat/{eventId}/sertifikat/{nomorAcara}/view', [RiwayatController::class, 'viewCertificate'])->name('riwayat.view-certificate');
 Route::get('/riwayat/{eventId}/surat-keterangan/{nomorAcara}/view', [RiwayatController::class, 'viewSuratKeterangan'])->name('riwayat.view-surat-keterangan');
 Route::get('/riwayat/{eventId}/hasil-perlombaan/{nomorAcara}/view', [RiwayatController::class, 'viewHasilPerlombaan'])->name('riwayat.view-hasil-perlombaan');
-Route::get('/riwayat/{eventId}/sertifikat/{nomorAcara}/detail/{pesertaId}', [RiwayatController::class, 'detailSertifikat'])->name('riwayat.detail-sertifikat');
+Route::get('/keterangan-juara/{kode}', [RiwayatController::class, 'detailSertifikat'])->where('kode', '.*')->name('riwayat.detail-sertifikat');
 Route::get('/riwayat/{eventId}/sertifikat/{nomorAcara}/download/{pesertaId}', [RiwayatController::class, 'downloadCertificate'])->name('riwayat.download-certificate');
 Route::get('/riwayat/{eventId}/surat-keterangan/{nomorAcara}/download/{pesertaId}', [RiwayatController::class, 'downloadSK'])->name('riwayat.download-sk');
 
@@ -134,6 +135,10 @@ Route::middleware(['auth','role:admin'])->group(function () {
     Route::get('/admin/dashboard/file/{id}/download', [UnduhanController::class, 'downloadExcel'])->name('dashboard.admin.excel.download');
     
     Route::get('/admin/dashboard/dokumen-peserta/{id}/download', [KompetisiController::class, 'downloadDokumen'])->name('dashboard.admin.dokumen.download');
+
+    // Kejuaraan
+    Route::get('admin/dashboard/kejuaraan', [WinnerController::class, 'index'])->name('admin.kejuaraan');
+    Route::post('admin/dashboard/kejuaraan', [WinnerController::class, 'store'])->name('admin.kejuaraan.store');
 });
 
 

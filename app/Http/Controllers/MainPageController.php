@@ -14,7 +14,9 @@ class MainPageController extends Controller
 
         $kompetisis = Kompetisi::where('waktu_kompetisi', ">=", now())->where('buka_pendaftaran', '<=', now())->orderBy('waktu_kompetisi', 'asc')->get();
 
-        return view('mainpage', compact('kompetisis'));
+        $competition_list= Kompetisi::all()->sortBy('waktu_kompetisi');
+
+        return view('mainpage', compact('kompetisis', 'competition_list'));
     }
 
 
@@ -45,18 +47,6 @@ class MainPageController extends Controller
                 })
                 ->with('acara.kompetisi')
                 ->get();
-
-        // $atlets = Atlet::whereHas('acara', function ($query) use ($kompetisi_current) {
-        //         $query->whereIn('kompetisi_id', $kompetisi_current); // Use `whereIn` for multiple IDs
-        //     })
-        //     ->with(['acara' => function ($query) use ($kompetisi_current) {
-        //         $query->whereIn('kompetisi_id', $kompetisi_current); // Filter acara by multiple kompetisi_id
-        //     }])
-        //     ->where('user_id', auth()->user()->id)
-        //     ->get()
-        //     ->sortByDesc(function ($atlet) {
-        //         return $atlet->acara->max('kompetisi_id');
-        //     });
 
         // Count acaras
         $acara_count = $atlets->flatMap(function ($atlet) {

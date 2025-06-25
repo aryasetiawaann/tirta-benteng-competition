@@ -75,6 +75,12 @@
                             <span class="text">Pembayaran</span>
                         </a>
                     </li>
+                    <li>
+                        <a href="{{ route('admin.kejuaraan') }}">
+                            <i class="icon ph-bold ph-trophy"></i>
+                            <span class="text">Kejuaraan</span>
+                        </a>
+                    </li>
                 </ul>
             </div>
         </div>

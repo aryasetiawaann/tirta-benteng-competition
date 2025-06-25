@@ -26,9 +26,9 @@
                     <div class="filter-controls">
                         <select id="yearFilter" class="filter-select">
                             <option value="">Semua Tahun</option>
-                            <option value="2025">2025</option>
-                            <option value="2024">2024</option>
-                            <option value="2023">2023</option>
+                            @foreach ($tahunKompetisi as $tahun)
+                                <option value={{$tahun}}>{{$tahun}}</option>
+                            @endforeach
                         </select>
 
                         <div class="search-box">
@@ -40,34 +40,34 @@
 
                 <div class="kejuaraan-grid" id="kejuaraanGrid">
                     @foreach($kejuaraan as $item)
-                    <div class="kejuaraan-card" data-year="{{ $item['year'] }}" data-title="{{ strtolower($item['title']) }}">
+                    <div class="kejuaraan-card" data-year="{{ \Carbon\Carbon::parse($item->waktu_kompetisi)->format('Y') }}" data-title="{{ strtolower($item->nama) }}">
                         <div class="card-image">
-                            <img src="{{ asset($item['image']) }}" alt="{{ $item['title'] }}" onerror="this.src='{{ asset('assets/img/default-event.jpg') }}'">
+                            <img src="{{ asset('assets/img/Swimpage.png') }}" alt="{{ $item->nama }}" onerror="this.src='{{ asset('assets/img/default-event.jpg') }}'">
                             <div class="card-overlay">
-                                <span class="year-badge">{{ $item['year'] }}</span>
+                                <span class="year-badge">{{ \Carbon\Carbon::parse($item->waktu_kompetisi)->format('Y') }}</span>
                             </div>
                         </div>
 
                         <div class="card-content">
-                            <h3 class="card-title">{{ $item['title'] }}</h3>
+                            <h3 class="card-title">{{ $item->nama }}</h3>
 
                             <div class="card-details">
                                 <div class="detail-item">
                                     <i class="bx bxs-map"></i>
-                                    <span>{{ $item['location'] }}</span>
+                                    <span>{{ $item->lokasi }}</span>
                                 </div>
                                 <div class="detail-item">
                                     <i class="bx bxs-calendar"></i>
-                                    <span>{{ $item['date'] }}</span>
+                                    <span>{{ \Carbon\Carbon::parse($item->waktu_kompetisi)->translatedFormat('d F Y') }}</span>
                                 </div>
                                 <div class="detail-item">
                                     <i class="bx bxs-medal"></i>
-                                    <span>{{ $item['type'] }}</span>
+                                    <span>{{ $item->kategori }}</span>
                                 </div>
                             </div>
 
                             <div class="card-actions">
-                                <a href="{{ route('riwayat.show', $item['id']) }}" class="btn-view-detail">
+                                <a href="{{ route('riwayat.show', $item->id) }}" class="btn-view-detail">
                                     <i class="bx bx-file"></i>
                                     Lihat Dokumen
                                 </a>

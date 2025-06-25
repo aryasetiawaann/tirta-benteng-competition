@@ -6,6 +6,11 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Storage;
 
+use App\Models\Kompetisi;
+use App\Models\Acara;
+use App\Models\Winner;
+
+
 class RiwayatController extends Controller
 {
     // Data dummy untuk kejuaraan - nanti bisa diganti dengan database
@@ -105,8 +110,15 @@ class RiwayatController extends Controller
     public function index()
     {
         try {
-            $kejuaraan = $this->getKejuaraanData();
-            return view('riwayat.riwayat', compact('kejuaraan'));
+            $kejuaraan = Kompetisi::all()->sortByDesc('created_at');
+
+            $tahunKompetisi = Kompetisi::selectRaw('YEAR(waktu_kompetisi) as tahun')
+            ->distinct()
+            ->orderBy('tahun', 'desc')
+            ->pluck('tahun');
+
+            return view('riwayat.riwayat', compact('kejuaraan', 'tahunKompetisi'));
+
         } catch (\Exception $e) {
             \Log::error('Error in RiwayatController@index: ' . $e->getMessage());
             return abort(500, 'Terjadi kesalahan sistem');
@@ -116,7 +128,7 @@ class RiwayatController extends Controller
     public function show($id)
     {
         try {
-            $kejuaraan = collect($this->getKejuaraanData())->firstWhere('id', (int)$id);
+            $kejuaraan = Kompetisi::find($id);
 
             if (!$kejuaraan) {
                 abort(404, 'Kejuaraan tidak ditemukan');
@@ -132,13 +144,14 @@ class RiwayatController extends Controller
     public function sertifikat($id)
     {
         try {
-            $kejuaraan = collect($this->getKejuaraanData())->firstWhere('id', (int)$id);
-            $nomorAcara = $this->getNomorAcaraData($id);
-
+            $kejuaraan = Kompetisi::find($id);
+            
             if (!$kejuaraan) {
                 abort(404, 'Kejuaraan tidak ditemukan');
             }
 
+            $nomorAcara = Acara::where('kompetisi_id', $id)->get();
+            
             return view('riwayat.sertifikat', compact('kejuaraan', 'nomorAcara'));
         } catch (\Exception $e) {
             \Log::error('Error in RiwayatController@sertifikat: ' . $e->getMessage());
@@ -166,14 +179,13 @@ class RiwayatController extends Controller
     public function hasilPerlombaan($id)
     {
         try {
-            $kejuaraan = collect($this->getKejuaraanData())->firstWhere('id', (int)$id);
-            $nomorAcara = $this->getNomorAcaraData($id);
+            $kejuaraan = Kompetisi::find($id);
 
             if (!$kejuaraan) {
                 abort(404, 'Kejuaraan tidak ditemukan');
             }
 
-            return view('riwayat.hasil-perlombaan', compact('kejuaraan', 'nomorAcara'));
+            return view('riwayat.hasil-perlombaan', compact('kejuaraan'));
         } catch (\Exception $e) {
             \Log::error('Error in RiwayatController@hasilPerlombaan: ' . $e->getMessage());
             return abort(500, 'Terjadi kesalahan sistem');
@@ -184,10 +196,13 @@ class RiwayatController extends Controller
     {
         try {
             // Decode URL-encoded nomor acara
-            $nomorAcara = urldecode($nomorAcara);
+            $nomorAcara = Acara::find($nomorAcara);
             
-            $kejuaraan = collect($this->getKejuaraanData())->firstWhere('id', (int)$eventId);
-            $pemenang = $this->getPemenangData($eventId, $nomorAcara);
+            $kejuaraan = Kompetisi::find($eventId);
+            
+            $pemenang = Winner::where('kompetisi_id', $kejuaraan->id)
+            ->where('acara_id', $nomorAcara->id)->get();
+
             
             if (!$kejuaraan) {
                 abort(404, 'Kejuaraan tidak ditemukan');
@@ -241,30 +256,33 @@ class RiwayatController extends Controller
         }
     }
     
-    public function detailSertifikat($eventId, $nomorAcara, $pesertaId)
+    public function detailSertifikat($kode)
     {
         try {
-            // Decode URL-encoded nomor acara
-            $nomorAcara = urldecode($nomorAcara);
+            $kode = urlencode($kode);
             
-            $kejuaraan = collect($this->getKejuaraanData())->firstWhere('id', (int)$eventId);
-            $pemenangList = $this->getPemenangData($eventId, $nomorAcara);
-            $pemenang = collect($pemenangList)->firstWhere('id', (int)$pesertaId);
-            
-            if (!$kejuaraan) {
-                abort(404, 'Kejuaraan tidak ditemukan');
-            }
-            
+            $pemenang = Winner::where('kode', $kode)->first();
+
+            // Cek dulu apakah data ditemukan
             if (!$pemenang) {
                 abort(404, 'Data peserta tidak ditemukan');
             }
 
+            $kejuaraan = Kompetisi::find($pemenang->kompetisi_id);
+            $nomorAcara = Acara::find($pemenang->acara_id);
+
+            if (!$kejuaraan) {
+                abort(404, 'Kejuaraan tidak ditemukan');
+            }
+
             return view('riwayat.detail-sertifikat', compact('kejuaraan', 'nomorAcara', 'pemenang'));
+
         } catch (\Exception $e) {
             \Log::error('Error in RiwayatController@detailSertifikat: ' . $e->getMessage());
             return abort(500, 'Terjadi kesalahan sistem');
         }
     }
+
 
     public function viewSuratKeterangan($eventId, $nomorAcara)
     {

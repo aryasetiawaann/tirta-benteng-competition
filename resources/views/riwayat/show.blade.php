@@ -12,28 +12,28 @@
                     <span class="separator">></span>
                     <a href="{{ route('riwayat.index') }}">Riwayat Kejuaraan</a>
                     <span class="separator">></span>
-                    <span class="current">{{ $kejuaraan['title'] }}</span>
+                    <span class="current">{{ $kejuaraan->nama }}</span>
                 </nav>
 
                 <div class="event-header">
                     <div class="event-info">
                         <div class="event-meta">
-                            <span class="year-badge">{{ $kejuaraan['year'] }}</span>
+                            <span class="year-badge">{{ \Carbon\Carbon::parse($kejuaraan->waktu_kompetisi)->format('Y') }}</span>
                         </div>
-                        <h1>{{ $kejuaraan['title'] }}</h1>
+                        <h1>{{ $kejuaraan->nama }}</h1>
 
                         <div class="event-details">
                             <div class="detail-item">
                                 <i class="bx bxs-location-plus"></i>
-                                <span>{{ $kejuaraan['location'] }}</span>
+                                <span>{{ $kejuaraan->lokasi }}</span>
                             </div>
                             <div class="detail-item">
                                 <i class="bx bxs-calendar-event"></i>
-                                <span>{{ $kejuaraan['date'] }}</span>
+                                <span>{{ \Carbon\Carbon::parse($kejuaraan->waktu_kompetisi)->translatedFormat('d F Y') }}</span>
                             </div>
                             <div class="detail-item">
                                 <i class="bx bxs-medal"></i>
-                                <span>{{ $kejuaraan['type'] }}</span>
+                                <span>{{ $kejuaraan->kategori }}</span>
                             </div>
                         </div>
                     </div>
@@ -61,7 +61,7 @@
                             <p>Lihat hasil lengkap dari setiap nomor perlombaan</p>
                         </div>
                         <div class="card-action">
-                            <a href="{{ route('riwayat.hasil-perlombaan', $kejuaraan['id']) }}" class="btn-category">
+                            <a href="{{ route('riwayat.hasil-perlombaan', $kejuaraan->id) }}" class="btn-category">
                                 <span>Lihat Hasil</span>
                                 <i class="bx bx-chevron-right"></i>
                             </a>
@@ -78,7 +78,7 @@
                             <p>Unduh sertifikat untuk para pemenang dan surat keterangan resmi kejuaraan.</p>
                         </div>
                         <div class="card-action">
-                            <a href="{{ route('riwayat.sertifikat', $kejuaraan['id']) }}" class="btn-category">
+                            <a href="{{ route('riwayat.sertifikat', $kejuaraan->id) }}" class="btn-category">
                                 <span>Lihat Dokumen</span>
                                 <i class="bx bx-chevron-right"></i>
                             </a>

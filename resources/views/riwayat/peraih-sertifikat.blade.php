@@ -15,14 +15,14 @@
                     </a>
                     <span class="separator">></span>
                     <a href="{{ route('riwayat.show', $kejuaraan['id']) }}">
-                        <span>{{ $kejuaraan['title'] }}</span>
+                        <span>{{ $kejuaraan->nama }}</span>
                     </a>
                     <span class="separator">></span>
                     <a href="{{ route('riwayat.sertifikat', $kejuaraan['id']) }}">
                         <span>Sertifikat</span>
                     </a>
                     <span class="separator">></span>
-                    <span class="current">{{ $nomorAcara }}</span>
+                    <span class="current">{{ $nomorAcara->nama }}</span>
                 </nav>
 
                 <div class="page-header">
@@ -30,8 +30,8 @@
                         <i class="bx bxs-medal"></i>
                     </div>
                     <h1>Peraih Sertifikat</h1>
-                    <p class="event-title">{{ $nomorAcara }}</p>
-                    <p class="event-subtitle">{{ $kejuaraan['title'] }} | {{ $kejuaraan['year'] }}</p>
+                    <p class="event-title">{{ $nomorAcara->nama }}</p>
+                    <p class="event-subtitle">{{ $kejuaraan->nama }} | {{ \Carbon\Carbon::parse($kejuaraan->waktu_kompetisi)->format('Y') }}</p>
                 </div>
             </div>
         </section>
@@ -41,19 +41,19 @@
             <div class="container">
                 <div class="winners-container horizontal">
                     @foreach($pemenang as $index => $winner)
-                    <div class="winner-card horizontal" data-rank="{{ $winner['peringkat'] }}">
+                    <div class="winner-card horizontal" data-rank="{{ $winner->rank }}">
                         <div class="card-left">
-                            <div class="winner-medal rank-{{ $winner['peringkat'] }}">
-                                <span>{{ $winner['peringkat'] }}</span>
+                            <div class="winner-medal rank-{{ $winner->rank }}">
+                                <span>{{ $winner->rank }}</span>
                             </div>
                         </div>
                         <div class="card-content">
                             <div class="winner-details">
-                                <h3 class="winner-name">{{ $winner['nama'] }}</h3>
-                                <p class="winner-club">{{ $winner['klub'] }}</p>
+                                <h3 class="winner-name">{{ $winner->nama }}</h3>
+                                <p class="winner-club">{{ $winner->club }}</p>
                             </div>
                             <div class="winner-actions horizontal">
-                                <a href="{{ route('riwayat.detail-sertifikat', ['eventId' => $kejuaraan['id'], 'nomorAcara' => urlencode($nomorAcara), 'pesertaId' => $winner['id']]) }}" class="btn-view-certificate">
+                                <a href="{{ route('riwayat.detail-sertifikat', $winner->kode) }}" class="btn-view-certificate">
                                     <i class="bx bx-show"></i>
                                     <span>Lihat</span>
                                 </a>

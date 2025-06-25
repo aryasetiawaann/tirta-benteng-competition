@@ -14,16 +14,16 @@
                         <span>Riwayat Kejuaraan</span>
                     </a>
                     <span class="separator">></span>
-                    <a href="{{ route('riwayat.show', $kejuaraan['id']) }}">
-                        <span>{{ $kejuaraan['title'] }}</span>
+                    <a href="{{ route('riwayat.show', $kejuaraan->id) }}">
+                        <span>{{ $kejuaraan->nama }}</span>
                     </a>
                     <span class="separator">></span>
-                    <a href="{{ route('riwayat.sertifikat', $kejuaraan['id']) }}">
+                    <a href="{{ route('riwayat.sertifikat', $kejuaraan->id) }}">
                         <span>Sertifikat</span>
                     </a>
                     <span class="separator">></span>
-                    <a href="{{ route('riwayat.peraih-sertifikat', ['eventId' => $kejuaraan['id'], 'nomorAcara' => urlencode($nomorAcara)]) }}">
-                        <span>{{ $nomorAcara }}</span>
+                    <a href="{{ route('riwayat.peraih-sertifikat', ['eventId' => $kejuaraan->id, 'nomorAcara' => $nomorAcara->id]) }}">
+                        <span>{{ $nomorAcara->nama }}</span>
                     </a>
                     <span class="separator">></span>
                     <span class="current">Keterangan Juara</span>
@@ -34,8 +34,8 @@
                         <i class="bx bxs-certification"></i>
                     </div>
                     <h1>Keterangan Juara</h1>
-                    <p class="event-title">{{ $nomorAcara }}</p>
-                    <p class="event-subtitle">{{ $kejuaraan['title'] }} | {{ $kejuaraan['year'] }}</p>
+                    <p class="event-title">{{ $nomorAcara->nama }}</p>
+                    <p class="event-subtitle">{{ $kejuaraan->nama }} | {{ \Carbon\Carbon::parse($kejuaraan->waktu_kompetisi)->format('Y') }}</p>
                 </div>
             </div>
         </section>
@@ -45,58 +45,58 @@
             <div class="container">
                 <div class="certificate-card">
                     <div class="certificate-header">
-                        <div class="certificate-badge rank-{{ $pemenang['peringkat'] }}">
-                            <span>{{ $pemenang['peringkat'] }}</span>
+                        <div class="certificate-badge rank-{{ $pemenang->rank }}">
+                            <span>{{ $pemenang->rank }}</span>
                         </div>
-                        <h2 class="certificate-title">{{ $pemenang['nama'] }}</h2>
+                        <h2 class="certificate-title">{{ $pemenang->nama }}</h2>
                     </div>
                     
                     <div class="certificate-details">
                         <div class="detail-row">
                             <div class="detail-label">Certificate ID</div>
-                            <div class="detail-value">CERT-{{ $kejuaraan['id'] }}-{{ $pemenang['id'] }}-{{ $kejuaraan['year'] }}</div>
+                            <div class="detail-value">{{urldecode($pemenang->kode)}}</div>
                         </div>
                         <div class="detail-row">
                             <div class="detail-label">Nama</div>
-                            <div class="detail-value">{{ $pemenang['nama'] }}</div>
+                            <div class="detail-value">{{ $pemenang->nama}}</div>
                         </div>
                         <div class="detail-row">
                             <div class="detail-label">Sekolah/Klub</div>
-                            <div class="detail-value">{{ $pemenang['klub'] }}</div>
+                            <div class="detail-value">{{ $pemenang->club }}</div>
                         </div>
                         <div class="detail-row">
                             <div class="detail-label">Kategori</div>
-                            <div class="detail-value">{{ $nomorAcara }}</div>
+                            <div class="detail-value">{{ $pemenang->nomor_lomba}}</div>
                         </div>
                         <div class="detail-row">
                             <div class="detail-label">Posisi</div>
-                            <div class="detail-value">Juara {{ $pemenang['peringkat'] }}</div>
+                            <div class="detail-value">Juara {{ $pemenang->rank}}</div>
                         </div>
                         <div class="detail-row">
                             <div class="detail-label">Tim</div>
-                            <div class="detail-value">{{ $pemenang['klub'] }}</div>
+                            <div class="detail-value">{{ $pemenang->club }}</div>
                         </div>
                         <div class="detail-row">
                             <div class="detail-label">Award</div>
-                            <div class="detail-value">Medali {{ $pemenang['peringkat'] == 1 ? 'Emas' : ($pemenang['peringkat'] == 2 ? 'Perak' : 'Perunggu') }}</div>
+                            <div class="detail-value">Medali {{ $pemenang->rank == 1 ? 'Emas' : ($pemenang->rank == 2 ? 'Perak' : 'Perunggu') }}</div>
                         </div>
                     </div>
                     
-                    <div class="certificate-actions">
-                        <a href="{{ route('riwayat.download-certificate', ['eventId' => $kejuaraan['id'], 'nomorAcara' => urlencode($nomorAcara), 'pesertaId' => $pemenang['id']]) }}" class="btn-download-certificate">
+                    {{-- <div class="certificate-actions">
+                        <a href="{{ route('riwayat.download-certificate', ['eventId' => $kejuaraan->id, 'nomorAcara' => urlencode($nomorAcara), 'pesertaId' => $pemenang['id']]) }}" class="btn-download-certificate">
                             <i class="bx bx-download"></i>
                             <span>Unduh Sertifikat</span>
                         </a>
-                        <a href="{{ route('riwayat.download-sk', ['eventId' => $kejuaraan['id'], 'nomorAcara' => urlencode($nomorAcara), 'pesertaId' => $pemenang['id']]) }}" class="btn-download-sk">
+                        <a href="{{ route('riwayat.download-sk', ['eventId' => $kejuaraan->id, 'nomorAcara' => urlencode($nomorAcara), 'pesertaId' => $pemenang['id']]) }}" class="btn-download-sk">
                             <i class="bx bx-file"></i>
                             <span>Unduh Surat Keterangan</span>
                         </a>
-                    </div>
+                    </div> --}}
                 </div>
 
                 <!-- Back Button -->
                 <div class="back-section">
-                    <a href="{{ route('riwayat.peraih-sertifikat', ['eventId' => $kejuaraan['id'], 'nomorAcara' => urlencode($nomorAcara)]) }}" class="btn-back">
+                    <a href="{{ route('riwayat.peraih-sertifikat', ['eventId' => $kejuaraan->id, 'nomorAcara' => $nomorAcara->id]) }}" class="btn-back">
                         <i class="bx bx-chevron-left"></i>
                         <span>Kembali ke Daftar Pemenang</span>
                     </a>

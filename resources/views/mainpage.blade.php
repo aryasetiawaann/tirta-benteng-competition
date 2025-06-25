@@ -86,120 +86,30 @@
                 
                 <div class="riwayat-carousel">
                     <div class="riwayat-carousel-track" id="riwayatTrack" role="region" aria-label="Riwayat perlombaan carousel">
-                        <!-- Card 1 -->
-                        <div class="riwayat-card carousel-card" data-slide="0">
-                            <div class="riwayat-year">2025</div>
-                            <h3 class="riwayat-title">Area Swimming Championship</h3>
-                            <div class="riwayat-details">
-                                <div class="riwayat-detail-item">
-                                    <i class="bx bxs-location"></i>
-                                    <span>Gelanggang Remaja Jakarta Utara</span>
+                        
+                        @foreach ($competition_list as $competition)
+                            <div class="riwayat-card carousel-card" data-slide="0">
+                                <div class="riwayat-year">{{ \Carbon\Carbon::parse($competition->waktu_kompetisi)->format('Y') }}</div>
+                                <h3 class="riwayat-title">{{$competition->nama}}</h3>
+                                <div class="riwayat-details">
+                                    <div class="riwayat-detail-item">
+                                        <i class="bx bxs-location"></i>
+                                        <span>{{$competition->lokasi}}</span>
+                                    </div>
+                                    <div class="riwayat-detail-item">
+                                        <i class="bx bxs-calendar"></i>
+                                        <span>{{ \Carbon\Carbon::parse($competition->waktu_kompetisi)->translatedFormat('d F Y') }}</span>
+                                    </div>
+                                    <div class="riwayat-detail-item">
+                                        <i class="bx bxs-user"></i>
+                                        <span>{{$competition->kategori}}</span>
+                                    </div>
                                 </div>
-                                <div class="riwayat-detail-item">
-                                    <i class="bx bxs-calendar"></i>
-                                    <span>19 April 2025</span>
-                                </div>
-                                <div class="riwayat-detail-item">
-                                    <i class="bx bxs-user"></i>
-                                    <span>Fun Competition</span>
-                                </div>
+                                <a href="{{ route('riwayat.show', $competition->id) }}" class="hasil-acara clickable-hasil" role="button" aria-label="Lihat detail hasil acara">
+                                    <div class="hasil-acara-title">Hasil Acara</div>
+                                </a>
                             </div>
-                            <a href="{{ route('riwayat.show', 1) }}" class="hasil-acara clickable-hasil" tabindex="0" role="button" aria-label="Lihat detail hasil acara">
-                                <div class="hasil-acara-title">Hasil Acara</div>
-                            </a>
-                        </div>
-
-                        <!-- Card 2 -->
-                        <div class="riwayat-card carousel-card" data-slide="1">
-                            <div class="riwayat-year">2025</div>
-                            <h3 class="riwayat-title">Area Swimming Competition</h3>
-                            <div class="riwayat-details">
-                                <div class="riwayat-detail-item">
-                                    <i class="bx bxs-location"></i>
-                                    <span>Taman Alfa Indah</span>
-                                </div>
-                                <div class="riwayat-detail-item">
-                                    <i class="bx bxs-calendar"></i>
-                                    <span>23 Februari 2025</span>
-                                </div>
-                                <div class="riwayat-detail-item">
-                                    <i class="bx bxs-user"></i>
-                                    <span>Fun Competition</span>
-                                </div>
-                            </div>
-                            <a href="{{ route('riwayat.show', 2) }}" class="hasil-acara clickable-hasil" tabindex="0" role="button" aria-label="Lihat detail hasil acara">
-                                <div class="hasil-acara-title">Hasil Acara</div>
-                            </a>
-                        </div>
-
-                        <!-- Card 3 -->
-                        <div class="riwayat-card carousel-card" data-slide="2">
-                            <div class="riwayat-year">2025</div>
-                            <h3 class="riwayat-title">AREA SPEED CHALLENGE 2025</h3>
-                            <div class="riwayat-details">
-                                <div class="riwayat-detail-item">
-                                    <i class="bx bxs-location"></i>
-                                    <span>Palem Tirta Ganda</span>
-                                </div>
-                                <div class="riwayat-detail-item">
-                                    <i class="bx bxs-calendar"></i>
-                                    <span>25 Januari 2025</span>
-                                </div>
-                                <div class="riwayat-detail-item">
-                                    <i class="bx bxs-user"></i>
-                                    <span>Fun Competition</span>
-                                </div>
-                            </div>
-                            <a href="{{ route('riwayat.show', 3) }}" class="hasil-acara clickable-hasil" tabindex="0" role="button" aria-label="Lihat detail hasil acara">
-                                <div class="hasil-acara-title">Hasil Acara</div>
-                            </a>
-                        </div>
-
-                        <!-- Card 4 -->
-                        <div class="riwayat-card carousel-card" data-slide="3">
-                            <div class="riwayat-year">2024</div>
-                            <h3 class="riwayat-title">AREA Fun Swimming Championship</h3>
-                            <div class="riwayat-details">
-                                <div class="riwayat-detail-item">
-                                    <i class="bx bxs-location"></i>
-                                    <span>Palem Tirta Ganda</span>
-                                </div>
-                                <div class="riwayat-detail-item">
-                                    <i class="bx bxs-calendar"></i>
-                                    <span>28 Juli 2024</span>
-                                </div>
-                                <div class="riwayat-detail-item">
-                                    <i class="bx bxs-user"></i>
-                                    <span>Fun Competition</span>
-                                </div>
-                            </div>
-                            <a href="{{ route('riwayat.show', 4) }}" class="hasil-acara clickable-hasil" tabindex="0" role="button" aria-label="Lihat detail hasil acara">
-                                <div class="hasil-acara-title">Hasil Acara</div>
-                            </a>
-                        </div>
-
-                        <!-- Card 5 -->
-                        <div class="riwayat-card carousel-card" data-slide="4">
-                            <div class="riwayat-year">2024</div>
-                            <h3 class="riwayat-title">Tirta Benteng Fun Swimming Competition</h3>
-                            <div class="riwayat-details">
-                                <div class="riwayat-detail-item">
-                                    <i class="bx bxs-location"></i>
-                                    <span>Yonif 203, Arya Kamuning</span>
-                                </div>
-                                <div class="riwayat-detail-item">
-                                    <i class="bx bxs-calendar"></i>
-                                    <span>01 Juni 2024</span>
-                                </div>
-                                <div class="riwayat-detail-item">
-                                    <i class="bx bxs-user"></i>
-                                    <span>Fun Competition</span>
-                                </div>
-                            </div>
-                            <a href="{{ route('riwayat.show', 5) }}" class="hasil-acara clickable-hasil" tabindex="0" role="button" aria-label="Lihat detail hasil acara">
-                                <div class="hasil-acara-title">Hasil Acara</div>
-                            </a>
-                        </div>
+                        @endforeach
 
                         <!-- Card 6 - Lihat Selengkapnya -->
                         <div class="riwayat-card carousel-card see-more-card" data-slide="5">
@@ -243,15 +153,15 @@
             <!-- Statistics Section -->
             <div class="riwayat-stats">
                 <div class="stat-item">
-                    <span class="stat-number">12</span>
+                    <span class="stat-number">{{$competition_list->count()}}</span>
                     <div class="stat-label">Total Kompetisi</div>
                 </div>
                 <div class="stat-item">
-                    <span class="stat-number">8</span>
+                    <span class="stat-number">-</span>
                     <div class="stat-label">Medali Emas</div>
                 </div>
                 <div class="stat-item">
-                    <span class="stat-number">15</span>
+                    <span class="stat-number">-</span>
                     <div class="stat-label">Total Medali</div>
                 </div>
             </div>

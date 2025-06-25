@@ -14,8 +14,8 @@
                         <span>Riwayat Kejuaraan</span>
                     </a>
                     <span class="separator">></span>
-                    <a href="{{ route('riwayat.show', $kejuaraan['id']) }}">
-                        <span>{{ $kejuaraan['title'] }}</span>
+                    <a href="{{ route('riwayat.show', $kejuaraan->id) }}">
+                        <span>{{ $kejuaraan->nama }}</span>
                     </a>
                     <span class="separator">></span>
                     <span class="current">Sertifikat</span>
@@ -26,7 +26,7 @@
                         <i class="bx bxs-badge-check"></i>
                     </div>
                     <h1>Sertifikat Pemenang</h1>
-                    <p class="event-title">{{ $kejuaraan['title'] }} | {{ $kejuaraan['year'] }}</p>
+                    <p class="event-title">{{ $kejuaraan->nama }} | {{ \Carbon\Carbon::parse($kejuaraan->waktu_kompetisi)->format('Y') }}</p>
                 </div>
             </div>
         </section>
@@ -52,11 +52,11 @@
                         <div class="acara-info">
                             <div class="acara-number">{{ $index + 1 }}</div>
                             <div class="acara-details">
-                                <h3>{{ $acara }}</h3>
+                                <h3>Acara {{$acara->nomor_lomba}} | {{$acara->nama}} KU {{$acara->grup}} {{$acara->kategori}}</h3>
                             </div>
                         </div>
                         <div class="acara-actions">
-                            <a href="{{ route('riwayat.peraih-sertifikat', ['eventId' => $kejuaraan['id'], 'nomorAcara' => urlencode($acara)]) }}" class="btn-view-sertifikat">
+                            <a href="{{ route('riwayat.peraih-sertifikat', ['eventId' => $kejuaraan->id, 'nomorAcara' => $acara->id]) }}" class="btn-view-sertifikat">
                                 <i class="bx bx-medal"></i>
                                 <span>Lihat Pemenang</span>
                             </a>
@@ -76,7 +76,7 @@
 
                 <!-- Back Button -->
                 <div class="back-section">
-                    <a href="{{ route('riwayat.show', $kejuaraan['id']) }}" class="btn-back">
+                    <a href="{{ route('riwayat.show', $kejuaraan->id) }}" class="btn-back">
                         <i class="bx bx-chevron-left"></i>
                         <span>Kembali ke Detail Kejuaraan</span>
                     </a>
