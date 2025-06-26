@@ -69,7 +69,7 @@ class KompetisiResmi implements FromCollection, WithMapping, ShouldAutoSize, Wit
                 }else {
                     $rows[] = [
                         $serieIndex + 1, // SERI
-                        $laneIndex,  // LINT
+                        $laneIndex === 0 ? '0' : $laneIndex,  // LINT
                         '', '', '', '', // Kosong
                     ];
                 }
