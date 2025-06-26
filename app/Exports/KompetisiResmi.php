@@ -60,7 +60,7 @@ class KompetisiResmi implements FromCollection, WithMapping, ShouldAutoSize, Wit
 
                     $rows[] = [
                         $serieIndex + 1, // SERI
-                        $laneIndex,  // LINT
+                        $laneIndex === 0 ? '0' : $laneIndex,  // LINT
                         $participant['name'],  // NAMA
                         $participant['club'],  // ASAL SEKOLAH / KLUB
                         $participant['track_record'] == 999 ? '-' : $trackRecordFormatted, // QET
