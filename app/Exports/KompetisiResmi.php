@@ -60,7 +60,7 @@ class KompetisiResmi implements FromCollection, WithMapping, ShouldAutoSize, Wit
 
                     $rows[] = [
                         $serieIndex + 1, // SERI
-                        $laneIndex + 1,  // LINT
+                        $laneIndex,  // LINT
                         $participant['name'],  // NAMA
                         $participant['club'],  // ASAL SEKOLAH / KLUB
                         $participant['track_record'] == 999 ? '-' : $trackRecordFormatted, // QET
@@ -69,10 +69,12 @@ class KompetisiResmi implements FromCollection, WithMapping, ShouldAutoSize, Wit
                 }else {
                     $rows[] = [
                         $serieIndex + 1, // SERI
-                        $laneIndex + 1,  // LINT
+                        $laneIndex,  // LINT
                         '', '', '', '', // Kosong
                     ];
                 }
+
+                $laneIndex + 1;
             }
         }
 
@@ -137,9 +139,19 @@ class KompetisiResmi implements FromCollection, WithMapping, ShouldAutoSize, Wit
 
                 foreach ($this->acaras as $acara) {
 
+                    $kategori = strtoupper($acara->kategori); // Default uppercase kategori
+                    if ($acara->kategori == 'Wanita') {
+                        $kategori = 'PUTRI';
+                    } elseif ($acara->kategori == 'Pria') {
+                        $kategori = 'PUTRA';
+                    } elseif ($acara->kategori == 'Campuran') {
+                        $kategori = 'CAMPURAN';
+                    }
+
                     // Merge untuk nama acara
                     $sheet->mergeCells("A$currentRow:F$currentRow");
-                    $sheet->setCellValue("A$currentRow", 'Acara ' . $acara->nomor_lomba . ' | '. $acara->nama . ' - ' . $acara->grup);
+                    $sheet->setCellValue("A$currentRow", 'Acara ' . $acara->nomor_lomba . ' | '. $acara->nama . ' - ' . strtoupper($acara->grup)
+                    . ' '. $kategori);
                     $sheet->getStyle("A$currentRow:F$currentRow")->applyFromArray($headerStyle);
 
                     $currentRow+=2;
