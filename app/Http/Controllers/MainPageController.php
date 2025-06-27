@@ -14,7 +14,7 @@ class MainPageController extends Controller
 
         $kompetisis = Kompetisi::where('waktu_kompetisi', ">=", now())->where('buka_pendaftaran', '<=', now())->orderBy('waktu_kompetisi', 'asc')->get();
 
-        $competition_list= Kompetisi::all()->sortBy('waktu_kompetisi');
+        $competition_list= Kompetisi::all()->sortByDesc('waktu_kompetisi');
 
         return view('mainpage', compact('kompetisis', 'competition_list'));
     }

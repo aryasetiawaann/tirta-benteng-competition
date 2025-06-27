@@ -85,18 +85,20 @@
                             </div>
                         </div>
                     </div>
-
-                    <div class="certificate-actions">
-                        <a href="/storage/{{ $pemenang->certificate->path }}" target="_blank"
-                            class="btn-download-certificate">
-                            <i class="bx bx-download"></i>
-                            <span>Unduh Sertifikat</span>
-                        </a>
-                        <a href="/storage/{{ $pemenang->letter->path }}" target="_blank" class="btn-download-sk">
-                            <i class="bx bx-file"></i>
-                            <span>Unduh Surat Keterangan</span>
-                        </a>
-                    </div>
+                    
+                    @if($pemenang->certificate_id != null && $pemenang->letter_id != null)
+                        <div class="certificate-actions">
+                            <a href="/storage/{{ $pemenang->certificate->path }}" target="_blank"
+                                class="btn-download-certificate">
+                                <i class="bx bx-download"></i>
+                                <span>Unduh Sertifikat</span>
+                            </a>
+                            <a href="/storage/{{ $pemenang->letter->path }}" target="_blank" class="btn-download-sk">
+                                <i class="bx bx-file"></i>
+                                <span>Unduh Surat Keterangan</span>
+                            </a>
+                        </div>
+                    @endif
                 </div>
 
                 <!-- Back Button -->
