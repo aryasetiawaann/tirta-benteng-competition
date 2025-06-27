@@ -3,12 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\Models\Winner;
+use App\Models\Certificate;
+use App\Models\Letter;
 use App\Models\Kompetisi;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Imports\KejuaraanImport;
+use Illuminate\Support\Facades\Storage;
 
 class WinnerController extends Controller
 {
@@ -49,35 +52,70 @@ class WinnerController extends Controller
         return back()->with('success', 'Data kejuaraan berhasil diimpor!');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Winner $winner)
+
+
+    public function inputDokumen(Request $request)
     {
-        //
+        $request->validate([
+            'jenis_dokumen' => 'required|in:sertifikat,surat_keterangan',
+            'dokumen.*' => 'required|mimes:pdf|max:2048',
+            'kompetisi_id' => 'required|exists:kompetisi,id',
+        ]);
+
+        $jenis = $request->jenis_dokumen;
+
+        // dd($request->file('dokumen'));
+
+        foreach ($request->file('dokumen') as $file) {
+            // Ambil nama file tanpa ekstensi
+            $fileName = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
+
+            // Ambil bagian kode di antara tanda '-' pertama dan terakhir
+            $segments = explode('-', $fileName);
+            if (count($segments) < 3) {
+                continue; // Skip jika format tidak valid
+            }
+
+
+            // Ambil kode
+            $kode = $segments[1] . '-' . $segments[2]; // "33%2FTBSC-TNG%2FVI%2F2025"
+
+            // Cari Winner berdasarkan kode
+            $winner = Winner::where('kode', $kode)->where('kompetisi_id', $request->input('kompetisi_id'))->first();
+
+
+            if (!$winner) {
+                continue; // Skip jika tidak ditemukan
+            }
+
+            // Simpan file ke storage
+            $path = $file->store('dokumen_kejuaraan', 'public');
+
+            // Simpan ke model sesuai jenis
+            if ($jenis === 'sertifikat') {
+
+
+
+                $certificate = Certificate::create([
+                    'path' => $path,
+                    'filename' => $file->getClientOriginalName(),
+                ]);
+
+                $winner->certificate_id = $certificate->id;
+            } elseif ($jenis === 'surat_keterangan') {
+                $letter = Letter::create([
+                    'path' => $path,
+                    'filename' => $file->getClientOriginalName(),
+                ]);
+
+                $winner->letter_id = $letter->id;
+            }
+
+            // Simpan perubahan di Winner
+            $winner->save();
+        }
+
+        return redirect()->back()->with('success', 'Dokumen berhasil diproses.');
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Winner $winner)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(UpdateWinnerRequest $request, Winner $winner)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Winner $winner)
-    {
-        //
-    }
 }

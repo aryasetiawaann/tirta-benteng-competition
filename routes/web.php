@@ -139,6 +139,8 @@ Route::middleware(['auth','role:admin'])->group(function () {
     // Kejuaraan
     Route::get('admin/dashboard/kejuaraan', [WinnerController::class, 'index'])->name('admin.kejuaraan');
     Route::post('admin/dashboard/kejuaraan', [WinnerController::class, 'store'])->name('admin.kejuaraan.store');
+    Route::post('admin/dashboard/kejuaraan/input-dokumen', [WinnerController::class, 'inputDokumen'])
+    ->name('admin.kejuaraan.input-doc');
 });
 
 

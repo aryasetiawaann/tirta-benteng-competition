@@ -26,7 +26,8 @@
                         <i class="bx bxs-badge-check"></i>
                     </div>
                     <h1>Sertifikat Pemenang</h1>
-                    <p class="event-title">{{ $kejuaraan->nama }} | {{ \Carbon\Carbon::parse($kejuaraan->waktu_kompetisi)->format('Y') }}</p>
+                    <p class="event-title">{{ $kejuaraan->nama }} |
+                        {{ \Carbon\Carbon::parse($kejuaraan->waktu_kompetisi)->format('Y') }}</p>
                 </div>
             </div>
         </section>
@@ -47,21 +48,31 @@
                 </div>
 
                 <div class="nomor-acara-list" id="nomorAcaraList">
-                    @foreach($nomorAcara as $index => $acara)
-                    <div class="nomor-acara-item" data-acara="{{ strtolower($acara) }}">
-                        <div class="acara-info">
-                            <div class="acara-number">{{ $index + 1 }}</div>
-                            <div class="acara-details">
-                                <h3>Acara {{$acara->nomor_lomba}} | {{$acara->nama}} KU {{$acara->grup}} {{$acara->kategori}}</h3>
+                    @foreach ($nomorAcara as $index => $acara)
+                        <div class="nomor-acara-item" data-acara="{{ strtolower($acara) }}">
+                            <div class="acara-info">
+                                <div class="acara-number">{{ $index + 1 }}</div>
+                                <div class="acara-details">
+                                    @if ($acara->kategori === 'Pria')
+                                        <h3>ACARA {{ $acara->nomor_lomba }} | {{ $acara->nama }} KU
+                                            {{ $acara->grup }} - PUTRA</h3>
+                                    @elseif ($acara->kategori === 'Wanita')
+                                        <h3>ACARA {{ $acara->nomor_lomba }} | {{ $acara->nama }} KU
+                                            {{ $acara->grup }} - PUTRI</h3>
+                                    @else
+                                        <h3>ACARA {{ $acara->nomor_lomba }} | {{ $acara->nama }} KU
+                                            {{ $acara->grup }} - {{ $acara->kategori }}</h3>
+                                    @endif
+                                </div>
+                            </div>
+                            <div class="acara-actions">
+                                <a href="{{ route('riwayat.peraih-sertifikat', ['eventId' => $kejuaraan->id, 'nomorAcara' => $acara->id]) }}"
+                                    class="btn-view-sertifikat">
+                                    <i class="bx bx-medal"></i>
+                                    <span>Lihat Pemenang</span>
+                                </a>
                             </div>
                         </div>
-                        <div class="acara-actions">
-                            <a href="{{ route('riwayat.peraih-sertifikat', ['eventId' => $kejuaraan->id, 'nomorAcara' => $acara->id]) }}" class="btn-view-sertifikat">
-                                <i class="bx bx-medal"></i>
-                                <span>Lihat Pemenang</span>
-                            </a>
-                        </div>
-                    </div>
                     @endforeach
                 </div>
 
@@ -97,7 +108,7 @@
 
                 nomorAcaraItems.forEach(item => {
                     const acara = item.getAttribute('data-acara');
-                    
+
                     if (acara.includes(searchTerm)) {
                         item.style.display = 'flex';
                         visibleCount++;

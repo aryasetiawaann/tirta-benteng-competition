@@ -25,9 +25,9 @@ return new class extends Migration
             $table->unsignedBigInteger('acara_id');
             $table->foreign('acara_id')->references('id')->on('acara')->onDelete('cascade');
             $table->unsignedBigInteger('certificate_id')->nullable();
-            $table->foreign('certificate_id')->references('id')->on('certificates')->onDelete('cascade');
+            $table->foreign('certificate_id')->references('id')->on('certificates')->onDelete('set null');
             $table->unsignedBigInteger('letter_id')->nullable();
-            $table->foreign('letter_id')->references('id')->on('letters')->onDelete('cascade');
+            $table->foreign('letter_id')->references('id')->on('letters')->onDelete('set null');
             $table->timestamps();
         });
     }

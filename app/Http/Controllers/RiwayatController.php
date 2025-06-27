@@ -150,7 +150,9 @@ class RiwayatController extends Controller
                 abort(404, 'Kejuaraan tidak ditemukan');
             }
 
-            $nomorAcara = Acara::where('kompetisi_id', $id)->get();
+            $nomorAcara = Acara::where('kompetisi_id', $id)
+            ->orderBy('nomor_lomba')
+            ->get();
             
             return view('riwayat.sertifikat', compact('kejuaraan', 'nomorAcara'));
         } catch (\Exception $e) {

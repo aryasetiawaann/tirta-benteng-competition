@@ -47,6 +47,37 @@
 
         </section>
 
+        <section class="all-container all-card w100">
+            <form action="{{ route('admin.kejuaraan.input-doc') }}" method="POST" enctype="multipart/form-data">
+                @csrf
+
+                <div class="form-group" style="margin-bottom: 1rem;">
+                    <label for="kompetisi_id">Pilih Kompetisi:</label><br>
+                    <select name="kompetisi_id" id="kompetisi_id" class="form-control" required>
+                        <option value="" disabled selected>-- Pilih Kompetisi --</option>
+                        @foreach ($kompetisiList as $kompetisi)
+                            <option value="{{ $kompetisi->id }}">{{ $kompetisi->nama }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="jenis_dokumen">Jenis Dokumen:</label>
+                    <select name="jenis_dokumen" class="form-control" required>
+                        <option value="" disabled selected>-- Pilih Jenis --</option>
+                        <option value="sertifikat">Sertifikat</option>
+                        <option value="surat_keterangan">Surat Keterangan</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="dokumen">Upload File PDF:</label>
+                    <input type="file" name="dokumen[]" class="form-control" accept="application/pdf" multiple required>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Upload Dokumen</button>
+            </form>
+        </section>
+
         <section class="all-container all-card w100" style="margin-top: 2rem;">
             <header class="divider flex">
                 <h2>Daftar Pemenang</h2>
@@ -54,10 +85,12 @@
 
             <form action="{{ route('admin.kejuaraan') }}" method="GET" style="margin-bottom: 1rem;">
                 <label for="filter_kompetisi">Filter berdasarkan Kompetisi:</label>
-                <select name="filter_kompetisi" id="filter_kompetisi" onchange="this.form.submit()" class="form-control" style="width: 250px;">
+                <select name="filter_kompetisi" id="filter_kompetisi" onchange="this.form.submit()" class="form-control"
+                    style="width: 250px;">
                     <option value="">-- Semua Kompetisi --</option>
                     @foreach ($kompetisiList as $kompetisi)
-                        <option value="{{ $kompetisi->id }}" {{ request('filter_kompetisi') == $kompetisi->id ? 'selected' : '' }}>
+                        <option value="{{ $kompetisi->id }}"
+                            {{ request('filter_kompetisi') == $kompetisi->id ? 'selected' : '' }}>
                             {{ $kompetisi->nama }}
                         </option>
                     @endforeach
@@ -75,17 +108,21 @@
                                 <th>Klub</th>
                                 <th>Rank</th>
                                 <th>Nomor Lomba</th>
+                                <th>Sertifikat</th>
+                                <th>SK</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach ($pemenangList as $pemenang)
                                 <tr>
                                     <td>{{ $pemenang->kelompok_umur }}</td>
-                                    <td>{{ $pemenang->acara->nomor_lomba}}</td>
+                                    <td>{{ $pemenang->acara->nomor_lomba }}</td>
                                     <td>{{ $pemenang->nama }}</td>
                                     <td>{{ $pemenang->club }}</td>
                                     <td>{{ $pemenang->rank }}</td>
                                     <td>{{ $pemenang->nomor_lomba }}</td>
+                                    <td>{{ $pemenang->certificate->filename ?? '-' }}</td>
+                                    <td>{{ $pemenang->letter->filename ?? '-' }}</td>
                                 </tr>
                             @endforeach
                         </tbody>
