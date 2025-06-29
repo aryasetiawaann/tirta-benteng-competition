@@ -248,7 +248,12 @@ class RiwayatController extends Controller
             $path = storage_path("app/public/certificates/{$filename}");
 
             if (!file_exists($path)) {
-                abort(404, 'File sertifikat tidak ditemukan');
+                // Alih-alih menampilkan error 404, tampilkan halaman dengan pesan file belum diupload
+                return view('riwayat.file-not-available', [
+                    'title' => 'Keterangan Juara Belum Tersedia',
+                    'message' => 'Mohon maaf, file keterangan juara belum diupload oleh penyelenggara.',
+                    'backUrl' => route('riwayat.peraih-sertifikat', ['eventId' => $eventId, 'nomorAcara' => $nomorAcara])
+                ]);
             }
 
             return response()->file($path);
@@ -267,7 +272,11 @@ class RiwayatController extends Controller
 
             // Cek dulu apakah data ditemukan
             if (!$pemenang) {
-                abort(404, 'Data peserta tidak ditemukan');
+                return view('riwayat.file-not-available', [
+                    'title' => 'Keterangan Juara Belum Tersedia',
+                    'message' => 'Mohon maaf, data keterangan juara belum tersedia atau tidak ditemukan.',
+                    'backUrl' => route('riwayat.index')
+                ]);
             }
 
             $kejuaraan = Kompetisi::find($pemenang->kompetisi_id);
@@ -297,7 +306,12 @@ class RiwayatController extends Controller
             $path = storage_path("app/public/surat-keterangan/{$filename}");
 
             if (!file_exists($path)) {
-                abort(404, 'File surat keterangan tidak ditemukan');
+                // Alih-alih menampilkan error 404, tampilkan halaman dengan pesan file belum diupload
+                return view('riwayat.file-not-available', [
+                    'title' => 'Surat Keterangan Belum Tersedia',
+                    'message' => 'Mohon maaf, file surat keterangan belum diupload oleh penyelenggara.',
+                    'backUrl' => route('riwayat.peraih-sertifikat', ['eventId' => $eventId, 'nomorAcara' => $nomorAcara])
+                ]);
             }
 
             return response()->file($path);
@@ -318,7 +332,12 @@ class RiwayatController extends Controller
             $path = storage_path("app/public/hasil-perlombaan/{$filename}");
 
             if (!file_exists($path)) {
-                abort(404, 'File hasil perlombaan tidak ditemukan');
+                // Alih-alih menampilkan error 404, tampilkan halaman dengan pesan file belum diupload
+                return view('riwayat.file-not-available', [
+                    'title' => 'Hasil Perlombaan Belum Tersedia',
+                    'message' => 'Mohon maaf, file hasil perlombaan belum diupload oleh penyelenggara.',
+                    'backUrl' => route('riwayat.hasil-perlombaan', ['id' => $eventId])
+                ]);
             }
 
             return response()->file($path);
@@ -347,7 +366,12 @@ class RiwayatController extends Controller
             $path = storage_path("app/public/certificates/{$filename}");
 
             if (!file_exists($path)) {
-                abort(404, 'File sertifikat tidak ditemukan');
+                // Alih-alih menampilkan error 404, tampilkan halaman dengan pesan file belum diupload
+                return view('riwayat.file-not-available', [
+                    'title' => 'Keterangan Juara Belum Tersedia',
+                    'message' => 'Mohon maaf, file keterangan juara belum diupload oleh penyelenggara.',
+                    'backUrl' => route('riwayat.detail-sertifikat', ['kode' => $pemenang->kode])
+                ]);
             }
 
             // Nama file yang akan diunduh oleh pengguna
@@ -379,7 +403,12 @@ class RiwayatController extends Controller
             $path = storage_path("app/public/surat-keterangan/{$filename}");
 
             if (!file_exists($path)) {
-                abort(404, 'File surat keterangan tidak ditemukan');
+                // Alih-alih menampilkan error 404, tampilkan halaman dengan pesan file belum diupload
+                return view('riwayat.file-not-available', [
+                    'title' => 'Surat Keterangan Belum Tersedia',
+                    'message' => 'Mohon maaf, file surat keterangan belum diupload oleh penyelenggara.',
+                    'backUrl' => route('riwayat.detail-sertifikat', ['kode' => $pemenang->kode])
+                ]);
             }
 
             // Nama file yang akan diunduh oleh pengguna
