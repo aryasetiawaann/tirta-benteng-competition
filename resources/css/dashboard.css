@@ -909,3 +909,136 @@ button[data-tooltip]:hover::after {
     background-color: #e0e0e0;
     transform: none;
 }
+
+/* ============================================= */
+/* ==   Styling for Admin Kejuaraan Page      == */
+/* ============================================= */
+
+/* General Section & Form Layout */
+.all-container .form-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1.5rem; /* Memberi jarak antar field form */
+}
+
+.all-container .form-group label {
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: #333;
+}
+
+/* Styling for Select and Input fields */
+.all-container .form-control {
+    width: 100%;
+    max-width: 500px; /* Batasi lebar maksimum agar tidak terlalu lebar di layar besar */
+    padding: 10px 12px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1rem;
+    background-color: #fff;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.all-container .form-control:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.2);
+    outline: none;
+}
+
+/* Custom Styling for File Input */
+.all-container input[type="file"].form-control,
+.all-container input[type="file"] {
+    border: 2px dashed #ccc;
+    padding: 1rem;
+    background-color: #fafafa;
+    cursor: pointer;
+    transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.all-container input[type="file"].form-control:hover,
+.all-container input[type="file"]:hover {
+    background-color: #f0f0f0;
+    border-color: #007bff;
+}
+
+/* Tombol Submit Form */
+.all-container form button[type="submit"] {
+    margin-top: 0.5rem;
+    width: auto;
+    min-width: 150px;
+    padding: 12px 20px;
+    font-size: 1rem;
+}
+
+/* Filter Dropdown Section */
+.all-container form[action$="/admin/kejuaraan"] {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-bottom: 1.5rem;
+}
+
+.all-container form[action$="/admin/kejuaraan"] label {
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+/* Table Enhancements */
+.table-responsive {
+    overflow-x: auto;
+    width: 100%;
+    border: 1px solid #ddd;
+    border-radius: 8px; /* Sudut lebih tumpul */
+    margin-top: 1rem;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.table-responsive > table {
+    border: none; /* Hilangkan border tabel karena container sudah punya */
+}
+
+.table-responsive > table th,
+.table-responsive > table td {
+    white-space: nowrap; /* Mencegah teks turun baris */
+    padding: 12px 15px;
+}
+
+.table-responsive > table th {
+    font-weight: 600;
+}
+
+.table-responsive > table tbody tr:nth-child(even) {
+    background-color: #f9f9f9; /* Zebra striping */
+}
+
+.table-responsive > table tbody tr:hover {
+    background-color: #f1f8ff; /* Warna hover yang lembut */
+}
+
+/* Pagination Links Styling to match theme */
+.pagination {
+    margin-top: 1.5rem;
+    justify-content: flex-end; /* Pindahkan ke kanan */
+}
+
+/* Responsive Adjustments */
+@media screen and (max-width: 768px) {
+    .all-container .flex {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 5px;
+    }
+    
+    .all-container header.divider h1,
+    .all-container header.divider h2 {
+        margin-bottom: 10px;
+    }
+
+    .all-container .form-control {
+        max-width: 100%; /* Gunakan lebar penuh di mobile */
+    }
+
+    .pagination {
+        justify-content: center; /* Tengahkan pagination di mobile */
+    }
+}

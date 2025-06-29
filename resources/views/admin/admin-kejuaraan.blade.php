@@ -20,7 +20,7 @@
         @endif
         <section class="all-container all-card w100">
             <header class="divider flex">
-                <h1>Kejuaraan</h1>
+                <h1>Upload Pemenang Kejuaraan</h1>
             </header>
 
             <form action="{{ route('admin.kejuaraan.store') }}" method="POST" enctype="multipart/form-data"
@@ -48,6 +48,10 @@
         </section>
 
         <section class="all-container all-card w100">
+            <header class="divider flex">
+                <h2>Upload Keterangan Juara</h2>
+            </header>
+
             <form action="{{ route('admin.kejuaraan.input-doc') }}" method="POST" enctype="multipart/form-data">
                 @csrf
 
