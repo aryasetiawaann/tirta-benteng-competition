@@ -39,10 +39,10 @@
 
                 <div class="form-group">
                     <label for="file">Upload File Excel:</label><br>
-                    <input type="file" id="file" name="file" accept=".xlsx,.xls" required>
+                    <input type="file" id="file" name="file" class="form-control" accept=".xlsx,.xls" required>
                 </div>
 
-                <button type="submit" class="btn btn-primary" style="margin-top: 0.5rem;">Import</button>
+                <button type="submit" class="btn btn-primary">Import</button>
             </form>
 
         </section>
@@ -55,7 +55,7 @@
             <form action="{{ route('admin.kejuaraan.input-doc') }}" method="POST" enctype="multipart/form-data">
                 @csrf
 
-                <div class="form-group" style="margin-bottom: 1rem;">
+                <div class="form-group">
                     <label for="kompetisi_id">Pilih Kompetisi:</label><br>
                     <select name="kompetisi_id" id="kompetisi_id" class="form-control" required>
                         <option value="" disabled selected>-- Pilih Kompetisi --</option>

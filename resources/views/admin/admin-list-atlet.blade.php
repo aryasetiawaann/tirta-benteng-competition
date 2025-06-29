@@ -46,6 +46,7 @@
                         <th>Jenis Kelamin</th>
                         <th>Nama Club</th>
                         <th>Email Akun</th>
+                        <th>Verified?</th>
                         <th>Aksi</th>
                     </tr>
                 </thead>
@@ -60,7 +61,25 @@
                       <td>{{ $atlet->user->club ?? 'Tidak Ada' }}</td>
                       <td>{{ $atlet->user->email ?? 'Tidak Ada' }}</td>
                       <td>
+                        @if($atlet->is_verified == 'verified')
+                            Terverifikasi
+                        @elseif($atlet->is_verified == 'not verified')
+                            Belum Diverifikasi
+                        @elseif($atlet->is_verified == 'need revision')
+                            Butuh Revisi
+                        @else
+                            -
+                        @endif
+                      </td>
+                      <td>
                         <div class="actions">
+                            @if($atlet->dokumen)
+                            <a href="{{ route('dashboard.atlet.dokumen.view', $atlet->id) }}" target="_blank" rel="noopener noreferrer">
+                              <button class="button-gap" data-tooltip="Lihat Dokumen">
+                                <i class='bx bx-xs bx-show'></i>
+                              </button>
+                            </a>
+                          @endif
                           <a href="{{ route('admin.atlet.edit', $atlet->id) }}">
                               <button class="button-gap" data-tooltip="Edit Atlet">
                                   <i class='bx bx-xs bx-edit'></i>
@@ -81,7 +100,7 @@
                     </tr>
                   @empty
                     <tr>
-                      <td colspan="8" style="text-align:center;">Belum ada atlet dengan dokumen</td>
+                      <td colspan="9" style="text-align:center;">Belum ada atlet terdaftar</td>
                     </tr>
                   @endforelse
                 </tbody>
