@@ -19,7 +19,7 @@
                     </a>
                     <span class="separator">></span>
                     <a href="{{ route('riwayat.sertifikat', $kejuaraan->id) }}">
-                        <span>Sertifikat</span>
+                        <span>Sertifikat dan Surat Keterangan</span>
                     </a>
                     <span class="separator">></span>
                     <a

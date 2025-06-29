@@ -19,7 +19,7 @@
                     </a>
                     <span class="separator">></span>
                     <a href="{{ route('riwayat.sertifikat', $kejuaraan['id']) }}">
-                        <span>Sertifikat</span>
+                        <span>Sertifikat dan Surat Keterangan</span>
                     </a>
                     <span class="separator">></span>
                     <span class="current">{{ $nomorAcara->nama }}</span>
@@ -29,7 +29,7 @@
                     <div class="header-badge">
                         <i class="bx bxs-medal"></i>
                     </div>
-                    <h1>Peraih Sertifikat</h1>
+                    <h1>Peraih Sertifikat dan Surat Keterangan</h1>
                     <p class="event-title">{{ $nomorAcara->nama }}</p>
                     <p class="event-subtitle">{{ $kejuaraan->nama }} | {{ \Carbon\Carbon::parse($kejuaraan->waktu_kompetisi)->format('Y') }}</p>
                 </div>

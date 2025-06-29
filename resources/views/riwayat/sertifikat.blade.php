@@ -18,14 +18,14 @@
                         <span>{{ $kejuaraan->nama }}</span>
                     </a>
                     <span class="separator">></span>
-                    <span class="current">Sertifikat</span>
+                    <span class="current">Sertifikat dan Surat Keterangan</span>
                 </nav>
 
                 <div class="page-header">
                     <div class="header-badge">
                         <i class="bx bxs-badge-check"></i>
                     </div>
-                    <h1>Sertifikat Pemenang</h1>
+                    <h1>Sertifikat dan Surat Keterangan Pemenang</h1>
                     <p class="event-title">{{ $kejuaraan->nama }} |
                         {{ \Carbon\Carbon::parse($kejuaraan->waktu_kompetisi)->format('Y') }}</p>
                 </div>
@@ -37,7 +37,7 @@
             <div class="container">
                 <div class="section-header">
                     <h2>Pilih Nomor Acara</h2>
-                    <p>Pilih nomor acara untuk melihat sertifikat pemenang</p>
+                    <p>Pilih nomor acara untuk melihat dokumen pemenang</p>
                 </div>
 
                 <div class="search-filter">
