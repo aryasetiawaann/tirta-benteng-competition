@@ -38,7 +38,7 @@
                 @if ($kejuaraan->file_hasil !== null)
                     <div class="pdf-container">
                         <!-- PDF Embed -->
-                        <object data="{{ asset('assets/dokumen/contoh-dokumen.pdf') }}" type="application/pdf"
+                        <object data="{{ asset($kejuaraan->file_hasil) }}" type="application/pdf"
                             width="100%" height="100%" class="pdf-object">
                             <div class="pdf-fallback">
                                 <p>Browser Anda tidak mendukung tampilan PDF langsung.</p>
@@ -51,7 +51,7 @@
 
                         <!-- PDF Controls -->
                         <div class="pdf-controls">
-                            <a href="{{ asset('assets/dokumen/contoh-dokumen.pdf') }}" class="btn-download-pdf"
+                            <a href="{{ asset($kejuaraan->file_hasil) }}" class="btn-download-pdf"
                                 download>
                                 <i class="bx bx-download"></i>
                                 <span>Unduh Hasil Perlombaan</span>
