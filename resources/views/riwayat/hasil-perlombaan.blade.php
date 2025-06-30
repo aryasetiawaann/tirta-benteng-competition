@@ -42,7 +42,7 @@
                             width="100%" height="100%" class="pdf-object">
                             <div class="pdf-fallback">
                                 <p>Browser Anda tidak mendukung tampilan PDF langsung.</p>
-                                <a href="{{ asset($kompetisi->file_hasil) }}" class="btn-download-pdf" download>
+                                <a href="{{ asset($kejuaraan->file_hasil) }}" class="btn-download-pdf" download>
                                     <i class="bx bx-download"></i>
                                     <span>Unduh PDF</span>
                                 </a>
