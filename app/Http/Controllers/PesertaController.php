@@ -29,10 +29,14 @@ class PesertaController extends Controller
         $pesertaCount = Peserta::whereIn('acara_id', $acaraIds)
             ->where('atlet_id', $request->atlet)
             ->count();
-
-        if($pesertaCount == $kompetisi->max_participation){
-            return redirect()->back()->with('success', 'Atlet telah mencapai batas maksimal partisipasi di kompetisi ini.');
+        
+        if($kompetisi->max_participation > 0){
+            
+            if($pesertaCount == $kompetisi->max_participation){
+                return redirect()->back()->with('success', 'Atlet telah mencapai batas maksimal partisipasi di kompetisi ini.');
+            }
         }
+
 
         
         Peserta::create($data);
