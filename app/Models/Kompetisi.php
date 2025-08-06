@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use App\Models\Acara;
 use App\Models\LogoKompetisi;
 use App\Models\HargaKompetisi;
+use App\Models\Pricing;
 
 class Kompetisi extends Model
 {
@@ -25,6 +26,9 @@ class Kompetisi extends Model
         'waktu_techmeeting',
         'waktu_kompetisi',
         'file_hasil',
+        'has_pricing',
+        'max_participation',
+        'additional_price',
     ];
 
     public function acara(){
@@ -37,5 +41,9 @@ class Kompetisi extends Model
 
     public function harga(){
         return $this->hasMany(HargaKompetisi::class, 'kompetisi_id');
+    }
+
+    public function pricings(){
+        return $this->hasMany(Pricing::class, 'kompetisi_id');
     }
 }

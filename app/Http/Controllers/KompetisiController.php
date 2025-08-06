@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Kompetisi;
 use App\Models\Atlet;
 use App\Models\Acara;
+use App\Models\Pricing;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
@@ -89,8 +90,11 @@ class KompetisiController extends Controller
         "kategori"=> $request->kategori,
         "waktu_techmeeting"=> $request->techmeet,
         "waktu_kompetisi"=> $request->datekompe,
+        "has_pricing" => $request->has_pricing,
+        "max_participation" => $request->max_participation,
+        "additional_price" => $request->additional_price,
         ];
-
+    
         $validation = Validator::make($data, [
             "nama" => "required",
             "lokasi" => "required",
@@ -99,6 +103,9 @@ class KompetisiController extends Controller
             "kategori" => "required",
             "waktu_techmeeting" => "required|date|after:tutup_pendaftaran",
             "waktu_kompetisi" => "required|date|after:waktu_techmeeting",
+            "has_pricing" => "nullable|boolean",
+            "max_participation" => "nullable|integer",
+            "additional_price" => "nullable|integer",
         ], [
             'nama.required' => 'Nama wajib diisi.',
             'lokasi.required' => 'Lokasi wajib diisi.',
@@ -111,7 +118,7 @@ class KompetisiController extends Controller
             'waktu_kompetisi.after' => 'Waktu kompetisi harus setelah waktu technical meeting.',
         ]);
 
-        $validation->after(function($validator) use ($data) {
+        $validation->after(function($validator) use ($data, $request) {
             if (isset($data['waktu_kompetisi']) && isset($data['waktu_techmeeting']) && isset($data['tutup_pendaftaran'])) {
                 $waktuKompetisi = strtotime($data['waktu_kompetisi']);
                 $waktuTechMeeting = strtotime($data['waktu_techmeeting']);
@@ -119,6 +126,20 @@ class KompetisiController extends Controller
                 
                 if ($waktuKompetisi <= $tutupPendaftaran || $waktuKompetisi <= $waktuTechMeeting) {
                     $validator->errors()->add('waktu_kompetisi', 'Waktu kompetisi harus setelah waktu technical meeting dan tanggal tutup pendaftaran.');
+                }
+            }
+
+             if (isset($data['has_pricing'])) {
+                if (!$request->has('pricings') || count($request->pricings) === 0) {
+                    $validator->errors()->add('pricings', 'Data harga wajib diisi jika checkbox diaktifkan.');
+                } else {
+                    $validPricing = collect($request->pricings)->filter(function ($item) {
+                        return !empty($item['harga']) && !empty($item['event_amount']);
+                    });
+
+                    if ($validPricing->isEmpty()) {
+                        $validator->errors()->add('pricings', 'Isi setidaknya satu harga dan jumlah event.');
+                    }
                 }
             }
         });
@@ -129,7 +150,19 @@ class KompetisiController extends Controller
                 ->withInput();
         }
 
-        Kompetisi::create($data);
+        $kompetisi = Kompetisi::create($data);
+
+        if ($request->has_pricing && $request->has('pricings')) {
+            foreach ($request->pricings as $pricing) {
+                if (!empty($pricing['harga']) && !empty($pricing['event_amount'])) {
+                    Pricing::create([
+                        'kompetisi_id' => $kompetisi->id,
+                        'harga' => $pricing['harga'],
+                        'event_amount' => $pricing['event_amount'],
+                    ]);
+                }
+            }
+        }
 
         return redirect()->back()->with('success', 'Data kompetisi berhasil disimpan.');
 
@@ -225,16 +258,22 @@ class KompetisiController extends Controller
 
     }
 
-    public function update(Request $request)
+    public function update(Request $request, $id)
     {
-        $data = [ "nama"=> $request->nama,
-        "lokasi"=> $request->lokasi,
-        "deskripsi"=> $request->deskripsi,
-        "buka_pendaftaran"=> $request->openreg,
-        "tutup_pendaftaran"=> $request->closereg,
-        "kategori"=> $request->kategori,
-        "waktu_techmeeting"=> $request->techmeet,
-        "waktu_kompetisi"=> $request->datekompe,
+        $kompetisi = Kompetisi::findOrFail($id);
+
+        $data = [
+            "nama" => $request->nama,
+            "lokasi" => $request->lokasi,
+            "deskripsi" => $request->deskripsi,
+            "buka_pendaftaran" => $request->openreg,
+            "tutup_pendaftaran" => $request->closereg,
+            "kategori" => $request->kategori,
+            "waktu_techmeeting" => $request->techmeet,
+            "waktu_kompetisi" => $request->datekompe,
+            "has_pricing" => $request->has_pricing ? 1 : 0,
+            "max_participation" => $request->max_participation,
+            "additional_price" => $request->additional_price,
         ];
 
         $validation = Validator::make($data, [
@@ -245,6 +284,10 @@ class KompetisiController extends Controller
             "kategori" => "required",
             "waktu_techmeeting" => "required|date|after:tutup_pendaftaran",
             "waktu_kompetisi" => "required|date|after:waktu_techmeeting",
+            "has_pricing" => "nullable|boolean",
+            "max_participation" => "nullable|integer",
+            "additional_price" => "nullable|integer",
+            
         ], [
             'nama.required' => 'Nama wajib diisi.',
             'lokasi.required' => 'Lokasi wajib diisi.',
@@ -257,30 +300,66 @@ class KompetisiController extends Controller
             'waktu_kompetisi.after' => 'Waktu kompetisi harus setelah waktu technical meeting.',
         ]);
 
-        $validation->after(function($validator) use ($data) {
+        $validation->after(function ($validator) use ($data, $request) {
             if (isset($data['waktu_kompetisi']) && isset($data['waktu_techmeeting']) && isset($data['tutup_pendaftaran'])) {
                 $waktuKompetisi = strtotime($data['waktu_kompetisi']);
                 $waktuTechMeeting = strtotime($data['waktu_techmeeting']);
                 $tutupPendaftaran = strtotime($data['tutup_pendaftaran']);
-                
+
                 if ($waktuKompetisi <= $tutupPendaftaran || $waktuKompetisi <= $waktuTechMeeting) {
                     $validator->errors()->add('waktu_kompetisi', 'Waktu kompetisi harus setelah waktu technical meeting dan tanggal tutup pendaftaran.');
                 }
             }
+
+            if (isset($data['has_pricing']) && $data['has_pricing']) {
+                if (!$request->has('pricings') || count($request->pricings) === 0) {
+                    $validator->errors()->add('pricings', 'Data harga wajib diisi jika checkbox diaktifkan.');
+                } else {
+                    $validPricing = collect($request->pricings)->filter(function ($item) {
+                        return !empty($item['harga']) && !empty($item['event_amount']);
+                    });
+
+                    if ($validPricing->isEmpty()) {
+                        $validator->errors()->add('pricings', 'Isi setidaknya satu harga dan jumlah event.');
+                    }
+                }
+            }
         });
-        
+
         if ($validation->fails()) {
             return redirect()->back()
                 ->withErrors($validation)
                 ->withInput();
         }
 
-        $kompetisi = Kompetisi::find($request->id);
+        // Update data kompetisi
         $kompetisi->update($data);
 
-        return redirect()->route('dashboard.admin.acara')->with('success', 'Data kompetisi berhasil diperbaharui.');
+        // Handle harga paket
+        if ($data['has_pricing']) {
+            // Hapus harga lama
+            Pricing::where('kompetisi_id', $kompetisi->id)->delete();
 
+            // Tambah harga baru
+            foreach ($request->pricings as $pricing) {
+                if (!empty($pricing['harga']) && !empty($pricing['event_amount'])) {
+                    Pricing::create([
+                        'kompetisi_id' => $kompetisi->id,
+                        'harga' => $pricing['harga'],
+                        'event_amount' => $pricing['event_amount'],
+                    ]);
+                }
+            }
+        } else {
+            // Jika tidak aktif, hapus semua harga
+            Pricing::where('kompetisi_id', $kompetisi->id)->delete();
+
+            $kompetisi->update(['max_participation' => null]);
+        }
+
+        return redirect()->route('dashboard.admin.acara')->with('success', 'Data kompetisi berhasil diperbarui.');
     }
+
 
     public function downloadDokumen($id)
     {

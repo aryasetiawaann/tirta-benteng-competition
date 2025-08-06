@@ -115,7 +115,7 @@ Route::middleware(['auth','role:admin'])->group(function () {
     Route::delete('/admin/dashboard/kompetisi/{id}/logo/delete', [LogoKompetisiController::class, 'destroy'])->name('dashboard.admin.kompetisi.logo.delete');
     Route::post('/admin/dashboard/kompetisi/detail-harga', [HargaKompetisiController::class, 'create'])->name('dashboard.admin.kompetisi.detail-harga.create');
     Route::delete('/admin/dashboard/kompetisi/{id}/detail-harga/delete', [HargaKompetisiController::class, 'destroy'])->name('dashboard.admin.kompetisi.detail-harga.delete');
-    Route::put('/admin/dashboard/edit-kompetisi', [KompetisiController::class, 'update'])->name('dashboard.admin.updatekompetisi');
+    Route::put('/admin/dashboard/edit-kompetisi/{id}/update', [KompetisiController::class, 'update'])->name('dashboard.admin.updatekompetisi');
     Route::delete('/admin/dashboard/kompetisi/{id}/delete', [KompetisiController::class, 'destroy'])->name('dashboard.admin.kompetisi.destroy');
     Route::get('/admin/dashboard/{id}/edit-kompetisi', [KompetisiController::class, 'editKompetisi'])->name('dashboard.admin.editkompetisi');
 

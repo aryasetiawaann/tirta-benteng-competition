@@ -77,7 +77,11 @@
                             @endif
                         </h3>
                         <h3 class="mtopbot">
-                            Harga : <span class="status harga smaller">Rp.{{ number_format($aca->harga, 2, ',', '.') }}</span>
+                            @if(!$aca->kompetisi->has_pricing)
+                                Harga : <span class="status harga smaller">Rp.{{ number_format($aca->harga, 2, ',', '.') }}</span>
+                            @else
+                                Harga : <span class="status harga smaller">Paket</span>
+                            @endif
                         </h3>
                         <p><strong>Nomor Grup :</strong> {{ $aca->grup }}</p>
                         <p><strong>Tahun :</strong> {{ $aca->max_umur != null ? $aca->min_umur . ' - ' . $aca->max_umur : $aca->min_umur }}</p>

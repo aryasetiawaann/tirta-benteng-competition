@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Acara;
+use App\Models\Kompetisi;
 use App\Models\Atlet;
 use App\Models\Pembayaran;
 use App\Models\Peserta;
@@ -20,6 +21,19 @@ class PesertaController extends Controller
             "peserta_user_id" => auth()->user()->id,
             "atlet_id"=> $request->atlet,
         ];
+
+        $kompetisi = Kompetisi::findOrFail($request->kompetisi);
+
+        $acaraIds = Acara::where('kompetisi_id', $request->kompetisi)->pluck('id');
+
+        $pesertaCount = Peserta::whereIn('acara_id', $acaraIds)
+            ->where('atlet_id', $request->atlet)
+            ->count();
+
+        if($pesertaCount == $kompetisi->max_participation){
+            return redirect()->back()->with('success', 'Atlet telah mencapai batas maksimal partisipasi di kompetisi ini.');
+        }
+
         
         Peserta::create($data);
         
@@ -28,13 +42,77 @@ class PesertaController extends Controller
 
     public function tagihan(){
 
-        $pesertas = Peserta::with('getAcara', 'getAtlet')
+        $pesertaCollection = Peserta::with('getAcara', 'getAtlet')
         ->where([
             ['peserta_user_id', auth()->user()->id],
             ['status_pembayaran', 'Menunggu']
         ])
-        ->get();
+        ->get()
+        ->groupBy(function ($item){
+            return $item->getAtlet->name;
+        });
 
+        $pesertas = [];
+
+        foreach($pesertaCollection as $nama_atlet => $pesertaList) {
+            
+            $kompetisi = $pesertaList->first()->getAcara->kompetisi;
+            $atlet_id = $pesertaList->first()->atlet_id;
+            $kompetisi_id = $kompetisi->id;
+
+            $acaraSudahDibayarCount = Peserta::where('atlet_id', $atlet_id)
+                ->whereHas('getAcara', function ($query) use ($kompetisi_id) {
+                    $query->where('kompetisi_id', $kompetisi_id);
+                })
+                ->where('status_pembayaran', 'Selesai')
+                ->count();
+
+            $acaraCount = $pesertaList->count();
+            $harga = 0; 
+
+            if($kompetisi->has_pricing){
+
+                if($acaraSudahDibayarCount > 0){
+                    if($acaraSudahDibayarCount == 1){
+                        $harga = ($acaraCount - 1) * $kompetisi->additional_price;
+
+                    }else{
+                        $harga = $acaraCount * $kompetisi->additional_price;
+                    }
+
+                }else{
+                    $sortedPricing = $kompetisi->pricings->sortBy('event_amount');
+                    $lastPricing = $sortedPricing->last();
+
+                    foreach( $sortedPricing as $pricing){
+    
+                        if($acaraCount <= $pricing->event_amount){
+                            $harga = $pricing->harga;
+                            break;
+                        }
+
+                        if($lastPricing){
+                            $totalAcara = $acaraCount - $pricing->event_amount;
+                            $harga = $pricing->harga + ($totalAcara * $kompetisi->additional_price);
+                        }
+                    }
+                }
+            }else{
+
+                foreach($pesertaList as $peserta){
+                    $harga += $peserta->getAcara->harga;
+                }
+            }
+
+            
+            $pesertas[] = [
+                'nama' => $nama_atlet,
+                'harga' => $harga,
+                'pesertas' => $pesertaList,
+            ];
+        }
+
+        
         return view('pages.dashboard-tagihan', compact('pesertas'));
     }
 
@@ -46,26 +124,33 @@ class PesertaController extends Controller
         \Midtrans\Config::$is3ds = true;
 
         $user = auth()->user();
-        $pesertaIds = $request->peserta_ids;
+        $pesertaIds = $request->peserta['ids'];
         $pesertas = Peserta::whereIn('id', $pesertaIds)->get();
         $itemDetails = [];
-        $totalHarga = 0;
+        $totalHarga = $request->peserta['harga'];
         $order_id = 'SC-' . date('Ymd') . '-' . strtoupper(Str::random(5)) . $user->id;
 
         if ($pesertas->isEmpty()) {
             return response()->json(['error' => 'Tidak ada peserta yang dipilih'], 400);
         }
 
+        $itemDetails[] = [
+            'id'    => 'acara',
+            'price' => $totalHarga,
+            'quantity' => 1,
+            'name' => 'Pembayaran Pendaftaran Peserta'
+        ];
+        
         // Ini untuk menampilkan peserta - acara yang dibayar
-        foreach ($pesertas as $peserta) {
-            $itemDetails[] = [
-                'id'       => $peserta->id,
-                'price'    => $peserta->getAcara->harga ?? 0,
-                'quantity' => 1,
-                'name'     => Str::limit("{$peserta->getAtlet->name} - {$peserta->getAcara->nomor_lomba}", 50),
-            ];
-            $totalHarga += $peserta->getAcara->harga ?? 0;
-        }
+        // foreach ($pesertas as $peserta) {
+        //     $itemDetails[] = [
+        //         'id'       => $peserta->id,
+        //         'price'    => $peserta->getAcara->harga ?? 0,
+        //         'quantity' => 1,
+        //         'name'     => Str::limit("{$peserta->getAtlet->name} - {$peserta->getAcara->nomor_lomba}", 50),
+        //     ];
+        //     $totalHarga += $peserta->getAcara->harga ?? 0;
+        // }
 
         // Untuk Perpajakan
         $taxPercentage = 2; // ubah nilai ini untuk mengganti persentase

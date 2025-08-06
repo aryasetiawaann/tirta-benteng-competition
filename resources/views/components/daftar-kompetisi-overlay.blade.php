@@ -6,7 +6,7 @@
             <span id="closeOverlay" class="bx bx-md bx-x"></span>
         </header>
         <section>
-            <form class="atlet" method="POST" action="{{route('dashboard.acara.daftar')}}">
+            <form id="formSubmit" class="atlet" method="POST" action="{{route('dashboard.acara.daftar')}}">
                 @csrf
                 <label for="atlet">Pilih Atlet</label>
                 <select id="atlet" name="atlet" style="cursor: pointer">
@@ -23,13 +23,28 @@
                     @endif
                 </select>
                 <input type="hidden" name="acara" id="acara" value="{{ $acara->id}}">
+                <input type="hidden" name="kompetisi" id="kompetisi" value="{{ $acara->kompetisi->id}}">
                 <input type="hidden" name="harga" id="harga" value="{{ $acara->harga}}">
                 @if ($atlets->count() > 0)
                 <div class="flex center">
-                    <button class="submit-button" type="submit">Kirim</button>
+                    <button id="submitButton" class="submit-button" type="submit">Kirim</button>
                 </div>
                 @endif
             </form>
         </section>
     </div>
 </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const form = document.getElementById('formSubmit'); // pastikan ini mengacu pada form yang tepat
+        const button = document.getElementById('submitButton');
+
+        form.addEventListener('submit', function () {
+            button.disabled = true;
+            button.style.backgroundColor = 'grey';
+            button.style.cursor = 'not-allowed';
+            button.textContent = 'Mengirim...'; // opsional: ubah teks saat loading
+        });
+    });
+</script>
