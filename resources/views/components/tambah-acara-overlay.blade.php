@@ -25,9 +25,10 @@
                 <select name="jenis_lomba" id="jenis_lomba">
                     <option value="tidak ada">Tidak Ada</option>
                     <option value="25m papan gaya bebas">25m Papan Gaya Bebas</option>
-                    <option value="25m fins gaya bebas">25m Fins Gaya Bebas</option>
                     <option value="25m gaya bebas">25m Gaya Bebas</option>
+                    <option value="25m fins gaya bebas">25m Fins Gaya Bebas</option>
                     <option value="50m gaya bebas">50m Gaya Bebas</option>
+                    <option value="50m fins gaya bebas">50m Fins Gaya Bebas</option>
                     <option value="100m gaya bebas">100m Gaya Bebas</option>
                     <option value="200m gaya bebas">200m Gaya Bebas</option>
                     <option value="400m gaya bebas">400m Gaya Bebas</option>

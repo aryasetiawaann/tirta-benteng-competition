@@ -47,9 +47,10 @@
                 <label for="jenis_lomba">Jenis Lomba *</label>
                 <select name="jenis_lomba" id="jenis_lomba">
                     <option value="25m papan gaya bebas" {{ $acara->jenis_lomba === "25m papan gaya bebas" ? "selected" : "" }}>25m Papan Gaya Bebas</option>
-                    <option value="25m fins gaya bebas" {{ $acara->jenis_lomba === "25m fins gaya bebas" ? "selected" : "" }}>25m Fins Gaya Bebas</option>
                     <option value="25m gaya bebas" {{ $acara->jenis_lomba === "25m gaya bebas" ? "selected" : "" }}>25m Gaya Bebas</option>
+                    <option value="25m fins gaya bebas" {{ $acara->jenis_lomba === "25m fins gaya bebas" ? "selected" : "" }}>25m Fins Gaya Bebas</option>
                     <option value="50m gaya bebas" {{ $acara->jenis_lomba === "50m gaya bebas" ? "selected" : "" }}>50m Gaya Bebas</option>
+                    <option value="50m fins gaya bebas" {{ $acara->jenis_lomba === "50m fins gaya bebas" ? "selected" : "" }}>50m Fins Gaya Bebas</option>
                     <option value="100m gaya bebas" {{ $acara->jenis_lomba === "100m gaya bebas" ? "selected" : "" }}>100m Gaya Bebas</option>
                     <option value="200m gaya bebas" {{ $acara->jenis_lomba === "200m gaya bebas" ? "selected" : "" }}>200m Gaya Bebas</option>
                     <option value="400m gaya bebas" {{ $acara->jenis_lomba === "400m gaya bebas" ? "selected" : "" }}>400m Gaya Bebas</option>
