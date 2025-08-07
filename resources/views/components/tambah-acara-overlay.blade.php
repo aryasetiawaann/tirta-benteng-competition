@@ -34,6 +34,7 @@
                     <option value="800m gaya bebas">800m Gaya Bebas</option>
                     <option value="1500m gaya bebas">1500m Gaya Bebas</option>
                     <option value="25m fins gaya kupu-kupu">25m Fins Gaya Kupu-Kupu</option>
+                    <option value="50m fins gaya kupu-kupu">50m Fins Gaya Kupu-Kupu</option>
                     <option value="25m gaya kupu-kupu">25m Gaya Kupu-Kupu</option>
                     <option value="50m gaya kupu-kupu">50m Gaya Kupu-Kupu</option>
                     <option value="100m gaya kupu-kupu">100m Gaya Kupu-Kupu</option>
