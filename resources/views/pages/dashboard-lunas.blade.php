@@ -29,7 +29,7 @@
                             <p>Dapatkan informasi terbaru terkait perlombaan.</p>
                         </div>
                     </div>
-                    <a href="https://chat.whatsapp.com/Bf8Cqva3vYgI04hsEA5RwW" target="_blank" class="button community-card-button">
+                    <a href="https://chat.whatsapp.com/IeGqzkYj8raHcO7GQw6tWc" target="_blank" class="button community-card-button">
                         Join Grup WhatsApp
                     </a>
                 </header>
