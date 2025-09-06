@@ -19,6 +19,9 @@ class UnduhanController extends Controller
 {
 
     public $officialMaxLanes = 10;
+    public $funMaxLanes = 4;
+    public $funGroupCount = 3;
+    public $funGroups = ['A', 'B', 'C'];
 
     public function userBukuAcara(){
 
@@ -68,13 +71,13 @@ class UnduhanController extends Controller
                 }
     
                 // Membagi peserta ke dalam heat
-                $heats = $this->divideIntoHeats($participants->toArray());
+                $heats = $this->divideIntoHeats($participants->toArray(), $this->funGroupCount, $this->funMaxLanes);
     
                 // Menambahkan data heat ke dalam acara
                 $acara->heats = $heats;
             }
 
-            $groups = ['A', 'B'];
+            $groups = ['A', 'B', 'C'];
     
             $pdf = Pdf::loadView('layouts.print-layout-bukuacara' , compact('acaras', 'kompetisi', 'time', 'groups'))->setPaper('a4', 'potrait');
 
@@ -91,7 +94,7 @@ class UnduhanController extends Controller
     }
 
 
-    private function divideIntoHeats($participants, $totalGroups = 2, $participantsPerGroup = 4) // jumlah grup per seri nya
+    private function divideIntoHeats($participants, $totalGroups = 3, $participantsPerGroup = 4) // jumlah grup per seri nya
     {
         // Hitung jumlah peserta per heat (total grup * peserta per grup)
         $maxLanes = $totalGroups * $participantsPerGroup;
@@ -215,13 +218,13 @@ class UnduhanController extends Controller
                 }
     
                 // Membagi peserta ke dalam heat
-                $heats = $this->divideIntoHeats($participants->toArray());
+                $heats = $this->divideIntoHeats($participants->toArray(), $this->funGroupCount, $this->funMaxLanes);
     
                 // Menambahkan data heat ke dalam acara
                 $acara->heats = $heats;
             }
     
-            return Excel::download(new KompetisiExport($acaras), $kompetisi->nama . '.xlsx');
+            return Excel::download(new KompetisiExport($acaras, $this->funGroupCount, $this->funMaxLanes, $this->funGroups, $kompetisi), $kompetisi->nama . '.xlsx');
 
         }else{
 

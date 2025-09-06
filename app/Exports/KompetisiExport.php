@@ -5,20 +5,28 @@ namespace App\Exports;
 use App\Models\Acara;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithMapping;
-use Maatwebsite\Excel\Concerns\ShouldAutoSize;
 use Maatwebsite\Excel\Concerns\WithEvents;
 use Maatwebsite\Excel\Events\AfterSheet;
+use PhpOffice\PhpSpreadsheet\Worksheet\PageSetup;
 use PhpOffice\PhpSpreadsheet\Style\Border;  
+use Carbon\Carbon;
 
 
-class KompetisiExport implements FromCollection, WithMapping, ShouldAutoSize, WithEvents
+class KompetisiExport implements FromCollection, WithMapping, WithEvents
 {
     protected $acaras;
+    protected $funGroupCount;
+    protected $funMaxLanes;
+    protected $funGroups;
+    protected $kompetisi;
 
-
-    public function __construct($acaras)
+    public function __construct($acaras, $funGroupCount, $funMaxLanes, $funGroups, $kompetisi)
     {
         $this->acaras = $acaras;
+        $this->funGroupCount = $funGroupCount;
+        $this->funMaxLanes = $funMaxLanes;
+        $this->funGroups = $funGroups;
+        $this->kompetisi = $kompetisi;
     }
 
     /**
@@ -34,18 +42,17 @@ class KompetisiExport implements FromCollection, WithMapping, ShouldAutoSize, Wi
      */
     public function map($acara): array
     {
+        // Ini untuk inisialisasi row nya
         $rows = [];
 
-        // Tambahkan baris untuk ACARA
-        $rows[] = [
-            'ACARA ' . $acara->nomor_lomba,
-            $acara->nama,
-            '', '', '', '', '', '', ''
-        ];
+        // Ini untuk baris header
+        $rows[] = [];
 
-        $rows[] = [
-            'SERI', 'GRUP', 'LINT', 'NAMA', 'ASAL SEKOLAH / KLUB', 'QET', 'HASIL'
-        ];
+        // Untuk baris seri
+        $rows[] = [];
+
+        // Untuk baris subheader
+        $rows[] = [];
 
         foreach ($acara->heats as $serieIndex => $heat) {
             foreach ($heat as $groupIndex => $group) {
@@ -60,21 +67,20 @@ class KompetisiExport implements FromCollection, WithMapping, ShouldAutoSize, Wi
 
                                 // Jika kategori fun, tambahkan kolom GRUP
                                 $rows[] = [
-                                    $serieIndex + 1, // SERI
-                                    $groupIndex == 0 ? 'A' : 'B', // GRUP
                                     $laneIndex + 1,  // LINT
+                                    $groupIndex == 0 ? 'A' : 'B', // GRUP
                                     $participant['name'],  // NAMA
+                                    'KU ' . $acara->grup,  // KU
                                     $participant['club'],  // ASAL SEKOLAH / KLUB
                                     $participant['track_record'] == 999 ? 'NT' : $trackRecordFormatted, // QET
-                                    '', // HASIL
+                                    '(..............)', // HASIL
                                 ];
                         } else {
                             // Jika tidak ada peserta
                             
                             $rows[] = [
-                                $serieIndex + 1, // SERI
-                                $groupIndex == 0 ? 'A' : 'B', // GRUP
                                 $laneIndex + 1,  // LINT
+                                $groupIndex == 0 ? 'A' : 'B', // GRUP
                                 '', '', '', '', // Kosong
                             ];
                         }
@@ -83,6 +89,7 @@ class KompetisiExport implements FromCollection, WithMapping, ShouldAutoSize, Wi
             }
         }            
 
+        // Space kosong untuk pemisah
         $rows[] = [];
         
         return $rows;
@@ -114,39 +121,73 @@ class KompetisiExport implements FromCollection, WithMapping, ShouldAutoSize, Wi
             AfterSheet::class => function (AfterSheet $event) {
                 $sheet = $event->sheet->getDelegate();
 
+                $sheet->getPageSetup()->setPaperSize(PageSetup::PAPERSIZE_A4);
+
+                // Set orientasi Portrait (bisa diganti Landscape)
+                $sheet->getPageSetup()->setOrientation(PageSetup::ORIENTATION_PORTRAIT);
+
+                // Set Footer
+                $sheet->getHeaderFooter()->setOddFooter('&LDicetak pada &D &T');
+
+                $waktu = Carbon::parse($this->kompetisi->waktu_kompetisi)->translatedFormat('j F Y');
+
+                $sheet->getHeaderFooter()->setOddHeader(
+                    "&C {$this->kompetisi->nama}\n{$this->kompetisi->lokasi}\n{$waktu}"
+                );
+
                 // Atur gaya default
                 $sheet->getParent()->getDefaultStyle()->getFont()->setName('Arial');
-                $sheet->getParent()->getDefaultStyle()->getFont()->setSize(12);
+                $sheet->getParent()->getDefaultStyle()->getFont()->setSize(10);
+                $sheet->getParent()->getDefaultStyle()->applyFromArray([
+                    'alignment' => [
+                        'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER,
+                    ],
+                ]);
 
                 // Gaya untuk header
                 $headerStyle = [
                     'font' => [
-                        'name' => 'Arial',
-                        'size' => 12,
+                        'size' => 9,
+                        'bold' => true,
                         'color' => ['argb' => '000000'],
                     ],
                     'fill' => [
                         'fillType' => \PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID,
-                        'startColor' => ['argb' => 'FFFFFFFF'],
+                        'startColor' => ['argb' => '7BDFF2'],
                     ],
                     'alignment' => [
-                        'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER,
+                    'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER,
+                    ]
+                ];
+
+                $seriStyle = [
+                    'font' => [
+                        'size' => 9,
+                        'underline' => true,
+                        'bold' => true,
+                        'color' => ['argb' => '000000'],
                     ],
-                    'borders' => [
-                        'allBorders' => [
-                            'borderStyle' => Border::BORDER_THIN,
-                        ],
+                    'fill' => [
+                        'fillType' => \PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID,
+                        'startColor' => ['argb' => 'B2F7EF']
+                    ],
+                    'alignment' => [
+                        'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER,
                     ],
                 ];
 
-                // Gaya untuk konten
-                $contentStyle = [
+                $subHeaderStyle = [
                     'font' => [
-                        'name' => 'Arial',
-                        'size' => 12,
+                        'size' => 9,
+                        'bold' => true,
+                        'color' => ['argb' => '000000'],
+                    ],
+                    'fill' => [
+                        'fillType' => \PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID,
+                        'startColor' => ['argb' => 'F2F2F2']
                     ],
                     'alignment' => [
-                        'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER,
+                        'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER,
                     ],
                 ];
 
@@ -165,12 +206,17 @@ class KompetisiExport implements FromCollection, WithMapping, ShouldAutoSize, Wi
 
 
                     // Merge untuk baris ACARA
-                    $sheet->mergeCells("A$currentRow:G$currentRow");
-                    $sheet->setCellValue("A$currentRow", 'Acara ' . $acara->nomor_lomba . ' | ' . $acara->nama . ' - ' . strtoupper($acara->grup)
-                    . ' '. $kategori);
+                    $sheet->setCellValue("A$currentRow", 'ACARA ' . $acara->nomor_lomba);
+                    $sheet->mergeCells("B$currentRow:C$currentRow");
+                    $sheet->setCellValue("B$currentRow", ' (KU ' . strtoupper($acara->grup) 
+                    . ') ');
+                    $sheet->mergeCells("D$currentRow:E$currentRow");
+                    $sheet->setCellValue("D$currentRow", $acara->nama);
+                    $sheet->mergeCells("F$currentRow:G$currentRow");
+                    $sheet->setCellValue("F$currentRow", $kategori);
                     $sheet->getStyle("A$currentRow:G$currentRow")->applyFromArray($headerStyle);
 
-                    $currentRow += 2;
+                    $currentRow++;
 
                     // Cek apakah acara memiliki peserta
                     if ($this->hasParticipants($acara)) {
@@ -178,30 +224,45 @@ class KompetisiExport implements FromCollection, WithMapping, ShouldAutoSize, Wi
                         // Proses heats dan seri
                         $serieIndex = 0;
                         foreach ($acara->heats as $key => $heat) {
-                            $this->mergeSeriColumns($sheet, $currentRow, $serieIndex);
+                            $sheet->setCellValue("A$currentRow", "Seri " . ($serieIndex + 1));
+                            $sheet->getStyle("A$currentRow")->applyFromArray($seriStyle);
+                            
+                            $currentRow++;
+
+                            $sheet->setCellValue("A$currentRow", "Ln.");
+                            $sheet->setCellValue("B$currentRow", "Grup");
+                            $sheet->setCellValue("C$currentRow", "Nama");
+                            $sheet->setCellValue("D$currentRow", "KU");
+                            $sheet->setCellValue("E$currentRow", "Asal Selokah/Klub");
+                            $sheet->setCellValue("F$currentRow", "QET");
+                            $sheet->setCellValue("G$currentRow", "Hasil");
+                            $sheet->getStyle("A$currentRow:G$currentRow")->applyFromArray($subHeaderStyle);
+                            
+                            $currentRow++;
+
+                            // $this->mergeSeriColumns($sheet, $currentRow, $serieIndex);
 
                             // Lakukan penggabungan kolom Grup
                             $this->mergeGrupColumns($sheet, $currentRow);
                             
                             if ($key == count($acara->heats) - 1) {
-                                $currentRow += 9;
+                                $currentRow += (($this->funGroupCount * $this->funMaxLanes) + 1);
                             } else {
-                                $currentRow += 8;
+                                $currentRow += ($this->funGroupCount * $this->funMaxLanes);
                             }
                             $serieIndex++;
                         }
+
                     } else {
                         // Jika tidak ada peserta, tambahkan baris kosong atau keterangan jika diperlukan
                         // Misalnya, tambahkan baris kosong
                         $currentRow += 1;
                     }
-
-                    // Terapkan style konten
-                    $sheet->getStyle("A$currentRow:G$currentRow")->applyFromArray($contentStyle);
                 }
 
                 // Sesuaikan lebar kolom
                 $this->adjustColumnWidths($sheet);
+                $sheet->getDefaultRowDimension()->setRowHeight(20);
             },
         ];
     }
@@ -209,8 +270,8 @@ class KompetisiExport implements FromCollection, WithMapping, ShouldAutoSize, Wi
     // Merge Grup A, B, C, dan D
     private function mergeGrupColumns($sheet, $currentRow)
     {
-        $groupNames = ['A', 'B']; // Nama grup
-        $groupRowCount = 4; // Jumlah baris per grup
+        $groupNames = $this->funGroups; // Nama grup
+        $groupRowCount = $this->funMaxLanes; // Jumlah baris per grup
 
         foreach ($groupNames as $index => $groupName) {
             $startGroupRow = $currentRow + ($index * $groupRowCount); // Baris awal grup
@@ -219,21 +280,57 @@ class KompetisiExport implements FromCollection, WithMapping, ShouldAutoSize, Wi
             // Merge kolom untuk grup
             $sheet->mergeCells("B$startGroupRow:B$endGroupRow");
             $sheet->setCellValue("B$startGroupRow", $groupName);
+
+            // Set Text di kotak jadi ada di atas tengah
             $sheet->getStyle("B$startGroupRow")->applyFromArray([
                 'alignment' => [
-                    'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_TOP,
+                    'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER,
                     'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER,
                 ],
             ]);
+
+            // Set border grup kiri kanan
             $sheet->getStyle("B$startGroupRow:B$endGroupRow")->applyFromArray([
                 'borders' => [
-                    'outline' => [
+                    'left' => [
                         'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
-                        'color' => ['argb' => '000000'], // Warna hitam
+                        'color' => ['argb' => '808080'], // Warna hitam
                     ],
-                    'inside' => [
+                    'right' => [
                         'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
-                        'color' => ['argb' => '000000'],
+                        'color' => ['argb' => '808080'], // Warna hitam
+                    ],
+                ],
+            ]);
+
+            // Set LINTASAN jadi di tengah
+            $sheet->getStyle("A$startGroupRow:A$endGroupRow")->applyFromArray([
+                'alignment' => [
+                    'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER,
+                ],
+            ]);
+
+            // Set KU ke tengah
+            $sheet->getStyle("D$startGroupRow:D$endGroupRow")->applyFromArray([
+                'alignment' => [
+                    'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER,
+                ],
+            ]);
+
+            // Set QET dan HASIL ke tengah
+            $sheet->getStyle("F$startGroupRow:G$endGroupRow")->applyFromArray([
+                'alignment' => [
+                    'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER,
+                ],
+            ]);
+
+
+            // Set border bottom setelah setiap grup
+            $sheet->getStyle("A$endGroupRow:G$endGroupRow")->applyFromArray([
+                'borders' => [
+                    'bottom' => [
+                        'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+                        'color' => ['argb' => 'D0D0D0'],
                     ],
                 ],
             ]);
@@ -246,7 +343,7 @@ class KompetisiExport implements FromCollection, WithMapping, ShouldAutoSize, Wi
     private function mergeSeriColumns($sheet, $currentRow, $serieIndex)
     {
         $startSeriRow = $currentRow; // Baris awal seri
-        $endSeriRow = $startSeriRow + 7; // Total 16 baris (4 grup × 4 baris)
+        $endSeriRow = $startSeriRow + (($this->funGroupCount * $this->funMaxLanes) - 1); // Total 16 baris (4 grup × 4 baris)
         $sheet->mergeCells("A$startSeriRow:A$endSeriRow");
         $sheet->setCellValue("A$startSeriRow", $serieIndex + 1);
         $sheet->getStyle("A$startSeriRow")->applyFromArray([
@@ -261,11 +358,11 @@ class KompetisiExport implements FromCollection, WithMapping, ShouldAutoSize, Wi
     // Custom lebar kolom
     private function adjustColumnWidths($sheet)
     {
-        $sheet->getColumnDimension('A')->setWidth(3); // SERI
-        $sheet->getColumnDimension('B')->setWidth(5);  // GRUP
-        $sheet->getColumnDimension('C')->setWidth(3);  // LINT
-        $sheet->getColumnDimension('D')->setWidth(30); // NAMA
-        $sheet->getColumnDimension('E')->setWidth(25); // ASAL SEKOLAH / KLUB
+        $sheet->getColumnDimension('A')->setWidth(10); // LINT
+        $sheet->getColumnDimension('B')->setWidth(7);  // GRUP
+        $sheet->getColumnDimension('C')->setWidth(25); // NAMA
+        $sheet->getColumnDimension('D')->setWidth(10); // ASALH SEKOLAH
+        $sheet->getColumnDimension('E')->setWidth(25); // ASALH SEKOLAH
         $sheet->getColumnDimension('F')->setWidth(10); // QET
         $sheet->getColumnDimension('G')->setWidth(10); // HASIL
     }
