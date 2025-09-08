@@ -48,11 +48,14 @@ class KompetisiExport implements FromCollection, WithMapping, WithEvents
         // Ini untuk baris header
         $rows[] = [];
 
-        // Untuk baris seri
-        $rows[] = [];
+        if($this->hasParticipants($acara)){
+            // Untuk baris seri
+            $rows[] = [];
+    
+            // Untuk baris subheader
+            $rows[] = [];
+        }
 
-        // Untuk baris subheader
-        $rows[] = [];
 
         foreach ($acara->heats as $serieIndex => $heat) {
             foreach ($heat as $groupIndex => $group) {
