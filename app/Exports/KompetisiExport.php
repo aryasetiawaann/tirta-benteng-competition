@@ -42,76 +42,78 @@ class KompetisiExport implements FromCollection, WithMapping, WithEvents
      */
     public function map($acara): array
     {
-        // Ini untuk inisialisasi row nya
-        $rows = [];
+        // // Ini untuk inisialisasi row nya
+        // $rows = [];
 
-        // Ini untuk baris header
-        $rows[] = [];
+        // // Ini untuk baris header
+        // $rows[] = [];
 
-        if($this->hasParticipants($acara)){
-            // Untuk baris seri
-            $rows[] = [];
+        // if($this->hasParticipants($acara)){
+        //     // Untuk baris seri
+        //     $rows[] = [];
     
-            // Untuk baris subheader
-            $rows[] = [];
-        }
+        //     // Untuk baris subheader
+        //     $rows[] = [];
+        // }
 
 
-        foreach ($acara->heats as $serieIndex => $heat) {
-            foreach ($heat as $groupIndex => $group) {
-                if($group) {
-                    foreach ($group as $laneIndex => $participant) {
+        // foreach ($acara->heats as $serieIndex => $heat) {
+        //     foreach ($heat as $groupIndex => $group) {
+        //         if($group) {
+        //             foreach ($group as $laneIndex => $participant) {
 
-                        if ($participant) {
-                            $trackRecordFormatted = sprintf('%02d:%02d.%02d', 
-                            floor($participant['track_record'] / 60),  // Menit
-                            floor(fmod($participant['track_record'], 60)),  // Detik
-                            round(($participant['track_record'] - floor($participant['track_record'])) * 100) // Milisekon
-                            );
+        //                 if ($participant) {
+        //                     $trackRecordFormatted = sprintf('%02d:%02d.%02d', 
+        //                     floor($participant['track_record'] / 60),  // Menit
+        //                     floor(fmod($participant['track_record'], 60)),  // Detik
+        //                     round(($participant['track_record'] - floor($participant['track_record'])) * 100) // Milisekon
+        //                     );
 
-                                // Jika kategori fun, tambahkan kolom GRUP
-                                $rows[] = [
-                                    $laneIndex + 1,  // LINT
-                                    $groupIndex == 0 ? 'A' : 'B', // GRUP
-                                    $participant['name'],  // NAMA
-                                    'KU ' . $acara->grup,  // KU
-                                    $participant['club'],  // ASAL SEKOLAH / KLUB
-                                    $participant['track_record'] == 999 ? 'NT' : $trackRecordFormatted, // QET
-                                    '(..............)', // HASIL
-                                ];
-                        } else {
-                            // Jika tidak ada peserta
+        //                         // Jika kategori fun, tambahkan kolom GRUP
+        //                         $rows[] = [
+        //                             $laneIndex + 1,  // LINT
+        //                             $groupIndex == 0 ? 'A' : 'B', // GRUP
+        //                             $participant['name'],  // NAMA
+        //                             'KU ' . $acara->grup,  // KU
+        //                             $participant['club'],  // ASAL SEKOLAH / KLUB
+        //                             $participant['track_record'] == 999 ? 'NT' : $trackRecordFormatted, // QET
+        //                             '(..............)', // HASIL
+        //                         ];
+        //                 } else {
+        //                     // Jika tidak ada peserta
                             
-                            $rows[] = [
-                                $laneIndex + 1,  // LINT
-                                $groupIndex == 0 ? 'A' : 'B', // GRUP
-                                '', '', '', '', // Kosong
-                            ];
-                        }
+        //                     $rows[] = [
+        //                         $laneIndex + 1,  // LINT
+        //                         $groupIndex == 0 ? 'A' : 'B', // GRUP
+        //                         '', '', '', '', // Kosong
+        //                     ];
+        //                 }
 
-                    }
-                }
+        //             }
+        //         }
 
-                $lastHeatIndex = array_key_last($acara->heats);
+        //         $lastHeatIndex = array_key_last($acara->heats);
 
-                $keys = array_keys($heat);
-                $lastGroupIndex = end($keys);
+        //         $keys = array_keys($heat);
+        //         $lastGroupIndex = end($keys);
 
-                // Check group index
-                if($groupIndex == $lastGroupIndex && $serieIndex != $lastHeatIndex){
-                    // Menambahkan baris baru untuk seri
-                    $rows[] = [];
+        //         // Check group index
+        //         if($groupIndex == $lastGroupIndex && $serieIndex != $lastHeatIndex){
+        //             // Menambahkan baris baru untuk seri
+        //             $rows[] = [];
 
-                    // Menambahkan baris baru untuk subheader
-                    $rows[] = [];
-                }
-            }
-        }            
+        //             // Menambahkan baris baru untuk subheader
+        //             $rows[] = [];
+        //         }
+        //     }
+        // }            
 
-        // Space kosong untuk pemisah
-        $rows[] = [];
+        // // Space kosong untuk pemisah
+        // $rows[] = [];
         
-        return $rows;
+        // return $rows;
+
+        return [];
     }
 
     /**
@@ -224,7 +226,7 @@ class KompetisiExport implements FromCollection, WithMapping, WithEvents
                     }
 
 
-                    // Merge untuk baris ACARA
+                    // Header
                     $sheet->setCellValue("A$currentRow", 'ACARA ' . $acara->nomor_lomba);
                     $sheet->mergeCells("B$currentRow:C$currentRow");
                     $sheet->setCellValue("B$currentRow", ' (KU ' . strtoupper($acara->grup) 
@@ -239,39 +241,66 @@ class KompetisiExport implements FromCollection, WithMapping, WithEvents
 
                     // Cek apakah acara memiliki peserta
                     if ($this->hasParticipants($acara)) {
+
+                        $lastSerieIndex = array_key_last($acara->heats);
                         
-                        // Proses heats dan seri
-                        $serieIndex = 0;
-                        foreach ($acara->heats as $key => $heat) {
+                        foreach ($acara->heats as $serieIndex => $heat) {
+                            // Seri
                             $sheet->setCellValue("A$currentRow", "Seri " . ($serieIndex + 1));
                             $sheet->getStyle("A$currentRow")->applyFromArray($seriStyle);
-                            
                             $currentRow++;
 
+                            // Subheader
                             $sheet->setCellValue("A$currentRow", "Ln.");
                             $sheet->setCellValue("B$currentRow", "Grup");
                             $sheet->setCellValue("C$currentRow", "Nama");
                             $sheet->setCellValue("D$currentRow", "KU");
-                            $sheet->setCellValue("E$currentRow", "Asal Selokah/Klub");
+                            $sheet->setCellValue("E$currentRow", "Asal Sekolah/Klub");
                             $sheet->setCellValue("F$currentRow", "QET");
                             $sheet->setCellValue("G$currentRow", "Hasil");
                             $sheet->getStyle("A$currentRow:G$currentRow")->applyFromArray($subHeaderStyle);
-                            
                             $currentRow++;
-
-                            // $this->mergeSeriColumns($sheet, $currentRow, $serieIndex);
 
                             // Lakukan penggabungan kolom Grup
                             $this->mergeGrupColumns($sheet, $currentRow);
                             
-                            if ($key == count($acara->heats) - 1) {
-                                $currentRow += (($this->funGroupCount * $this->funMaxLanes) + 1);
-                            } else {
-                                $currentRow += ($this->funGroupCount * $this->funMaxLanes);
-                            }
-                            $serieIndex++;
-                        }
+                             foreach ($heat as $groupIndex => $group) {
+                                foreach ($group as $laneIndex => $participant) {
+                                    if ($participant) {
+                                        $trackRecordFormatted = sprintf('%02d:%02d.%02d',
+                                            floor($participant['track_record'] / 60),
+                                            floor(fmod($participant['track_record'], 60)),
+                                            round(($participant['track_record'] - floor($participant['track_record'])) * 100)
+                                        );
 
+                                        $sheet->fromArray([[
+                                            $laneIndex + 1,
+                                            $this->funGroups[$groupIndex],
+                                            $participant['name'],
+                                            'KU ' . $acara->grup,
+                                            $participant['club'],
+                                            $participant['track_record'] == 999 ? 'NT' : $trackRecordFormatted,
+                                            '(..............)',
+                                        ]], null, "A$currentRow");
+
+                                    }else{
+                                        // lane kosong
+                                        $sheet->fromArray([[
+                                            $laneIndex + 1,
+                                            $this->funGroups[$groupIndex],
+                                            '', '', '', '', ''
+                                        ]], null, "A$currentRow");
+                                    }
+
+                                    $currentRow++;
+                                }
+                            }
+
+                            // Menambahkan spasi pada seri paling terakhir
+                            if($serieIndex == $lastSerieIndex){
+                                $currentRow++;
+                            }
+                        }
                     } else {
                         // Jika tidak ada peserta, tambahkan baris kosong atau keterangan jika diperlukan
                         // Misalnya, tambahkan baris kosong
@@ -380,7 +409,7 @@ class KompetisiExport implements FromCollection, WithMapping, WithEvents
         $sheet->getColumnDimension('A')->setWidth(10); // LINT
         $sheet->getColumnDimension('B')->setWidth(7);  // GRUP
         $sheet->getColumnDimension('C')->setWidth(25); // NAMA
-        $sheet->getColumnDimension('D')->setWidth(10); // ASALH SEKOLAH
+        $sheet->getColumnDimension('D')->setWidth(10); // KU
         $sheet->getColumnDimension('E')->setWidth(25); // ASALH SEKOLAH
         $sheet->getColumnDimension('F')->setWidth(10); // QET
         $sheet->getColumnDimension('G')->setWidth(10); // HASIL

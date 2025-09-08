@@ -96,7 +96,7 @@ class UnduhanController extends Controller
     }
 
 
-    private function divideIntoHeats($participants, $totalGroups = 3, $participantsPerGroup = 4) // jumlah grup per seri nya
+    private function divideIntoHeats($participants, $totalGroups, $participantsPerGroup) // jumlah grup per seri nya
     {
         // Hitung jumlah peserta per heat (total grup * peserta per grup)
         $maxLanes = $totalGroups * $participantsPerGroup;
