@@ -37,53 +37,6 @@ class KompetisiResmi implements FromCollection, WithMapping, WithEvents
      */
     public function map($acara): array
     {
-        // $rows = [];
-
-        // $rows[] = [
-        //     'ACARA ' . $acara->nomor_lomba,
-        //     $acara->nama,
-        //     '', '', '', '', ''
-        // ];
-
-        // $rows[] = [
-        //     'SERI', 'LINT', 'NAMA', 'ASAL SEKOLAH / KLUB', 'QET', 'HASIL'
-        // ];
-
-        // foreach ($acara->heats as $serieIndex => $heat)
-        // {
-        //     foreach($heat as $laneIndex => $participant)
-        //     {
-        //         if($participant)
-        //         {
-        //             $trackRecordFormatted = sprintf('%02d:%02d.%02d', 
-        //                 floor($participant['track_record'] / 60),  // Menit
-        //                 floor(fmod($participant['track_record'], 60)),  // Detik
-        //                 round(($participant['track_record'] - floor($participant['track_record'])) * 100) // Milisekon
-        //                 );
-
-        //             $rows[] = [
-        //                 $serieIndex + 1, // SERI
-        //                 $laneIndex === 0 ? '0' : $laneIndex,  // LINT
-        //                 $participant['name'],  // NAMA
-        //                 $participant['club'],  // ASAL SEKOLAH / KLUB
-        //                 $participant['track_record'] == 999 ? '-' : $trackRecordFormatted, // QET
-        //                 '', // HASIL
-        //             ];
-        //         }else {
-        //             $rows[] = [
-        //                 $serieIndex + 1, // SERI
-        //                 $laneIndex === 0 ? '0' : $laneIndex,  // LINT
-        //                 '', '', '', '', // Kosong
-        //             ];
-        //         }
-
-        //         $laneIndex + 1;
-        //     }
-        // }
-
-        // $rows[] = [];
-        
-        // return $rows;
         return [];
     }
 
@@ -306,8 +259,8 @@ class KompetisiResmi implements FromCollection, WithMapping, WithEvents
         $sheet->getColumnDimension('B')->setWidth(25); // NAMA
         $sheet->getColumnDimension('C')->setWidth(10); // KU
         $sheet->getColumnDimension('D')->setWidth(25); // ASALH SEKOLAH
-        $sheet->getColumnDimension('E')->setWidth(10); // QET
-        $sheet->getColumnDimension('F')->setWidth(10); // HASIL
+        $sheet->getColumnDimension('E')->setWidth(15); // QET
+        $sheet->getColumnDimension('F')->setWidth(15); // HASIL
     }
 
     
