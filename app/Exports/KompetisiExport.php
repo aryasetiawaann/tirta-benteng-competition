@@ -42,77 +42,6 @@ class KompetisiExport implements FromCollection, WithMapping, WithEvents
      */
     public function map($acara): array
     {
-        // // Ini untuk inisialisasi row nya
-        // $rows = [];
-
-        // // Ini untuk baris header
-        // $rows[] = [];
-
-        // if($this->hasParticipants($acara)){
-        //     // Untuk baris seri
-        //     $rows[] = [];
-    
-        //     // Untuk baris subheader
-        //     $rows[] = [];
-        // }
-
-
-        // foreach ($acara->heats as $serieIndex => $heat) {
-        //     foreach ($heat as $groupIndex => $group) {
-        //         if($group) {
-        //             foreach ($group as $laneIndex => $participant) {
-
-        //                 if ($participant) {
-        //                     $trackRecordFormatted = sprintf('%02d:%02d.%02d', 
-        //                     floor($participant['track_record'] / 60),  // Menit
-        //                     floor(fmod($participant['track_record'], 60)),  // Detik
-        //                     round(($participant['track_record'] - floor($participant['track_record'])) * 100) // Milisekon
-        //                     );
-
-        //                         // Jika kategori fun, tambahkan kolom GRUP
-        //                         $rows[] = [
-        //                             $laneIndex + 1,  // LINT
-        //                             $groupIndex == 0 ? 'A' : 'B', // GRUP
-        //                             $participant['name'],  // NAMA
-        //                             'KU ' . $acara->grup,  // KU
-        //                             $participant['club'],  // ASAL SEKOLAH / KLUB
-        //                             $participant['track_record'] == 999 ? 'NT' : $trackRecordFormatted, // QET
-        //                             '(..............)', // HASIL
-        //                         ];
-        //                 } else {
-        //                     // Jika tidak ada peserta
-                            
-        //                     $rows[] = [
-        //                         $laneIndex + 1,  // LINT
-        //                         $groupIndex == 0 ? 'A' : 'B', // GRUP
-        //                         '', '', '', '', // Kosong
-        //                     ];
-        //                 }
-
-        //             }
-        //         }
-
-        //         $lastHeatIndex = array_key_last($acara->heats);
-
-        //         $keys = array_keys($heat);
-        //         $lastGroupIndex = end($keys);
-
-        //         // Check group index
-        //         if($groupIndex == $lastGroupIndex && $serieIndex != $lastHeatIndex){
-        //             // Menambahkan baris baru untuk seri
-        //             $rows[] = [];
-
-        //             // Menambahkan baris baru untuk subheader
-        //             $rows[] = [];
-        //         }
-        //     }
-        // }            
-
-        // // Space kosong untuk pemisah
-        // $rows[] = [];
-        
-        // return $rows;
-
         return [];
     }
 
@@ -383,23 +312,6 @@ class KompetisiExport implements FromCollection, WithMapping, WithEvents
                 ],
             ]);
         }
-    }
-  
-
-
-    // Merge untuk SERI
-    private function mergeSeriColumns($sheet, $currentRow, $serieIndex)
-    {
-        $startSeriRow = $currentRow; // Baris awal seri
-        $endSeriRow = $startSeriRow + (($this->funGroupCount * $this->funMaxLanes) - 1); // Total 16 baris (4 grup × 4 baris)
-        $sheet->mergeCells("A$startSeriRow:A$endSeriRow");
-        $sheet->setCellValue("A$startSeriRow", $serieIndex + 1);
-        $sheet->getStyle("A$startSeriRow")->applyFromArray([
-            'alignment' => [
-                'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_TOP,
-                'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER,
-            ],
-        ]);
     }
 
 
