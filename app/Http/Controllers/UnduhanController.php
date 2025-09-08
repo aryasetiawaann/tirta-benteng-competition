@@ -18,10 +18,12 @@ use Illuminate\Support\Facades\File;
 class UnduhanController extends Controller
 {
 
+    // Resmi
     public $officialMaxLanes = 10;
+    // Fun
     public $funMaxLanes = 4;
-    public $funGroupCount = 3;
-    public $funGroups = ['A', 'B', 'C'];
+    public $funGroupCount = 2;
+    public $funGroups = ['A', 'B'];
 
     public function userBukuAcara(){
 

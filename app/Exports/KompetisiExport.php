@@ -58,6 +58,7 @@ class KompetisiExport implements FromCollection, WithMapping, WithEvents
             foreach ($heat as $groupIndex => $group) {
                 if($group) {
                     foreach ($group as $laneIndex => $participant) {
+
                         if ($participant) {
                             $trackRecordFormatted = sprintf('%02d:%02d.%02d', 
                             floor($participant['track_record'] / 60),  // Menit
@@ -84,7 +85,22 @@ class KompetisiExport implements FromCollection, WithMapping, WithEvents
                                 '', '', '', '', // Kosong
                             ];
                         }
+
                     }
+                }
+
+                $lastHeatIndex = array_key_last($acara->heats);
+
+                $keys = array_keys($heat);
+                $lastGroupIndex = end($keys);
+
+                // Check group index
+                if($groupIndex == $lastGroupIndex && $serieIndex != $lastHeatIndex){
+                    // Menambahkan baris baru untuk seri
+                    $rows[] = [];
+
+                    // Menambahkan baris baru untuk subheader
+                    $rows[] = [];
                 }
             }
         }            
