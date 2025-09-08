@@ -5,20 +5,23 @@ namespace App\Exports;
 use App\Models\Acara;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithMapping;
-use Maatwebsite\Excel\Concerns\ShouldAutoSize;
 use Maatwebsite\Excel\Concerns\WithEvents;
 use Maatwebsite\Excel\Events\AfterSheet;
-use PhpOffice\PhpSpreadsheet\Style\Border;  
+use PhpOffice\PhpSpreadsheet\Worksheet\PageSetup;
+use PhpOffice\PhpSpreadsheet\Style\Border; 
+use Carbon\Carbon;
 
-class KompetisiResmi implements FromCollection, WithMapping, ShouldAutoSize, WithEvents
+class KompetisiResmi implements FromCollection, WithMapping, WithEvents
 {
     protected $acaras;
     protected $maxLanes;
+    protected $kompetisi;
 
-    public function __construct($acaras, $maxLanes)
+    public function __construct($acaras, $maxLanes, $kompetisi)
     {
         $this->acaras = $acaras;
         $this->maxLanes = $maxLanes;
+        $this->kompetisi = $kompetisi;
     }
 
     /**
@@ -34,53 +37,54 @@ class KompetisiResmi implements FromCollection, WithMapping, ShouldAutoSize, Wit
      */
     public function map($acara): array
     {
-        $rows = [];
+        // $rows = [];
 
-        $rows[] = [
-            'ACARA ' . $acara->nomor_lomba,
-            $acara->nama,
-            '', '', '', '', ''
-        ];
+        // $rows[] = [
+        //     'ACARA ' . $acara->nomor_lomba,
+        //     $acara->nama,
+        //     '', '', '', '', ''
+        // ];
 
-        $rows[] = [
-            'SERI', 'LINT', 'NAMA', 'ASAL SEKOLAH / KLUB', 'QET', 'HASIL'
-        ];
+        // $rows[] = [
+        //     'SERI', 'LINT', 'NAMA', 'ASAL SEKOLAH / KLUB', 'QET', 'HASIL'
+        // ];
 
-        foreach ($acara->heats as $serieIndex => $heat)
-        {
-            foreach($heat as $laneIndex => $participant)
-            {
-                if($participant)
-                {
-                    $trackRecordFormatted = sprintf('%02d:%02d.%02d', 
-                        floor($participant['track_record'] / 60),  // Menit
-                        floor(fmod($participant['track_record'], 60)),  // Detik
-                        round(($participant['track_record'] - floor($participant['track_record'])) * 100) // Milisekon
-                        );
+        // foreach ($acara->heats as $serieIndex => $heat)
+        // {
+        //     foreach($heat as $laneIndex => $participant)
+        //     {
+        //         if($participant)
+        //         {
+        //             $trackRecordFormatted = sprintf('%02d:%02d.%02d', 
+        //                 floor($participant['track_record'] / 60),  // Menit
+        //                 floor(fmod($participant['track_record'], 60)),  // Detik
+        //                 round(($participant['track_record'] - floor($participant['track_record'])) * 100) // Milisekon
+        //                 );
 
-                    $rows[] = [
-                        $serieIndex + 1, // SERI
-                        $laneIndex === 0 ? '0' : $laneIndex,  // LINT
-                        $participant['name'],  // NAMA
-                        $participant['club'],  // ASAL SEKOLAH / KLUB
-                        $participant['track_record'] == 999 ? '-' : $trackRecordFormatted, // QET
-                        '', // HASIL
-                    ];
-                }else {
-                    $rows[] = [
-                        $serieIndex + 1, // SERI
-                        $laneIndex === 0 ? '0' : $laneIndex,  // LINT
-                        '', '', '', '', // Kosong
-                    ];
-                }
+        //             $rows[] = [
+        //                 $serieIndex + 1, // SERI
+        //                 $laneIndex === 0 ? '0' : $laneIndex,  // LINT
+        //                 $participant['name'],  // NAMA
+        //                 $participant['club'],  // ASAL SEKOLAH / KLUB
+        //                 $participant['track_record'] == 999 ? '-' : $trackRecordFormatted, // QET
+        //                 '', // HASIL
+        //             ];
+        //         }else {
+        //             $rows[] = [
+        //                 $serieIndex + 1, // SERI
+        //                 $laneIndex === 0 ? '0' : $laneIndex,  // LINT
+        //                 '', '', '', '', // Kosong
+        //             ];
+        //         }
 
-                $laneIndex + 1;
-            }
-        }
+        //         $laneIndex + 1;
+        //     }
+        // }
 
-        $rows[] = [];
+        // $rows[] = [];
         
-        return $rows;
+        // return $rows;
+        return [];
     }
 
     private function hasParticipants(Acara $acara): bool
@@ -99,39 +103,75 @@ class KompetisiResmi implements FromCollection, WithMapping, ShouldAutoSize, Wit
     {
         return [
             AfterSheet::class => function (AfterSheet $event) {
-                $sheet = $event->sheet->getDelegate();
+                 $sheet = $event->sheet->getDelegate();
 
+                $sheet->getPageSetup()->setPaperSize(PageSetup::PAPERSIZE_A4);
+
+                // Set orientasi Portrait (bisa diganti Landscape)
+                $sheet->getPageSetup()->setOrientation(PageSetup::ORIENTATION_PORTRAIT);
+
+                // Set Footer
+                $sheet->getHeaderFooter()->setOddFooter('&LDicetak pada &D &T');
+
+                $waktu = Carbon::parse($this->kompetisi->waktu_kompetisi)->translatedFormat('j F Y');
+
+                $sheet->getHeaderFooter()->setOddHeader(
+                    "&C {$this->kompetisi->nama}\n{$this->kompetisi->lokasi}\n{$waktu}"
+                );
+
+                // Atur gaya default
                 $sheet->getParent()->getDefaultStyle()->getFont()->setName('Arial');
-                $sheet->getParent()->getDefaultStyle()->getFont()->setSize(12);
-                // Style untuk header biru
+                $sheet->getParent()->getDefaultStyle()->getFont()->setSize(10);
+                $sheet->getParent()->getDefaultStyle()->applyFromArray([
+                    'alignment' => [
+                        'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER,
+                    ],
+                ]);
+
+                // Gaya untuk header
                 $headerStyle = [
                     'font' => [
-                        'name' => 'Arial',
-                        'size' => 12,
+                        'size' => 9,
+                        'bold' => true,
                         'color' => ['argb' => '000000'],
                     ],
                     'fill' => [
                         'fillType' => \PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID,
-                        'startColor' => ['argb' => 'FFFFFFFF'],
+                        'startColor' => ['argb' => '7BDFF2'],
                     ],
                     'alignment' => [
-                        'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER,
+                    'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER,
+                    ]
+                ];
+
+                $seriStyle = [
+                    'font' => [
+                        'size' => 9,
+                        'underline' => true,
+                        'bold' => true,
+                        'color' => ['argb' => '000000'],
                     ],
-                    'borders' => [
-                        'allBorders' => [
-                            'borderStyle' => Border::BORDER_THIN,
-                        ],
+                    'fill' => [
+                        'fillType' => \PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID,
+                        'startColor' => ['argb' => 'B2F7EF']
+                    ],
+                    'alignment' => [
+                        'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER,
                     ],
                 ];
 
-                // Style untuk konten
-                $contentStyle = [
+                $subHeaderStyle = [
                     'font' => [
-                        'name' => 'Arial',
-                        'size' => 12,
+                        'size' => 9,
+                        'bold' => true,
+                        'color' => ['argb' => '000000'],
+                    ],
+                    'fill' => [
+                        'fillType' => \PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID,
+                        'startColor' => ['argb' => 'F2F2F2']
                     ],
                     'alignment' => [
-                        'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER,
+                        'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER,
                     ],
                 ];
 
@@ -148,57 +188,113 @@ class KompetisiResmi implements FromCollection, WithMapping, ShouldAutoSize, Wit
                         $kategori = 'CAMPURAN';
                     }
 
-                    // Merge untuk nama acara
-                    $sheet->mergeCells("A$currentRow:F$currentRow");
-                    $sheet->setCellValue("A$currentRow", 'Acara ' . $acara->nomor_lomba . ' | '. $acara->nama . ' - ' . strtoupper($acara->grup)
-                    . ' '. $kategori);
+                    // Header
+                    $sheet->setCellValue("A$currentRow", 'ACARA ' . $acara->nomor_lomba);
+                    $sheet->mergeCells("B$currentRow:C$currentRow");
+                    $sheet->setCellValue("B$currentRow", ' (KU ' . strtoupper($acara->grup) 
+                    . ') ');
+                    $sheet->mergeCells("D$currentRow:E$currentRow");
+                    $sheet->setCellValue("D$currentRow", $acara->nama);
+                    $sheet->setCellValue("F$currentRow", $kategori);
                     $sheet->getStyle("A$currentRow:F$currentRow")->applyFromArray($headerStyle);
 
-                    $currentRow+=2;
+                    $currentRow++;
 
                     if ($this->hasParticipants($acara))
                     {
-                        $serieIndex = 0;
-                        foreach ($acara->heats as $key => $heat) 
+                        $lastSerieIndex = array_key_last($acara->heats);
+
+                        foreach ($acara->heats as $serieIndex => $heat) 
                         {
-                            $this->mergeSeriColumns($sheet, $currentRow, $serieIndex);
-                            
-                            if($key == count($acara->heats) - 1)
+                            // Seri
+                            $sheet->setCellValue("A$currentRow", "Seri " . ($serieIndex + 1));
+                            $sheet->getStyle("A$currentRow")->applyFromArray($seriStyle);
+                            $currentRow++;
+
+                            // Subheader
+                            $sheet->setCellValue("A$currentRow", "Ln.");
+                            $sheet->setCellValue("B$currentRow", "Nama");
+                            $sheet->setCellValue("C$currentRow", "KU");
+                            $sheet->setCellValue("D$currentRow", "Asal Sekolah/Klub");
+                            $sheet->setCellValue("E$currentRow", "QET");
+                            $sheet->setCellValue("F$currentRow", "Hasil");
+                            $sheet->getStyle("A$currentRow:F$currentRow")->applyFromArray($subHeaderStyle);
+                            $currentRow++;
+
+                            $this->applySeriStyle($sheet, $currentRow);
+
+                            foreach($heat as $laneIndex => $participant)
                             {
-                                $currentRow += ($this->maxLanes + 1);
-                            }else{
-                                $currentRow += $this->maxLanes;
+                                if($participant)
+                                {
+                                    $trackRecordFormatted = sprintf('%02d:%02d.%02d',
+                                            floor($participant['track_record'] / 60),
+                                            floor(fmod($participant['track_record'], 60)),
+                                            round(($participant['track_record'] - floor($participant['track_record'])) * 100)
+                                        );
+
+                                        $sheet->fromArray([[
+                                            $laneIndex + 1,
+                                            $participant['name'],
+                                            'KU ' . $acara->grup,
+                                            $participant['club'],
+                                            $participant['track_record'] == 999 ? 'NT' : $trackRecordFormatted,
+                                            '',
+                                        ]], null, "A$currentRow");
+                                }
+                                else
+                                {
+                                    $sheet->fromArray([[
+                                            $laneIndex + 1,
+                                            '', '', '', '', ''
+                                        ]], null, "A$currentRow");
+                                }
+
+                                $currentRow++;
                             }
-                            $serieIndex++;
+                        }
+
+                        if($serieIndex == $lastSerieIndex){
+                            $currentRow++;
                         }
                     }
                     else
                     {
                         $currentRow += 1;
                     }
-                    // Proses heats dan seri
-
-                    // Terapkan style konten
-                    $sheet->getStyle("A$currentRow:F$currentRow")->applyFromArray($contentStyle);
                 }
 
                 // Custom width
                 $this->adjustColumnWidths($sheet);
+                $sheet->getDefaultRowDimension()->setRowHeight(20);
             },
         ];
     }
 
     // Merge untuk SERI
-    private function mergeSeriColumns($sheet, $currentRow, $serieIndex)
+    private function applySeriStyle($sheet, $currentRow)
     {
         $startSeriRow = $currentRow; // Setelah header
         $endSeriRow = $startSeriRow + ($this->maxLanes - 1); // baris per SERI
-        $sheet->mergeCells("A$startSeriRow:A$endSeriRow");
-        $sheet->setCellValue("A$startSeriRow", $serieIndex + 1);
-        $sheet->getStyle("A$startSeriRow")->applyFromArray([
+
+        // Set LINTASAN jadi di tengah
+        $sheet->getStyle("A$startSeriRow:A$endSeriRow")->applyFromArray([
             'alignment' => [
-                'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_TOP, // Vertikal di atas
-                'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_RIGHT, // Horizontal di kanan
+                'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER,
+            ],
+        ]);
+
+        // Set KU ke tengah
+        $sheet->getStyle("C$startSeriRow:C$endSeriRow")->applyFromArray([
+            'alignment' => [
+                'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER,
+            ],
+        ]);
+
+        // Set QET dan HASIL ke tengah
+        $sheet->getStyle("E$startSeriRow:F$endSeriRow")->applyFromArray([
+            'alignment' => [
+                'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER,
             ],
         ]);
     }
@@ -206,12 +302,12 @@ class KompetisiResmi implements FromCollection, WithMapping, ShouldAutoSize, Wit
     // Custom lebar kolom
     private function adjustColumnWidths($sheet)
     {
-        $sheet->getColumnDimension('A')->setWidth(3); // SERI
-        $sheet->getColumnDimension('B')->setWidth(3);  // LINT
-        $sheet->getColumnDimension('C')->setWidth(30); // NAMA
-        $sheet->getColumnDimension('D')->setWidth(25); // ASAL SEKOLAH / KLUB
-        $sheet->getColumnDimension('E')->setWidth(15); // QET
-        $sheet->getColumnDimension('F')->setWidth(20); // HASIL
+        $sheet->getColumnDimension('A')->setWidth(10); // LINT
+        $sheet->getColumnDimension('B')->setWidth(25); // NAMA
+        $sheet->getColumnDimension('C')->setWidth(10); // KU
+        $sheet->getColumnDimension('D')->setWidth(25); // ASALH SEKOLAH
+        $sheet->getColumnDimension('E')->setWidth(10); // QET
+        $sheet->getColumnDimension('F')->setWidth(10); // HASIL
     }
 
     

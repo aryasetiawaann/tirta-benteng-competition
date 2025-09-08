@@ -235,7 +235,8 @@ class UnduhanController extends Controller
 
             }
 
-            return Excel::download(new KompetisiResmi($acaras, $this->officialMaxLanes), $kompetisi->nama . '.xlsx');
+
+            return Excel::download(new KompetisiResmi($acaras, $this->officialMaxLanes, $kompetisi), $kompetisi->nama . '.xlsx');
         }
 
     }

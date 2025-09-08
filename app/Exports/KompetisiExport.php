@@ -209,7 +209,7 @@ class KompetisiExport implements FromCollection, WithMapping, WithEvents
                                             'KU ' . $acara->grup,
                                             $participant['club'],
                                             $participant['track_record'] == 999 ? 'NT' : $trackRecordFormatted,
-                                            '(..............)',
+                                            '',
                                         ]], null, "A$currentRow");
 
                                     }else{
@@ -258,7 +258,7 @@ class KompetisiExport implements FromCollection, WithMapping, WithEvents
             $sheet->mergeCells("B$startGroupRow:B$endGroupRow");
             $sheet->setCellValue("B$startGroupRow", $groupName);
 
-            // Set Text di kotak jadi ada di atas tengah
+            // Set Text di kotak Grup
             $sheet->getStyle("B$startGroupRow")->applyFromArray([
                 'alignment' => [
                     'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER,
@@ -266,7 +266,7 @@ class KompetisiExport implements FromCollection, WithMapping, WithEvents
                 ],
             ]);
 
-            // Set border grup kiri kanan
+            // Set border grup kiri kanan di Grup
             $sheet->getStyle("B$startGroupRow:B$endGroupRow")->applyFromArray([
                 'borders' => [
                     'left' => [
