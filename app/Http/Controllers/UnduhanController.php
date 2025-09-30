@@ -148,6 +148,16 @@ class UnduhanController extends Controller
             $heat = array_merge($heat, array_fill(0, $maxLanes - count($heat), null));
             // Membagi setiap heat menjadi grup (sesuai jumlah grup dan peserta per grup)
             $heat = array_chunk($heat, $participantsPerGroup);
+
+            $lastGroup = end($heat);
+            
+            if(count($lastGroup) < $maxLanes){
+                $heat = array_values(array_reverse($heat));
+            }
+        }
+
+        if(count($heats) > 1 ){
+            $heats = array_values(array_reverse($heats));
         }
 
         return $heats;

@@ -142,6 +142,7 @@ class KompetisiExport implements FromCollection, WithMapping, WithEvents
                 ];
 
                 $currentRow = 1;
+                $serieCount = 0;
 
                 foreach ($this->acaras as $acara) {
 
@@ -171,6 +172,7 @@ class KompetisiExport implements FromCollection, WithMapping, WithEvents
                     // Cek apakah acara memiliki peserta
                     if ($this->hasParticipants($acara)) {
 
+                        $serieCount += count($acara->heats);
                         $lastSerieIndex = array_key_last($acara->heats);
                         
                         foreach ($acara->heats as $serieIndex => $heat) {
@@ -235,7 +237,11 @@ class KompetisiExport implements FromCollection, WithMapping, WithEvents
                         // Misalnya, tambahkan baris kosong
                         $currentRow += 1;
                     }
+
                 }
+
+                $sheet->mergeCells("A$currentRow:B$currentRow");
+                $sheet->setCellValue("A$currentRow", 'TOTAL SERI: ' . $serieCount);
 
                 // Sesuaikan lebar kolom
                 $this->adjustColumnWidths($sheet);
