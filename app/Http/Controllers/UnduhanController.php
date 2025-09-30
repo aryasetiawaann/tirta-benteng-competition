@@ -151,7 +151,7 @@ class UnduhanController extends Controller
 
             $lastGroup = end($heat);
             
-            if(count($lastGroup) < $maxLanes){
+            if(count($lastGroup) < $maxLanes && count($lastGroup) > 0){
                 $heat = array_values(array_reverse($heat));
             }
         }
