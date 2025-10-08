@@ -161,10 +161,10 @@ class PesertaController extends Controller
         $totaltax = $totalHarga * ($taxPercentage / 100);
 
         $itemDetails[] = [
-            'id'        => 'tax',
+            'id'        => 'service',
             'price'     => round($totaltax),
             'quantity'  => 1,  
-            'name'      => "Pajak Layanan ({$taxPercentage}%)",
+            'name'      => "Biaya Layanan ({$taxPercentage}%)",
         ];
 
         $totalHarga += $totaltax;

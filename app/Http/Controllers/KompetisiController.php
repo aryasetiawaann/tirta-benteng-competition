@@ -82,6 +82,7 @@ class KompetisiController extends Controller
 
     public function tambahKompetisi(Request $request)
     {
+
         $data = [ "nama"=> $request->nama,
         "lokasi"=> $request->lokasi,
         "deskripsi"=> $request->deskripsi,
@@ -90,7 +91,7 @@ class KompetisiController extends Controller
         "kategori"=> $request->kategori,
         "waktu_techmeeting"=> $request->techmeet,
         "waktu_kompetisi"=> $request->datekompe,
-        "has_pricing" => $request->has_pricing,
+        "has_pricing" => $request->has_pricing ?? 0,
         "max_participation" => $request->max_participation,
         "additional_price" => $request->additional_price,
         ];
@@ -129,7 +130,7 @@ class KompetisiController extends Controller
                 }
             }
 
-             if (isset($data['has_pricing'])) {
+             if ($data['has_pricing'] == 1) {
                 if (!$request->has('pricings') || count($request->pricings) === 0) {
                     $validator->errors()->add('pricings', 'Data harga wajib diisi jika checkbox diaktifkan.');
                 } else {

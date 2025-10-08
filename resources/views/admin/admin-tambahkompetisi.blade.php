@@ -52,6 +52,7 @@
                         <label>
                             <input type="checkbox" id="has_pricing" name="has_pricing" value="1"> Aktifkan Harga Paket
                         </label>
+
                         <div id="pricing_container" style="display: none; margin-top: 10px;">
                             <input type="number" id="max_participation" name="max_participation" placeholder="Maksimal acara yang diikuti">
                             <input type="number" id="additional_price" name="additional_price" placeholder="Biaya tambah Nomor Acara">
@@ -59,9 +60,9 @@
                                 <div class="pricing-group">
                                     <p>Paket 1</p>
                                     <input type="number" name="pricings[0][event_amount]"
-                                        placeholder="Maksimal Jumlah Acara (contoh: 3)" class="form-control" required>
+                                        placeholder="Maksimal Jumlah Acara (contoh: 3)" class="form-control">
                                     <input type="number" name="pricings[0][harga]" placeholder="Jumlah Harga"
-                                        class="form-control" required>
+                                        class="form-control">
                                 </div>
                             </div>
                             <button type="button" onclick="addPricing()">Tambah Paket +</button>
@@ -171,8 +172,8 @@
 
             div.innerHTML = `
             <p style="margin-top: 10px;">Paket ${pricingIndex + 1}</p>
-            <input type="number" name="pricings[${pricingIndex}][event_amount]" placeholder="Maksimal Jumlah Acara (contoh: 3)" class="form-control" required>
-            <input type="number" name="pricings[${pricingIndex}][harga]" placeholder="Jumlah Harga" class="form-control" required>
+            <input type="number" name="pricings[${pricingIndex}][event_amount]" placeholder="Maksimal Jumlah Acara (contoh: 3)" class="form-control">
+            <input type="number" name="pricings[${pricingIndex}][harga]" placeholder="Jumlah Harga" class="form-control">
         `;
 
             wrapper.appendChild(div);
@@ -183,6 +184,14 @@
             const checkbox = document.getElementById('has_pricing');
             const pricingContainer = document.getElementById('pricing_container');
 
+            if (!checkbox || !pricingContainer) return;
+
+            // Saat halaman pertama kali dimuat
+            if (checkbox.checked) {
+                pricingContainer.style.display = 'block';
+            } else {
+                pricingContainer.style.display = 'none';
+            }
 
             checkbox.addEventListener('change', function() {
                 pricingContainer.style.display = this.checked ? 'block' : 'none';
