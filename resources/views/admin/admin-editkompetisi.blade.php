@@ -70,9 +70,9 @@
                                 <div class="pricing-group">
                                     <p>Paket 1</p>
                                     <input type="number" name="pricings[0][event_amount]"
-                                        placeholder="Maksimal Jumlah Acara (contoh: 3)" class="form-control" required>
+                                        placeholder="Maksimal Jumlah Acara (contoh: 3)" class="form-control">
                                     <input type="number" name="pricings[0][harga]" placeholder="Jumlah Harga"
-                                        class="form-control" required>
+                                        class="form-control">
                                 </div>
                             @endif
                         </div>
@@ -103,8 +103,8 @@
 
             div.innerHTML = `
             <p style="margin-top: 10px;">Paket ${pricingIndex + 1}</p>
-            <input type="number" name="pricings[${pricingIndex}][event_amount]" placeholder="Maksimal Jumlah Acara (contoh: 3)" class="form-control" required>
-            <input type="number" name="pricings[${pricingIndex}][harga]" placeholder="Jumlah Harga" class="form-control" required>
+            <input type="number" name="pricings[${pricingIndex}][event_amount]" placeholder="Maksimal Jumlah Acara (contoh: 3)" class="form-control" >
+            <input type="number" name="pricings[${pricingIndex}][harga]" placeholder="Jumlah Harga" class="form-control" >
         `;
 
             wrapper.appendChild(div);
