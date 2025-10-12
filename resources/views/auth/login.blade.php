@@ -3,7 +3,7 @@
         <div class="login-head">
             <a href="{{ route('main') }}"><i class="fa fa-angle-left" aria-hidden="true"></i><span>Kembali</span></a>
             <div class="login-head-logo">
-                <img src="{{ asset('assets/img/LogoWebHD.png') }}" alt="logo">
+                <img src="{{ asset('assets/img/SpeedZone.png') }}" alt="logo">
             </div>
             @if ($errors->any())
             <div class="login-error-msg">
