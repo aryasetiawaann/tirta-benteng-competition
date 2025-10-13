@@ -1438,12 +1438,10 @@ a {
 .footer-logos {
     display: flex;
     align-items: center;
-    gap: 10px;
 }
 
 .footer-logo {
-    width: 60px;
-    aspect-ratio: 1/1; 
+    width: 150px;
 }
 
 .logo-divider {

@@ -274,9 +274,7 @@
         <div class="footer-container">
             <div class="footer-left">
                 <div class="footer-logos">
-                    <img src="{{ asset('assets/img/LogoWebHD.png') }}" alt="Logo 1" class="footer-logo">
-                    <span class="logo-divider">x</span>
-                    <img src="{{ asset('assets/img/LogoArea2.png') }}" alt="Logo 2" class="footer-logo">
+                    <img src="{{ asset('assets/img/SpeedZone2.png') }}" alt="Logo 1" class="footer-logo">
                 </div>
                 <p>&#169 Swimming Competition Registration 2024</p>
             </div>
@@ -294,7 +292,6 @@
                 <h4>Hubungi Kami</h4>
                 <ul>
                     <li><a href="tel:+6287864774431"><i class="fa fa-phone"></i><span>087864774431 - Firza</span></a></li>
-                    <li><a href="tel:+6281311384000"><i class="fa fa-phone"></i><span>081311384000 - April</span></a></li>
                 </ul>
             </div>
         </div>
