@@ -44,26 +44,32 @@ class PesertaController extends Controller
         return redirect()->back()->with('success','Atlet berhasil ditambahkan');
     }
 
-    public function tagihan(){
-
-        $pesertaCollection = Peserta::with('getAcara', 'getAtlet')
-        ->where([
-            ['peserta_user_id', auth()->user()->id],
-            ['status_pembayaran', 'Menunggu']
-        ])
-        ->get()
-        ->groupBy(function ($item){
-            return $item->getAtlet->name;
-        });
+    public function tagihan()
+    {
+        $pesertaCollection = Peserta::with('getAcara.kompetisi', 'getAtlet')
+            ->where([
+                ['peserta_user_id', auth()->user()->id],
+                ['status_pembayaran', 'Menunggu']
+            ])
+            ->get()
+            // 🔹 Kelompokkan berdasarkan kombinasi kompetisi dan atlet
+            ->groupBy(function ($item) {
+                $kompetisi = $item->getAcara->kompetisi->id ?? 'unknown';
+                $atlet = $item->getAtlet->id ?? 'unknown';
+                return $kompetisi . '-' . $atlet;
+            });
 
         $pesertas = [];
 
-        foreach($pesertaCollection as $nama_atlet => $pesertaList) {
-            
-            $kompetisi = $pesertaList->first()->getAcara->kompetisi;
-            $atlet_id = $pesertaList->first()->atlet_id;
-            $kompetisi_id = $kompetisi->id;
+        foreach ($pesertaCollection as $key => $pesertaList) {
+            $firstPeserta = $pesertaList->first();
+            $kompetisi = $firstPeserta->getAcara->kompetisi;
+            $atlet = $firstPeserta->getAtlet;
 
+            $kompetisi_id = $kompetisi->id;
+            $atlet_id = $atlet->id;
+
+            // Hitung berapa acara dari kompetisi ini yang SUDAH dibayar oleh atlet ini
             $acaraSudahDibayarCount = Peserta::where('atlet_id', $atlet_id)
                 ->whereHas('getAcara', function ($query) use ($kompetisi_id) {
                     $query->where('kompetisi_id', $kompetisi_id);
@@ -72,51 +78,45 @@ class PesertaController extends Controller
                 ->count();
 
             $acaraCount = $pesertaList->count();
-            $harga = 0; 
+            $harga = 0;
 
-            if($kompetisi->has_pricing){
-
-                if($acaraSudahDibayarCount > 0){
-                    if($acaraSudahDibayarCount == 1){
+            if ($kompetisi->has_pricing) {
+                if ($acaraSudahDibayarCount > 0) {
+                    if ($acaraSudahDibayarCount == 1) {
                         $harga = ($acaraCount - 1) * $kompetisi->additional_price;
-
-                    }else{
+                    } else {
                         $harga = $acaraCount * $kompetisi->additional_price;
                     }
-
-                }else{
+                } else {
                     $sortedPricing = $kompetisi->pricings->sortBy('event_amount');
                     $lastPricing = $sortedPricing->last();
 
-                    foreach( $sortedPricing as $pricing){
-    
-                        if($acaraCount <= $pricing->event_amount){
+                    foreach ($sortedPricing as $pricing) {
+                        if ($acaraCount <= $pricing->event_amount) {
                             $harga = $pricing->harga;
                             break;
                         }
 
-                        if($lastPricing){
+                        if ($lastPricing) {
                             $totalAcara = $acaraCount - $pricing->event_amount;
                             $harga = $pricing->harga + ($totalAcara * $kompetisi->additional_price);
                         }
                     }
                 }
-            }else{
-
-                foreach($pesertaList as $peserta){
+            } else {
+                foreach ($pesertaList as $peserta) {
                     $harga += $peserta->getAcara->harga;
                 }
             }
 
-            
             $pesertas[] = [
-                'nama' => $nama_atlet,
+                'kompetisi' => $kompetisi->nama,
+                'nama' => $atlet->name,
                 'harga' => $harga,
                 'pesertas' => $pesertaList,
             ];
         }
 
-        
         return view('pages.dashboard-tagihan', compact('pesertas'));
     }
 
