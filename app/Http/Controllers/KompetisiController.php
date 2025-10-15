@@ -427,6 +427,24 @@ class KompetisiController extends Controller
 
         return response()->download($zipFilePath)->deleteFileAfterSend(true);
     }
+
+    // GET /api/kompetisi
+    public function getAllKompetisi()
+    {
+        return response()->json(Kompetisi::all());
+    }
+
+    // GET /api/kompetisi/{id}
+    public function getKompetisiById($id)
+    {
+        $kompetisi = Kompetisi::find($id);
+        if (!$kompetisi) {
+            return response()->json(['message' => 'Not found'], 404);
+        }
+
+        return response()->json($kompetisi);
+    }
+
     /**
      * Remove the specified resource from storage.
      */
