@@ -21,7 +21,7 @@
     </div>
 
     <div class="bottom-container">
-        <section class="all-container all-card w100 community-card">
+        {{-- <section class="all-container all-card w100 community-card">
             <header class="divider flex community-card-header">
                 <div class="community-card-icon-container">
                     <i class='bx bxl-whatsapp community-card-icon'></i>
@@ -35,7 +35,7 @@
                     Tanya di WhatsApp
                 </a>
             </header>
-        </section>
+        </section> --}}
 
         <section class="all-container all-card w100">
             <header class="divider flex">
