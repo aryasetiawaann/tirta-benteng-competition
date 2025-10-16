@@ -20,6 +20,7 @@ class PesertaController extends Controller
         $data = [ "acara_id"=> $request->acara,
             "peserta_user_id" => auth()->user()->id,
             "atlet_id"=> $request->atlet,
+            "kompetisi_id"=> $request->kompetisi,
         ];
 
         $kompetisi = Kompetisi::findOrFail($request->kompetisi);
