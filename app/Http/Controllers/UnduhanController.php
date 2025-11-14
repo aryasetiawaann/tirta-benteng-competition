@@ -22,8 +22,8 @@ class UnduhanController extends Controller
     public $officialMaxLanes = 10;
     // Fun
     public $funMaxLanes = 4;
-    public $funGroupCount = 3;
-    public $funGroups = ['A', 'B', 'C'];
+    public $funGroupCount = 1;
+    public $funGroups = ['A'];
 
     public function userBukuAcara(){
 
