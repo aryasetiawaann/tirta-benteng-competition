@@ -82,11 +82,7 @@ class PesertaController extends Controller
 
             if ($kompetisi->has_pricing) {
                 if ($acaraSudahDibayarCount > 0) {
-                    if ($acaraSudahDibayarCount == 1) {
-                        $harga = ($acaraCount - 1) * $kompetisi->additional_price;
-                    } else {
-                        $harga = $acaraCount * $kompetisi->additional_price;
-                    }
+                    $harga = $acaraCount * $kompetisi->additional_price;
                 } else {
                     $sortedPricing = $kompetisi->pricings->sortBy('event_amount');
                     $lastPricing = $sortedPricing->last();
