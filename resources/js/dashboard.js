@@ -17,6 +17,12 @@ document.addEventListener('DOMContentLoaded', function () {
     if (document.querySelector('table')) {
         initializeTable();
     }
+
+    // Handle NIK validation
+    setupNikValidation();
+
+    // Handle File validation
+    setupFileValidation();
 });
 
 // Function to handle error and success messages
@@ -143,34 +149,34 @@ function initializeTable() {
     // Function to update pagination numbers dynamically
     function updatePagination(totalPages) {
         pageNumbersDiv.innerHTML = ''; // Clear existing page numbers
-    
+
         const windowWidth = window.innerWidth;
-    
+
         if (windowWidth <= 768) {
             // For small screens, show only 3 middle pages
             const startPage = Math.max(1, currentPage - 1); // Start from one page before the current page
             const endPage = Math.min(totalPages, currentPage + 1); // End at one page after the current page
-    
+
             for (let i = startPage; i <= endPage; i++) {
                 addPageNumber(i); // Add the 3 middle pages
             }
         } else {
             // For larger screens, show the full pagination
             addPageNumber(1); // Always show the first page
-    
+
             if (currentPage > 3) {
                 pageNumbersDiv.appendChild(createEllipsis()); // Show ellipsis if there are pages before the current page
             }
-    
+
             // Show current page and its neighbors
             for (let i = Math.max(2, currentPage - 1); i <= Math.min(totalPages - 1, currentPage + 1); i++) {
                 addPageNumber(i);
             }
-    
+
             if (currentPage < totalPages - 2) {
                 pageNumbersDiv.appendChild(createEllipsis()); // Show ellipsis if there are pages after the current page
             }
-    
+
             if (totalPages > 1) {
                 addPageNumber(totalPages); // Always show the last page if there is more than one page
             }
@@ -243,4 +249,115 @@ function initializeTable() {
 
     // Initialize table on page load
     updateTable();
+}
+
+// Function to set up NIK validation
+function setupNikValidation() {
+    const nikInputs = document.querySelectorAll('input[name="nik"], #nik');
+
+    if (!nikInputs.length) return;
+
+    nikInputs.forEach(input => {
+        // Create an error message element that will sit slightly below the input
+        let errorMsg = document.createElement('span');
+        errorMsg.style.color = 'rgb(236, 68, 68)';
+        errorMsg.style.fontSize = '12px';
+        errorMsg.style.display = 'none';
+        errorMsg.style.marginTop = '-10px';
+        errorMsg.style.marginBottom = '10px';
+        errorMsg.style.marginLeft = '5px';
+        errorMsg.style.display = 'block';
+
+        // Initially hide the element
+        errorMsg.style.display = 'none';
+
+        // Insert it after the input
+        input.parentNode.insertBefore(errorMsg, input.nextSibling);
+
+        input.addEventListener('input', function (e) {
+            let value = this.value;
+            let originalValue = value;
+
+            // Remove non-numeric chars
+            let numericValue = value.replace(/\D/g, '');
+
+            let hasNonNumeric = originalValue !== numericValue;
+            let hasExceededMax = numericValue.length > 16;
+
+            if (hasExceededMax) {
+                numericValue = numericValue.substring(0, 16);
+            }
+
+            // Update input value strictly based on requirements
+            if (originalValue !== numericValue) {
+                this.value = numericValue;
+            }
+
+            if (hasNonNumeric) {
+                errorMsg.textContent = '* NIK hanya boleh berisi angka.';
+                errorMsg.style.display = 'block';
+            } else if (hasExceededMax) {
+                errorMsg.textContent = '* NIK maksimal 16 digit.';
+                errorMsg.style.display = 'block';
+            } else {
+                errorMsg.style.display = 'none';
+                errorMsg.textContent = '';
+            }
+
+            // Clear message after 3 seconds to avoid clutter
+            if (hasNonNumeric || hasExceededMax) {
+                clearTimeout(this.errorTimeout);
+                this.errorTimeout = setTimeout(() => {
+                    errorMsg.style.display = 'none';
+                }, 3000);
+            }
+        });
+    });
+}
+
+// Function to set up File upload validation
+function setupFileValidation() {
+    const fileInputs = document.querySelectorAll('input[type="file"][name="dokumen"]');
+
+    if (!fileInputs.length) return;
+
+    fileInputs.forEach(input => {
+        let errorMsg = document.createElement('span');
+        errorMsg.style.color = 'rgb(236, 68, 68)';
+        errorMsg.style.fontSize = '12px';
+        errorMsg.style.display = 'none';
+        errorMsg.style.marginLeft = '5px';
+        errorMsg.style.display = 'block';
+
+        errorMsg.style.display = 'none';
+
+        input.parentNode.insertBefore(errorMsg, input.nextSibling);
+
+        input.addEventListener('change', function (e) {
+            const file = this.files[0];
+            if (file) {
+                const allowedTypes = ['application/pdf', 'image/jpeg', 'image/jpg', 'image/png'];
+                const allowedExtensions = ['.pdf', '.jpg', '.jpeg', '.png'];
+                const fileName = file.name.toLowerCase();
+                const isValidExtension = allowedExtensions.some(ext => fileName.endsWith(ext));
+
+                if (!allowedTypes.includes(file.type) && !isValidExtension) {
+                    this.value = ''; // clear the input
+                    errorMsg.textContent = '* Format file tidak valid. Hanya PDF, JPG, dan PNG yang diperbolehkan.';
+                    errorMsg.style.display = 'block';
+
+                    clearTimeout(this.errorTimeout);
+                    this.errorTimeout = setTimeout(() => {
+                        errorMsg.style.display = 'none';
+                    }, 5000);
+                } else {
+                    errorMsg.style.display = 'none';
+                    errorMsg.textContent = '';
+                }
+            } else {
+                errorMsg.style.display = 'none';
+                errorMsg.textContent = '';
+            }
+        });
+    });
 }

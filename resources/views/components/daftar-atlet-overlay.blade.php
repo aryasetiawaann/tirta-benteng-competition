@@ -12,7 +12,7 @@
                 <input type="text" id="nama" name="nama" placeholder="Nama Atlet">
                 
                 <label for="nik">NIK *</label>
-                <input type="text" id="nik" name="nik" placeholder="Masukkan NIK">
+                <input type="text" id="nik" name="nik" placeholder="Masukkan NIK" maxlength="16">
 
                 <label>Keterangan Daerah *</label>
                 <select id="provinsi" name="provinsi">
@@ -45,8 +45,8 @@
                     <option value="wanita">Wanita</option>
                 </select>
                 <label for="dokumen">Dokumen</label>
-                <p><i style="font-size: 12px">(Akte / KTP .pdf)</i></p>
-                <input type="file" name="dokumen" id="dokumen" accept=".pdf">
+                <p><i style="font-size: 12px">(Akte / KTP .pdf, .jpg, .png)</i></p>
+                <input type="file" name="dokumen" id="dokumen" accept=".pdf,.jpg,.jpeg,.png">
                 <div class="flex center" style="margin-top: 20px;">
                     <button type="submit" class="submit-button">Kirim</button>
                 </div>

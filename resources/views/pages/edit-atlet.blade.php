@@ -50,7 +50,7 @@
                         <input type="text" id="nama" name="nama" placeholder="Nama Atlet" value="{{ $atlet->name }}">
 
                         <label for="nik">NIK *</label>
-                        <input type="text" id="nik" name="nik" placeholder="Masukkan NIK" value="{{ $atlet->nik ?? '' }}">
+                        <input type="text" id="nik" name="nik" placeholder="Masukkan NIK" value="{{ $atlet->nik ?? '' }}" maxlength="16">
 
                         <label>Keterangan Daerah *</label>
                         <select id="provinsi" name="provinsi">
@@ -84,8 +84,8 @@
                             <option value="wanita" {{ $atlet->jenis_kelamin === "Wanita" ? "selected" : "" }}>Wanita</option>
                         </select>
                         <label for="">Upload Dokumen</label>
-                        <p><i style="font-size: 12px">(Akte / KTP .pdf)</i></p>
-                        <input type="file" name="dokumen" id="dokumen" accept=".pdf" value="{{ $atlet->dokumen }}">
+                        <p><i style="font-size: 12px">(Akte / KTP .pdf, .jpg, .png)</i></p>
+                        <input type="file" name="dokumen" id="dokumen" accept=".pdf,.jpg,.jpeg,.png" value="{{ $atlet->dokumen }}">
                             
                         {{-- <label for="record">Track Record</label>
                         <p><i style="font-size: 12px">(Tulis 0 Jika tidak ada)</i></p>
