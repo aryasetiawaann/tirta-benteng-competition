@@ -23,5 +23,6 @@
 </head>
 <body>
     {{ $slot }}
+    @vite(['resources/js/auth.js'])
 </body>
 </html>

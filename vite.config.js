@@ -15,6 +15,7 @@ export default defineConfig({
                 "resources/js/bootstrap.js",
                 "resources/js/dashboard.js",
                 "resources/js/mainpage.js",
+                "resources/js/auth.js",
                 "resources/js/profile.js",
                 "resources/js/sidebar.js",
                 "resources/js/riwayat.js",

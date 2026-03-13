@@ -20,9 +20,12 @@
                     <input id="email" type="email" name="email" value="{{old('email')}}" required autofocus autocomplete="username" placeholder="Masukkan email">
                 </div>
                 
-                <div class="login-body-form">
+                <div class="login-body-form password-input-container">
                     <label for="password">Password</label>
-                    <input id="password" type="password" name="password" required autocomplete="current-password" placeholder="Masukkan password">
+                    <div class="password-wrapper">
+                        <input id="password" type="password" name="password" required autocomplete="current-password" placeholder="Masukkan password">
+                        <i class="fa fa-eye-slash toggle-password" aria-hidden="true" onclick="togglePasswordVisibility('password', this)"></i>
+                    </div>
                 </div>
 
                 <div class="login-body-info">

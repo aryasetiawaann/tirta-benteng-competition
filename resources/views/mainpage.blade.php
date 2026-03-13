@@ -1,5 +1,6 @@
 <x-guest-layout>
-    <section id="hero" style="background-image: linear-gradient(rgba(0, 0, 0, 0.4),rgba(0, 0, 0, 0.4)), url('{{ asset('assets/img/Swimpage.png') }}'); background-size: cover; background-position: center;">
+    <section id="hero"
+        style="background-image: linear-gradient(rgba(0, 0, 0, 0.4),rgba(0, 0, 0, 0.4)), url('{{ asset('assets/img/Swimpage.png') }}'); background-size: cover; background-position: center;">
         <nav class="navbar">
             <div class="navbar-left">
                 <a href="{{ route('main') }}">
@@ -42,7 +43,8 @@
             <p>Show your skills in this fun and inspiring swimming competition!</p>
             <div class="hero-buttons">
                 <a href="{{ route('login') }}"><button class="btn-competition">Ikuti Kompetisi</button></a>
-                {{-- <a href="https://www.instagram.com/tirtabentengsc/" target="_blank" class="fa fa-instagram"></a> --}}
+                {{-- <a href="https://www.instagram.com/tirtabentengsc/" target="_blank" class="fa fa-instagram"></a>
+                --}}
             </div>
         </div>
     </section>
@@ -58,9 +60,14 @@
                 <div class="line"></div>
             </div>
             <h2>Swimming Competition</h2>
-                <p>Swimming Competition dirancang untuk menginspirasi atlet muda dan berbakat dalam mengejar mimpi mereka di arena olahraga. Dengan berbagai kategori lomba yang mencakup semua gaya renang dan kelompok umur, kompetisi ini memberikan kesempatan bagi semua orang untuk bersaing dan berkembang.
-                <br><br>Bersiaplah untuk menyaksikan pertarungan sengit di kolam renang, serta merasakan kegembiraan dan antusiasme yang membara. Mari bersama-sama menciptakan momen tak terlupakan dan mengukir prestasi terbaik di kejuaraan kali ini! </p>
-            </div>
+            <p>Swimming Competition dirancang untuk menginspirasi atlet muda dan berbakat dalam mengejar mimpi mereka di
+                arena olahraga. Dengan berbagai kategori lomba yang mencakup semua gaya renang dan kelompok umur,
+                kompetisi ini memberikan kesempatan bagi semua orang untuk bersaing dan berkembang.
+                <br><br>Bersiaplah untuk menyaksikan pertarungan sengit di kolam renang, serta merasakan kegembiraan dan
+                antusiasme yang membara. Mari bersama-sama menciptakan momen tak terlupakan dan mengukir prestasi
+                terbaik di kejuaraan kali ini!
+            </p>
+        </div>
     </section>
 
     <section id="riwayat">
@@ -79,13 +86,15 @@
                 <button class="carousel-btn carousel-prev" id="riwayatPrevBtn" aria-label="Previous slide">
                     <i class="bx bx-chevron-left"></i>
                 </button>
-                
+
                 <div class="riwayat-carousel">
-                    <div class="riwayat-carousel-track" id="riwayatTrack" role="region" aria-label="Riwayat perlombaan carousel">
-                        
+                    <div class="riwayat-carousel-track" id="riwayatTrack" role="region"
+                        aria-label="Riwayat perlombaan carousel">
+
                         @foreach ($competition_list as $competition)
                             <div class="riwayat-card carousel-card" data-slide="0">
-                                <div class="riwayat-year">{{ \Carbon\Carbon::parse($competition->waktu_kompetisi)->format('Y') }}</div>
+                                <div class="riwayat-year">
+                                    {{ \Carbon\Carbon::parse($competition->waktu_kompetisi)->format('Y') }}</div>
                                 <h3 class="riwayat-title">{{$competition->nama}}</h3>
                                 <div class="riwayat-details">
                                     <div class="riwayat-detail-item">
@@ -101,7 +110,8 @@
                                         <span>{{$competition->kategori}}</span>
                                     </div>
                                 </div>
-                                <a href="{{ route('riwayat.show', $competition->id) }}" class="hasil-acara clickable-hasil" role="button" aria-label="Lihat detail hasil acara">
+                                <a href="{{ route('riwayat.show', $competition->id) }}" class="hasil-acara clickable-hasil"
+                                    role="button" aria-label="Lihat detail hasil acara">
                                     <div class="hasil-acara-title">Hasil Acara</div>
                                 </a>
                             </div>
@@ -115,7 +125,9 @@
                                 </div>
                                 <h3 class="see-more-title">Lihat Lebih Banyak</h3>
                                 <p class="see-more-desc">Jelajahi semua riwayat perlombaan dan prestasi lengkap</p>
-                                <button class="btn-see-more-all" onclick="window.location.href='{{ route('riwayat.index') }}'" aria-label="Lihat semua riwayat perlombaan">
+                                <button class="btn-see-more-all"
+                                    onclick="window.location.href='{{ route('riwayat.index') }}'"
+                                    aria-label="Lihat semua riwayat perlombaan">
                                     Lihat Selengkapnya
                                 </button>
                             </div>
@@ -140,26 +152,11 @@
 
             <!-- Tombol Lihat Selengkapnya di bawah carousel -->
             <div class="riwayat-bottom-action">
-                <a href="{{ route('riwayat.index') }}" class="btn-lihat-selengkapnya" aria-label="Lihat semua hasil acara">
+                <a href="{{ route('riwayat.index') }}" class="btn-lihat-selengkapnya"
+                    aria-label="Lihat semua hasil acara">
                     <i class="bx bxs-eye"></i>
                     Lihat Selengkapnya
                 </a>
-            </div>
-
-            <!-- Statistics Section -->
-            <div class="riwayat-stats">
-                <div class="stat-item">
-                    <span class="stat-number">{{$competition_list->count()}}</span>
-                    <div class="stat-label">Total Kompetisi</div>
-                </div>
-                <div class="stat-item">
-                    <span class="stat-number">-</span>
-                    <div class="stat-label">Medali Emas</div>
-                </div>
-                <div class="stat-item">
-                    <span class="stat-number">-</span>
-                    <div class="stat-label">Total Medali</div>
-                </div>
             </div>
         </div>
     </section>
@@ -172,44 +169,46 @@
         </div>
         @if ($kompetisis->count() > 0)
             @foreach ($kompetisis as $index => $kompetisi)
-            <div class="jadwal-container" id="kompetisi-{{ $index }}" style="{{ $index == 0 ? '' : 'display:none;'}}">
-                <h2>{{ $kompetisi->nama }}</h2>
-                <div class="jadwal-items">
-                    <div class="jadwal-item">
-                        <div class="jadwal-item-img">
-                            <img src="{{ asset('assets/img/pendaftaran.png') }}" alt="pendaftaran form">
+                <div class="jadwal-container" id="kompetisi-{{ $index }}" style="{{ $index == 0 ? '' : 'display:none;'}}">
+                    <h2>{{ $kompetisi->nama }}</h2>
+                    <div class="jadwal-items">
+                        <div class="jadwal-item">
+                            <div class="jadwal-item-img">
+                                <img src="{{ asset('assets/img/pendaftaran.png') }}" alt="pendaftaran form">
+                            </div>
+                            <p>{{ \Carbon\Carbon::parse($kompetisi->buka_pendaftaran)->format('d M Y') }} -
+                                {{ \Carbon\Carbon::parse($kompetisi->tutup_pendaftaran)->subDay()->format('d M Y') }}</p>
+                            <h3>Pendaftaran</h3>
                         </div>
-                        <p>{{ \Carbon\Carbon::parse($kompetisi->buka_pendaftaran)->format('d M Y') }} - {{ \Carbon\Carbon::parse($kompetisi->tutup_pendaftaran)->subDay()->format('d M Y') }}</p>
-                        <h3>Pendaftaran</h3>
-                    </div>
-                    <div class="jadwal-item">
-                        <div class="jadwal-item-img">
-                            <img src="{{ asset('assets/img/tech-meeting.png') }}" alt="technical meeting">
+                        <div class="jadwal-item">
+                            <div class="jadwal-item-img">
+                                <img src="{{ asset('assets/img/tech-meeting.png') }}" alt="technical meeting">
+                            </div>
+                            <p>{{ $kompetisi->waktu_techmeeting ? \Carbon\Carbon::parse($kompetisi->waktu_techmeeting)->format('d M Y') : '-' }}
+                            </p>
+                            <h3>Technical Meeting</h3>
                         </div>
-                        <p>{{ $kompetisi->waktu_techmeeting? \Carbon\Carbon::parse($kompetisi->waktu_techmeeting)->format('d M Y') : '-' }}</p>
-                        <h3>Technical Meeting</h3>
-                    </div>
-                    <div class="jadwal-item">
-                        <div class="jadwal-item-img">
-                            <img src="{{ asset('assets/img/kompetisi.png') }}" alt="piala kompetisi">
+                        <div class="jadwal-item">
+                            <div class="jadwal-item-img">
+                                <img src="{{ asset('assets/img/kompetisi.png') }}" alt="piala kompetisi">
+                            </div>
+                            <p>{{ \Carbon\Carbon::parse($kompetisi->waktu_kompetisi)->format('d M Y') }}</p>
+                            <h3>Kompetisi</h3>
                         </div>
-                        <p>{{ \Carbon\Carbon::parse($kompetisi->waktu_kompetisi)->format('d M Y') }}</p>
-                        <h3>Kompetisi</h3>
                     </div>
                 </div>
-            </div>
             @endforeach
             @if ($kompetisis->count() > 1)
-            <div class="jadwal-navigation">
-                <button id="jadPrevBtn">Previous</button>
-                <button id="jadNextBtn">Next</button>
-            </div>
+                <div class="jadwal-navigation">
+                    <button id="jadPrevBtn">Previous</button>
+                    <button id="jadNextBtn">Next</button>
+                </div>
             @endif
         @else
-        <h2>Coming Soon</h2>
-        <div class="jadwal-items"></div>
+            <h2>Coming Soon</h2>
+            <div class="jadwal-items"></div>
         @endif
-        
+
     </section>
 
     <section id="biaya">
@@ -219,38 +218,39 @@
             <div class="line"></div>
         </div>
         @if ($kompetisis->count() > 0)
-        <h2>BIAYA KOMPETISI</h2>
-        <div class="event-list">
-            <ul>
-                @foreach($kompetisis as $index => $kompetisi)
-                <li class="{{ $index === 0 ? 'active-event' : '' }}" data-index="{{ $index }}">
-                    <p>{{ $kompetisi->nama }}</p>
-                </li>
-                @endforeach
-            </ul>
-        </div>
-        <div class="price-list">
-            @foreach ($kompetisis as $index => $kompetisi)    
-                @if ($kompetisi->harga->count() > 0)
-                    @foreach ($kompetisi->harga as $hargaIndex => $harga)
-                        <div class="price" id="price-{{ $index }}-{{ $hargaIndex }}" style="{{ $index !== 0 ? 'display: none;' : '' }}">
-                            <h3>{{ $harga->judul }}</h3>
-                            <hr>
-                            <h4>Rp.{{ number_format($harga->harga, 2, ',', '.') }}</h4>
-                            {!! $harga->deskripsi !!}
-                            <a href="{{ route('dashboard.kompetisi') }}"><button>Daftar</button></a>
-                        </div>
+            <h2>BIAYA KOMPETISI</h2>
+            <div class="event-list">
+                <ul>
+                    @foreach($kompetisis as $index => $kompetisi)
+                        <li class="{{ $index === 0 ? 'active-event' : '' }}" data-index="{{ $index }}">
+                            <p>{{ $kompetisi->nama }}</p>
+                        </li>
                     @endforeach
-                @else
-                <div class="price" id="price-{{ $index }}" style="{{ $index !== 0 ? 'display: none;' : '' }}">
-                    <h3>Harga belum tersedia</h3>
-                    <hr>
-                </div>
-                @endif
-            @endforeach
-        </div>
+                </ul>
+            </div>
+            <div class="price-list">
+                @foreach ($kompetisis as $index => $kompetisi)
+                    @if ($kompetisi->harga->count() > 0)
+                        @foreach ($kompetisi->harga as $hargaIndex => $harga)
+                            <div class="price" id="price-{{ $index }}-{{ $hargaIndex }}"
+                                style="{{ $index !== 0 ? 'display: none;' : '' }}">
+                                <h3>{{ $harga->judul }}</h3>
+                                <hr>
+                                <h4>Rp.{{ number_format($harga->harga, 2, ',', '.') }}</h4>
+                                {!! $harga->deskripsi !!}
+                                <a href="{{ route('dashboard.kompetisi') }}"><button>Daftar</button></a>
+                            </div>
+                        @endforeach
+                    @else
+                        <div class="price" id="price-{{ $index }}" style="{{ $index !== 0 ? 'display: none;' : '' }}">
+                            <h3>Harga belum tersedia</h3>
+                            <hr>
+                        </div>
+                    @endif
+                @endforeach
+            </div>
         @else
-        <h2>Coming Soon</h2>
+            <h2>Coming Soon</h2>
         @endif
     </section>
 
@@ -265,7 +265,10 @@
                 <div class="line"></div>
             </div>
             <h2>Persyaratan Lomba</h2>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. <br><br>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
+                dolore magna aliqua. <br><br>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+                aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum
+                dolore eu fugiat nulla pariatur.</p>
         </div>
     </section> --}}
 
@@ -276,7 +279,7 @@
                 <div class="footer-logos">
                     <img src="{{ asset('assets/img/SpeedZone2.png') }}" alt="Logo 1" class="footer-logo">
                 </div>
-                <p>&#169 Swimming Competition Registration 2024</p>
+                <p>&#169 Swimming Competition Registration 2026</p>
             </div>
 
             <div class="footer-menu">
@@ -291,7 +294,8 @@
             <div class="footer-contact">
                 <h4>Hubungi Kami</h4>
                 <ul>
-                    <li><a href="tel:+6287864774431"><i class="fa fa-phone"></i><span>087864774431 - Firza</span></a></li>
+                    <li><a href="tel:+6287864774431"><i class="fa fa-phone"></i><span>087864774431 - Firza</span></a>
+                    </li>
                 </ul>
             </div>
         </div>

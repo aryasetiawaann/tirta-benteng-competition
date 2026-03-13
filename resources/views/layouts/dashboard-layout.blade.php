@@ -89,5 +89,6 @@
 <body>
     @include('components.dashboard-sidebar')
     @yield('content')
+    @vite(['resources/js/auth.js'])
 </body>
 </html>
