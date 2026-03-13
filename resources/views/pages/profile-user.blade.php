@@ -60,6 +60,18 @@
                             <input id="phone" type="text" name="phone" value="{{ auth()->user()->phone }}" placeholder="Masukkan nomor telepon">
                         </div>
 
+                        <div>
+                            <label for="provinsi">Provinsi</label>
+                            <select id="provinsi" name="provinsi">
+                                <option value="" disabled {{ !auth()->user()->provinsi ? 'selected' : '' }}>Pilih Provinsi</option>
+                                <option value="DKI Jakarta" {{ auth()->user()->provinsi == 'DKI Jakarta' ? 'selected' : '' }}>DKI Jakarta</option>
+                                <option value="Jawa Barat" {{ auth()->user()->provinsi == 'Jawa Barat' ? 'selected' : '' }}>Jawa Barat</option>
+                                <option value="Jawa Tengah" {{ auth()->user()->provinsi == 'Jawa Tengah' ? 'selected' : '' }}>Jawa Tengah</option>
+                                <option value="DI Yogyakarta" {{ auth()->user()->provinsi == 'DI Yogyakarta' ? 'selected' : '' }}>DI Yogyakarta</option>
+                                <option value="Jawa Timur" {{ auth()->user()->provinsi == 'Jawa Timur' ? 'selected' : '' }}>Jawa Timur</option>
+                            </select>
+                        </div>
+
                         <button type="submit">Simpan</button>
                     </form>
                 </div>
@@ -73,17 +85,26 @@
 
                     <div>
                         <label for="current_password">Password Aktif</label>
-                        <input type="password" name="current_password" id="current_password">
+                        <div class="password-wrapper">
+                            <input type="password" name="current_password" id="current_password">
+                            <i class="fa fa-eye-slash toggle-password" aria-hidden="true" onclick="togglePasswordVisibility('current_password', this)"></i>
+                        </div>
                     </div>
 
                     <div>
                         <label for="update_password">Password Baru</label>
-                        <input type="password" name="password" id="update_password">
+                        <div class="password-wrapper">
+                            <input type="password" name="password" id="update_password">
+                            <i class="fa fa-eye-slash toggle-password" aria-hidden="true" onclick="togglePasswordVisibility('update_password', this)"></i>
+                        </div>
                     </div>
 
                     <div>
                         <label for="confirm_update_password">Konfirmasi Password Baru</label>
-                        <input type="password" name="password_confirmation" id="confirm_update_password">
+                        <div class="password-wrapper">
+                            <input type="password" name="password_confirmation" id="confirm_update_password">
+                            <i class="fa fa-eye-slash toggle-password" aria-hidden="true" onclick="togglePasswordVisibility('confirm_update_password', this)"></i>
+                        </div>
                     </div>
                     
                     <button>Simpan</button>
@@ -99,7 +120,10 @@
 
                     <div>
                         <label for="password">Password</label>
-                        <input type="password" name="password" id="password" placeholder="Password">
+                        <div class="password-wrapper">
+                            <input type="password" name="password" id="password" placeholder="Password">
+                            <i class="fa fa-eye-slash toggle-password" aria-hidden="true" onclick="togglePasswordVisibility('password', this)"></i>
+                        </div>
                         
                         <ul>
                             @foreach ($errors->getBag('userDeletion')->all() as $error)

@@ -77,7 +77,8 @@
 .profile-form input[type="text"],
 .profile-form input[type="email"],
 .profile-form input[type="password"],
-.profile-form input[type="file"] {
+.profile-form input[type="file"],
+.profile-form select {
     width: 100%;
     padding: 10px;
     margin-bottom: 15px;
@@ -85,12 +86,28 @@
     border-radius: 5px;
     box-sizing: border-box;
     transition: border-color 0.1s ease-in-out;
+    background-color: #fff;
+    font-family: inherit;
+    font-size: 14px;
+}
+
+/* Fix select chevron spacing and appearance */
+.profile-form select {
+    appearance: none; /* Hide default arrow */
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    padding-right: 36px; /* Add space on right for custom arrow */
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 12px center; /* Position from right edge */
+    background-size: 16px; /* Arrow size */
 }
 
 .profile-form input[type="text"]:focus,
 .profile-form input[type="email"]:focus,
 .profile-form input[type="password"]:focus,
-.profile-form input[type="file"]:focus {
+.profile-form input[type="file"]:focus,
+.profile-form select:focus {
     border-color: #007bff;
     outline: none;
 }
@@ -111,6 +128,33 @@
 
 .profile-form a > button {
     margin-bottom: 20px;
+}
+
+/* Password Toggle Styles */
+.password-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.password-wrapper input {
+    width: 100%;
+    padding-right: 40px !important; /* Make room for the eye icon */
+    margin-bottom: 0 !important;
+}
+
+.toggle-password {
+    position: absolute;
+    right: 12px;
+    cursor: pointer;
+    color: #666;
+    font-size: 16px;
+    transition: color 0.3s;
+}
+
+.toggle-password:hover {
+    color: #008dda;
 }
 
 /* Additional Section Styles */

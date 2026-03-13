@@ -83,6 +83,19 @@ body, html {
         outline: none;
     }
 
+    /* Fix select chevron spacing and appearance for general selectors */
+    select {
+        appearance: none; /* Hide default arrow */
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        padding-right: 36px !important; /* Add space on right for custom arrow */
+        background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+        background-repeat: no-repeat;
+        background-position: right 12px center; /* Position from right edge */
+        background-size: 16px; /* Arrow size */
+        background-color: #fff;
+    }
+
     .table-container select option {
         padding: 10px;
         background-color: white;
@@ -733,14 +746,47 @@ input#dokumen {
 }
 
 .edit-atlet {
+    margin-top: 20px;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
 }
-.edit-atlet input, .edit-atlet select {
+
+.edit-atlet select {
+    margin: 5px 0 20px 0;
+    appearance: none;
+    padding: 10px;
+    font-size: 1rem;
+    border: 1px solid #a5a5a5;
+    border-radius: 4px;
+    box-sizing: border-box;
+    width: 100%;
+}
+
+.edit-atlet select option {
+    padding: 10px;
+    background-color: #fff;
+    color: #4b4b4b;
+}
+
+.edit-atlet input {
     margin: 5px 0 20px 0;
     padding: 10px;
     font-size: 1rem;
+    border: 1px solid #a5a5a5;
+    border-radius: 4px;
+    box-sizing: border-box;
+    width: 100%;
+}
+
+.edit-atlet input:focus, .edit-atlet select:focus {
+    border-color: #007bff;
+    outline: none;
+}
+
+.edit-atlet input[type="file"], .overlay input[type="file"] {
+    border: none;
+    padding: 0;
+    background-color: transparent;
 }
 
 .edit-dokumen label {
@@ -796,6 +842,34 @@ input#dokumen {
     flex-direction: column; /* Stack the elements vertically */
     align-items: flex-end; /* Align the elements to the right */
     margin-top: 20px; /* Space above the container */
+}
+
+/* Region details group */
+select#provinsi, .overlay select#provinsi {
+    margin-bottom: 10px !important;
+}
+
+.region-group {
+    display: flex;
+    gap: 15px;
+    width: 100%;
+    margin-bottom: 5px;
+}
+
+.region-group select {
+    flex: 1;
+    margin-bottom: 0 !important;
+}
+
+@media screen and (max-width: 600px) {
+    .region-group {
+        flex-direction: column;
+        gap: 5px;
+    }
+    .region-group select {
+        width: 100%;
+        margin-bottom: 5px !important;
+    }
 }
 
 .total-price p {
@@ -1003,6 +1077,10 @@ button[data-tooltip]:hover::after {
         align-items: flex-start;
         gap: 5px;
     }
+
+    .all-container .flex.center {
+        align-items: center;
+    }
     
     .all-container header.divider h1,
     .all-container header.divider h2 {
@@ -1016,4 +1094,16 @@ button[data-tooltip]:hover::after {
     .pagination {
         justify-content: center; /* Tengahkan pagination di mobile */
     }
+}
+
+/* Sizing and Layout Utilities */
+.w100 {
+    width: 100%;
+}
+
+.w768 {
+    width: 100%;
+    max-width: 768px;
+    margin-left: auto;
+    margin-right: auto;
 }
