@@ -63,12 +63,7 @@
                         <div>
                             <label for="provinsi">Provinsi</label>
                             <select id="provinsi" name="provinsi">
-                                <option value="" disabled {{ !auth()->user()->provinsi ? 'selected' : '' }}>Pilih Provinsi</option>
-                                <option value="DKI Jakarta" {{ auth()->user()->provinsi == 'DKI Jakarta' ? 'selected' : '' }}>DKI Jakarta</option>
-                                <option value="Jawa Barat" {{ auth()->user()->provinsi == 'Jawa Barat' ? 'selected' : '' }}>Jawa Barat</option>
-                                <option value="Jawa Tengah" {{ auth()->user()->provinsi == 'Jawa Tengah' ? 'selected' : '' }}>Jawa Tengah</option>
-                                <option value="DI Yogyakarta" {{ auth()->user()->provinsi == 'DI Yogyakarta' ? 'selected' : '' }}>DI Yogyakarta</option>
-                                <option value="Jawa Timur" {{ auth()->user()->provinsi == 'Jawa Timur' ? 'selected' : '' }}>Jawa Timur</option>
+                                <option value="" disabled {{ !auth()->user()->province ? 'selected' : '' }}>Pilih Provinsi</option>
                             </select>
                         </div>
 
@@ -162,5 +157,26 @@
         function validatePhoto() {
             return true;
         }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const provinsiSelect = document.getElementById('provinsi');
+            const currentProvinsi = "{{ old('provinsi', auth()->user()->province) }}";
+
+            fetch('/api/provinces')
+                .then(response => response.json())
+                .then(result => {
+                    const data = result.data;
+                    data.forEach(provinsi => {
+                        const option = document.createElement('option');
+                        option.value = provinsi.name;
+                        option.textContent = provinsi.name;
+                        if (provinsi.name === currentProvinsi) {
+                            option.selected = true;
+                        }
+                        provinsiSelect.appendChild(option);
+                    });
+                })
+                .catch(error => console.error('Error fetching provinces:', error));
+        });
     </script>
 @endsection

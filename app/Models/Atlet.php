@@ -19,6 +19,10 @@ class Atlet extends Model
         'user_id',
         'dokumen',
         'is_verified',
+        'nik',
+        'province',
+        'regency',
+        'district',
     ];
 
 

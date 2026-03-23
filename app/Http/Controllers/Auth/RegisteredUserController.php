@@ -36,6 +36,9 @@ class RegisteredUserController extends Controller
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
             'club' => ['nullable', 'string', 'max:255'], // Updated to make 'club' optional
             'phone' => ['required', 'string', 'regex:/^(0)[8][1-9][0-9]{6,11}$/', 'max:15'],
+            'provinsi' => ['required', 'string'],
+        ], [
+            'provinsi.required' => 'provinsi wajib diisi.',
         ]);
 
         $user = User::create([
@@ -44,6 +47,7 @@ class RegisteredUserController extends Controller
             'password' => Hash::make($request->password),
             'club' => $request->club,
             'phone' => $request->phone,
+            'province' => $request->provinsi,
         ]);
 
         event(new Registered($user));

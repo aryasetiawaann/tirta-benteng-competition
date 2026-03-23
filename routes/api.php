@@ -5,6 +5,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\KompetisiController;
+use App\Http\Controllers\Api\AtletController;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,3 +26,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::post('/midtrans-callback', [PesertaController::class, 'paymentCallback']);
+
+Route::middleware('api.key')->group(function () {
+    Route::get('/atlets', [AtletController::class, 'index']);
+});

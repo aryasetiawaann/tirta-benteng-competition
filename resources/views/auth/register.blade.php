@@ -50,16 +50,6 @@
                     <label for="provinsi">Provinsi *</label>
                     <select id="provinsi" name="provinsi" required>
                         <option value="" disabled selected>Pilih Provinsi</option>
-                        <option value="DKI Jakarta" {{ old('provinsi') == 'DKI Jakarta' ? 'selected' : '' }}>DKI Jakarta
-                        </option>
-                        <option value="Jawa Barat" {{ old('provinsi') == 'Jawa Barat' ? 'selected' : '' }}>Jawa Barat
-                        </option>
-                        <option value="Jawa Tengah" {{ old('provinsi') == 'Jawa Tengah' ? 'selected' : '' }}>Jawa Tengah
-                        </option>
-                        <option value="DI Yogyakarta" {{ old('provinsi') == 'DI Yogyakarta' ? 'selected' : '' }}>DI
-                            Yogyakarta</option>
-                        <option value="Jawa Timur" {{ old('provinsi') == 'Jawa Timur' ? 'selected' : '' }}>Jawa Timur
-                        </option>
                     </select>
                     @error('provinsi')
                         <p>{{ $message }}</p>
@@ -104,4 +94,26 @@
             </form>
         </div>
     </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const provinsiSelect = document.getElementById('provinsi');
+            const oldProvinsi = "{{ old('provinsi') }}";
+
+            fetch('/api/provinces')
+                .then(response => response.json())
+                .then(result => {
+                    const data = result.data;
+                    data.forEach(provinsi => {
+                        const option = document.createElement('option');
+                        option.value = provinsi.name;
+                        option.textContent = provinsi.name;
+                        if (provinsi.name === oldProvinsi) {
+                            option.selected = true;
+                        }
+                        provinsiSelect.appendChild(option);
+                    });
+                })
+                .catch(error => console.error('Error fetching provinces:', error));
+        });
+    </script>
 </x-guest-layout>

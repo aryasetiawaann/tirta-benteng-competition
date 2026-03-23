@@ -32,12 +32,14 @@ class ProfileController extends Controller
             "club" => $request->club,
             "phone" => $request->phone,
             "foto" => $request->foto,
+            "provinsi" => $request->provinsi,
         ];
 
         $validation = Validator::make($data, [
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users,email,' . Auth::id(),
             'phone' => 'required|string|regex:/^(0)[8][1-9][0-9]{6,11}$/| max:15',
+            'provinsi' => 'required|string',
         ], [
             'name.required' => 'Nama wajib diisi.',
             'name.string' => 'Nama harus berupa string.',
@@ -51,6 +53,7 @@ class ProfileController extends Controller
             'phone.string' => 'Nomor telepon harus berupa string.',
             'phone.regex' => 'Format nomor telepon tidak valid.',
             'phone.max' => 'Nomor telepon tidak boleh lebih dari 15 karakter.',
+            'provinsi.required' => 'provinsi wajib diisi.',
         ]);
 
         if ($validation->fails()) {
@@ -74,6 +77,7 @@ class ProfileController extends Controller
         $user->email = $data['email'];
         $user->club = $data['club'];
         $user->phone = $data['phone'];
+        $user->province = $data['provinsi'];
         $user->save();
 
         return redirect()->back()->with('success', 'Profil berhasil diperbaharui');

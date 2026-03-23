@@ -121,20 +121,33 @@ class AtletController extends Controller
             "umur" => $request->umur,
             "jenis_kelamin" => $request->jenisKelamin,
             "user_id" => auth()->user()->id,
-            'dokumen' => $dokumen
+            'dokumen' => $dokumen,
+            'nik' => $request->nik,
+            'province' => $request->provinsi,
+            'regency' => $request->kota,
+            'district' => $request->kecamatan,
         ];
 
         $validation = Validator::make($data, [
             "name" => "required",
             "umur" => "required|date|before:today|unique:atlets,umur,NULL,id,name," . $data['name'],
             "jenis_kelamin" => "required",
+            "nik" => "required|string|size:16",
+            "province" => "required|string",
+            "regency" => "required|string",
+            "district" => "required|string",
         ], [
             'name.required' => 'Nama atlet wajib diisi.',
             'umur.required' => 'Tanggal lahir atlet wajib diisi.',
             'umur.date' => 'Tanggal lahir atlet harus berupa tanggal yang valid.',
             'umur.before' => 'Tanggal lahir tidak boleh sama atau lebih dari hari ini.',
             'umur.unique' => 'Atlet sudah terdaftar dengan nama yang sama.',
-            'jenis_kelamin.required' => 'Jenis kelamin atlet wajib diisi.', 
+            'jenis_kelamin.required' => 'Jenis kelamin atlet wajib diisi.',
+            'nik.required' => 'NIK wajib diisi.',
+            'nik.size' => 'NIK harus 16 karakter.',
+            'province.required' => 'Provinsi wajib diisi.',
+            'regency.required' => 'Kota/Kabupaten wajib diisi.',
+            'district.required' => 'Kecamatan wajib diisi.',
         ]);
 
         if ($validation->fails()) {
@@ -201,17 +214,30 @@ class AtletController extends Controller
             "umur" => $request->umur ? $request->umur : $atlet->umur,
             "jenis_kelamin" => $request->jenisKelamin ? $request->jenisKelamin : $atlet->jenis_kelamin,
             "user_id" => $atlet->user_id,
-            "dokumen" => $dokumen
+            "dokumen" => $dokumen,
+            "nik" => $request->nik,
+            "province" => $request->provinsi,
+            "regency" => $request->kota,
+            "district" => $request->kecamatan,
         ];
 
         $validation = Validator::make($data, [
             "name" => "required",
             "umur" => "nullable|date|before:today",
             "jenis_kelamin" => "nullable",
+            "nik" => "required|string|size:16",
+            "province" => "required|string",
+            "regency" => "required|string",
+            "district" => "required|string",
         ], [
             'name.required' => 'Nama atlet wajib diisi.',
             'umur.date' => 'Tanggal lahir atlet harus berupa tanggal yang valid.',
             'umur.before' => 'Tanggal lahir tidak boleh sama atau lebih dari hari ini.',
+            'nik.required' => 'NIK wajib diisi.',
+            'nik.size' => 'NIK harus 16 karakter.',
+            'province.required' => 'Provinsi wajib diisi.',
+            'regency.required' => 'Kota/Kabupaten wajib diisi.',
+            'district.required' => 'Kecamatan wajib diisi.',
         ]);
 
         if ($validation->fails()) {
@@ -247,17 +273,30 @@ class AtletController extends Controller
             "umur" => $request->umur ? $request->umur : $atlet->umur,
             "jenis_kelamin" => $request->jenisKelamin ? $request->jenisKelamin : $atlet->jenis_kelamin,
             "user_id" => $atlet->user_id,
-            "dokumen" => $dokumen
+            "dokumen" => $dokumen,
+            "nik" => $request->nik,
+            "province" => $request->provinsi,
+            "regency" => $request->kota,
+            "district" => $request->kecamatan,
         ];
 
         $validation = Validator::make($data, [
             "name" => "required",
             "umur" => "nullable|date|before:today",
             "jenis_kelamin" => "nullable",
+            "nik" => "required|string|size:16",
+            "province" => "required|string",
+            "regency" => "required|string",
+            "district" => "required|string",
         ], [
             'name.required' => 'Nama atlet wajib diisi.',
             'umur.date' => 'Tanggal lahir atlet harus berupa tanggal yang valid.',
             'umur.before' => 'Tanggal lahir tidak boleh sama atau lebih dari hari ini.',
+            'nik.required' => 'NIK wajib diisi.',
+            'nik.size' => 'NIK harus 16 karakter.',
+            'province.required' => 'Provinsi wajib diisi.',
+            'regency.required' => 'Kota/Kabupaten wajib diisi.',
+            'district.required' => 'Kecamatan wajib diisi.',
         ]);
 
         if ($validation->fails()) {
