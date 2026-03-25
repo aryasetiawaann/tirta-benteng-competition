@@ -50,6 +50,19 @@
                     <option value="200m gaya dada">200m Gaya Dada</option>
                     <option value="200m gaya ganti">200m Gaya Ganti</option>
                     <option value="400m gaya ganti">400m Gaya Ganti</option>
+                    <option value="50m snorkling bifin">50m Snorkling Bifin</option>
+                    <option value="50m bifin board">50m Bifin Board</option>
+                    <option value="50m bifin">50m Bifin</option>
+                    <option value="100m bifin">100m Bifin</option>
+                    <option value="200m bifin">200m Bifin</option>
+                    <option value="400m bifin">400m Bifin</option>
+                    <option value="50m surface board">50m Surface Board</option>
+                    <option value="50m surface">50m Surface</option>
+                    <option value="100m surface">100m Surface</option>
+                    <option value="200m surface">200m Surface</option>
+                    <option value="400m surface">400m Surface</option>
+                    <option value="800m surface">800m Surface</option>
+                    <option value="50m apnea">50m Apnea</option>
                 </select>
 
                 <label for="harga">Harga*</label>
