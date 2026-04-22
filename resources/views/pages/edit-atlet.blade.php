@@ -73,9 +73,9 @@
                             <option value="pria" {{ $atlet->jenis_kelamin === "Pria" ? "selected" : "" }}>Pria</option>
                             <option value="wanita" {{ $atlet->jenis_kelamin === "Wanita" ? "selected" : "" }}>Wanita</option>
                         </select>
-                        <label for="">Upload Dokumen</label>
+                        <label for="">Dokumen *</label>
                         <p><i style="font-size: 12px">(Akte / KTP .pdf, .jpg, .png)</i></p>
-                        <input type="file" name="dokumen" id="dokumen" accept=".pdf,.jpg,.jpeg,.png" value="{{ $atlet->dokumen }}">
+                        <input type="file" name="dokumen" id="dokumen" accept=".pdf,.jpg,.jpeg,.png" {{ empty($atlet->dokumen) ? 'required' : '' }}>
                             
                         {{-- <label for="record">Track Record</label>
                         <p><i style="font-size: 12px">(Tulis 0 Jika tidak ada)</i></p>
