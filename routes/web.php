@@ -106,6 +106,8 @@ Route::middleware(['auth','role:admin'])->group(function () {
     Route::put('/admin/dashboard/atlet', [AtletController::class, 'adminUpdate'])->name('admin.atlet.update');
     Route::post('/admin/dashboard/verified-atlet/{id}',[AtletController::class,'acceptAtletDoc'])->name('admin.dashboard.verified');
     Route::post('/admin/dashboard/flag-atlet/{id}',[AtletController::class,'flagAtletDoc'])->name('admin.dashboard.flagged');
+    Route::post('/admin/dashboard/bulk-verified-atlet',[AtletController::class,'bulkAcceptAtletDoc'])->name('admin.dashboard.bulk.verified');
+    Route::post('/admin/dashboard/bulk-flag-atlet',[AtletController::class,'bulkFlagAtletDoc'])->name('admin.dashboard.bulk.flagged');
 
     Route::get('/admin/dashboard/verifikasi-pembayaran', [AdminController::class, 'pembayaranList'])->name('admin.payment.list');
     Route::post('/admin/dashboard/verifikasi-pembayaran/update', [AdminController::class, 'updatePembayaran'])->name('admin.payment.update');

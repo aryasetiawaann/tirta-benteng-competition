@@ -320,7 +320,7 @@ class AtletController extends Controller
     }
 
     public function flagAtletDoc($id){
-        
+
         $atlet = Atlet::find($id);
 
         $atlet->is_verified = 'need revision';
@@ -328,6 +328,24 @@ class AtletController extends Controller
         $atlet->save();
 
         return redirect()->back()->with('success', 'Atlet berhasil ditandai untuk revisi');
+    }
+
+    public function bulkAcceptAtletDoc(Request $request){
+        $ids = $request->input('selected_atlets', []);
+        if (empty($ids)) {
+            return redirect()->back()->with('error', 'Tidak ada atlet yang dipilih.');
+        }
+        Atlet::whereIn('id', $ids)->update(['is_verified' => 'verified']);
+        return redirect()->back()->with('success', count($ids) . ' atlet berhasil terverifikasi.');
+    }
+
+    public function bulkFlagAtletDoc(Request $request){
+        $ids = $request->input('selected_atlets', []);
+        if (empty($ids)) {
+            return redirect()->back()->with('error', 'Tidak ada atlet yang dipilih.');
+        }
+        Atlet::whereIn('id', $ids)->update(['is_verified' => 'need revision']);
+        return redirect()->back()->with('success', count($ids) . ' atlet berhasil ditandai untuk revisi.');
     }
 
     /**

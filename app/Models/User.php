@@ -48,7 +48,8 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
-    public function atlet(){
-        return $this->hasMany(Atlet::class,'id');
+    public function atlet()
+    {
+        return $this->hasMany(Atlet::class, 'id');
     }
 }
