@@ -23,103 +23,104 @@
         <h1>Verifikasi Dokumen Atlet</h1>
     </header>
 
-    {{-- Bulk Action Toolbar --}}
-    <form id="bulk-form" method="POST" action="">
+    {{-- Bulk form dipisah dari konten, checkbox & tombol bulk terasosiasi via atribut form="bulk-form" --}}
+    <form id="bulk-form" method="POST" action="{{ route('admin.dashboard.bulk.verified') }}">
         @csrf
-        <div id="bulk-toolbar" style="display:none; margin-bottom:12px; padding:10px 14px; background:#f1f5f9; border:1px solid #cbd5e1; border-radius:8px; display:none; align-items:center; gap:10px; flex-wrap:wrap;">
-            <span id="selected-count" style="font-weight:600; margin-right:4px;">0 atlet dipilih</span>
-            <button type="submit"
-                    formaction="{{ route('admin.dashboard.bulk.verified') }}"
-                    onclick="return confirmBulk('Apakah kamu yakin ingin memverifikasi atlet-atlet yang dipilih?')"
-                    class="button-green button-gap">
-                <i class='bx bx-xs bx-check'></i> Verifikasi Terpilih
-            </button>
-            <button type="submit"
-                    formaction="{{ route('admin.dashboard.bulk.flagged') }}"
-                    onclick="return confirmBulk('Apakah kamu yakin ingin menandai atlet-atlet yang dipilih?')"
-                    class="button-orange button-gap">
-                <i class='bx bx-xs bxs-flag-alt'></i> Tandai Terpilih
-            </button>
-            <button type="button" onclick="clearSelection()" style="margin-left:auto;" class="button-gap">
-                Batal Pilih
-            </button>
-        </div>
-
-        <div class="table-container">
-            <label for="entries">Tampilkan
-                <select id="entries" name="entries">
-                    <option value="5">5</option>
-                    <option value="10">10</option>
-                    <option value="25">25</option>
-                    <option value="50">50</option>
-                    <option value="100">100</option>
-                </select>
-                atlet
-            </label>
-            <input type="text" id="search" placeholder="Cari...">
-            <div class="table-scroll">
-                <table>
-                    <thead>
-                        <tr>
-                            <th><input type="checkbox" id="select-all" title="Pilih Semua"></th>
-                            <th>No</th>
-                            <th>Nama</th>
-                            <th>No Telepon</th>
-                            <th>Nama Club</th>
-                            <th>Jenis Kelamin</th>
-                            <th>Tanggal Lahir</th>
-                            <th>Dokumen</th>
-                            <th>Aksi</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                      @forelse ($notVerAtlets as $atlet)
-                        <tr>
-                          <td>
-                            <input type="checkbox" name="selected_atlets[]" value="{{ $atlet->id }}" class="atlet-checkbox">
-                          </td>
-                          <td>{{ $loop->iteration }}</td>
-                          <td>{{ $atlet->name }}</td>
-                          <td>{{ $atlet->user->phone ?? 'Tidak Ada' }}</td>
-                          <td>{{ $atlet->user->club ?? 'Tidak Ada' }}</td>
-                          <td>{{ $atlet->jenis_kelamin }}</td>
-                          <td>{{ \Carbon\Carbon::parse($atlet->umur)->format('d M Y') }}</td>
-                          <td>
-                            <a href="{{ route('dashboard.atlet.dokumen.view', $atlet->id) }}" target="_blank" rel="noopener noreferrer">
-                              <button type="button" class="button-gap" data-tooltip="Lihat Dokumen">
-                                <i class='bx bx-xs bx-show'></i>
-                              </button>
-                            </a>
-                          </td>
-                          <td>
-                            <div class="actions">
-                              <form action="{{ route('admin.dashboard.verified', $atlet->id) }}" method="post">
-                                  @csrf
-                                  <button class="button-green button-gap" data-tooltip="Terima Atlet" onclick="return confirm('Apakah kamu yakin ingin menerima atlet ini?')">
-                                    <i class='bx bx-xs bx-check'></i>
-                                  </button>
-                                  <button class="button-orange button-gap" data-tooltip="Tandai Atlet" formaction="{{ route('admin.dashboard.flagged', $atlet->id) }}" onclick="return confirm('Apakah kamu yakin ingin menandai atlet ini?')">
-                                    <i class='bx bx-xs bxs-flag-alt'></i>
-                                  </button>
-                              </form>
-                            </div>
-                          </td>
-                        </tr>
-                      @empty
-                        <tr>
-                          <td colspan="9" style="text-align:center;">Belum ada atlet dengan dokumen</td>
-                        </tr>
-                      @endforelse
-                    </tbody>
-                </table>
-            </div>
-            <div class="pagination">
-                <button class="prev" disabled>Sebelumnya</button>
-                <div class="page-numbers"></div>
-                <button class="next" disabled>Selanjutnya</button>
-            </div>
-        </div>
     </form>
+
+    <div id="bulk-toolbar" style="display:none; margin-bottom:12px; padding:10px 14px; background:#f1f5f9; border:1px solid #cbd5e1; border-radius:8px; align-items:center; gap:10px; flex-wrap:wrap;">
+        <span id="selected-count" style="font-weight:600; margin-right:4px;">0 atlet dipilih</span>
+        <button type="submit" form="bulk-form"
+                formaction="{{ route('admin.dashboard.bulk.verified') }}"
+                onclick="return confirmBulk('Apakah kamu yakin ingin memverifikasi atlet-atlet yang dipilih?')"
+                class="button-green button-gap">
+            <i class='bx bx-xs bx-check'></i> Verifikasi Terpilih
+        </button>
+        <button type="submit" form="bulk-form"
+                formaction="{{ route('admin.dashboard.bulk.flagged') }}"
+                onclick="return confirmBulk('Apakah kamu yakin ingin menandai atlet-atlet yang dipilih?')"
+                class="button-orange button-gap">
+            <i class='bx bx-xs bxs-flag-alt'></i> Tandai Terpilih
+        </button>
+        <button type="button" onclick="clearSelection()" style="margin-left:auto;" class="button-gap">
+            Batal Pilih
+        </button>
+    </div>
+
+    <div class="table-container">
+        <label for="entries">Tampilkan
+            <select id="entries" name="entries">
+                <option value="5">5</option>
+                <option value="10">10</option>
+                <option value="25">25</option>
+                <option value="50">50</option>
+                <option value="100">100</option>
+            </select>
+            atlet
+        </label>
+        <input type="text" id="search" placeholder="Cari...">
+        <div class="table-scroll">
+            <table>
+                <thead>
+                    <tr>
+                        <th><input type="checkbox" id="select-all" title="Pilih Semua"></th>
+                        <th>No</th>
+                        <th>Nama</th>
+                        <th>No Telepon</th>
+                        <th>Nama Club</th>
+                        <th>Jenis Kelamin</th>
+                        <th>Tanggal Lahir</th>
+                        <th>Dokumen</th>
+                        <th>Aksi</th>
+                    </tr>
+                </thead>
+                <tbody>
+                  @forelse ($notVerAtlets as $atlet)
+                    <tr>
+                      <td>
+                        <input type="checkbox" form="bulk-form" name="selected_atlets[]" value="{{ $atlet->id }}" class="atlet-checkbox">
+                      </td>
+                      <td>{{ $loop->iteration }}</td>
+                      <td>{{ $atlet->name }}</td>
+                      <td>{{ $atlet->user->phone ?? 'Tidak Ada' }}</td>
+                      <td>{{ $atlet->user->club ?? 'Tidak Ada' }}</td>
+                      <td>{{ $atlet->jenis_kelamin }}</td>
+                      <td>{{ \Carbon\Carbon::parse($atlet->umur)->format('d M Y') }}</td>
+                      <td>
+                        <a href="{{ route('dashboard.atlet.dokumen.view', $atlet->id) }}" target="_blank" rel="noopener noreferrer">
+                          <button type="button" class="button-gap" data-tooltip="Lihat Dokumen">
+                            <i class='bx bx-xs bx-show'></i>
+                          </button>
+                        </a>
+                      </td>
+                      <td>
+                        <div class="actions">
+                          <form action="{{ route('admin.dashboard.verified', $atlet->id) }}" method="post">
+                              @csrf
+                              <button class="button-green button-gap" data-tooltip="Terima Atlet" onclick="return confirm('Apakah kamu yakin ingin menerima atlet ini?')">
+                                <i class='bx bx-xs bx-check'></i>
+                              </button>
+                              <button class="button-orange button-gap" data-tooltip="Tandai Atlet" formaction="{{ route('admin.dashboard.flagged', $atlet->id) }}" onclick="return confirm('Apakah kamu yakin ingin menandai atlet ini?')">
+                                <i class='bx bx-xs bxs-flag-alt'></i>
+                              </button>
+                          </form>
+                        </div>
+                      </td>
+                    </tr>
+                  @empty
+                    <tr>
+                      <td colspan="9" style="text-align:center;">Belum ada atlet dengan dokumen</td>
+                    </tr>
+                  @endforelse
+                </tbody>
+            </table>
+        </div>
+        <div class="pagination">
+            <button class="prev" disabled>Sebelumnya</button>
+            <div class="page-numbers"></div>
+            <button class="next" disabled>Selanjutnya</button>
+        </div>
+    </div>
 </section>
 
 </div>
