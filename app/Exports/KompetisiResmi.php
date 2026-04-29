@@ -146,10 +146,10 @@ class KompetisiResmi implements FromCollection, WithMapping, WithEvents
                     $sheet->mergeCells("B$currentRow:C$currentRow");
                     $sheet->setCellValue("B$currentRow", ' (KU ' . strtoupper($acara->grup) 
                     . ') ');
-                    $sheet->mergeCells("D$currentRow:E$currentRow");
+                    $sheet->mergeCells("D$currentRow:G$currentRow");
                     $sheet->setCellValue("D$currentRow", $acara->nama);
-                    $sheet->setCellValue("F$currentRow", $kategori);
-                    $sheet->getStyle("A$currentRow:F$currentRow")->applyFromArray($headerStyle);
+                    $sheet->setCellValue("H$currentRow", $kategori);
+                    $sheet->getStyle("A$currentRow:H$currentRow")->applyFromArray($headerStyle);
 
                     $currentRow++;
 
@@ -167,11 +167,13 @@ class KompetisiResmi implements FromCollection, WithMapping, WithEvents
                             // Subheader
                             $sheet->setCellValue("A$currentRow", "Ln.");
                             $sheet->setCellValue("B$currentRow", "Nama");
-                            $sheet->setCellValue("C$currentRow", "KU");
-                            $sheet->setCellValue("D$currentRow", "Asal Sekolah/Klub");
-                            $sheet->setCellValue("E$currentRow", "QET");
-                            $sheet->setCellValue("F$currentRow", "Hasil");
-                            $sheet->getStyle("A$currentRow:F$currentRow")->applyFromArray($subHeaderStyle);
+                            $sheet->setCellValue("C$currentRow", "Thn Lahir");
+                            $sheet->setCellValue("D$currentRow", "KU");
+                            $sheet->setCellValue("E$currentRow", "Asal Sekolah/Klub");
+                            $sheet->setCellValue("F$currentRow", "Provinsi");
+                            $sheet->setCellValue("G$currentRow", "QET");
+                            $sheet->setCellValue("H$currentRow", "Hasil");
+                            $sheet->getStyle("A$currentRow:H$currentRow")->applyFromArray($subHeaderStyle);
                             $currentRow++;
 
                             $this->applySeriStyle($sheet, $currentRow);
@@ -189,8 +191,10 @@ class KompetisiResmi implements FromCollection, WithMapping, WithEvents
                                         $sheet->fromArray([[
                                             $laneIndex + 1,
                                             $participant['name'],
+                                            isset($participant['umur']) ? \Carbon\Carbon::parse($participant['umur'])->format('Y') : '',
                                             'KU ' . $acara->grup,
                                             $participant['club'],
+                                            $participant['province'] ?? '',
                                             $participant['track_record'] == 999 ? 'NT' : $trackRecordFormatted,
                                             '',
                                         ]], null, "A$currentRow");
@@ -199,7 +203,7 @@ class KompetisiResmi implements FromCollection, WithMapping, WithEvents
                                 {
                                     $sheet->fromArray([[
                                             $laneIndex + 1,
-                                            '', '', '', '', ''
+                                            '', '', '', '', '', '', ''
                                         ]], null, "A$currentRow");
                                 }
 
@@ -237,15 +241,15 @@ class KompetisiResmi implements FromCollection, WithMapping, WithEvents
             ],
         ]);
 
-        // Set KU ke tengah
-        $sheet->getStyle("C$startSeriRow:C$endSeriRow")->applyFromArray([
+        // Set Tahun Lahir dan KU ke tengah
+        $sheet->getStyle("C$startSeriRow:D$endSeriRow")->applyFromArray([
             'alignment' => [
                 'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER,
             ],
         ]);
 
         // Set QET dan HASIL ke tengah
-        $sheet->getStyle("E$startSeriRow:F$endSeriRow")->applyFromArray([
+        $sheet->getStyle("G$startSeriRow:H$endSeriRow")->applyFromArray([
             'alignment' => [
                 'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER,
             ],
@@ -257,10 +261,12 @@ class KompetisiResmi implements FromCollection, WithMapping, WithEvents
     {
         $sheet->getColumnDimension('A')->setWidth(10); // LINT
         $sheet->getColumnDimension('B')->setWidth(25); // NAMA
-        $sheet->getColumnDimension('C')->setWidth(10); // KU
-        $sheet->getColumnDimension('D')->setWidth(25); // ASALH SEKOLAH
-        $sheet->getColumnDimension('E')->setWidth(15); // QET
-        $sheet->getColumnDimension('F')->setWidth(15); // HASIL
+        $sheet->getColumnDimension('C')->setWidth(12); // TAHUN LAHIR
+        $sheet->getColumnDimension('D')->setWidth(10); // KU
+        $sheet->getColumnDimension('E')->setWidth(25); // ASAL SEKOLAH
+        $sheet->getColumnDimension('F')->setWidth(20); // PROVINSI
+        $sheet->getColumnDimension('G')->setWidth(15); // QET
+        $sheet->getColumnDimension('H')->setWidth(15); // HASIL
     }
 
     
