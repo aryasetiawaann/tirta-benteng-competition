@@ -112,7 +112,11 @@ class WinnerController extends Controller
 
             // Cari Winner berdasarkan kode yang ada di nama file
             $winner = $winners->first(function ($w) use ($decodedFileName) {
-                $kodeLower = strtolower($w->kode);
+                // Normalisasi kode dari DB agar jika DB menggunakan % atau %F, disamakan dulu
+                $kodeNormalized = str_ireplace('%f', '%2F', $w->kode);
+                $kodeNormalized = preg_replace('/%(?!2F)/i', '%2F', $kodeNormalized);
+                
+                $kodeLower = strtolower(urldecode($kodeNormalized));
                 $fileNameLower = strtolower($decodedFileName);
                 
                 // Jika nama file sama persis dengan kode
