@@ -96,13 +96,24 @@ class WinnerController extends Controller
         $winners = Winner::where('kompetisi_id', $kompetisiId)->get();
 
         foreach ($request->file('dokumen') as $file) {
-            // Ambil nama file tanpa ekstensi
-            $fileName = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
+            $originalName = $file->getClientOriginalName();
+            
+            $newFileName = $originalName;
+            
+            // Handle jika pemisahnya '%F' atau '%f'
+            $newFileName = str_ireplace('%f', '%2F', $newFileName);
+            
+            // Ubah % menjadi %2F (kecuali jika sudah %2F)
+            $newFileName = preg_replace('/%(?!2F)/i', '%2F', $newFileName);
+            
+            // Ambil nama file tanpa ekstensi untuk pencocokan
+            $fileName = pathinfo($newFileName, PATHINFO_FILENAME);
+            $decodedFileName = urldecode($fileName);
 
             // Cari Winner berdasarkan kode yang ada di nama file
-            $winner = $winners->first(function ($w) use ($fileName) {
+            $winner = $winners->first(function ($w) use ($decodedFileName) {
                 $kodeLower = strtolower($w->kode);
-                $fileNameLower = strtolower($fileName);
+                $fileNameLower = strtolower($decodedFileName);
                 
                 // Jika nama file sama persis dengan kode
                 if ($fileNameLower === $kodeLower) {
@@ -137,8 +148,8 @@ class WinnerController extends Controller
                 continue; // Skip jika tidak ditemukan
             }
 
-            // Simpan file ke storage
-            $path = $file->store('dokumen_kejuaraan', 'public');
+            // Simpan file ke storage dengan nama baru
+            $path = $file->storeAs('dokumen_kejuaraan', $newFileName, 'public');
 
             // Simpan ke model sesuai jenis
             if ($jenis === 'sertifikat') {
@@ -147,14 +158,14 @@ class WinnerController extends Controller
 
                 $certificate = Certificate::create([
                     'path' => $path,
-                    'filename' => $file->getClientOriginalName(),
+                    'filename' => $newFileName,
                 ]);
 
                 $winner->certificate_id = $certificate->id;
             } elseif ($jenis === 'surat_keterangan') {
                 $letter = Letter::create([
                     'path' => $path,
-                    'filename' => $file->getClientOriginalName(),
+                    'filename' => $newFileName,
                 ]);
 
                 $winner->letter_id = $letter->id;

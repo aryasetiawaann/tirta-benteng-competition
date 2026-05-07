@@ -81,7 +81,7 @@ class RiwayatController extends Controller
             'Acara 130 | 400 M GAYA BEBAS - KU E PUTRI'
         ];
     }
-    
+
     private function getPemenangData($eventId, $nomorAcara)
     {
         // Data dummy pemenang - nanti bisa diganti dengan database
@@ -113,9 +113,9 @@ class RiwayatController extends Controller
             $kejuaraan = Kompetisi::all()->sortByDesc('created_at');
 
             $tahunKompetisi = Kompetisi::selectRaw('YEAR(waktu_kompetisi) as tahun')
-            ->distinct()
-            ->orderBy('tahun', 'desc')
-            ->pluck('tahun');
+                ->distinct()
+                ->orderBy('tahun', 'desc')
+                ->pluck('tahun');
 
             return view('riwayat.riwayat', compact('kejuaraan', 'tahunKompetisi'));
 
@@ -145,15 +145,15 @@ class RiwayatController extends Controller
     {
         try {
             $kejuaraan = Kompetisi::find($id);
-            
+
             if (!$kejuaraan) {
                 abort(404, 'Kejuaraan tidak ditemukan');
             }
 
             $nomorAcara = Acara::where('kompetisi_id', $id)
-            ->orderBy('nomor_lomba')
-            ->get();
-            
+                ->orderBy('nomor_lomba')
+                ->get();
+
             return view('riwayat.sertifikat', compact('kejuaraan', 'nomorAcara'));
         } catch (\Exception $e) {
             \Log::error('Error in RiwayatController@sertifikat: ' . $e->getMessage());
@@ -164,7 +164,7 @@ class RiwayatController extends Controller
     public function suratKeterangan($id)
     {
         try {
-            $kejuaraan = collect($this->getKejuaraanData())->firstWhere('id', (int)$id);
+            $kejuaraan = collect($this->getKejuaraanData())->firstWhere('id', (int) $id);
             $nomorAcara = $this->getNomorAcaraData($id);
 
             if (!$kejuaraan) {
@@ -199,13 +199,13 @@ class RiwayatController extends Controller
         try {
             // Decode URL-encoded nomor acara
             $nomorAcara = Acara::find($nomorAcara);
-            
-            $kejuaraan = Kompetisi::find($eventId);
-            
-            $pemenang = Winner::where('kompetisi_id', $kejuaraan->id)
-            ->where('acara_id', $nomorAcara->id)->get();
 
-            
+            $kejuaraan = Kompetisi::find($eventId);
+
+            $pemenang = Winner::where('kompetisi_id', $kejuaraan->id)
+                ->where('acara_id', $nomorAcara->id)->get();
+
+
             if (!$kejuaraan) {
                 abort(404, 'Kejuaraan tidak ditemukan');
             }
@@ -222,10 +222,10 @@ class RiwayatController extends Controller
         try {
             // Decode URL-encoded nomor acara
             $nomorAcara = urldecode($nomorAcara);
-            
-            $kejuaraan = collect($this->getKejuaraanData())->firstWhere('id', (int)$eventId);
+
+            $kejuaraan = collect($this->getKejuaraanData())->firstWhere('id', (int) $eventId);
             $pemenang = $this->getPemenangData($eventId, $nomorAcara);
-            
+
             if (!$kejuaraan) {
                 abort(404, 'Kejuaraan tidak ditemukan');
             }
@@ -242,7 +242,7 @@ class RiwayatController extends Controller
         try {
             // Decode URL-encoded nomor acara
             $nomorAcara = urldecode($nomorAcara);
-            
+
             // Path ke file PDF sertifikat
             $filename = "sertifikat_event_{$eventId}_" . str_replace(' ', '_', $nomorAcara) . ".pdf";
             $path = storage_path("app/public/certificates/{$filename}");
@@ -262,12 +262,12 @@ class RiwayatController extends Controller
             return abort(500, 'Terjadi kesalahan sistem');
         }
     }
-    
+
     public function detailSertifikat($kode)
     {
         try {
             $kode = urlencode($kode);
-            
+
             $pemenang = Winner::where('kode', $kode)->first();
 
             // Cek dulu apakah data ditemukan
@@ -300,7 +300,7 @@ class RiwayatController extends Controller
         try {
             // Decode URL-encoded nomor acara
             $nomorAcara = urldecode($nomorAcara);
-            
+
             // Path ke file PDF surat keterangan
             $filename = "surat_keterangan_event_{$eventId}_" . str_replace(' ', '_', $nomorAcara) . ".pdf";
             $path = storage_path("app/public/surat-keterangan/{$filename}");
@@ -326,7 +326,7 @@ class RiwayatController extends Controller
         try {
             // Decode URL-encoded nomor acara
             $nomorAcara = urldecode($nomorAcara);
-            
+
             // Path ke file PDF hasil perlombaan
             $filename = "hasil_perlombaan_event_{$eventId}_" . str_replace(' ', '_', $nomorAcara) . ".pdf";
             $path = storage_path("app/public/hasil-perlombaan/{$filename}");
@@ -352,15 +352,15 @@ class RiwayatController extends Controller
         try {
             // Decode URL-encoded nomor acara
             $nomorAcara = urldecode($nomorAcara);
-            
+
             // Dapatkan data pemenang untuk nama file yang lebih spesifik
             $pemenangList = $this->getPemenangData($eventId, $nomorAcara);
-            $pemenang = collect($pemenangList)->firstWhere('id', (int)$pesertaId);
-            
+            $pemenang = collect($pemenangList)->firstWhere('id', (int) $pesertaId);
+
             if (!$pemenang) {
                 abort(404, 'Data peserta tidak ditemukan');
             }
-            
+
             // Path ke file PDF sertifikat
             $filename = "sertifikat_event_{$eventId}_" . str_replace(' ', '_', $nomorAcara) . ".pdf";
             $path = storage_path("app/public/certificates/{$filename}");
@@ -376,7 +376,7 @@ class RiwayatController extends Controller
 
             // Nama file yang akan diunduh oleh pengguna
             $downloadName = "Sertifikat_{$pemenang['nama']}_{$nomorAcara}.pdf";
-            
+
             return response()->download($path, $downloadName);
         } catch (\Exception $e) {
             \Log::error('Error in RiwayatController@downloadCertificate: ' . $e->getMessage());
@@ -389,15 +389,15 @@ class RiwayatController extends Controller
         try {
             // Decode URL-encoded nomor acara
             $nomorAcara = urldecode($nomorAcara);
-            
+
             // Dapatkan data pemenang untuk nama file yang lebih spesifik
             $pemenangList = $this->getPemenangData($eventId, $nomorAcara);
-            $pemenang = collect($pemenangList)->firstWhere('id', (int)$pesertaId);
-            
+            $pemenang = collect($pemenangList)->firstWhere('id', (int) $pesertaId);
+
             if (!$pemenang) {
                 abort(404, 'Data peserta tidak ditemukan');
             }
-            
+
             // Path ke file PDF surat keterangan
             $filename = "surat_keterangan_event_{$eventId}_" . str_replace(' ', '_', $nomorAcara) . ".pdf";
             $path = storage_path("app/public/surat-keterangan/{$filename}");
@@ -413,7 +413,7 @@ class RiwayatController extends Controller
 
             // Nama file yang akan diunduh oleh pengguna
             $downloadName = "Surat_Keterangan_{$pemenang['nama']}_{$nomorAcara}.pdf";
-            
+
             return response()->download($path, $downloadName);
         } catch (\Exception $e) {
             \Log::error('Error in RiwayatController@downloadSK: ' . $e->getMessage());
