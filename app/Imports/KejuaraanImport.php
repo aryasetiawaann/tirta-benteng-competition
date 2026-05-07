@@ -26,8 +26,8 @@ class KejuaraanImport implements ToCollection, WithHeadingRow
                           ->where('kompetisi_id', $this->kompetisiId)
                           ->first();
 
-            if (!$acara || $row['nama_atlet'] == null) {
-                // Lewati jika acara tidak ditemukan di kompetisi ini
+            if (!$acara || empty(trim($row['nama_atlet'] ?? ''))) {
+                // Lewati jika acara tidak ditemukan di kompetisi ini atau nama atlet kosong
                 continue;
             }
 
