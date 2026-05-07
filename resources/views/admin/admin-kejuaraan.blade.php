@@ -87,18 +87,44 @@
                 <h2>Daftar Pemenang</h2>
             </header>
 
-            <form action="{{ route('admin.kejuaraan') }}" method="GET" style="margin-bottom: 1rem;">
-                <label for="filter_kompetisi">Filter berdasarkan Kompetisi:</label>
-                <select name="filter_kompetisi" id="filter_kompetisi" onchange="this.form.submit()" class="form-control"
-                    style="width: 250px;">
-                    <option value="">-- Semua Kompetisi --</option>
-                    @foreach ($kompetisiList as $kompetisi)
-                        <option value="{{ $kompetisi->id }}"
-                            {{ request('filter_kompetisi') == $kompetisi->id ? 'selected' : '' }}>
-                            {{ $kompetisi->nama }}
-                        </option>
-                    @endforeach
-                </select>
+            <form action="{{ route('admin.kejuaraan') }}" method="GET" style="margin-bottom: 1.5rem; display: flex; gap: 1rem; align-items: flex-end; flex-wrap: wrap;">
+                <div>
+                    <label for="filter_kompetisi" style="display: block; margin-bottom: 0.5rem; font-weight: 500;">Kompetisi:</label>
+                    <select name="filter_kompetisi" id="filter_kompetisi" class="form-control" style="width: 250px;">
+                        <option value="">-- Semua Kompetisi --</option>
+                        @foreach ($kompetisiList as $kompetisi)
+                            <option value="{{ $kompetisi->id }}"
+                                {{ request('filter_kompetisi') == $kompetisi->id ? 'selected' : '' }}>
+                                {{ $kompetisi->nama }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+
+                <div>
+                    <label for="filter_dokumen" style="display: block; margin-bottom: 0.5rem; font-weight: 500;">Status Dokumen:</label>
+                    <select name="filter_dokumen" id="filter_dokumen" class="form-control" style="width: 200px;">
+                        <option value="">-- Semua Status --</option>
+                        <option value="has_sertifikat" {{ request('filter_dokumen') == 'has_sertifikat' ? 'selected' : '' }}>Sudah Punya Sertifikat</option>
+                        <option value="no_sertifikat" {{ request('filter_dokumen') == 'no_sertifikat' ? 'selected' : '' }}>Belum Punya Sertifikat</option>
+                        <option value="has_sk" {{ request('filter_dokumen') == 'has_sk' ? 'selected' : '' }}>Sudah Punya SK</option>
+                        <option value="no_sk" {{ request('filter_dokumen') == 'no_sk' ? 'selected' : '' }}>Belum Punya SK</option>
+                        <option value="has_both" {{ request('filter_dokumen') == 'has_both' ? 'selected' : '' }}>Lengkap (Sertifikat & SK)</option>
+                        <option value="no_both" {{ request('filter_dokumen') == 'no_both' ? 'selected' : '' }}>Belum Punya Keduanya</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label for="search" style="display: block; margin-bottom: 0.5rem; font-weight: 500;">Cari:</label>
+                    <input type="text" name="search" id="search" class="form-control" placeholder="Nama, Klub, atau Kode" value="{{ request('search') }}" style="width: 250px;">
+                </div>
+
+                <div style="display: flex; gap: 0.5rem;">
+                    <button type="submit" class="btn btn-primary">Filter</button>
+                    @if(request()->hasAny(['filter_kompetisi', 'filter_dokumen', 'search']))
+                        <a href="{{ route('admin.kejuaraan') }}" class="btn" style="background-color: #6c757d; color: white; text-decoration: none;">Reset</a>
+                    @endif
+                </div>
             </form>
 
             @if ($pemenangList->count())

@@ -28,7 +28,34 @@ class WinnerController extends Controller
             $query->where('kompetisi_id', $request->filter_kompetisi);
         }
 
-        $pemenangList = $query->orderBy('nomor_lomba')->paginate(10);
+        if ($request->filled('search')) {
+            $search = $request->search;
+            $query->where(function($q) use ($search) {
+                $q->where('nama', 'LIKE', "%{$search}%")
+                  ->orWhere('club', 'LIKE', "%{$search}%")
+                  ->orWhere('kode', 'LIKE', "%{$search}%")
+                  ->orWhere('nomor_lomba', 'LIKE', "%{$search}%");
+            });
+        }
+
+        if ($request->filled('filter_dokumen')) {
+            $filter = $request->filter_dokumen;
+            if ($filter == 'has_sertifikat') {
+                $query->whereNotNull('certificate_id');
+            } elseif ($filter == 'no_sertifikat') {
+                $query->whereNull('certificate_id');
+            } elseif ($filter == 'has_sk') {
+                $query->whereNotNull('letter_id');
+            } elseif ($filter == 'no_sk') {
+                $query->whereNull('letter_id');
+            } elseif ($filter == 'has_both') {
+                $query->whereNotNull('certificate_id')->whereNotNull('letter_id');
+            } elseif ($filter == 'no_both') {
+                $query->whereNull('certificate_id')->whereNull('letter_id');
+            }
+        }
+
+        $pemenangList = $query->orderBy('nomor_lomba')->paginate(10)->withQueryString();
 
         return view('admin.admin-kejuaraan', compact('kompetisiList', 'pemenangList'));
     }
@@ -63,26 +90,48 @@ class WinnerController extends Controller
         ]);
 
         $jenis = $request->jenis_dokumen;
+        $kompetisiId = $request->input('kompetisi_id');
 
-        // dd($request->file('dokumen'));
+        // Ambil semua pemenang untuk kompetisi ini
+        $winners = Winner::where('kompetisi_id', $kompetisiId)->get();
 
         foreach ($request->file('dokumen') as $file) {
             // Ambil nama file tanpa ekstensi
             $fileName = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
 
-            // Ambil bagian kode di antara tanda '-' pertama dan terakhir
-            $segments = explode('-', $fileName);
-            if (count($segments) < 3) {
-                continue; // Skip jika format tidak valid
-            }
+            // Cari Winner berdasarkan kode yang ada di nama file
+            $winner = $winners->first(function ($w) use ($fileName) {
+                $kodeLower = strtolower($w->kode);
+                $fileNameLower = strtolower($fileName);
+                
+                // Jika nama file sama persis dengan kode
+                if ($fileNameLower === $kodeLower) {
+                    return true;
+                }
+                
+                // Cek apakah nama file dimulai dengan kode + pemisah
+                if (str_starts_with($fileNameLower, $kodeLower . '-') || 
+                    str_starts_with($fileNameLower, $kodeLower . '_') || 
+                    str_starts_with($fileNameLower, $kodeLower . ' ')) {
+                    return true;
+                }
 
+                // Cek apakah nama file berakhiran dengan pemisah + kode
+                if (str_ends_with($fileNameLower, '-' . $kodeLower) || 
+                    str_ends_with($fileNameLower, '_' . $kodeLower) || 
+                    str_ends_with($fileNameLower, ' ' . $kodeLower)) {
+                    return true;
+                }
 
-            // Ambil kode
-            $kode = $segments[1] . '-' . $segments[2]; // "33%2FTBSC-TNG%2FVI%2F2025"
+                // Cek apakah nama file mengandung pemisah + kode + pemisah di tengah
+                if (str_contains($fileNameLower, '-' . $kodeLower . '-') ||
+                    str_contains($fileNameLower, '_' . $kodeLower . '_') ||
+                    str_contains($fileNameLower, ' ' . $kodeLower . ' ')) {
+                    return true;
+                }
 
-            // Cari Winner berdasarkan kode
-            $winner = Winner::where('kode', $kode)->where('kompetisi_id', $request->input('kompetisi_id'))->first();
-
+                return false;
+            });
 
             if (!$winner) {
                 continue; // Skip jika tidak ditemukan
