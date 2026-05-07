@@ -152,8 +152,8 @@ class WinnerController extends Controller
                 continue; // Skip jika tidak ditemukan
             }
 
-            // Simpan file ke storage dengan nama baru
-            $path = $file->storeAs('dokumen_kejuaraan', $newFileName, 'public');
+            // Simpan file ke storage dengan nama hashed (otomatis oleh Laravel)
+            $path = $file->store('dokumen_kejuaraan', 'public');
 
             // Simpan ke model sesuai jenis
             if ($jenis === 'sertifikat') {

@@ -37,7 +37,8 @@
                     <h1>Keterangan Juara</h1>
                     <p class="event-title">{{ $nomorAcara->nama }}</p>
                     <p class="event-subtitle">{{ $kejuaraan->nama }} |
-                        {{ \Carbon\Carbon::parse($kejuaraan->waktu_kompetisi)->format('Y') }}</p>
+                        {{ \Carbon\Carbon::parse($kejuaraan->waktu_kompetisi)->format('Y') }}
+                    </p>
                 </div>
             </div>
         </section>
@@ -85,7 +86,7 @@
                             </div>
                         </div>
                     </div>
-                    
+
                     @if($pemenang->certificate_id != null || $pemenang->letter_id != null)
                         <div class="certificate-actions">
                             @if($pemenang->certificate_id != null)
@@ -118,7 +119,7 @@
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             // Animate certificate card
             setTimeout(() => {
                 document.querySelector('.certificate-card').classList.add('animated');
