@@ -18,11 +18,12 @@ class KompetisiFactory extends Factory
     {
         return [
             'nama' => $this->faker->word,
-            'status' => $this->faker->randomElement(['Registrasi', 'Selesai']),
             'lokasi' => $this->faker->address,
             'deskripsi' => $this->faker->paragraph,
             'buka_pendaftaran' => $this->faker->date(),
             'tutup_pendaftaran' => $this->faker->date(),
+            'waktu_kompetisi' => $this->faker->date(),
+            'kategori' => $this->faker->randomElement(['Resmi', 'Fun']),
         ];
     }
 }
