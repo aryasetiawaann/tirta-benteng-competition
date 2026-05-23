@@ -22,6 +22,16 @@ class AtletImportService
     {
         $spreadsheet = IOFactory::load($filePath);
 
+        $required = ['Info Klub', 'Referensi', 'Input Atlet'];
+        $missing  = array_filter($required, fn($name) => $spreadsheet->getSheetByName($name) === null);
+        if (!empty($missing)) {
+            $found = implode(', ', array_map(fn($s) => '"' . $s->getTitle() . '"', $spreadsheet->getAllSheets()));
+            throw new \RuntimeException(
+                'File tidak sesuai format. Sheet yang dibutuhkan: ' . implode(', ', $required) . '. '
+                . 'Sheet yang ditemukan: ' . $found . '.'
+            );
+        }
+
         $userInfo  = $this->parseInfoKlub($spreadsheet->getSheetByName('Info Klub'));
         $acaraMap  = $this->parseReferensi($spreadsheet->getSheetByName('Referensi'), $kompetisiId);
         $stats     = $this->parseInputAtlet($spreadsheet->getSheetByName('Input Atlet'), $userInfo['user'], $acaraMap);
@@ -134,15 +144,16 @@ class AtletImportService
             ->get()
             ->keyBy('id');
 
-        $athletesNew    = 0;
-        $athletesReused = 0;
-        $registrations  = 0;
-        $totalHarga     = 0;
-        $pesertaIds     = [];
+        $athletesNew       = 0;
+        $athletesReused    = 0;
+        $registrations     = 0;
+        $totalHarga        = 0;
+        $pesertaIds        = [];
+        $registeredAthletes = [];
 
         return DB::transaction(function () use (
             $rows, $user, $acaraMap, $acaraCache,
-            &$athletesNew, &$athletesReused, &$registrations, &$totalHarga, &$pesertaIds
+            &$athletesNew, &$athletesReused, &$registrations, &$totalHarga, &$pesertaIds, &$registeredAthletes
         ) {
             for ($i = 1; $i < count($rows); $i++) {
                 $row  = $rows[$i];
@@ -191,6 +202,7 @@ class AtletImportService
                 }
 
                 // Register Nomor Lomba 1–7 (columns 5–11)
+                $athleteNewLabels = [];
                 for ($col = 5; $col <= 11; $col++) {
                     $label = trim((string)($row[$col] ?? ''));
                     if (empty($label)) continue;
@@ -214,9 +226,14 @@ class AtletImportService
                         'status_pembayaran' => 'Selesai',
                         'waktu_pembayaran'  => now()->toDateString(),
                     ]);
-                    $pesertaIds[]  = $peserta->id;
-                    $totalHarga   += $acara->harga ?? 0;
+                    $pesertaIds[]       = $peserta->id;
+                    $totalHarga        += $acara->harga ?? 0;
                     $registrations++;
+                    $athleteNewLabels[] = $label;
+                }
+
+                if (!empty($athleteNewLabels)) {
+                    $registeredAthletes[] = ['name' => $name, 'events' => $athleteNewLabels];
                 }
             }
 
@@ -233,10 +250,11 @@ class AtletImportService
             }
 
             return [
-                'athletes_new'     => $athletesNew,
-                'athletes_reused'  => $athletesReused,
-                'registrations'    => $registrations,
-                'pembayaran_total' => $totalHarga,
+                'athletes_new'       => $athletesNew,
+                'athletes_reused'    => $athletesReused,
+                'registrations'      => $registrations,
+                'pembayaran_total'   => $totalHarga,
+                'registered_athletes' => $registeredAthletes,
             ];
         });
     }

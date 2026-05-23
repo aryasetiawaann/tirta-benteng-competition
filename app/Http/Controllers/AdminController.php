@@ -87,7 +87,7 @@ class AdminController extends Controller
 
         try {
             $result = (new AtletImportService())->import($fullPath, (int) $request->kompetisi_id);
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             return redirect()->back()->withErrors(['file' => 'Import gagal: ' . $e->getMessage()]);
         } finally {
             @unlink($fullPath);
