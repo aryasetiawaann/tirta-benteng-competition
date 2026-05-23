@@ -67,6 +67,11 @@
                                     <span class="text">Revisi Dokumen</span>
                                 </a>
                             </li>
+                            <li>
+                                <a href="{{ route('admin.import.atlet.form') }}">
+                                    <span class="text">Import Atlet</span>
+                                </a>
+                            </li>
                         </ul>
                     </li>
                     <li>
