@@ -91,4 +91,45 @@ class AtletImportTest extends TestCase
         $this->assertDatabaseCount('users', 1);
         $this->assertEquals($existing->id, $result['user']->id);
     }
+
+    public function test_referensi_builds_label_to_acara_map(): void
+    {
+        $kompetisi = Kompetisi::factory()->create();
+        $acara1 = Acara::factory()->create(['kompetisi_id' => $kompetisi->id, 'harga' => 75000,
+            'kategori' => 'Pria', 'min_umur' => 2015, 'max_umur' => null]);
+        $acara2 = Acara::factory()->create(['kompetisi_id' => $kompetisi->id, 'harga' => 75000,
+            'kategori' => 'Pria', 'min_umur' => 2015, 'max_umur' => null]);
+
+        $path = tempnam(sys_get_temp_dir(), 'import_') . '.xlsx';
+        $this->buildXlsx($acara1->id, $acara2->id, $path);
+        $result = (new AtletImportService())->import($path, $kompetisi->id);
+        @unlink($path);
+
+        // With parseReferensi working, 2 registrations should be created
+        $this->assertEquals(2, $result['registrations']);
+        $this->assertEquals(150000, $result['pembayaran_total']);
+    }
+
+    public function test_skips_already_registered_athlete_event(): void
+    {
+        $kompetisi = Kompetisi::factory()->create();
+        $acara1 = Acara::factory()->create(['kompetisi_id' => $kompetisi->id, 'harga' => 50000,
+            'kategori' => 'Pria', 'min_umur' => 2015, 'max_umur' => null]);
+        $acara2 = Acara::factory()->create(['kompetisi_id' => $kompetisi->id, 'harga' => 50000,
+            'kategori' => 'Pria', 'min_umur' => 2015, 'max_umur' => null]);
+
+        $path = tempnam(sys_get_temp_dir(), 'import_') . '.xlsx';
+        $this->buildXlsx($acara1->id, $acara2->id, $path);
+
+        // Import twice
+        (new AtletImportService())->import($path, $kompetisi->id);
+        $result2 = (new AtletImportService())->import($path, $kompetisi->id);
+        @unlink($path);
+
+        // Second import: athlete reused, 0 new registrations (already registered)
+        $this->assertEquals(0, $result2['athletes_new']);
+        $this->assertEquals(1, $result2['athletes_reused']);
+        $this->assertEquals(0, $result2['registrations']);
+        $this->assertDatabaseCount('acara_atlet', 2); // still only 2, not 4
+    }
 }
