@@ -145,4 +145,18 @@ class AtletImportTest extends TestCase
         $response = $this->actingAs($admin)->get(route('admin.import.atlet.form'));
         $response->assertStatus(200);
     }
+
+    public function test_import_form_rejects_guest(): void
+    {
+        $this->get(route('admin.import.atlet.form'))
+            ->assertRedirect(route('login'));
+    }
+
+    public function test_import_form_rejects_non_admin(): void
+    {
+        $nonAdmin = User::factory()->create(); // role defaults to null/non-admin
+        $this->actingAs($nonAdmin)
+            ->get(route('admin.import.atlet.form'))
+            ->assertRedirect('dashboard');
+    }
 }

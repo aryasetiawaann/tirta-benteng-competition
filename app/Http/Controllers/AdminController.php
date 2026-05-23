@@ -7,6 +7,7 @@ use App\Models\Atlet;
 use App\Models\Peserta;
 use App\Services\AtletImportService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class AdminController extends Controller
 {
@@ -82,7 +83,7 @@ class AdminController extends Controller
         ]);
 
         $path = $request->file('file')->store('imports', 'local');
-        $fullPath = storage_path('app/' . $path);
+        $fullPath = Storage::disk('local')->path($path);
 
         try {
             $result = (new AtletImportService())->import($fullPath, (int) $request->kompetisi_id);
