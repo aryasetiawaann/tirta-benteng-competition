@@ -8,7 +8,6 @@ use App\Models\Pembayaran;
 use App\Models\Peserta;
 use App\Models\User;
 use Carbon\Carbon;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use PhpOffice\PhpSpreadsheet\Shared\Date as XlsxDate;
@@ -57,7 +56,7 @@ class AtletImportService
                 'email'    => $email,
                 'club'     => $clubName,
                 'phone'    => $phone,
-                'password' => Hash::make($plainPassword),
+                'password' => $plainPassword,
             ]);
         }
 

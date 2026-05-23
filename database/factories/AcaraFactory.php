@@ -25,8 +25,8 @@ class AcaraFactory extends Factory
             'harga' => $this->faker->numberBetween(10000, 500000),
             'kuota' => $this->faker->numberBetween(10, 100),
             'grup' => $this->faker->word,
-            'min_umur' => $this->faker->numberBetween(2010, 2018),
-            'max_umur' => $this->faker->numberBetween(2000, 2009),
+            'min_umur' => $this->faker->numberBetween(2000, 2009),
+            'max_umur' => $this->faker->numberBetween(2010, 2018),
         ];
     }
 }

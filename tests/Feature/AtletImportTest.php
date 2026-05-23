@@ -79,7 +79,7 @@ class AtletImportTest extends TestCase
             'kategori' => 'Pria', 'min_umur' => 2015, 'max_umur' => null]);
         $acara2 = Acara::factory()->create(['kompetisi_id' => $kompetisi->id, 'harga' => 0,
             'kategori' => 'Pria', 'min_umur' => 2015, 'max_umur' => null]);
-        User::factory()->create(['email' => 'testclub@example.com']);
+        $existing = User::factory()->create(['email' => 'testclub@example.com']);
 
         $path = tempnam(sys_get_temp_dir(), 'import_') . '.xlsx';
         $this->buildXlsx($acara1->id, $acara2->id, $path);
@@ -89,5 +89,6 @@ class AtletImportTest extends TestCase
         $this->assertFalse($result['user_created']);
         $this->assertNull($result['user_password']);
         $this->assertDatabaseCount('users', 1);
+        $this->assertEquals($existing->id, $result['user']->id);
     }
 }
