@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Kompetisi;
 use App\Models\Atlet;
 use App\Models\Peserta;
+use App\Services\AtletImportService;
 use Illuminate\Http\Request;
 
 class AdminController extends Controller
@@ -65,5 +66,34 @@ class AdminController extends Controller
       ]);
 
       return response()->json(['message' => "$total status pembayaran berhasil diperbarui."]);
+    }
+
+    public function importAtletForm()
+    {
+        $kompetisis = Kompetisi::orderBy('id', 'desc')->get();
+        return view('admin.admin-import-atlet', compact('kompetisis'));
+    }
+
+    public function importAtlet(Request $request)
+    {
+        $request->validate([
+            'kompetisi_id' => 'required|exists:kompetisi,id',
+            'file'         => 'required|file|mimes:xlsx',
+        ]);
+
+        $path = $request->file('file')->store('imports', 'local');
+        $fullPath = storage_path('app/' . $path);
+
+        try {
+            $result = (new AtletImportService())->import($fullPath, (int) $request->kompetisi_id);
+        } catch (\Exception $e) {
+            return redirect()->back()->withErrors(['file' => 'Import gagal: ' . $e->getMessage()]);
+        } finally {
+            @unlink($fullPath);
+        }
+
+        return redirect()
+            ->route('admin.import.atlet.form')
+            ->with('import_result', $result);
     }
 }

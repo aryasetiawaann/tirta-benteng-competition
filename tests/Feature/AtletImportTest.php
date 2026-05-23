@@ -132,4 +132,17 @@ class AtletImportTest extends TestCase
         $this->assertEquals(0, $result2['registrations']);
         $this->assertDatabaseCount('acara_atlet', 2); // still only 2, not 4
     }
+
+    public function test_import_form_is_accessible_as_admin(): void
+    {
+        $admin = User::factory()->create();
+        // role is not fillable — update directly
+        \Illuminate\Support\Facades\DB::table('users')
+            ->where('id', $admin->id)
+            ->update(['role' => 'admin']);
+        $admin->refresh();
+
+        $response = $this->actingAs($admin)->get(route('admin.import.atlet.form'));
+        $response->assertStatus(200);
+    }
 }
