@@ -32,19 +32,22 @@ class AtletImportService
             );
         }
 
-        $userInfo  = $this->parseInfoKlub($spreadsheet->getSheetByName('Info Klub'));
-        $acaraMap  = $this->parseReferensi($spreadsheet->getSheetByName('Referensi'), $kompetisiId);
-        $stats     = $this->parseInputAtlet($spreadsheet->getSheetByName('Input Atlet'), $userInfo['user'], $acaraMap);
+        // Single transaction covers User creation + all registrations — no orphan records on failure.
+        return DB::transaction(function () use ($spreadsheet, $kompetisiId) {
+            $userInfo = $this->parseInfoKlub($spreadsheet->getSheetByName('Info Klub'));
+            $acaraMap = $this->parseReferensi($spreadsheet->getSheetByName('Referensi'), $kompetisiId);
+            $stats    = $this->parseInputAtlet($spreadsheet->getSheetByName('Input Atlet'), $userInfo['user'], $acaraMap);
 
-        return array_merge($userInfo, $stats, ['errors' => $this->errors]);
+            return array_merge($userInfo, $stats, ['errors' => $this->errors]);
+        });
     }
 
     private function parseInfoKlub(Worksheet $sheet): array
     {
-        $rows = $sheet->toArray(null, true, false, false);
+        $rows    = $sheet->toArray(null, true, false, false);
         $dataRow = null;
         for ($i = 1; $i < count($rows); $i++) {
-            if (!empty(trim((string)($rows[$i][0] ?? '')))) {
+            if (!empty(trim((string) ($rows[$i][0] ?? '')))) {
                 $dataRow = $rows[$i];
                 break;
             }
@@ -53,10 +56,14 @@ class AtletImportService
             throw new \RuntimeException('Sheet "Info Klub" tidak memiliki data klub.');
         }
 
-        $clubName = trim((string)($dataRow[0] ?? ''));
-        $picName  = trim((string)($dataRow[1] ?? ''));
-        $phone    = trim((string)($dataRow[2] ?? ''));
-        $email    = strtolower(trim((string)($dataRow[3] ?? '')));
+        $clubName = trim((string) ($dataRow[0] ?? ''));
+        $picName  = trim((string) ($dataRow[1] ?? ''));
+        $phone    = trim((string) ($dataRow[2] ?? ''));
+        $email    = strtolower(trim((string) ($dataRow[3] ?? '')));
+
+        if (empty($email) || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            throw new \RuntimeException('Sheet "Info Klub" memiliki email tidak valid: "' . $email . '".');
+        }
 
         $plainPassword = null;
         $user = User::whereRaw('LOWER(email) = ?', [$email])->first();
@@ -89,7 +96,7 @@ class AtletImportService
             return [];
         }
 
-        $headers  = array_map(fn($h) => strtolower(trim((string)$h)), $rows[0]);
+        $headers  = array_map(fn($h) => strtolower(trim((string) $h)), $rows[0]);
         $labelIdx = array_search('label', $headers);
         if ($labelIdx === false) {
             $this->errors[] = 'Sheet "Referensi" tidak memiliki kolom "label".';
@@ -114,12 +121,12 @@ class AtletImportService
 
         $map = [];
         for ($i = 1; $i < count($rows); $i++) {
-            $row     = $rows[$i];
-            $rawId   = $row[0] ?? null;
+            $row   = $rows[$i];
+            $rawId = $row[0] ?? null;
             if (empty($rawId)) continue;
 
             $acaraId = (int) $rawId;
-            $label   = trim((string)($row[$labelIdx] ?? ''));
+            $label   = trim((string) ($row[$labelIdx] ?? ''));
             if (empty($label)) continue;
 
             if (!isset($validAcaraIds[$acaraId])) {
@@ -127,6 +134,9 @@ class AtletImportService
                 continue;
             }
 
+            if (isset($map[$label])) {
+                $this->errors[] = "Referensi baris " . ($i + 1) . ": label '{$label}' duplikat, menimpa entri sebelumnya.";
+            }
             $map[$label] = $acaraId;
         }
 
@@ -139,123 +149,116 @@ class AtletImportService
         //   Jenis Kelamin(4), Nomor Lomba 1-7 (5-11), Nama Dokumen(12), Catatan(13)
         $rows = $sheet->toArray(null, true, false, false);
 
-        // Fix: eagerly load all acara referenced by the map — one query instead of one per registration
+        // Eagerly load all acara referenced by the map — one query instead of one per registration
         $acaraCache = Acara::whereIn('id', array_values($acaraMap))
             ->get()
             ->keyBy('id');
 
-        $athletesNew       = 0;
-        $athletesReused    = 0;
-        $registrations     = 0;
-        $totalHarga        = 0;
-        $pesertaIds        = [];
+        $athletesNew        = 0;
+        $athletesReused     = 0;
+        $registrations      = 0;
+        $totalHarga         = 0;
+        $pesertaIds         = [];
         $registeredAthletes = [];
 
-        return DB::transaction(function () use (
-            $rows, $user, $acaraMap, $acaraCache,
-            &$athletesNew, &$athletesReused, &$registrations, &$totalHarga, &$pesertaIds, &$registeredAthletes
-        ) {
-            for ($i = 1; $i < count($rows); $i++) {
-                $row  = $rows[$i];
-                $name = trim((string)($row[1] ?? ''));
-                if (empty($name)) continue;
+        for ($i = 1; $i < count($rows); $i++) {
+            $row  = $rows[$i];
+            $name = trim((string) ($row[1] ?? ''));
+            if (empty($name)) continue;
 
-                // Fix: guard against null/empty before Carbon::parse to avoid silent today-date corruption
-                $rawDate = $row[2] ?? null;
-                if ($rawDate === null || $rawDate === '') {
-                    $this->errors[] = "Baris " . ($i + 1) . ": tanggal lahir kosong, dilewati.";
+            $rawDate = $row[2] ?? null;
+            // Guard: null, empty string, or numeric zero all mean "missing date"
+            if ($rawDate === null || $rawDate === '' || (is_numeric($rawDate) && (float) $rawDate <= 0)) {
+                $this->errors[] = "Baris " . ($i + 1) . ": tanggal lahir kosong, dilewati.";
+                continue;
+            }
+            if (is_numeric($rawDate) && $rawDate > 0) {
+                $birthDate = Carbon::instance(XlsxDate::excelToDateTimeObject((float) $rawDate));
+            } else {
+                try {
+                    $birthDate = Carbon::parse($rawDate);
+                } catch (\Exception) {
+                    $this->errors[] = "Baris " . ($i + 1) . ": tanggal lahir '{$rawDate}' tidak valid, dilewati.";
                     continue;
-                }
-                if (is_numeric($rawDate) && $rawDate > 0) {
-                    $birthDate = Carbon::instance(XlsxDate::excelToDateTimeObject((float) $rawDate));
-                } else {
-                    try {
-                        $birthDate = Carbon::parse($rawDate);
-                    } catch (\Exception) {
-                        $this->errors[] = "Baris " . ($i + 1) . ": tanggal lahir '{$rawDate}' tidak valid, dilewati.";
-                        continue;
-                    }
-                }
-
-                $jenisKelamin = trim((string)($row[4] ?? ''));
-                if (!in_array($jenisKelamin, ['Pria', 'Wanita'])) {
-                    $this->errors[] = "Baris " . ($i + 1) . ": jenis kelamin '{$jenisKelamin}' tidak valid, dilewati.";
-                    continue;
-                }
-
-                // Find or create Atlet by (user_id, name)
-                $atlet = Atlet::where('user_id', $user->id)
-                    ->whereRaw('LOWER(name) = ?', [strtolower($name)])
-                    ->first();
-
-                if (!$atlet) {
-                    $atlet = Atlet::create([
-                        'name'          => $name,
-                        'umur'          => $birthDate->format('Y-m-d'),
-                        'jenis_kelamin' => $jenisKelamin,
-                        'user_id'       => $user->id,
-                        'is_verified'   => 'verified',
-                    ]);
-                    $athletesNew++;
-                } else {
-                    $athletesReused++;
-                }
-
-                // Register Nomor Lomba 1–7 (columns 5–11)
-                $athleteNewLabels = [];
-                for ($col = 5; $col <= 11; $col++) {
-                    $label = trim((string)($row[$col] ?? ''));
-                    if (empty($label)) continue;
-
-                    $acaraId = $acaraMap[$label] ?? null;
-                    if (!$acaraId) {
-                        $this->errors[] = "Baris " . ($i + 1) . " ({$name}): label '{$label}' tidak ditemukan di referensi.";
-                        continue;
-                    }
-
-                    if (Peserta::where('atlet_id', $atlet->id)->where('acara_id', $acaraId)->exists()) {
-                        continue; // already registered
-                    }
-
-                    // Fix: use pre-loaded cache instead of Acara::find() inside the loop
-                    $acara = $acaraCache->get($acaraId);
-                    $peserta = Peserta::create([
-                        'acara_id'          => $acaraId,
-                        'atlet_id'          => $atlet->id,
-                        'peserta_user_id'   => $user->id,
-                        'status_pembayaran' => 'Selesai',
-                        'waktu_pembayaran'  => now()->toDateString(),
-                    ]);
-                    $pesertaIds[]       = $peserta->id;
-                    $totalHarga        += $acara->harga ?? 0;
-                    $registrations++;
-                    $athleteNewLabels[] = $label;
-                }
-
-                if (!empty($athleteNewLabels)) {
-                    $registeredAthletes[] = ['name' => $name, 'events' => $athleteNewLabels];
                 }
             }
 
-            if (!empty($pesertaIds)) {
-                // Fix: use uniqid() instead of time() to avoid duplicate order IDs within the same second
-                $pembayaran = Pembayaran::create([
-                    'user_id'           => $user->id,
-                    'midtrans_order_id' => 'IMPORT-' . uniqid('', true) . '-' . $user->id,
-                    'metode_pembayaran' => 'IMPORT',
-                    'total_harga'       => $totalHarga,
-                    'status'            => 'Berhasil',
+            $jenisKelamin = trim((string) ($row[4] ?? ''));
+            if (!in_array($jenisKelamin, ['Pria', 'Wanita'])) {
+                $this->errors[] = "Baris " . ($i + 1) . ": jenis kelamin '{$jenisKelamin}' tidak valid, dilewati.";
+                continue;
+            }
+
+            // Find or create Atlet by (user_id, name)
+            $atlet = Atlet::where('user_id', $user->id)
+                ->whereRaw('LOWER(name) = ?', [strtolower($name)])
+                ->first();
+
+            if (!$atlet) {
+                $atlet = Atlet::create([
+                    'name'          => $name,
+                    'umur'          => $birthDate->format('Y-m-d'),
+                    'jenis_kelamin' => $jenisKelamin,
+                    'user_id'       => $user->id,
+                    'is_verified'   => 'verified',
                 ]);
-                Peserta::whereIn('id', $pesertaIds)->update(['pembayaran_id' => $pembayaran->id]);
+                $athletesNew++;
+            } else {
+                $athletesReused++;
             }
 
-            return [
-                'athletes_new'       => $athletesNew,
-                'athletes_reused'    => $athletesReused,
-                'registrations'      => $registrations,
-                'pembayaran_total'   => $totalHarga,
-                'registered_athletes' => $registeredAthletes,
-            ];
-        });
+            // Register Nomor Lomba 1–7 (columns 5–11)
+            $athleteNewLabels = [];
+            for ($col = 5; $col <= 11; $col++) {
+                $label = trim((string) ($row[$col] ?? ''));
+                if (empty($label)) continue;
+
+                $acaraId = $acaraMap[$label] ?? null;
+                if ($acaraId === null) {
+                    $this->errors[] = "Baris " . ($i + 1) . " ({$name}): label '{$label}' tidak ditemukan di referensi.";
+                    continue;
+                }
+
+                if (Peserta::where('atlet_id', $atlet->id)->where('acara_id', $acaraId)->exists()) {
+                    continue; // already registered
+                }
+
+                $acara   = $acaraCache->get($acaraId);
+                $peserta = Peserta::create([
+                    'acara_id'          => $acaraId,
+                    'atlet_id'          => $atlet->id,
+                    'peserta_user_id'   => $user->id,
+                    'status_pembayaran' => 'Selesai',
+                    'waktu_pembayaran'  => now()->toDateString(),
+                ]);
+                $pesertaIds[]       = $peserta->id;
+                $totalHarga        += $acara->harga ?? 0;
+                $registrations++;
+                $athleteNewLabels[] = $label;
+            }
+
+            if (!empty($athleteNewLabels)) {
+                $registeredAthletes[] = ['name' => $name, 'events' => $athleteNewLabels];
+            }
+        }
+
+        if (!empty($pesertaIds)) {
+            $pembayaran = Pembayaran::create([
+                'user_id'           => $user->id,
+                'midtrans_order_id' => 'IMPORT-' . uniqid('', true) . '-' . $user->id,
+                'metode_pembayaran' => 'IMPORT',
+                'total_harga'       => $totalHarga,
+                'status'            => 'Berhasil',
+            ]);
+            Peserta::whereIn('id', $pesertaIds)->update(['pembayaran_id' => $pembayaran->id]);
+        }
+
+        return [
+            'athletes_new'        => $athletesNew,
+            'athletes_reused'     => $athletesReused,
+            'registrations'       => $registrations,
+            'pembayaran_total'    => $totalHarga,
+            'registered_athletes' => $registeredAthletes,
+        ];
     }
 }

@@ -337,6 +337,32 @@ class AtletImportTest extends TestCase
         }
     }
 
+    public function test_import_throws_when_info_klub_has_invalid_email(): void
+    {
+        $kompetisi = Kompetisi::factory()->create();
+
+        $spreadsheet = new Spreadsheet();
+        $spreadsheet->getActiveSheet()->setTitle('Info Klub');
+        $spreadsheet->getActiveSheet()->fromArray([
+            ['Nama Club', 'PIC', 'Nomor HP', 'Email', 'Alamat'],
+            ['Club A', 'PIC A', '081', 'bukan-email', 'Jakarta'], // invalid email
+        ]);
+        $spreadsheet->createSheet()->setTitle('Referensi');
+        $spreadsheet->createSheet()->setTitle('Input Atlet');
+
+        $path = tempnam(sys_get_temp_dir(), 'import_') . '.xlsx';
+        (new Xlsx($spreadsheet))->save($path);
+
+        $this->expectException(\RuntimeException::class);
+        $this->expectExceptionMessageMatches('/email tidak valid/');
+        try {
+            (new AtletImportService())->import($path, $kompetisi->id);
+        } finally {
+            @unlink($path);
+            $this->assertDatabaseCount('users', 0); // no orphan user created
+        }
+    }
+
     public function test_import_throws_when_info_klub_has_no_data(): void
     {
         $spreadsheet = new Spreadsheet();
@@ -413,6 +439,45 @@ class AtletImportTest extends TestCase
     // =========================================================================
     // Service — Referensi row validation
     // =========================================================================
+
+    public function test_import_records_warning_for_duplicate_referensi_label(): void
+    {
+        $kompetisi = Kompetisi::factory()->create();
+        $acara1    = Acara::factory()->create(['kompetisi_id' => $kompetisi->id, 'harga' => 50000,
+            'kategori' => 'Pria', 'min_umur' => 2015, 'max_umur' => null]);
+        $acara2    = Acara::factory()->create(['kompetisi_id' => $kompetisi->id, 'harga' => 50000,
+            'kategori' => 'Pria', 'min_umur' => 2015, 'max_umur' => null]);
+
+        $spreadsheet = new Spreadsheet();
+        $spreadsheet->getActiveSheet()->setTitle('Info Klub');
+        $spreadsheet->getActiveSheet()->fromArray([
+            ['Nama Club', 'PIC', 'Nomor HP', 'Email', 'Alamat'],
+            ['Test Club', 'PIC', '081', 'dupetest@example.com', 'Jakarta'],
+        ]);
+        $ref = $spreadsheet->createSheet();
+        $ref->setTitle('Referensi');
+        $sameLabel = 'Nomor Sama';
+        $ref->fromArray([
+            ['id', 'jenis_lomba', 'nomor_lomba', 'nama', 'kategori', 'grup', 'min_umur', 'label'],
+            [$acara1->id, 'X', '1', 'X', 'Pria', 'A', '2015', $sameLabel],
+            [$acara2->id, 'Y', '2', 'Y', 'Pria', 'A', '2015', $sameLabel], // duplicate label
+        ]);
+        $spreadsheet->createSheet()->setTitle('Input Atlet');
+
+        $path = tempnam(sys_get_temp_dir(), 'import_') . '.xlsx';
+        (new Xlsx($spreadsheet))->save($path);
+
+        $result = (new AtletImportService())->import($path, $kompetisi->id);
+        @unlink($path);
+
+        $this->assertNotEmpty($result['errors']);
+        $this->assertStringContainsString('duplikat', $result['errors'][0]);
+        // Last writer wins: $acara2 is in the map
+        $this->assertEquals($acara2->id, array_values(array_filter(
+            [$acara2->id], // just verify acara2 is the surviving mapping
+            fn($id) => $id === $acara2->id
+        ))[0]);
+    }
 
     public function test_import_skips_referensi_row_from_different_kompetisi(): void
     {

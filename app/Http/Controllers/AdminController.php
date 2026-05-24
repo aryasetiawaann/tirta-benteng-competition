@@ -79,7 +79,7 @@ class AdminController extends Controller
     {
         $request->validate([
             'kompetisi_id' => 'required|exists:kompetisi,id',
-            'file'         => 'required|file|mimes:xlsx',
+            'file'         => 'required|file|mimes:xlsx|max:10240',
         ]);
 
         $path = $request->file('file')->store('imports', 'local');
@@ -92,6 +92,8 @@ class AdminController extends Controller
         } finally {
             @unlink($fullPath);
         }
+
+        unset($result['user']); // strip Eloquent model — blade only needs the scalar fields
 
         return redirect()
             ->route('admin.import.atlet.form')
