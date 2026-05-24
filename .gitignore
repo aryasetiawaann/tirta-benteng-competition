@@ -18,3 +18,9 @@ yarn-error.log
 /.idea
 /.vscode
 /_backup_database
+.claude
+*.xlsx
+CLAUDE.md
+*.sql
+docs/
+graphify-out/

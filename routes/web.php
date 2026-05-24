@@ -144,6 +144,9 @@ Route::middleware(['auth','role:admin'])->group(function () {
     Route::post('admin/dashboard/kejuaraan', [WinnerController::class, 'store'])->name('admin.kejuaraan.store');
     Route::post('admin/dashboard/kejuaraan/input-dokumen', [WinnerController::class, 'inputDokumen'])
     ->name('admin.kejuaraan.input-doc');
+
+    Route::get('/admin/dashboard/import-atlet', [AdminController::class, 'importAtletForm'])->name('admin.import.atlet.form');
+    Route::post('/admin/dashboard/import-atlet', [AdminController::class, 'importAtlet'])->name('admin.import.atlet');
 });
 
 Route::get('/api/provinces', function () {

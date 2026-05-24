@@ -12,6 +12,10 @@ return new class extends Migration
      */
     public function up(): void
     {
+        // SQLite does not support MODIFY / ENUM — skip on non-MySQL connections
+        if (DB::getDriverName() !== 'mysql') {
+            return;
+        }
         // Update enum dengan menambahkan 'need revision'
         DB::statement("ALTER TABLE atlets MODIFY is_verified ENUM('not verified', 'verified', 'need revision') DEFAULT 'not verified'");
     }
@@ -21,6 +25,9 @@ return new class extends Migration
      */
     public function down(): void
     {
+        if (DB::getDriverName() !== 'mysql') {
+            return;
+        }
         // Pastikan tidak ada data 'need revision' sebelum rollback
         DB::table('atlets')
             ->where('is_verified', 'need revision')
