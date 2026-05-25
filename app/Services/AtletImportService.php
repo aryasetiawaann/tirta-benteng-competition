@@ -66,7 +66,22 @@ class AtletImportService
         }
 
         $plainPassword = null;
-        $user = User::whereRaw('LOWER(email) = ?', [$email])->first();
+        $userByEmail = User::whereRaw('LOWER(email) = ?', [$email])->first();
+        $userByClub  = User::whereRaw('LOWER(club) = ?', [strtolower($clubName)])->first();
+
+        if ($userByEmail && strtolower($userByEmail->club) !== strtolower($clubName)) {
+            throw new \RuntimeException(
+                'Email "' . $email . '" sudah terdaftar untuk klub "' . $userByEmail->club . '", bukan "' . $clubName . '".'
+            );
+        }
+
+        if ($userByClub && strtolower($userByClub->email) !== $email) {
+            throw new \RuntimeException(
+                'Klub "' . $clubName . '" sudah terdaftar dengan email "' . $userByClub->email . '", bukan "' . $email . '".'
+            );
+        }
+
+        $user = $userByEmail ?? $userByClub;
         if (!$user) {
             $plainPassword = Str::random(12);
             $user = User::create([
