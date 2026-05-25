@@ -1,0 +1,28 @@
+name: Deploy to Production
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Deploy via SSH
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          port: ${{ secrets.SSH_PORT }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            cd ~/domains/speedzone.id
+            git pull origin main
+            if git diff HEAD@{1} HEAD --name-only 2>/dev/null | grep -q composer.lock; then
+              composer install --no-dev --optimize-autoloader --no-interaction
+            fi
+            php artisan config:cache
+            php artisan view:cache
+            php artisan route:cache
