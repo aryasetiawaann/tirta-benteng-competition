@@ -98,9 +98,12 @@
 
             selectAllCheckbox.addEventListener("click", function() {
                 checkboxes.forEach(checkbox => {
-                    checkbox.checked = selectAllCheckbox.checked;
-                    updateTotalAtlet();
+                    const row = checkbox.closest('tr');
+                    if (row && row.style.display !== 'none') {
+                        checkbox.checked = selectAllCheckbox.checked;
+                    }
                 });
+                updateTotalAtlet();
             });
 
             checkboxes.forEach(checkbox => {
@@ -112,7 +115,10 @@
                 let checkedCheckboxes = document.querySelectorAll(".checkbox_ids:checked");
 
                 checkedCheckboxes.forEach(checkbox => {
-                    selectedIds.push(checkbox.value);
+                    const row = checkbox.closest('tr');
+                    if (row && row.style.display !== 'none') {
+                        selectedIds.push(checkbox.value);
+                    }
                 });
 
                 if (selectedIds.length === 0) {
@@ -143,7 +149,10 @@
 
 
             function updateTotalAtlet() {
-                let checkedCheckboxes = document.querySelectorAll(".checkbox_ids:checked");
+                let checkedCheckboxes = Array.from(document.querySelectorAll(".checkbox_ids:checked")).filter(cb => {
+                    const row = cb.closest('tr');
+                    return row && row.style.display !== 'none';
+                });
                 let totalAtlet = checkedCheckboxes.length;
 
 
