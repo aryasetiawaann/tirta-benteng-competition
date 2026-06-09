@@ -39,7 +39,7 @@
             atlet
         </label>
         <input type="text" id="search" placeholder="Cari..." value="{{ $search }}">
-        <div class="table-scroll">
+        <div class="table-scroll" data-server-paginated>
             <table>
                 <thead>
                     <tr>
