@@ -50,7 +50,7 @@ class AtletController extends Controller
     {
         $atlet = Atlet::findOrFail($id);
 
-        if ($atlet->user_id !== auth()->id()) {
+        if ($atlet->user_id !== auth()->id() && auth()->user()->role !== 'admin') {
             abort(403);
         }
 
@@ -78,7 +78,7 @@ class AtletController extends Controller
     {
         $atlet = Atlet::findOrFail($id);
 
-        if ($atlet->user_id !== auth()->id()) {
+        if ($atlet->user_id !== auth()->id() && auth()->user()->role !== 'admin') {
             abort(403);
         }
 
