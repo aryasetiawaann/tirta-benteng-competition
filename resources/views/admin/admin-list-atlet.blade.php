@@ -1,4 +1,10 @@
 @extends('admin.admin-dashboard-layout')
+@section('style')
+<style>
+    .pagination a { text-decoration: none; }
+    .pagination a button { cursor: pointer; }
+</style>
+@endsection
 @section('content')
 <div class="main-content">
     @if (session('success'))
@@ -25,16 +31,14 @@
     </header>
     <div class="table-container">
         <label for="entries">Tampilkan
-            <select id="entries" name="entries">
-                <option value="5">5</option>
-                <option value="10">10</option>
-                <option value="25">25</option>
-                <option value="50">50</option>
-                <option value="100">100</option>
-            </select> 
+            <select id="entries" onchange="changePerPage(this.value)">
+                @foreach([5, 10, 25, 50, 100] as $opt)
+                    <option value="{{ $opt }}" {{ $perPage == $opt ? 'selected' : '' }}>{{ $opt }}</option>
+                @endforeach
+            </select>
             atlet
         </label>
-        <input type="text" id="search" placeholder="Cari...">
+        <input type="text" id="search" placeholder="Cari..." value="{{ $search }}">
         <div class="table-scroll">
             <table>
                 <thead>
@@ -53,7 +57,7 @@
                 <tbody>
                   @forelse ($atlets as $atlet)
                     <tr>
-                      <td>{{ $loop->iteration }}</td>
+                      <td>{{ ($atlets->currentPage() - 1) * $atlets->perPage() + $loop->iteration }}</td>
                       <td>{{ $atlet->name }}</td>
                       <td>{{ \Carbon\Carbon::parse($atlet->umur)->format('d M Y') }}</td>
                       <td>{{ now()->diffInYears(\Carbon\Carbon::parse($atlet->umur)) }}</td>
@@ -95,7 +99,6 @@
                             </button>
                           </form>
                         </div>
-                        </a>
                       </td>
                     </tr>
                   @empty
@@ -107,12 +110,48 @@
             </table>
         </div>
         <div class="pagination">
-            <button class="prev" disabled>Sebelumnya</button>
-            <div class="page-numbers"></div>
-            <button class="next" disabled>Selanjutnya</button>
+            @if($atlets->onFirstPage())
+                <button class="prev" disabled>Sebelumnya</button>
+            @else
+                <a href="{{ $atlets->previousPageUrl() }}"><button class="prev">Sebelumnya</button></a>
+            @endif
+            <div class="page-numbers">
+                @for($i = max(1, $atlets->currentPage() - 2); $i <= min($atlets->lastPage(), $atlets->currentPage() + 2); $i++)
+                    <a href="{{ $atlets->url($i) }}">
+                        <span class="page-number {{ $i == $atlets->currentPage() ? 'current' : '' }}">{{ $i }}</span>
+                    </a>
+                @endfor
+            </div>
+            @if($atlets->hasMorePages())
+                <a href="{{ $atlets->nextPageUrl() }}"><button class="next">Selanjutnya</button></a>
+            @else
+                <button class="next" disabled>Selanjutnya</button>
+            @endif
         </div>
     </div>
 </section>
 
 </div>
+
+<script>
+    let searchTimeout;
+    document.getElementById('search').addEventListener('input', function () {
+        clearTimeout(searchTimeout);
+        const val = this.value;
+        searchTimeout = setTimeout(function () {
+            const params = new URLSearchParams(window.location.search);
+            if (val) params.set('search', val);
+            else params.delete('search');
+            params.delete('page');
+            window.location.href = window.location.pathname + '?' + params.toString();
+        }, 500);
+    });
+
+    function changePerPage(value) {
+        const params = new URLSearchParams(window.location.search);
+        params.set('perPage', value);
+        params.delete('page');
+        window.location.href = window.location.pathname + '?' + params.toString();
+    }
+</script>
 @endsection
