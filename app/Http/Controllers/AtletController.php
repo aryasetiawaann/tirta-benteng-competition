@@ -30,7 +30,11 @@ class AtletController extends Controller
 
     public function deleteDocument($id)
     {
-        $atlet = Atlet::find($id);
+        $atlet = Atlet::findOrFail($id);
+
+        if ($atlet->user_id !== auth()->id()) {
+            abort(403);
+        }
 
         if ($atlet->dokumen && File::exists(public_path($atlet->dokumen))) {
             File::delete(public_path($atlet->dokumen));
@@ -44,7 +48,15 @@ class AtletController extends Controller
 
     public function downloadDocument($id)
     {
-        $atlet = Atlet::find($id);
+        $atlet = Atlet::findOrFail($id);
+
+        if ($atlet->user_id !== auth()->id() && auth()->user()->role !== 'admin') {
+            abort(403);
+        }
+
+        if (!$atlet->dokumen) {
+            abort(404);
+        }
 
         $path = public_path($atlet->dokumen);
 
@@ -57,16 +69,22 @@ class AtletController extends Controller
 
         $response = Response::make($file, 200);
         $response->header("Content-Type", $type);
-
         $response->header("Content-Disposition", 'attachment; filename=Dokumen'.$atlet->name.".pdf");
 
         return $response;
-
     }
 
     public function viewDocument($id)
     {
-        $atlet = Atlet::find($id);
+        $atlet = Atlet::findOrFail($id);
+
+        if ($atlet->user_id !== auth()->id() && auth()->user()->role !== 'admin') {
+            abort(403);
+        }
+
+        if (!$atlet->dokumen) {
+            abort(404);
+        }
 
         $path = public_path($atlet->dokumen);
 
@@ -79,7 +97,6 @@ class AtletController extends Controller
 
         $response = Response::make($file, 200);
         $response->header("Content-Type", $type);
-
         $response->header("Content-Disposition", 'inline; filename=Dokumen_' . $atlet->name . ".pdf");
 
         return $response;

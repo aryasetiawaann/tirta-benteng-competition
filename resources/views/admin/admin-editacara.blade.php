@@ -56,10 +56,10 @@
                     <option value="400m gaya bebas" {{ $acara->jenis_lomba === "400m gaya bebas" ? "selected" : "" }}>400m Gaya Bebas</option>
                     <option value="800m gaya bebas" {{ $acara->jenis_lomba === "800m gaya bebas" ? "selected" : "" }}>800m Gaya Bebas</option>
                     <option value="1500m gaya bebas" {{ $acara->jenis_lomba === "1500m gaya bebas" ? "selected" : "" }}>1500m Gaya Bebas</option>
-                    <option value="25m fins gaya kupu-kupu" {{ $acara->jenis_lomba === "25m fins gaya kupu-kupu" ? "selected" : "" }}>25m Fins Gaya Kupu-Kupu</option>
-                    <option value="50m fins gaya kupu-kupu" {{ $acara->jenis_lomba === "50m fins gaya kupu-kupu" ? "selected" : "" }}>50m Fins Gaya Kupu-Kupu</option>
                     <option value="25m gaya kupu-kupu" {{ $acara->jenis_lomba === "25m gaya kupu-kupu" ? "selected" : "" }}>25m Gaya Kupu-Kupu</option>
+                    <option value="25m fins gaya kupu-kupu" {{ $acara->jenis_lomba === "25m fins gaya kupu-kupu" ? "selected" : "" }}>25m Fins Gaya Kupu-Kupu</option>
                     <option value="50m gaya kupu-kupu" {{ $acara->jenis_lomba === "50m gaya kupu-kupu" ? "selected" : "" }}>50m Gaya Kupu-Kupu</option>
+                    <option value="50m fins gaya kupu-kupu" {{ $acara->jenis_lomba === "50m fins gaya kupu-kupu" ? "selected" : "" }}>50m Fins Gaya Kupu-Kupu</option>
                     <option value="100m gaya kupu-kupu" {{ $acara->jenis_lomba === "100m gaya kupu-kupu" ? "selected" : "" }}>100m Gaya Kupu-Kupu</option>
                     <option value="200m gaya kupu-kupu" {{ $acara->jenis_lomba === "200m gaya kupu-kupu" ? "selected" : "" }}>200m Gaya Kupu-Kupu</option>
                     <option value="25m gaya punggung" {{ $acara->jenis_lomba === "25m gaya punggung" ? "selected" : "" }}>25m Gaya Punggung</option>
@@ -67,22 +67,25 @@
                     <option value="100m gaya punggung" {{ $acara->jenis_lomba === "100m gaya punggung" ? "selected" : "" }}>100m Gaya Punggung</option>
                     <option value="200m gaya punggung" {{ $acara->jenis_lomba === "200m gaya punggung" ? "selected" : "" }}>200m Gaya Punggung</option>
                     <option value="25m gaya dada" {{ $acara->jenis_lomba === "25m gaya dada" ? "selected" : "" }}>25m Gaya Dada</option>
+                    <option value="25m papan gaya dada" {{ $acara->jenis_lomba === "25m papan gaya dada" ? "selected" : "" }}>25m Papan Gaya Dada</option>
                     <option value="50m gaya dada" {{ $acara->jenis_lomba === "50m gaya dada" ? "selected" : "" }}>50m Gaya Dada</option>
+                    <option value="50m papan gaya dada" {{ $acara->jenis_lomba === "50m papan gaya dada" ? "selected" : "" }}>50m Papan Gaya Dada</option>
                     <option value="100m gaya dada" {{ $acara->jenis_lomba === "100m gaya dada" ? "selected" : "" }}>100m Gaya Dada</option>
+                    <option value="100m papan gaya dada" {{ $acara->jenis_lomba === "100m papan gaya dada" ? "selected" : "" }}>100m Papan Gaya Dada</option>
                     <option value="200m gaya dada" {{ $acara->jenis_lomba === "200m gaya dada" ? "selected" : "" }}>200m Gaya Dada</option>
                     <option value="200m gaya ganti" {{ $acara->jenis_lomba === "200m gaya ganti" ? "selected" : "" }}>200m Gaya Ganti</option>
                     <option value="400m gaya ganti" {{ $acara->jenis_lomba === "400m gaya ganti" ? "selected" : "" }}>400m Gaya Ganti</option>
                     <option value="25m bifin" {{ $acara->jenis_lomba === "25m bifin" ? "selected" : "" }}>25m Bifin</option>
                     <option value="25m bifin board" {{ $acara->jenis_lomba === "25m bifin board" ? "selected" : "" }}>25m Bifin Board</option>
-                    <option value="50m snorkling bifin" {{ $acara->jenis_lomba === "50m snorkling bifin" ? "selected" : "" }}>50m Snorkling Bifin</option>
-                    <option value="50m bifin board" {{ $acara->jenis_lomba === "50m bifin board" ? "selected" : "" }}>50m Bifin Board</option>
                     <option value="50m bifin" {{ $acara->jenis_lomba === "50m bifin" ? "selected" : "" }}>50m Bifin</option>
+                    <option value="50m bifin board" {{ $acara->jenis_lomba === "50m bifin board" ? "selected" : "" }}>50m Bifin Board</option>
+                    <option value="50m snorkling bifin" {{ $acara->jenis_lomba === "50m snorkling bifin" ? "selected" : "" }}>50m Snorkling Bifin</option>
                     <option value="100m bifin" {{ $acara->jenis_lomba === "100m bifin" ? "selected" : "" }}>100m Bifin</option>
                     <option value="200m bifin" {{ $acara->jenis_lomba === "200m bifin" ? "selected" : "" }}>200m Bifin</option>
                     <option value="400m bifin" {{ $acara->jenis_lomba === "400m bifin" ? "selected" : "" }}>400m Bifin</option>
                     <option value="25m surface board" {{ $acara->jenis_lomba === "25m surface board" ? "selected" : "" }}>25m Surface Board</option>
-                    <option value="50m surface board" {{ $acara->jenis_lomba === "50m surface board" ? "selected" : "" }}>50m Surface Board</option>
                     <option value="50m surface" {{ $acara->jenis_lomba === "50m surface" ? "selected" : "" }}>50m Surface</option>
+                    <option value="50m surface board" {{ $acara->jenis_lomba === "50m surface board" ? "selected" : "" }}>50m Surface Board</option>
                     <option value="100m surface" {{ $acara->jenis_lomba === "100m surface" ? "selected" : "" }}>100m Surface</option>
                     <option value="200m surface" {{ $acara->jenis_lomba === "200m surface" ? "selected" : "" }}>200m Surface</option>
                     <option value="400m surface" {{ $acara->jenis_lomba === "400m surface" ? "selected" : "" }}>400m Surface</option>

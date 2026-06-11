@@ -35,11 +35,25 @@ class AdminController extends Controller
       return view('admin.admin-revisi-atlet', compact('flagAtlets'));
     }
 
-    public function atletList() {
+    public function atletList(Request $request) {
+      $search = $request->query('search', '');
+      $perPage = in_array((int) $request->query('perPage', 25), [5, 10, 25, 50, 100])
+                 ? (int) $request->query('perPage', 25)
+                 : 25;
 
-      $atlets = Atlet::orderByDesc('created_at')->get();
+      $atlets = Atlet::with('user')
+          ->when($search, function ($query) use ($search) {
+              $query->where('name', 'like', "%{$search}%")
+                  ->orWhereHas('user', function ($q) use ($search) {
+                      $q->where('club', 'like', "%{$search}%")
+                        ->orWhere('email', 'like', "%{$search}%");
+                  });
+          })
+          ->orderByDesc('created_at')
+          ->paginate($perPage)
+          ->withQueryString();
 
-      return view('admin.admin-list-atlet', compact('atlets'));
+      return view('admin.admin-list-atlet', compact('atlets', 'search', 'perPage'));
     }
 
     public function pembayaranList(){

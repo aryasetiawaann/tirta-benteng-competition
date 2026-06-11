@@ -118,6 +118,9 @@ function initializeTable() {
     const nextButton = document.querySelector('.next');
     const pageNumbersDiv = document.querySelector('.page-numbers');
 
+    if (!entriesDropdown || !searchInput || !prevButton || !nextButton || !pageNumbersDiv) return;
+    if (document.querySelector('[data-server-paginated]')) return;
+
     let currentPage = 1;
     let rowsPerPage = parseInt(entriesDropdown.value);
 
