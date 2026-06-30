@@ -160,6 +160,10 @@
                                     <div class="lbl">Nomor</div>
                                 </div>
                                 <div class="stat">
+                                    <div class="num">{{ $s['nomor_lomba_count'] ?? 0 }}</div>
+                                    <div class="lbl">Acara</div>
+                                </div>
+                                <div class="stat">
                                     <div class="num">{{ $s['club'] ?? 0 }}</div>
                                     <div class="lbl">Club</div>
                                 </div>
@@ -193,7 +197,6 @@
                                         <dl>
                                             <dt>Sisa Hari Pendaftaran</dt>
                                             <dd>{{ $sisaHari === null ? '—' : ($sisaHari < 0 ? 'Ditutup' : $sisaHari . ' hari') }}</dd>
-                                            <dt>Jumlah Nomor Lomba Terisi</dt><dd>{{ $s['nomor_lomba_count'] ?? 0 }}</dd>
                                         </dl>
                                     </div>
                                     <div class="laporan-detail-group">
