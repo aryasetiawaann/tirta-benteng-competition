@@ -68,4 +68,24 @@ class LaporanPageTest extends TestCase
             ->get(route('admin.laporan.export-all'))
             ->assertRedirect();
     }
+
+    public function test_export_echoes_readable_download_token_cookie(): void
+    {
+        $k = \App\Models\Kompetisi::factory()->create([
+            'nama' => 'Lomba Aktif',
+            'buka_pendaftaran' => now()->subDay(),
+            'waktu_kompetisi' => now()->addDay(),
+        ]);
+
+        $res = $this->actingAs($this->admin())
+            ->get(route('admin.laporan.export', $k->id) . '?download_token=tok123');
+
+        $res->assertOk();
+        $cookie = collect($res->headers->getCookies())
+            ->first(fn ($c) => $c->getName() === 'download_token');
+
+        $this->assertNotNull($cookie, 'download_token cookie should be set on the download response');
+        $this->assertSame('tok123', $cookie->getValue());
+        $this->assertFalse($cookie->isHttpOnly(), 'cookie must be readable by JS');
+    }
 }

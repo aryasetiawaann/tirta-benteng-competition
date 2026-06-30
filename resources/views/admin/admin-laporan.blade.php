@@ -48,6 +48,10 @@
     .laporan-stats .stat.is-ok .num { color: #16a34a; }   /* Selesai */
     .laporan-stats .stat.is-wait .num { color: #d97706; }  /* Menunggu */
 
+    /* Busy state while an export is being generated. */
+    a[data-export].is-exporting { pointer-events: none; opacity: 0.6; }
+    a[data-export] button:disabled { cursor: progress; }
+
     /* Mobile: Export Semua stays in the header; the per-competition Export
        button drops to the end of the card as a full-width button. */
     @media (max-width: 768px) {
@@ -78,7 +82,7 @@
             <header class="divider flex" style="justify-content: space-between; align-items: center;">
                 <h1>Laporan Kompetisi Aktif</h1>
                 @if ($competitions->isNotEmpty())
-                    <a href="{{ route('admin.laporan.export-all') }}">
+                    <a href="{{ route('admin.laporan.export-all') }}" data-export>
                         <button type="button">Export Semua Aktif</button>
                     </a>
                 @endif
@@ -117,7 +121,7 @@
                                     <div class="lbl">Menunggu</div>
                                 </div>
                             </div>
-                            <a class="laporan-export" href="{{ route('admin.laporan.export', $k->id) }}">
+                            <a class="laporan-export" href="{{ route('admin.laporan.export', $k->id) }}" data-export>
                                 <button type="button">Export</button>
                             </a>
                         </div>
@@ -126,4 +130,64 @@
             @endif
         </section>
     </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            function getCookie(name) {
+                var match = document.cookie.split('; ').find(function (row) {
+                    return row.indexOf(name + '=') === 0;
+                });
+                return match ? match.split('=')[1] : null;
+            }
+            function clearCookie(name) {
+                document.cookie = name + '=; Max-Age=0; path=/';
+            }
+
+            document.querySelectorAll('a[data-export]').forEach(function (link) {
+                link.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    if (link.classList.contains('is-exporting')) {
+                        return;
+                    }
+
+                    var btn = link.querySelector('button');
+                    var original = btn ? btn.innerHTML : '';
+                    var token = 'dl' + Date.now() + Math.floor(Math.random() * 1000000);
+
+                    var url = new URL(link.href, window.location.origin);
+                    url.searchParams.set('download_token', token);
+
+                    link.classList.add('is-exporting');
+                    if (btn) {
+                        btn.disabled = true;
+                        btn.innerHTML = 'Mengekspor…';
+                    }
+
+                    function finish() {
+                        clearInterval(poll);
+                        clearTimeout(safety);
+                        clearCookie('download_token');
+                        link.classList.remove('is-exporting');
+                        if (btn) {
+                            btn.disabled = false;
+                            btn.innerHTML = original;
+                        }
+                    }
+
+                    // The server echoes our token back as the `download_token`
+                    // cookie on the download response, so the button re-enables
+                    // exactly when the file starts downloading.
+                    var poll = setInterval(function () {
+                        if (getCookie('download_token') === token) {
+                            finish();
+                        }
+                    }, 400);
+                    // Safety net in case the cookie never arrives.
+                    var safety = setTimeout(finish, 120000);
+
+                    window.location.href = url.toString();
+                });
+            });
+        });
+    </script>
 @endsection
