@@ -138,4 +138,51 @@ class LaporanReportService
 
         return $out;
     }
+
+    public function daftarRows(array $kompetisiIds): array
+    {
+        $base = $this->baseRows($kompetisiIds);
+        $byComp = $base->groupBy('kompetisi_id');
+        $rows = [];
+
+        foreach ($this->orderedCompetitionIds($base) as $compId) {
+            $compRows = $byComp[$compId];
+            $compNama = $compRows->first()->kompetisi_nama;
+
+            $list = $compRows->map(fn ($r) => [
+                'name' => $r->atlet_name,
+                'nomor' => $r->nomor_lomba,
+                'club' => $r->club,
+                'phone' => $r->phone,
+                'status' => $r->status_pembayaran,
+            ])->values()->all();
+            usort($list, fn ($a, $b) => [$a['club'], $a['name'], $a['nomor']] <=> [$b['club'], $b['name'], $b['nomor']]);
+
+            $no = 1;
+            foreach ($list as $r) {
+                $rows[] = [
+                    'No' => $no++,
+                    'Nama Atlet' => $r['name'],
+                    'Nomor Lomba' => $r['nomor'],
+                    'Club' => $r['club'],
+                    'Nomor Telepon' => "'" . $r['phone'],
+                    'Status Pembayaran' => $r['status'],
+                    'Nama Kompetisi' => $compNama,
+                ];
+            }
+
+            $rows[] = [
+                'No' => null, 'Nama Atlet' => 'Total Atlet', 'Nomor Lomba' => '', 'Club' => '',
+                'Nomor Telepon' => '', 'Status Pembayaran' => $compRows->pluck('atlet_name')->unique()->count(),
+                'Nama Kompetisi' => $compNama,
+            ];
+            $rows[] = [
+                'No' => null, 'Nama Atlet' => 'Total Club', 'Nomor Lomba' => '', 'Club' => '',
+                'Nomor Telepon' => '', 'Status Pembayaran' => $compRows->pluck('user_name')->unique()->count(),
+                'Nama Kompetisi' => $compNama,
+            ];
+        }
+
+        return $rows;
+    }
 }

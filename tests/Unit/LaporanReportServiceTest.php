@@ -109,4 +109,32 @@ class LaporanReportServiceTest extends TestCase
         $this->assertSame(1, $s['selesai']);
         $this->assertSame(1, $s['menunggu']);
     }
+
+    public function test_daftar_rows_list_with_total_atlet_and_total_club(): void
+    {
+        $k = $this->seedKompetisi(
+            ['nama' => 'Lomba C', 'buka_pendaftaran' => now()->subDay(), 'waktu_kompetisi' => now()->addDay()],
+            [
+                ['club' => 'Beta',  'email' => 'b@x.com', 'phone' => '0822', 'user_name' => 'UB', 'atlet' => 'Cici', 'nomor' => 2, 'status' => 'Selesai'],
+                ['club' => 'Alpha', 'email' => 'a@x.com', 'phone' => '0811', 'user_name' => 'UA', 'atlet' => 'Andi', 'nomor' => 1, 'status' => 'Menunggu'],
+            ]
+        );
+
+        $rows = (new LaporanReportService())->daftarRows([$k->id]);
+
+        // Ordered by club asc -> Alpha first
+        $this->assertSame('Andi', $rows[0]['Nama Atlet']);
+        $this->assertSame(1, $rows[0]['No']);
+        $this->assertSame("'0811", $rows[0]['Nomor Telepon']);
+        $this->assertSame('Cici', $rows[1]['Nama Atlet']);
+
+        // Total rows
+        $totalAtlet = $rows[2];
+        $this->assertSame('Total Atlet', $totalAtlet['Nama Atlet']);
+        $this->assertSame(2, $totalAtlet['Status Pembayaran']);
+        $totalClub = $rows[3];
+        $this->assertSame('Total Club', $totalClub['Nama Atlet']);
+        $this->assertSame(2, $totalClub['Status Pembayaran']);
+        $this->assertSame('Lomba C', $totalClub['Nama Kompetisi']);
+    }
 }
