@@ -39,7 +39,7 @@
             </div>
         </div>
         <div class="hero-content">
-            <h1>Swimming Competition Registration</h1>
+            <h1>Finswimming Competition Registration</h1>
             <p>Show your skills in this fun and inspiring swimming competition!</p>
             <div class="hero-buttons">
                 <a href="{{ route('login') }}"><button class="btn-competition">Ikuti Kompetisi</button></a>
@@ -95,11 +95,11 @@
                             <div class="riwayat-card carousel-card" data-slide="0">
                                 <div class="riwayat-year">
                                     {{ \Carbon\Carbon::parse($competition->waktu_kompetisi)->format('Y') }}</div>
-                                <h3 class="riwayat-title">{{$competition->nama}}</h3>
+                                <h3 class="riwayat-title">{{ $competition->nama }}</h3>
                                 <div class="riwayat-details">
                                     <div class="riwayat-detail-item">
                                         <i class="bx bxs-location"></i>
-                                        <span>{{$competition->lokasi}}</span>
+                                        <span>{{ $competition->lokasi }}</span>
                                     </div>
                                     <div class="riwayat-detail-item">
                                         <i class="bx bxs-calendar"></i>
@@ -107,11 +107,12 @@
                                     </div>
                                     <div class="riwayat-detail-item">
                                         <i class="bx bxs-user"></i>
-                                        <span>{{$competition->kategori}}</span>
+                                        <span>{{ $competition->kategori }}</span>
                                     </div>
                                 </div>
-                                <a href="{{ route('riwayat.show', $competition->id) }}" class="hasil-acara clickable-hasil"
-                                    role="button" aria-label="Lihat detail hasil acara">
+                                <a href="{{ route('riwayat.show', $competition->id) }}"
+                                    class="hasil-acara clickable-hasil" role="button"
+                                    aria-label="Lihat detail hasil acara">
                                     <div class="hasil-acara-title">Hasil Acara</div>
                                 </a>
                             </div>
@@ -169,7 +170,8 @@
         </div>
         @if ($kompetisis->count() > 0)
             @foreach ($kompetisis as $index => $kompetisi)
-                <div class="jadwal-container" id="kompetisi-{{ $index }}" style="{{ $index == 0 ? '' : 'display:none;'}}">
+                <div class="jadwal-container" id="kompetisi-{{ $index }}"
+                    style="{{ $index == 0 ? '' : 'display:none;' }}">
                     <h2>{{ $kompetisi->nama }}</h2>
                     <div class="jadwal-items">
                         <div class="jadwal-item">
@@ -177,7 +179,8 @@
                                 <img src="{{ asset('assets/img/pendaftaran.png') }}" alt="pendaftaran form">
                             </div>
                             <p>{{ \Carbon\Carbon::parse($kompetisi->buka_pendaftaran)->format('d M Y') }} -
-                                {{ \Carbon\Carbon::parse($kompetisi->tutup_pendaftaran)->subDay()->format('d M Y') }}</p>
+                                {{ \Carbon\Carbon::parse($kompetisi->tutup_pendaftaran)->subDay()->format('d M Y') }}
+                            </p>
                             <h3>Pendaftaran</h3>
                         </div>
                         <div class="jadwal-item">
@@ -221,7 +224,7 @@
             <h2>BIAYA KOMPETISI</h2>
             <div class="event-list">
                 <ul>
-                    @foreach($kompetisis as $index => $kompetisi)
+                    @foreach ($kompetisis as $index => $kompetisi)
                         <li class="{{ $index === 0 ? 'active-event' : '' }}" data-index="{{ $index }}">
                             <p>{{ $kompetisi->nama }}</p>
                         </li>
@@ -242,7 +245,8 @@
                             </div>
                         @endforeach
                     @else
-                        <div class="price" id="price-{{ $index }}" style="{{ $index !== 0 ? 'display: none;' : '' }}">
+                        <div class="price" id="price-{{ $index }}"
+                            style="{{ $index !== 0 ? 'display: none;' : '' }}">
                             <h3>Harga belum tersedia</h3>
                             <hr>
                         </div>
