@@ -35,11 +35,11 @@ class LaporanController extends Controller
 
     public function exportAllActive()
     {
-        try {
-            $path = $this->exporter->exportActive();
-        } catch (\RuntimeException $e) {
+        if ($this->reports->activeCompetitions()->isEmpty()) {
             return back()->with('error', 'Tidak ada kompetisi aktif untuk diekspor.');
         }
+
+        $path = $this->exporter->exportActive();
 
         app()->terminating(function () use ($path) {
             \Illuminate\Support\Facades\File::deleteDirectory(dirname($path));

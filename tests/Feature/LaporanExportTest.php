@@ -8,6 +8,7 @@ use App\Models\User;
 use App\Services\LaporanExportService;
 use App\Services\LaporanReportService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\File;
 use Tests\TestCase;
 
 class LaporanExportTest extends TestCase
@@ -66,7 +67,7 @@ class LaporanExportTest extends TestCase
         $this->assertTrue((bool) preg_grep('/list_club_payment .* Lomba A\.xlsx$/', $entries));
         $this->assertTrue((bool) preg_grep('/list_daftar .* Lomba A\.xlsx$/', $entries));
 
-        @unlink($path);
+        File::deleteDirectory(dirname($path));
     }
 
     public function test_export_active_includes_combined_plus_split_and_excludes_inactive(): void
@@ -96,7 +97,7 @@ class LaporanExportTest extends TestCase
         $this->assertTrue((bool) preg_grep('/CompB\.xlsx$/', $entries));
         $this->assertEmpty(preg_grep('/CompPast/', $entries));
 
-        @unlink($path);
+        File::deleteDirectory(dirname($path));
     }
 
     public function test_export_active_deduplicates_same_named_competitions(): void
@@ -122,7 +123,7 @@ class LaporanExportTest extends TestCase
         $this->assertTrue((bool) preg_grep('/ \(' . $a->id . '\)\.xlsx$/', $entries));
         $this->assertTrue((bool) preg_grep('/ \(' . $b->id . '\)\.xlsx$/', $entries));
 
-        @unlink($path);
+        File::deleteDirectory(dirname($path));
     }
 
     public function test_export_active_throws_when_none_active(): void
