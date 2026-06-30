@@ -145,6 +145,8 @@ class LaporanReportServiceTest extends TestCase
         $expectedAvg = round((\Carbon\Carbon::parse('2010-01-01')->age + \Carbon\Carbon::parse('2014-01-01')->age) / 2, 1);
         $this->assertSame($expectedAvg, $s['umur_rata']);
         $this->assertSame('Alpha', $s['club_terbanyak']);     // Alpha 1 athlete vs Beta 1 -> tie -> alphabetical
+        $this->assertSame(1, $s['club_terbanyak_peserta']);   // Andi
+        $this->assertSame(2, $s['club_terbanyak_nomor']);     // Andi's 2 entries
     }
 
     public function test_summaries_sums_distinct_payments_for_revenue(): void
@@ -183,23 +185,6 @@ class LaporanReportServiceTest extends TestCase
 
         $this->assertSame(150000, $s['pendapatan_terkumpul']); // distinct Berhasil payment, once
         $this->assertSame(50000, $s['pendapatan_tertunda']);   // Menunggu payment
-    }
-
-    public function test_summaries_computes_quota_fill_rate(): void
-    {
-        // Two events, kuota 50 each = 100 total. One entry on nomor 1 -> 1/100 = 1.0%.
-        $k = $this->seedKompetisi(
-            ['nama' => 'Lomba F', 'buka_pendaftaran' => now()->subDay(), 'waktu_kompetisi' => now()->addDay()],
-            [
-                ['club' => 'Alpha', 'email' => 'a@x.com', 'phone' => '0811', 'user_name' => 'UA', 'atlet' => 'Andi', 'nomor' => 1, 'status' => 'Selesai', 'kuota' => 50],
-            ]
-        );
-        // A second event with no entries, kuota 50, so total quota = 100.
-        Acara::factory()->create(['kompetisi_id' => $k->id, 'nomor_lomba' => 99, 'kuota' => 50]);
-
-        $s = collect((new LaporanReportService())->summaries([$k->id]))->firstWhere('kompetisi_id', $k->id);
-
-        $this->assertEqualsWithDelta(1.0, $s['keterisian_kuota'], 0.01);
     }
 
     public function test_daftar_rows_list_with_total_atlet_and_total_club(): void

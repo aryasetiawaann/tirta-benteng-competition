@@ -163,8 +163,8 @@
                                     <div class="laporan-detail-group">
                                         <div class="grp-title">Keuangan</div>
                                         <dl>
-                                            <dt>Pendapatan Terkumpul</dt><dd>{{ $rp($s['pendapatan_terkumpul'] ?? 0) }}</dd>
-                                            <dt>Pendapatan Tertunda</dt><dd>{{ $rp($s['pendapatan_tertunda'] ?? 0) }}</dd>
+                                            <dt>Terkumpul</dt><dd>{{ $rp($s['pendapatan_terkumpul'] ?? 0) }}</dd>
+                                            <dt>Tertunda</dt><dd>{{ $rp($s['pendapatan_tertunda'] ?? 0) }}</dd>
                                             <dt>Tingkat Pelunasan</dt><dd>{{ $s['tingkat_pelunasan'] ?? 0 }}%</dd>
                                         </dl>
                                     </div>
@@ -173,9 +173,7 @@
                                         <dl>
                                             <dt>Sisa Hari Pendaftaran</dt>
                                             <dd>{{ $sisaHari === null ? '—' : ($sisaHari < 0 ? 'Ditutup' : $sisaHari . ' hari') }}</dd>
-                                            <dt>Keterisian Kuota</dt>
-                                            <dd>{{ isset($s['keterisian_kuota']) ? $s['keterisian_kuota'] . '%' : '—' }}</dd>
-                                            <dt>Jumlah Nomor Lomba</dt><dd>{{ $s['nomor_lomba_count'] ?? 0 }}</dd>
+                                            <dt>Jumlah Nomor Lomba Terisi</dt><dd>{{ $s['nomor_lomba_count'] ?? 0 }}</dd>
                                         </dl>
                                     </div>
                                     <div class="laporan-detail-group">
@@ -183,8 +181,9 @@
                                         <dl>
                                             <dt>Komposisi Gender (L / P)</dt><dd>{{ $s['gender_l'] ?? 0 }} / {{ $s['gender_p'] ?? 0 }}</dd>
                                             <dt>Rata-rata Umur</dt><dd>{{ $s['umur_rata'] ?? 0 }} th</dd>
-                                            <dt>Rata-rata Nomor/Atlet</dt><dd>{{ $s['nomor_per_atlet'] ?? 0 }}</dd>
-                                            <dt>Club Terbanyak</dt><dd>{{ $s['club_terbanyak'] ?? '—' }}</dd>
+                                            <dt>Rata-rata Nomor per Atlet</dt><dd>{{ $s['nomor_per_atlet'] ?? 0 }}</dd>
+                                            <dt>Club Terbanyak</dt>
+                                            <dd>{{ $s['club_terbanyak'] ?? '—' }}@if (($s['club_terbanyak'] ?? null) !== null) ({{ $s['club_terbanyak_peserta'] ?? 0 }} peserta, {{ $s['club_terbanyak_nomor'] ?? 0 }} nomor)@endif</dd>
                                         </dl>
                                     </div>
                                 </div>

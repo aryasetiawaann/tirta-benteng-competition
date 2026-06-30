@@ -145,28 +145,11 @@ class LaporanReportService
         return $out;
     }
 
-    /** @return array<int|string, int> total kuota per competition */
-    private function quotaByComp(array $kompetisiIds): array
-    {
-        if (empty($kompetisiIds)) {
-            return [];
-        }
-
-        return DB::table('acara')
-            ->whereIn('kompetisi_id', $kompetisiIds)
-            ->groupBy('kompetisi_id')
-            ->selectRaw('kompetisi_id, SUM(kuota) as total_kuota')
-            ->pluck('total_kuota', 'kompetisi_id')
-            ->map(fn ($v) => (int) $v)
-            ->all();
-    }
-
     public function summaries(array $kompetisiIds): array
     {
         $base = $this->baseRows($kompetisiIds);
         $byComp = $base->groupBy('kompetisi_id');
         $revenue = $this->revenueByComp($kompetisiIds);
-        $quota = $this->quotaByComp($kompetisiIds);
         $out = [];
 
         foreach ($this->orderedCompetitionIds($base) as $compId) {
@@ -185,8 +168,11 @@ class LaporanReportService
                 ->values()->all();
             usort($pairs, fn ($a, $b) => [$b['count'], $a['club']] <=> [$a['count'], $b['club']]);
 
+            $topClub = $pairs[0]['club'] ?? null;
+            $topClubPeserta = $pairs[0]['count'] ?? 0;
+            $topClubNomor = $topClub !== null ? $compRows->where('club', $topClub)->count() : 0;
+
             $rev = $revenue[$compId] ?? ['terkumpul' => 0, 'tertunda' => 0];
-            $totalKuota = $quota[$compId] ?? 0;
 
             $out[] = [
                 'kompetisi_id' => $compId,
@@ -202,10 +188,11 @@ class LaporanReportService
                 'gender_p' => $athletes->where('jenis_kelamin', 'Wanita')->count(),
                 'umur_rata' => $ages->isEmpty() ? 0.0 : round($ages->avg(), 1),
                 'nomor_per_atlet' => $peserta > 0 ? round($nomor / $peserta, 1) : 0.0,
-                'club_terbanyak' => $pairs[0]['club'] ?? null,
+                'club_terbanyak' => $topClub,
+                'club_terbanyak_peserta' => $topClubPeserta,
+                'club_terbanyak_nomor' => $topClubNomor,
                 'pendapatan_terkumpul' => $rev['terkumpul'],
                 'pendapatan_tertunda' => $rev['tertunda'],
-                'keterisian_kuota' => $totalKuota > 0 ? round($nomor / $totalKuota * 100, 1) : null,
             ];
         }
 
