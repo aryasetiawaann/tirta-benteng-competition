@@ -7,7 +7,8 @@
         position: relative;
         padding: 22px 24px;
         border-radius: 12px;
-        background: #f4f6f9;
+        background: #fff;
+        border: 1px solid #d4d9e0;
         box-shadow: 0 1px 2px rgba(16, 24, 40, 0.05);
         margin: 0 0 18px;
     }
@@ -26,11 +27,10 @@
         margin-top: 18px;
     }
     .laporan-stats .stat {
-        background: #fff;
+        background: #f5f6f8;
         border-radius: 8px;
         padding: 12px 10px;
         text-align: center;
-        box-shadow: 0 1px 2px rgba(16, 24, 40, 0.04);
     }
     .laporan-stats .stat .num {
         font-size: 1.6rem;
