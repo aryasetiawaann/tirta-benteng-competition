@@ -48,6 +48,37 @@
     .laporan-stats .stat.is-ok .num { color: #16a34a; }   /* Selesai */
     .laporan-stats .stat.is-wait .num { color: #d97706; }  /* Menunggu */
 
+    .laporan-detail { margin-top: 14px; }
+    .laporan-detail > summary {
+        cursor: pointer;
+        font-size: 0.8rem;
+        font-weight: 600;
+        color: #374151;
+        list-style: none;
+        user-select: none;
+    }
+    .laporan-detail > summary::-webkit-details-marker { display: none; }
+    .laporan-detail > summary::before { content: '\25B8'; margin-right: 6px; }
+    .laporan-detail[open] > summary::before { content: '\25BE'; }
+    .laporan-detail-body { margin-top: 12px; display: grid; gap: 14px; }
+    .laporan-detail-group .grp-title {
+        font-size: 0.72rem;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+        color: #6b7280;
+        margin-bottom: 6px;
+    }
+    .laporan-detail-group dl {
+        margin: 0;
+        display: grid;
+        grid-template-columns: 1fr auto;
+        row-gap: 4px;
+        column-gap: 12px;
+        font-size: 0.85rem;
+    }
+    .laporan-detail-group dt { color: #4b5563; }
+    .laporan-detail-group dd { margin: 0; font-weight: 600; color: #111827; text-align: right; }
+
     /* Busy state while an export is being generated. */
     a[data-export].is-exporting { pointer-events: none; opacity: 0.5; }
     a[data-export] button:disabled { cursor: not-allowed; }
@@ -121,6 +152,43 @@
                                     <div class="lbl">Menunggu</div>
                                 </div>
                             </div>
+                            @php
+                                $tutup = $k->tutup_pendaftaran ? \Carbon\Carbon::parse($k->tutup_pendaftaran) : null;
+                                $sisaHari = $tutup ? now()->startOfDay()->diffInDays($tutup->copy()->startOfDay(), false) : null;
+                                $rp = fn ($v) => 'Rp ' . number_format((int) $v, 0, ',', '.');
+                            @endphp
+                            <details class="laporan-detail">
+                                <summary>Detail</summary>
+                                <div class="laporan-detail-body">
+                                    <div class="laporan-detail-group">
+                                        <div class="grp-title">Keuangan</div>
+                                        <dl>
+                                            <dt>Pendapatan Terkumpul</dt><dd>{{ $rp($s['pendapatan_terkumpul'] ?? 0) }}</dd>
+                                            <dt>Pendapatan Tertunda</dt><dd>{{ $rp($s['pendapatan_tertunda'] ?? 0) }}</dd>
+                                            <dt>Tingkat Pelunasan</dt><dd>{{ $s['tingkat_pelunasan'] ?? 0 }}%</dd>
+                                        </dl>
+                                    </div>
+                                    <div class="laporan-detail-group">
+                                        <div class="grp-title">Operasional</div>
+                                        <dl>
+                                            <dt>Sisa Hari Pendaftaran</dt>
+                                            <dd>{{ $sisaHari === null ? '—' : ($sisaHari < 0 ? 'Ditutup' : $sisaHari . ' hari') }}</dd>
+                                            <dt>Keterisian Kuota</dt>
+                                            <dd>{{ isset($s['keterisian_kuota']) ? $s['keterisian_kuota'] . '%' : '—' }}</dd>
+                                            <dt>Jumlah Nomor Lomba</dt><dd>{{ $s['nomor_lomba_count'] ?? 0 }}</dd>
+                                        </dl>
+                                    </div>
+                                    <div class="laporan-detail-group">
+                                        <div class="grp-title">Partisipasi</div>
+                                        <dl>
+                                            <dt>Komposisi Gender (L / P)</dt><dd>{{ $s['gender_l'] ?? 0 }} / {{ $s['gender_p'] ?? 0 }}</dd>
+                                            <dt>Rata-rata Umur</dt><dd>{{ $s['umur_rata'] ?? 0 }} th</dd>
+                                            <dt>Rata-rata Nomor/Atlet</dt><dd>{{ $s['nomor_per_atlet'] ?? 0 }}</dd>
+                                            <dt>Club Terbanyak</dt><dd>{{ $s['club_terbanyak'] ?? '—' }}</dd>
+                                        </dl>
+                                    </div>
+                                </div>
+                            </details>
                             <a class="laporan-export" href="{{ route('admin.laporan.export', $k->id) }}" data-export>
                                 <button type="button">Export</button>
                             </a>
