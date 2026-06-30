@@ -53,4 +53,89 @@ class LaporanReportService
             ])
             ->get();
     }
+
+    /** @return array<int, array<int, string>> ordered competition ids by name asc */
+    private function orderedCompetitionIds(Collection $base): array
+    {
+        $names = $base->groupBy('kompetisi_id')->map(fn ($g) => $g->first()->kompetisi_nama);
+        return $names->sort()->keys()->all();
+    }
+
+    public function clubPaymentRows(array $kompetisiIds): array
+    {
+        $base = $this->baseRows($kompetisiIds);
+        $byComp = $base->groupBy('kompetisi_id');
+        $rows = [];
+
+        foreach ($this->orderedCompetitionIds($base) as $compId) {
+            $compRows = $byComp[$compId];
+            $compNama = $compRows->first()->kompetisi_nama;
+
+            $users = [];
+            foreach ($compRows->groupBy('user_id') as $urows) {
+                $first = $urows->first();
+                $users[] = [
+                    'club' => $first->club,
+                    'email' => $first->email,
+                    'phone' => $first->phone,
+                    'peserta' => $urows->pluck('atlet_name')->unique()->count(),
+                    'nomor' => $urows->count(),
+                    'selesai' => $urows->where('status_pembayaran', 'Selesai')->count(),
+                    'menunggu' => $urows->where('status_pembayaran', 'Menunggu')->count(),
+                ];
+            }
+            usort($users, fn ($a, $b) => [$a['club'], $a['email']] <=> [$b['club'], $b['email']]);
+
+            $no = 1;
+            foreach ($users as $u) {
+                $rows[] = [
+                    'No' => $no++,
+                    'Club' => $u['club'],
+                    'Email' => $u['email'],
+                    'Nomor Telepon' => "'" . $u['phone'],
+                    'Total Peserta per Club' => $u['peserta'],
+                    'Total Nomor per Club' => $u['nomor'],
+                    'Total Selesai per Club' => $u['selesai'],
+                    'Total Menunggu per Club' => $u['menunggu'],
+                    'Nama Kompetisi' => $compNama,
+                ];
+            }
+
+            $rows[] = [
+                'No' => null,
+                'Club' => 'Total Semua',
+                'Email' => '',
+                'Nomor Telepon' => '',
+                'Total Peserta per Club' => $compRows->pluck('atlet_name')->unique()->count(),
+                'Total Nomor per Club' => $compRows->count(),
+                'Total Selesai per Club' => $compRows->where('status_pembayaran', 'Selesai')->count(),
+                'Total Menunggu per Club' => $compRows->where('status_pembayaran', 'Menunggu')->count(),
+                'Nama Kompetisi' => $compNama,
+            ];
+        }
+
+        return $rows;
+    }
+
+    public function summaries(array $kompetisiIds): array
+    {
+        $base = $this->baseRows($kompetisiIds);
+        $byComp = $base->groupBy('kompetisi_id');
+        $out = [];
+
+        foreach ($this->orderedCompetitionIds($base) as $compId) {
+            $compRows = $byComp[$compId];
+            $out[] = [
+                'kompetisi_id' => $compId,
+                'nama' => $compRows->first()->kompetisi_nama,
+                'peserta' => $compRows->pluck('atlet_name')->unique()->count(),
+                'nomor' => $compRows->count(),
+                'club' => $compRows->pluck('user_id')->unique()->count(),
+                'selesai' => $compRows->where('status_pembayaran', 'Selesai')->count(),
+                'menunggu' => $compRows->where('status_pembayaran', 'Menunggu')->count(),
+            ];
+        }
+
+        return $out;
+    }
 }
