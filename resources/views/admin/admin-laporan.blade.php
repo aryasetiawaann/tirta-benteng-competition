@@ -60,24 +60,44 @@
     .laporan-detail > summary::-webkit-details-marker { display: none; }
     .laporan-detail > summary::before { content: '\25B8'; margin-right: 6px; }
     .laporan-detail[open] > summary::before { content: '\25BE'; }
-    .laporan-detail-body { margin-top: 12px; display: grid; gap: 14px; }
+    .laporan-detail-body {
+        margin-top: 12px;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+        gap: 12px;
+    }
+    .laporan-detail-group {
+        background: #f9fafb;
+        border: 1px solid #e5e7eb;
+        border-radius: 8px;
+        padding: 12px 14px;
+    }
     .laporan-detail-group .grp-title {
         font-size: 0.72rem;
         text-transform: uppercase;
         letter-spacing: 0.04em;
         color: #6b7280;
-        margin-bottom: 6px;
+        font-weight: 700;
+        margin-bottom: 8px;
+        padding-bottom: 6px;
+        border-bottom: 1px solid #e5e7eb;
     }
     .laporan-detail-group dl {
         margin: 0;
         display: grid;
         grid-template-columns: 1fr auto;
-        row-gap: 4px;
         column-gap: 12px;
         font-size: 0.85rem;
     }
+    .laporan-detail-group dt,
+    .laporan-detail-group dd {
+        padding: 6px 0;
+        border-bottom: 1px solid #edeff2;
+    }
     .laporan-detail-group dt { color: #4b5563; }
     .laporan-detail-group dd { margin: 0; font-weight: 600; color: #111827; text-align: right; }
+    .laporan-detail-group dl > dt:last-of-type,
+    .laporan-detail-group dl > dd:last-child { border-bottom: none; padding-bottom: 0; }
 
     /* Busy state while an export is being generated. */
     a[data-export].is-exporting { pointer-events: none; opacity: 0.5; }
