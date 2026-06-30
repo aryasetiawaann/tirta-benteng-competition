@@ -36,8 +36,10 @@ class LaporanExportService
      */
     private function buildZip(array $competitions, bool $combined): string
     {
-        $ts = now()->format('d-m-Y H-i-s');
-        $folder = "laporan {$ts}";
+        // Time (HHMMSS) is used only in the folder name; the files inside use date only.
+        $now = now();
+        $date = $now->format('d-m-Y');
+        $folder = 'laporan ' . $now->format('d-m-Y_His'); // e.g. "laporan 30-06-2026_210910"
         $ids = array_map(fn ($k) => $k->id, $competitions);
 
         $relDir = 'laporan-tmp/' . Str::uuid();
@@ -49,13 +51,13 @@ class LaporanExportService
 
         try {
             if ($combined) {
-                $files["{$folder}/list_club_payment {$ts}.xlsx"] = $this->writeSheet(
-                    $relDir, "list_club_payment {$ts}.xlsx",
+                $files["{$folder}/list_club_payment {$date}.xlsx"] = $this->writeSheet(
+                    $relDir, "list_club_payment {$date}.xlsx",
                     LaporanReportService::CLUB_PAYMENT_HEADINGS,
                     $this->reports->clubPaymentRows($ids), self::CLUB_LEFT,
                 );
-                $files["{$folder}/list_daftar {$ts}.xlsx"] = $this->writeSheet(
-                    $relDir, "list_daftar {$ts}.xlsx",
+                $files["{$folder}/list_daftar {$date}.xlsx"] = $this->writeSheet(
+                    $relDir, "list_daftar {$date}.xlsx",
                     LaporanReportService::DAFTAR_HEADINGS,
                     $this->reports->daftarRows($ids), self::DAFTAR_LEFT,
                 );
@@ -67,13 +69,13 @@ class LaporanExportService
             foreach ($competitions as $k) {
                 $safe = str_replace(['/', '\\'], '-', $k->nama);
                 $suffix = in_array($safe, $dupes, true) ? " ({$k->id})" : '';
-                $files["{$folder}/list_club_payment {$ts} {$safe}{$suffix}.xlsx"] = $this->writeSheet(
-                    $relDir, "list_club_payment {$ts} {$safe}{$suffix}.xlsx",
+                $files["{$folder}/list_club_payment {$date} {$safe}{$suffix}.xlsx"] = $this->writeSheet(
+                    $relDir, "list_club_payment {$date} {$safe}{$suffix}.xlsx",
                     LaporanReportService::CLUB_PAYMENT_HEADINGS,
                     $this->reports->clubPaymentRows([$k->id]), self::CLUB_LEFT,
                 );
-                $files["{$folder}/list_daftar {$ts} {$safe}{$suffix}.xlsx"] = $this->writeSheet(
-                    $relDir, "list_daftar {$ts} {$safe}{$suffix}.xlsx",
+                $files["{$folder}/list_daftar {$date} {$safe}{$suffix}.xlsx"] = $this->writeSheet(
+                    $relDir, "list_daftar {$date} {$safe}{$suffix}.xlsx",
                     LaporanReportService::DAFTAR_HEADINGS,
                     $this->reports->daftarRows([$k->id]), self::DAFTAR_LEFT,
                 );

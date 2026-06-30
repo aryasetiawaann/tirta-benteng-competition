@@ -67,6 +67,14 @@ class LaporanExportTest extends TestCase
         $this->assertTrue((bool) preg_grep('/list_club_payment .* Lomba A\.xlsx$/', $entries));
         $this->assertTrue((bool) preg_grep('/list_daftar .* Lomba A\.xlsx$/', $entries));
 
+        // Time (HHMMSS) lives only in the folder name, e.g. "laporan 30-06-2026_210910/".
+        foreach ($entries as $e) {
+            $this->assertMatchesRegularExpression('#^laporan \d{2}-\d{2}-\d{4}_\d{6}/#', $e);
+        }
+        // The files inside use date only (no time): "list_club_payment 30-06-2026 Lomba A.xlsx".
+        $this->assertTrue((bool) preg_grep('#/list_club_payment \d{2}-\d{2}-\d{4} Lomba A\.xlsx$#', $entries));
+        $this->assertTrue((bool) preg_grep('#/list_daftar \d{2}-\d{2}-\d{4} Lomba A\.xlsx$#', $entries));
+
         File::deleteDirectory(dirname($path));
     }
 
