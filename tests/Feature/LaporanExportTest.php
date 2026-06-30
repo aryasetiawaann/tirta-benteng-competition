@@ -68,4 +68,40 @@ class LaporanExportTest extends TestCase
 
         @unlink($path);
     }
+
+    public function test_export_active_includes_combined_plus_split_and_excludes_inactive(): void
+    {
+        $a = $this->seedKompetisi(
+            ['nama' => 'CompA', 'buka_pendaftaran' => now()->subDay(), 'waktu_kompetisi' => now()->addDay()],
+            [['club' => 'Alpha', 'email' => 'a@x.com', 'phone' => '0811', 'user_name' => 'UA', 'atlet' => 'Andi', 'nomor' => 1, 'status' => 'Selesai']]
+        );
+        $b = $this->seedKompetisi(
+            ['nama' => 'CompB', 'buka_pendaftaran' => now()->subDay(), 'waktu_kompetisi' => now()->addDays(2)],
+            [['club' => 'Beta', 'email' => 'b@x.com', 'phone' => '0822', 'user_name' => 'UB', 'atlet' => 'Budi', 'nomor' => 1, 'status' => 'Menunggu']]
+        );
+        // Inactive (already held) — must not appear.
+        $this->seedKompetisi(
+            ['nama' => 'CompPast', 'buka_pendaftaran' => now()->subDays(10), 'waktu_kompetisi' => now()->subDay()],
+            [['club' => 'Gamma', 'email' => 'g@x.com', 'phone' => '0833', 'user_name' => 'UG', 'atlet' => 'Gita', 'nomor' => 1, 'status' => 'Selesai']]
+        );
+
+        $service = new LaporanExportService(new LaporanReportService());
+        $path = $service->exportActive();
+        $entries = $this->zipEntries($path);
+
+        // 2 combined + 2 per active competition (2 actives) = 6
+        $this->assertCount(6, $entries);
+        $this->assertTrue((bool) preg_grep('/list_club_payment [0-9 :-]+\.xlsx$/', $entries)); // combined (no name suffix)
+        $this->assertTrue((bool) preg_grep('/CompA\.xlsx$/', $entries));
+        $this->assertTrue((bool) preg_grep('/CompB\.xlsx$/', $entries));
+        $this->assertEmpty(preg_grep('/CompPast/', $entries));
+
+        @unlink($path);
+    }
+
+    public function test_export_active_throws_when_none_active(): void
+    {
+        $this->expectException(\RuntimeException::class);
+        (new LaporanExportService(new LaporanReportService()))->exportActive();
+    }
 }

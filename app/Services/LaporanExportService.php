@@ -21,6 +21,16 @@ class LaporanExportService
         return $this->buildZip([$k], combined: false);
     }
 
+    public function exportActive(): string
+    {
+        $active = $this->reports->activeCompetitions();
+        if ($active->isEmpty()) {
+            throw new \RuntimeException('No active competitions to export.');
+        }
+
+        return $this->buildZip($active->all(), combined: true);
+    }
+
     /**
      * @param  array<int, Kompetisi>  $competitions
      */
