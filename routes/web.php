@@ -15,6 +15,7 @@ use App\Http\Controllers\UnduhanController;
 use App\Http\Controllers\TrackRecordController;
 use App\Http\Controllers\DaftarPesertaController;
 use App\Http\Controllers\WinnerController;
+use App\Http\Controllers\LaporanController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Http;
 /*
@@ -147,6 +148,11 @@ Route::middleware(['auth','role:admin'])->group(function () {
 
     Route::get('/admin/dashboard/import-atlet', [AdminController::class, 'importAtletForm'])->name('admin.import.atlet.form');
     Route::post('/admin/dashboard/import-atlet', [AdminController::class, 'importAtlet'])->name('admin.import.atlet');
+
+    // Laporan
+    Route::get('/admin/dashboard/laporan', [LaporanController::class, 'index'])->name('admin.laporan');
+    Route::get('/admin/dashboard/laporan/export-all', [LaporanController::class, 'exportAllActive'])->name('admin.laporan.export-all');
+    Route::get('/admin/dashboard/laporan/{id}/export', [LaporanController::class, 'exportOne'])->name('admin.laporan.export');
 });
 
 Route::get('/api/provinces', function () {

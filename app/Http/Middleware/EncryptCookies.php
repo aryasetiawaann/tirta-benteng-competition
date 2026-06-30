@@ -12,6 +12,7 @@ class EncryptCookies extends Middleware
      * @var array<int, string>
      */
     protected $except = [
-        //
+        // Read by JS to detect when an export download has started (see admin-laporan page).
+        'download_token',
     ];
 }

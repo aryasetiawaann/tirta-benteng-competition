@@ -86,6 +86,12 @@
                             <span class="text">Kejuaraan</span>
                         </a>
                     </li>
+                    <li>
+                        <a href="{{ route('admin.laporan') }}">
+                            <i class="icon ph-bold ph-file-text"></i>
+                            <span class="text">Laporan</span>
+                        </a>
+                    </li>
                 </ul>
             </div>
         </div>
