@@ -61,15 +61,19 @@ class LaporanExportService
                 );
             }
 
+            $safeNames = array_map(fn ($k) => str_replace(['/', '\\'], '-', $k->nama), $competitions);
+            $dupes = array_keys(array_filter(array_count_values($safeNames), fn ($c) => $c > 1));
+
             foreach ($competitions as $k) {
                 $safe = str_replace(['/', '\\'], '-', $k->nama);
-                $files["{$folder}/list_club_payment {$ts} {$safe}.xlsx"] = $this->writeSheet(
-                    $relDir, "list_club_payment {$ts} {$safe}.xlsx",
+                $suffix = in_array($safe, $dupes, true) ? " ({$k->id})" : '';
+                $files["{$folder}/list_club_payment {$ts} {$safe}{$suffix}.xlsx"] = $this->writeSheet(
+                    $relDir, "list_club_payment {$ts} {$safe}{$suffix}.xlsx",
                     LaporanReportService::CLUB_PAYMENT_HEADINGS,
                     $this->reports->clubPaymentRows([$k->id]), self::CLUB_LEFT,
                 );
-                $files["{$folder}/list_daftar {$ts} {$safe}.xlsx"] = $this->writeSheet(
-                    $relDir, "list_daftar {$ts} {$safe}.xlsx",
+                $files["{$folder}/list_daftar {$ts} {$safe}{$suffix}.xlsx"] = $this->writeSheet(
+                    $relDir, "list_daftar {$ts} {$safe}{$suffix}.xlsx",
                     LaporanReportService::DAFTAR_HEADINGS,
                     $this->reports->daftarRows([$k->id]), self::DAFTAR_LEFT,
                 );
@@ -80,7 +84,9 @@ class LaporanExportService
             $zipPath = $zipDir . '/' . $folder . '.zip';
 
             $zip = new \ZipArchive();
-            $zip->open($zipPath, \ZipArchive::CREATE | \ZipArchive::OVERWRITE);
+            if ($zip->open($zipPath, \ZipArchive::CREATE | \ZipArchive::OVERWRITE) !== true) {
+                throw new \RuntimeException("Could not create zip archive at {$zipPath}");
+            }
             foreach ($files as $entry => $abs) {
                 $zip->addFile($abs, $entry);
             }

@@ -99,6 +99,32 @@ class LaporanExportTest extends TestCase
         @unlink($path);
     }
 
+    public function test_export_active_deduplicates_same_named_competitions(): void
+    {
+        $a = $this->seedKompetisi(
+            ['nama' => 'Lomba Sama', 'buka_pendaftaran' => now()->subDay(), 'waktu_kompetisi' => now()->addDay()],
+            [['club' => 'Alpha', 'email' => 'a@x.com', 'phone' => '0811', 'user_name' => 'UA', 'atlet' => 'Andi', 'nomor' => 1, 'status' => 'Selesai']]
+        );
+        $b = $this->seedKompetisi(
+            ['nama' => 'Lomba Sama', 'buka_pendaftaran' => now()->subDay(), 'waktu_kompetisi' => now()->addDays(2)],
+            [['club' => 'Beta', 'email' => 'b@x.com', 'phone' => '0822', 'user_name' => 'UB', 'atlet' => 'Budi', 'nomor' => 1, 'status' => 'Menunggu']]
+        );
+
+        $service = new LaporanExportService(new LaporanReportService());
+        $path = $service->exportActive();
+        $entries = $this->zipEntries($path);
+
+        // 2 combined + 2 split per competition (2 competitions) = 6
+        $this->assertCount(6, $entries);
+        // All entry names must be distinct (no silent overwrite)
+        $this->assertSame(count($entries), count(array_unique($entries)));
+        // Each competition's split files should include its id suffix
+        $this->assertTrue((bool) preg_grep('/ \(' . $a->id . '\)\.xlsx$/', $entries));
+        $this->assertTrue((bool) preg_grep('/ \(' . $b->id . '\)\.xlsx$/', $entries));
+
+        @unlink($path);
+    }
+
     public function test_export_active_throws_when_none_active(): void
     {
         $this->expectException(\RuntimeException::class);

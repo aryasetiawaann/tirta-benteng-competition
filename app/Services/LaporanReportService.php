@@ -54,7 +54,7 @@ class LaporanReportService
             ->get();
     }
 
-    /** @return array<int, array<int, string>> ordered competition ids by name asc */
+    /** @return array<int, int|string> ordered competition ids by name asc */
     private function orderedCompetitionIds(Collection $base): array
     {
         $names = $base->groupBy('kompetisi_id')->map(fn ($g) => $g->first()->kompetisi_nama);

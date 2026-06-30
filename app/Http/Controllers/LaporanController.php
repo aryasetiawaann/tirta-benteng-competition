@@ -27,7 +27,10 @@ class LaporanController extends Controller
         $k = Kompetisi::findOrFail($id);
         $path = $this->exporter->exportCompetition($k);
 
-        return response()->download($path, basename($path))->deleteFileAfterSend(true);
+        app()->terminating(function () use ($path) {
+            \Illuminate\Support\Facades\File::deleteDirectory(dirname($path));
+        });
+        return response()->download($path, basename($path));
     }
 
     public function exportAllActive()
@@ -38,6 +41,9 @@ class LaporanController extends Controller
             return back()->with('error', 'Tidak ada kompetisi aktif untuk diekspor.');
         }
 
-        return response()->download($path, basename($path))->deleteFileAfterSend(true);
+        app()->terminating(function () use ($path) {
+            \Illuminate\Support\Facades\File::deleteDirectory(dirname($path));
+        });
+        return response()->download($path, basename($path));
     }
 }
