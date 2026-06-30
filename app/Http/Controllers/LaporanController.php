@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\Models\Kompetisi;
 use App\Services\LaporanExportService;
 use App\Services\LaporanReportService;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
@@ -24,27 +25,44 @@ class LaporanController extends Controller
         return view('admin.admin-laporan', compact('competitions', 'summaries'));
     }
 
-    public function exportOne($id)
+    public function exportOne(Request $request, $id)
     {
         $k = Kompetisi::findOrFail($id);
+        $path = $this->exporter->exportCompetition($k);
 
-        return $this->downloadAndCleanup($this->exporter->exportCompetition($k));
+        return $this->downloadAndCleanup($path, $request);
     }
 
-    public function exportAllActive()
+    public function exportAllActive(Request $request)
     {
         if ($this->reports->activeCompetitions()->isEmpty()) {
             return back()->with('error', 'Tidak ada kompetisi aktif untuk diekspor.');
         }
 
-        return $this->downloadAndCleanup($this->exporter->exportActive());
+        $path = $this->exporter->exportActive();
+
+        return $this->downloadAndCleanup($path, $request);
     }
 
-    /** Stream the zip and schedule its temp directory for cleanup after send. */
-    private function downloadAndCleanup(string $path): BinaryFileResponse
+    /**
+     * Stream the zip, schedule temp cleanup, and echo back the client's
+     * download_token as a readable cookie so the page can detect that the
+     * download has started and re-enable its export button.
+     */
+    private function downloadAndCleanup(string $path, Request $request): BinaryFileResponse
     {
-        app()->terminating(fn () => File::deleteDirectory(dirname($path)));
+        app()->terminating(function () use ($path) {
+            File::deleteDirectory(dirname($path));
+        });
 
-        return response()->download($path, basename($path));
+        $response = response()->download($path, basename($path));
+
+        $token = (string) $request->query('download_token', '');
+        if ($token !== '' && preg_match('/^[A-Za-z0-9]{1,64}$/', $token)) {
+            // httpOnly = false so the page's JS can read it to detect the download started.
+            $response->headers->setCookie(cookie('download_token', $token, 1, '/', null, null, false));
+        }
+
+        return $response;
     }
 }

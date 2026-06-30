@@ -132,18 +132,58 @@
     </div>
 
     <script>
-        // Disable + grey the export button on click so it can't be double-clicked
-        // while the zip is generated. The download runs without leaving the page,
-        // so we re-enable on a short timer.
-        document.querySelectorAll('a[data-export]').forEach(function (link) {
-            link.addEventListener('click', function () {
-                var btn = link.querySelector('button');
-                link.classList.add('is-exporting');
-                if (btn) btn.disabled = true;
-                setTimeout(function () {
-                    link.classList.remove('is-exporting');
-                    if (btn) btn.disabled = false;
-                }, 8000);
+        document.addEventListener('DOMContentLoaded', function () {
+            function getCookie(name) {
+                var match = document.cookie.split('; ').find(function (row) {
+                    return row.indexOf(name + '=') === 0;
+                });
+                return match ? match.split('=')[1] : null;
+            }
+            function clearCookie(name) {
+                document.cookie = name + '=; Max-Age=0; path=/';
+            }
+
+            document.querySelectorAll('a[data-export]').forEach(function (link) {
+                link.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    if (link.classList.contains('is-exporting')) {
+                        return;
+                    }
+
+                    var btn = link.querySelector('button');
+                    var token = 'dl' + Date.now() + Math.floor(Math.random() * 1000000);
+
+                    var url = new URL(link.href, window.location.origin);
+                    url.searchParams.set('download_token', token);
+
+                    link.classList.add('is-exporting');
+                    if (btn) {
+                        btn.disabled = true;
+                    }
+
+                    function finish() {
+                        clearInterval(poll);
+                        clearTimeout(safety);
+                        clearCookie('download_token');
+                        link.classList.remove('is-exporting');
+                        if (btn) {
+                            btn.disabled = false;
+                        }
+                    }
+
+                    // The server echoes our token back as the `download_token`
+                    // cookie on the download response, so the button re-enables
+                    // exactly when the file starts downloading.
+                    var poll = setInterval(function () {
+                        if (getCookie('download_token') === token) {
+                            finish();
+                        }
+                    }, 400);
+                    // Safety net in case the cookie never arrives.
+                    var safety = setTimeout(finish, 120000);
+
+                    window.location.href = url.toString();
+                });
             });
         });
     </script>
