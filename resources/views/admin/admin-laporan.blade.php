@@ -7,8 +7,8 @@
         position: relative;
         padding: 22px 24px;
         border-radius: 12px;
-        background: #fff;
-        box-shadow: 0 1px 2px rgba(16, 24, 40, 0.06), 0 4px 12px rgba(16, 24, 40, 0.06);
+        background: #f4f6f9;
+        box-shadow: 0 1px 2px rgba(16, 24, 40, 0.05);
         margin: 0 0 18px;
     }
     .laporan-card .card-head {
@@ -26,10 +26,11 @@
         margin-top: 18px;
     }
     .laporan-stats .stat {
-        background: #f5f6f8;
+        background: #fff;
         border-radius: 8px;
         padding: 12px 10px;
         text-align: center;
+        box-shadow: 0 1px 2px rgba(16, 24, 40, 0.04);
     }
     .laporan-stats .stat .num {
         font-size: 1.6rem;
