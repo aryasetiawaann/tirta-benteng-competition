@@ -120,10 +120,36 @@ class LaporanReportService
         return $rows;
     }
 
+    /** @return array<int|string, array{terkumpul:int, tertunda:int}> */
+    private function revenueByComp(array $kompetisiIds): array
+    {
+        if (empty($kompetisiIds)) {
+            return [];
+        }
+
+        $payments = DB::table('acara_atlet as aa')
+            ->join('acara as ac', 'aa.acara_id', '=', 'ac.id')
+            ->join('pembayaran as p', 'aa.pembayaran_id', '=', 'p.id')
+            ->whereIn('ac.kompetisi_id', $kompetisiIds)
+            ->select('ac.kompetisi_id as kompetisi_id', 'p.id as pembayaran_id', 'p.total_harga', 'p.status')
+            ->distinct()
+            ->get();
+
+        $out = [];
+        foreach ($payments->groupBy('kompetisi_id') as $compId => $rows) {
+            $out[$compId] = [
+                'terkumpul' => (int) $rows->where('status', 'Berhasil')->sum('total_harga'),
+                'tertunda' => (int) $rows->where('status', 'Menunggu')->sum('total_harga'),
+            ];
+        }
+        return $out;
+    }
+
     public function summaries(array $kompetisiIds): array
     {
         $base = $this->baseRows($kompetisiIds);
         $byComp = $base->groupBy('kompetisi_id');
+        $revenue = $this->revenueByComp($kompetisiIds);
         $out = [];
 
         foreach ($this->orderedCompetitionIds($base) as $compId) {
@@ -142,6 +168,8 @@ class LaporanReportService
                 ->values()->all();
             usort($pairs, fn ($a, $b) => [$b['count'], $a['club']] <=> [$a['count'], $b['club']]);
 
+            $rev = $revenue[$compId] ?? ['terkumpul' => 0, 'tertunda' => 0];
+
             $out[] = [
                 'kompetisi_id' => $compId,
                 'nama' => $compRows->first()->kompetisi_nama,
@@ -157,6 +185,8 @@ class LaporanReportService
                 'umur_rata' => $ages->isEmpty() ? 0.0 : round($ages->avg(), 1),
                 'nomor_per_atlet' => $peserta > 0 ? round($nomor / $peserta, 1) : 0.0,
                 'club_terbanyak' => $pairs[0]['club'] ?? null,
+                'pendapatan_terkumpul' => $rev['terkumpul'],
+                'pendapatan_tertunda' => $rev['tertunda'],
             ];
         }
 

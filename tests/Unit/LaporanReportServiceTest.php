@@ -4,6 +4,7 @@ namespace Tests\Unit;
 use App\Models\Acara;
 use App\Models\Atlet;
 use App\Models\Kompetisi;
+use App\Models\Pembayaran;
 use App\Models\User;
 use App\Services\LaporanReportService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -144,6 +145,44 @@ class LaporanReportServiceTest extends TestCase
         $expectedAvg = round((\Carbon\Carbon::parse('2010-01-01')->age + \Carbon\Carbon::parse('2014-01-01')->age) / 2, 1);
         $this->assertSame($expectedAvg, $s['umur_rata']);
         $this->assertSame('Alpha', $s['club_terbanyak']);     // Alpha 1 athlete vs Beta 1 -> tie -> alphabetical
+    }
+
+    public function test_summaries_sums_distinct_payments_for_revenue(): void
+    {
+        $k = Kompetisi::factory()->create([
+            'nama' => 'Lomba E', 'buka_pendaftaran' => now()->subDay(), 'waktu_kompetisi' => now()->addDay(),
+        ]);
+        $u = User::factory()->create(['club' => 'Alpha', 'email' => 'a@x.com', 'phone' => '0811', 'role' => 'user']);
+        $atlet = Atlet::create(['user_id' => $u->id, 'name' => 'Andi', 'umur' => '2010-01-01', 'jenis_kelamin' => 'Pria']);
+
+        // One Berhasil payment of 150000 covering TWO entries -> counted once.
+        $paid = Pembayaran::create([
+            'user_id' => $u->id, 'midtrans_order_id' => 'ORD-1', 'metode_pembayaran' => 'qris',
+            'total_harga' => 150000, 'status' => 'Berhasil',
+        ]);
+        // One Menunggu payment of 50000.
+        $pending = Pembayaran::create([
+            'user_id' => $u->id, 'midtrans_order_id' => 'ORD-2', 'metode_pembayaran' => 'qris',
+            'total_harga' => 50000, 'status' => 'Menunggu',
+        ]);
+        // One Gagal payment of 99999 -> excluded entirely.
+        $failed = Pembayaran::create([
+            'user_id' => $u->id, 'midtrans_order_id' => 'ORD-3', 'metode_pembayaran' => 'qris',
+            'total_harga' => 99999, 'status' => 'Gagal',
+        ]);
+
+        foreach ([[1, $paid], [2, $paid], [3, $pending], [4, $failed]] as [$nomor, $pay]) {
+            $acara = Acara::factory()->create(['kompetisi_id' => $k->id, 'nomor_lomba' => $nomor]);
+            $atlet->acara()->attach($acara->id, [
+                'status_pembayaran' => $pay->status === 'Berhasil' ? 'Selesai' : 'Menunggu',
+                'pembayaran_id' => $pay->id,
+            ]);
+        }
+
+        $s = collect((new LaporanReportService())->summaries([$k->id]))->firstWhere('kompetisi_id', $k->id);
+
+        $this->assertSame(150000, $s['pendapatan_terkumpul']); // distinct Berhasil payment, once
+        $this->assertSame(50000, $s['pendapatan_tertunda']);   // Menunggu payment
     }
 
     public function test_daftar_rows_list_with_total_atlet_and_total_club(): void
