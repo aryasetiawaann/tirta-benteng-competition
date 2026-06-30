@@ -185,6 +185,23 @@ class LaporanReportServiceTest extends TestCase
         $this->assertSame(50000, $s['pendapatan_tertunda']);   // Menunggu payment
     }
 
+    public function test_summaries_computes_quota_fill_rate(): void
+    {
+        // Two events, kuota 50 each = 100 total. One entry on nomor 1 -> 1/100 = 1.0%.
+        $k = $this->seedKompetisi(
+            ['nama' => 'Lomba F', 'buka_pendaftaran' => now()->subDay(), 'waktu_kompetisi' => now()->addDay()],
+            [
+                ['club' => 'Alpha', 'email' => 'a@x.com', 'phone' => '0811', 'user_name' => 'UA', 'atlet' => 'Andi', 'nomor' => 1, 'status' => 'Selesai', 'kuota' => 50],
+            ]
+        );
+        // A second event with no entries, kuota 50, so total quota = 100.
+        Acara::factory()->create(['kompetisi_id' => $k->id, 'nomor_lomba' => 99, 'kuota' => 50]);
+
+        $s = collect((new LaporanReportService())->summaries([$k->id]))->firstWhere('kompetisi_id', $k->id);
+
+        $this->assertEqualsWithDelta(1.0, $s['keterisian_kuota'], 0.01);
+    }
+
     public function test_daftar_rows_list_with_total_atlet_and_total_club(): void
     {
         $k = $this->seedKompetisi(

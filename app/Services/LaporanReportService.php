@@ -145,11 +145,28 @@ class LaporanReportService
         return $out;
     }
 
+    /** @return array<int|string, int> total kuota per competition */
+    private function quotaByComp(array $kompetisiIds): array
+    {
+        if (empty($kompetisiIds)) {
+            return [];
+        }
+
+        return DB::table('acara')
+            ->whereIn('kompetisi_id', $kompetisiIds)
+            ->groupBy('kompetisi_id')
+            ->selectRaw('kompetisi_id, SUM(kuota) as total_kuota')
+            ->pluck('total_kuota', 'kompetisi_id')
+            ->map(fn ($v) => (int) $v)
+            ->all();
+    }
+
     public function summaries(array $kompetisiIds): array
     {
         $base = $this->baseRows($kompetisiIds);
         $byComp = $base->groupBy('kompetisi_id');
         $revenue = $this->revenueByComp($kompetisiIds);
+        $quota = $this->quotaByComp($kompetisiIds);
         $out = [];
 
         foreach ($this->orderedCompetitionIds($base) as $compId) {
@@ -169,6 +186,7 @@ class LaporanReportService
             usort($pairs, fn ($a, $b) => [$b['count'], $a['club']] <=> [$a['count'], $b['club']]);
 
             $rev = $revenue[$compId] ?? ['terkumpul' => 0, 'tertunda' => 0];
+            $totalKuota = $quota[$compId] ?? 0;
 
             $out[] = [
                 'kompetisi_id' => $compId,
@@ -187,6 +205,7 @@ class LaporanReportService
                 'club_terbanyak' => $pairs[0]['club'] ?? null,
                 'pendapatan_terkumpul' => $rev['terkumpul'],
                 'pendapatan_tertunda' => $rev['tertunda'],
+                'keterisian_kuota' => $totalKuota > 0 ? round($nomor / $totalKuota * 100, 1) : null,
             ];
         }
 
