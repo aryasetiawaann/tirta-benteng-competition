@@ -90,7 +90,7 @@
                         <div class="all-card mtopbot laporan-card">
                             <div class="card-head">
                                 <h2 style="margin-bottom: 4px;">{{ $k->nama }}</h2>
-                                <p class="smaller">Tanggal lomba: {{ \Carbon\Carbon::parse($k->waktu_kompetisi)->format('d/m/Y') }}</p>
+                                <p class="smaller">Tanggal lomba: {{ \Carbon\Carbon::parse($k->waktu_kompetisi)->locale('id')->isoFormat('dddd, D MMMM YYYY') }}</p>
                             </div>
                             <div class="laporan-stats">
                                 <div class="stat">
