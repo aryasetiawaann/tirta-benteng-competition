@@ -17,12 +17,33 @@
         top: 16px;
         right: 16px;
     }
-    .laporan-metrics {
-        display: flex;
-        gap: 24px;
-        flex-wrap: wrap;
-        margin-top: 10px;
+    .laporan-stats {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(96px, 1fr));
+        gap: 10px;
+        margin-top: 14px;
     }
+    .laporan-stats .stat {
+        background: #f5f6f8;
+        border-radius: 8px;
+        padding: 12px 10px;
+        text-align: center;
+    }
+    .laporan-stats .stat .num {
+        font-size: 1.6rem;
+        font-weight: 700;
+        line-height: 1.1;
+        color: #111827;
+    }
+    .laporan-stats .stat .lbl {
+        font-size: 0.7rem;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+        color: #6b7280;
+        margin-top: 4px;
+    }
+    .laporan-stats .stat.is-ok .num { color: #16a34a; }   /* Selesai */
+    .laporan-stats .stat.is-wait .num { color: #d97706; }  /* Menunggu */
 
     /* Mobile: Export Semua stays in the header; the per-competition Export
        button drops to the end of the card as a full-width button. */
@@ -71,12 +92,27 @@
                                 <h2 style="margin-bottom: 4px;">{{ $k->nama }}</h2>
                                 <p class="smaller">Tanggal lomba: {{ \Carbon\Carbon::parse($k->waktu_kompetisi)->format('d/m/Y') }}</p>
                             </div>
-                            <div class="laporan-metrics">
-                                <span>Peserta: <strong>{{ $s['peserta'] ?? 0 }}</strong></span>
-                                <span>Nomor: <strong>{{ $s['nomor'] ?? 0 }}</strong></span>
-                                <span>Club: <strong>{{ $s['club'] ?? 0 }}</strong></span>
-                                <span>Selesai: <strong>{{ $s['selesai'] ?? 0 }}</strong></span>
-                                <span>Menunggu: <strong>{{ $s['menunggu'] ?? 0 }}</strong></span>
+                            <div class="laporan-stats">
+                                <div class="stat">
+                                    <div class="num">{{ $s['peserta'] ?? 0 }}</div>
+                                    <div class="lbl">Peserta</div>
+                                </div>
+                                <div class="stat">
+                                    <div class="num">{{ $s['nomor'] ?? 0 }}</div>
+                                    <div class="lbl">Nomor</div>
+                                </div>
+                                <div class="stat">
+                                    <div class="num">{{ $s['club'] ?? 0 }}</div>
+                                    <div class="lbl">Club</div>
+                                </div>
+                                <div class="stat is-ok">
+                                    <div class="num">{{ $s['selesai'] ?? 0 }}</div>
+                                    <div class="lbl">Selesai</div>
+                                </div>
+                                <div class="stat is-wait">
+                                    <div class="num">{{ $s['menunggu'] ?? 0 }}</div>
+                                    <div class="lbl">Menunggu</div>
+                                </div>
                             </div>
                             <a class="laporan-export" href="{{ route('admin.laporan.export', $k->id) }}">
                                 <button type="button">Export</button>
