@@ -49,8 +49,8 @@
     .laporan-stats .stat.is-wait .num { color: #d97706; }  /* Menunggu */
 
     /* Busy state while an export is being generated. */
-    a[data-export].is-exporting { pointer-events: none; opacity: 0.6; }
-    a[data-export] button:disabled { cursor: progress; }
+    a[data-export].is-exporting { pointer-events: none; opacity: 0.5; }
+    a[data-export] button:disabled { cursor: not-allowed; }
 
     /* Mobile: Export Semua stays in the header; the per-competition Export
        button drops to the end of the card as a full-width button. */
@@ -151,7 +151,6 @@
                     }
 
                     var btn = link.querySelector('button');
-                    var original = btn ? btn.innerHTML : '';
                     var token = 'dl' + Date.now() + Math.floor(Math.random() * 1000000);
 
                     var url = new URL(link.href, window.location.origin);
@@ -160,7 +159,6 @@
                     link.classList.add('is-exporting');
                     if (btn) {
                         btn.disabled = true;
-                        btn.innerHTML = 'Mengekspor…';
                     }
 
                     function finish() {
@@ -170,7 +168,6 @@
                         link.classList.remove('is-exporting');
                         if (btn) {
                             btn.disabled = false;
-                            btn.innerHTML = original;
                         }
                     }
 
