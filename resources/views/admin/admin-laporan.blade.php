@@ -5,23 +5,25 @@
 <style>
     .laporan-card {
         position: relative;
-        padding: 16px;
-        border: 1px solid #e5e5e5;
-        border-radius: 8px;
+        padding: 22px 24px;
+        border-radius: 12px;
+        background: #fff;
+        box-shadow: 0 1px 2px rgba(16, 24, 40, 0.06), 0 4px 12px rgba(16, 24, 40, 0.06);
+        margin: 0 0 18px;
     }
     .laporan-card .card-head {
         padding-right: 130px; /* leave room for the absolute Export button on desktop */
     }
     .laporan-export {
         position: absolute;
-        top: 16px;
-        right: 16px;
+        top: 22px;
+        right: 24px;
     }
     .laporan-stats {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(96px, 1fr));
-        gap: 10px;
-        margin-top: 14px;
+        grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+        gap: 12px;
+        margin-top: 18px;
     }
     .laporan-stats .stat {
         background: #f5f6f8;
@@ -90,7 +92,7 @@
                         <div class="all-card mtopbot laporan-card">
                             <div class="card-head">
                                 <h2 style="margin-bottom: 4px;">{{ $k->nama }}</h2>
-                                <p class="smaller">Tanggal lomba: {{ \Carbon\Carbon::parse($k->waktu_kompetisi)->locale('id')->isoFormat('dddd, D MMMM YYYY') }}</p>
+                                <p class="smaller">{{ \Carbon\Carbon::parse($k->waktu_kompetisi)->locale('id')->isoFormat('dddd, D MMMM YYYY') }}</p>
                             </div>
                             <div class="laporan-stats">
                                 <div class="stat">
