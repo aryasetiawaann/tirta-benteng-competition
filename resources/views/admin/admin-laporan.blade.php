@@ -62,11 +62,12 @@
     .laporan-detail[open] > summary::before { content: '\25BE'; }
     .laporan-detail-body {
         margin-top: 12px;
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+        display: flex;
+        flex-wrap: wrap;
         gap: 12px;
     }
     .laporan-detail-group {
+        flex: 1 1 230px;
         background: #f9fafb;
         border: 1px solid #e5e7eb;
         border-radius: 8px;
