@@ -142,8 +142,6 @@ class LaporanReportServiceTest extends TestCase
         $this->assertSame(2, $s['nomor_lomba_count']);        // nomor 1 & 2 distinct
         $this->assertSame(1.5, $s['nomor_per_atlet']);        // 3 entries / 2 peserta
         $this->assertEqualsWithDelta(66.7, $s['tingkat_pelunasan'], 0.1); // 2 Selesai / 3
-        $expectedAvg = round((\Carbon\Carbon::parse('2010-01-01')->age + \Carbon\Carbon::parse('2014-01-01')->age) / 2, 1);
-        $this->assertSame($expectedAvg, $s['umur_rata']);
         $this->assertSame('Alpha', $s['club_terbanyak']);     // Alpha 1 athlete vs Beta 1 -> tie -> alphabetical
         $this->assertSame(1, $s['club_terbanyak_peserta']);   // Andi
         $this->assertSame(2, $s['club_terbanyak_nomor']);     // Andi's 2 entries

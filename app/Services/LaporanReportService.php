@@ -50,7 +50,6 @@ class LaporanReportService
                 'at.name as atlet_name',
                 'at.id as atlet_id',
                 'at.jenis_kelamin as jenis_kelamin',
-                'at.umur as umur',
                 'ac.nomor_lomba as nomor_lomba',
                 'aa.status_pembayaran as status_pembayaran',
             ])
@@ -160,8 +159,6 @@ class LaporanReportService
             $selesai = $compRows->where('status_pembayaran', 'Selesai')->count();
             $peserta = $compRows->pluck('atlet_name')->unique()->count();
 
-            $ages = $athletes->map(fn ($a) => \Carbon\Carbon::parse($a->umur)->age);
-
             // Top club by unique athletes; ties broken alphabetically.
             $pairs = $athletes->groupBy('club')
                 ->map(fn ($g, $club) => ['club' => (string) $club, 'count' => $g->count()])
@@ -186,7 +183,6 @@ class LaporanReportService
                 'nomor_lomba_count' => $compRows->pluck('nomor_lomba')->unique()->count(),
                 'gender_l' => $athletes->where('jenis_kelamin', 'Pria')->count(),
                 'gender_p' => $athletes->where('jenis_kelamin', 'Wanita')->count(),
-                'umur_rata' => $ages->isEmpty() ? 0.0 : round($ages->avg(), 1),
                 'nomor_per_atlet' => $peserta > 0 ? round($nomor / $peserta, 1) : 0.0,
                 'club_terbanyak' => $topClub,
                 'club_terbanyak_peserta' => $topClubPeserta,

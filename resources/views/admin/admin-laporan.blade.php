@@ -211,7 +211,6 @@
                                         <div class="grp-title">Partisipasi</div>
                                         <dl>
                                             <dt>Komposisi Gender<span class="sub">(L / P)</span></dt><dd>{{ $s['gender_l'] ?? 0 }} / {{ $s['gender_p'] ?? 0 }}</dd>
-                                            <dt>Rata-rata Umur</dt><dd>{{ $s['umur_rata'] ?? 0 }} th</dd>
                                             <dt>Rata-rata Nomor per Atlet</dt><dd>{{ $s['nomor_per_atlet'] ?? 0 }}</dd>
                                             <dt>Club Terbanyak</dt>
                                             <dd>{{ $s['club_terbanyak'] ?? '—' }}@if (($s['club_terbanyak'] ?? null) !== null)<span class="sub">({{ $s['club_terbanyak_peserta'] ?? 0 }} peserta, {{ $s['club_terbanyak_nomor'] ?? 0 }} nomor)</span>@endif</dd>
