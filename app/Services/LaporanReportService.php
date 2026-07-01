@@ -48,6 +48,8 @@ class LaporanReportService
                 'u.phone as phone',
                 'u.name as user_name',
                 'at.name as atlet_name',
+                'at.id as atlet_id',
+                'at.jenis_kelamin as jenis_kelamin',
                 'ac.nomor_lomba as nomor_lomba',
                 'aa.status_pembayaran as status_pembayaran',
             ])
@@ -117,22 +119,76 @@ class LaporanReportService
         return $rows;
     }
 
+    /** @return array<int|string, array{terkumpul:int, tertunda:int}> */
+    private function revenueByComp(array $kompetisiIds): array
+    {
+        if (empty($kompetisiIds)) {
+            return [];
+        }
+
+        $payments = DB::table('acara_atlet as aa')
+            ->join('acara as ac', 'aa.acara_id', '=', 'ac.id')
+            ->join('pembayaran as p', 'aa.pembayaran_id', '=', 'p.id')
+            ->whereIn('ac.kompetisi_id', $kompetisiIds)
+            ->select('ac.kompetisi_id as kompetisi_id', 'p.id as pembayaran_id', 'p.total_harga', 'p.status')
+            ->distinct()
+            ->get();
+
+        $out = [];
+        foreach ($payments->groupBy('kompetisi_id') as $compId => $rows) {
+            $out[$compId] = [
+                'terkumpul' => (int) $rows->where('status', 'Berhasil')->sum('total_harga'),
+                'tertunda' => (int) $rows->where('status', 'Menunggu')->sum('total_harga'),
+            ];
+        }
+        return $out;
+    }
+
     public function summaries(array $kompetisiIds): array
     {
         $base = $this->baseRows($kompetisiIds);
         $byComp = $base->groupBy('kompetisi_id');
+        $revenue = $this->revenueByComp($kompetisiIds);
         $out = [];
 
         foreach ($this->orderedCompetitionIds($base) as $compId) {
             $compRows = $byComp[$compId];
+
+            $athletes = $compRows->groupBy('atlet_id')->map(fn ($g) => $g->first());
+            $nomor = $compRows->count();
+            $selesai = $compRows->where('status_pembayaran', 'Selesai')->count();
+            $peserta = $compRows->pluck('atlet_name')->unique()->count();
+
+            // Top club by unique athletes; ties broken alphabetically.
+            $pairs = $athletes->groupBy('club')
+                ->map(fn ($g, $club) => ['club' => (string) $club, 'count' => $g->count()])
+                ->values()->all();
+            usort($pairs, fn ($a, $b) => [$b['count'], $a['club']] <=> [$a['count'], $b['club']]);
+
+            $topClub = $pairs[0]['club'] ?? null;
+            $topClubPeserta = $pairs[0]['count'] ?? 0;
+            $topClubNomor = $topClub !== null ? $compRows->where('club', $topClub)->count() : 0;
+
+            $rev = $revenue[$compId] ?? ['terkumpul' => 0, 'tertunda' => 0];
+
             $out[] = [
                 'kompetisi_id' => $compId,
                 'nama' => $compRows->first()->kompetisi_nama,
-                'peserta' => $compRows->pluck('atlet_name')->unique()->count(),
-                'nomor' => $compRows->count(),
+                'peserta' => $peserta,
+                'nomor' => $nomor,
                 'club' => $compRows->pluck('user_id')->unique()->count(),
-                'selesai' => $compRows->where('status_pembayaran', 'Selesai')->count(),
+                'selesai' => $selesai,
                 'menunggu' => $compRows->where('status_pembayaran', 'Menunggu')->count(),
+                'tingkat_pelunasan' => $nomor > 0 ? round($selesai / $nomor * 100, 1) : 0.0,
+                'nomor_lomba_count' => $compRows->pluck('nomor_lomba')->unique()->count(),
+                'gender_l' => $athletes->where('jenis_kelamin', 'Pria')->count(),
+                'gender_p' => $athletes->where('jenis_kelamin', 'Wanita')->count(),
+                'nomor_per_atlet' => $peserta > 0 ? round($nomor / $peserta, 1) : 0.0,
+                'club_terbanyak' => $topClub,
+                'club_terbanyak_peserta' => $topClubPeserta,
+                'club_terbanyak_nomor' => $topClubNomor,
+                'pendapatan_terkumpul' => $rev['terkumpul'],
+                'pendapatan_tertunda' => $rev['tertunda'],
             ];
         }
 

@@ -46,7 +46,9 @@ class LaporanPageTest extends TestCase
         $this->actingAs($this->admin())
             ->get(route('admin.laporan'))
             ->assertOk()
-            ->assertSee('Lomba Aktif');
+            ->assertSee('Lomba Aktif')
+            ->assertSee('Keuangan')
+            ->assertSee('Tingkat Pelunasan');
     }
 
     public function test_admin_can_download_single_export_zip(): void

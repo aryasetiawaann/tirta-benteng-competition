@@ -48,6 +48,65 @@
     .laporan-stats .stat.is-ok .num { color: #16a34a; }   /* Selesai */
     .laporan-stats .stat.is-wait .num { color: #d97706; }  /* Menunggu */
 
+    .laporan-detail { margin-top: 14px; }
+    .laporan-detail > summary {
+        cursor: pointer;
+        font-size: 0.8rem;
+        font-weight: 600;
+        color: #374151;
+        list-style: none;
+        user-select: none;
+    }
+    .laporan-detail > summary::-webkit-details-marker { display: none; }
+    .laporan-detail > summary::before { content: '\25B8'; margin-right: 6px; }
+    .laporan-detail[open] > summary::before { content: '\25BE'; }
+    .laporan-detail-body {
+        margin-top: 12px;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+    }
+    .laporan-detail-group {
+        flex: 1 1;
+        background: #f9fafb;
+        border: 1px solid #e5e7eb;
+        border-radius: 8px;
+        padding: 12px 14px;
+    }
+    .laporan-detail-group .grp-title {
+        font-size: 0.72rem;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+        color: #6b7280;
+        font-weight: 700;
+        margin-bottom: 8px;
+        padding-bottom: 6px;
+        border-bottom: 1px solid #e5e7eb;
+    }
+    .laporan-detail-group dl {
+        margin: 0;
+        display: grid;
+        grid-template-columns: 1fr auto;
+        column-gap: 12px;
+        font-size: 0.85rem;
+    }
+    .laporan-detail-group dt,
+    .laporan-detail-group dd {
+        padding: 6px 0;
+        border-bottom: 1px solid #edeff2;
+    }
+    .laporan-detail-group dt { color: #4b5563; }
+    .laporan-detail-group dd { margin: 0; font-weight: 600; color: #111827; text-align: right; }
+    .laporan-detail-group dl > dt:last-of-type,
+    .laporan-detail-group dl > dd:last-child { border-bottom: none; padding-bottom: 0; }
+    .laporan-detail-group .sub {
+        display: block;
+        font-size: 0.72rem;
+        font-weight: 400;
+        color: #9ca3af;
+        margin-top: 1px;
+    }
+
     /* Busy state while an export is being generated. */
     a[data-export].is-exporting { pointer-events: none; opacity: 0.5; }
     a[data-export] button:disabled { cursor: not-allowed; }
@@ -109,6 +168,10 @@
                                     <div class="lbl">Nomor</div>
                                 </div>
                                 <div class="stat">
+                                    <div class="num">{{ $s['nomor_lomba_count'] ?? 0 }}</div>
+                                    <div class="lbl">Acara</div>
+                                </div>
+                                <div class="stat">
                                     <div class="num">{{ $s['club'] ?? 0 }}</div>
                                     <div class="lbl">Club</div>
                                 </div>
@@ -121,6 +184,40 @@
                                     <div class="lbl">Menunggu</div>
                                 </div>
                             </div>
+                            @php
+                                $tutup = $k->tutup_pendaftaran ? \Carbon\Carbon::parse($k->tutup_pendaftaran) : null;
+                                $sisaHari = $tutup ? now()->startOfDay()->diffInDays($tutup->copy()->startOfDay(), false) : null;
+                                $rp = fn ($v) => 'Rp ' . number_format((int) $v, 0, ',', '.');
+                            @endphp
+                            <details class="laporan-detail">
+                                <summary>Detail</summary>
+                                <div class="laporan-detail-body">
+                                    <div class="laporan-detail-group">
+                                        <div class="grp-title">Keuangan</div>
+                                        <dl>
+                                            <dt>Terkumpul</dt><dd>{{ $rp($s['pendapatan_terkumpul'] ?? 0) }}</dd>
+                                            <dt>Tertunda</dt><dd>{{ $rp($s['pendapatan_tertunda'] ?? 0) }}</dd>
+                                            <dt>Tingkat Pelunasan</dt><dd>{{ $s['tingkat_pelunasan'] ?? 0 }}%</dd>
+                                        </dl>
+                                    </div>
+                                    <div class="laporan-detail-group">
+                                        <div class="grp-title">Operasional</div>
+                                        <dl>
+                                            <dt>Sisa Hari Pendaftaran</dt>
+                                            <dd>{{ $sisaHari === null ? '—' : ($sisaHari < 0 ? 'Ditutup' : $sisaHari . ' hari') }}</dd>
+                                        </dl>
+                                    </div>
+                                    <div class="laporan-detail-group">
+                                        <div class="grp-title">Partisipasi</div>
+                                        <dl>
+                                            <dt>Komposisi Gender<span class="sub">(L / P)</span></dt><dd>{{ $s['gender_l'] ?? 0 }} / {{ $s['gender_p'] ?? 0 }}</dd>
+                                            <dt>Rata-rata Nomor per Atlet</dt><dd>{{ $s['nomor_per_atlet'] ?? 0 }}</dd>
+                                            <dt>Club Terbanyak</dt>
+                                            <dd>{{ $s['club_terbanyak'] ?? '—' }}@if (($s['club_terbanyak'] ?? null) !== null)<span class="sub">({{ $s['club_terbanyak_peserta'] ?? 0 }} peserta, {{ $s['club_terbanyak_nomor'] ?? 0 }} nomor)</span>@endif</dd>
+                                        </dl>
+                                    </div>
+                                </div>
+                            </details>
                             <a class="laporan-export" href="{{ route('admin.laporan.export', $k->id) }}" data-export>
                                 <button type="button">Export</button>
                             </a>
