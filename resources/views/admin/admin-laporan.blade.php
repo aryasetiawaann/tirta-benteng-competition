@@ -98,6 +98,13 @@
     .laporan-detail-group dd { margin: 0; font-weight: 600; color: #111827; text-align: right; }
     .laporan-detail-group dl > dt:last-of-type,
     .laporan-detail-group dl > dd:last-child { border-bottom: none; padding-bottom: 0; }
+    .laporan-detail-group .sub {
+        display: block;
+        font-size: 0.72rem;
+        font-weight: 400;
+        color: #9ca3af;
+        margin-top: 1px;
+    }
 
     /* Busy state while an export is being generated. */
     a[data-export].is-exporting { pointer-events: none; opacity: 0.5; }
@@ -202,11 +209,11 @@
                                     <div class="laporan-detail-group">
                                         <div class="grp-title">Partisipasi</div>
                                         <dl>
-                                            <dt>Komposisi Gender (L / P)</dt><dd>{{ $s['gender_l'] ?? 0 }} / {{ $s['gender_p'] ?? 0 }}</dd>
+                                            <dt>Komposisi Gender<span class="sub">(L / P)</span></dt><dd>{{ $s['gender_l'] ?? 0 }} / {{ $s['gender_p'] ?? 0 }}</dd>
                                             <dt>Rata-rata Umur</dt><dd>{{ $s['umur_rata'] ?? 0 }} th</dd>
                                             <dt>Rata-rata Nomor per Atlet</dt><dd>{{ $s['nomor_per_atlet'] ?? 0 }}</dd>
                                             <dt>Club Terbanyak</dt>
-                                            <dd>{{ $s['club_terbanyak'] ?? '—' }}@if (($s['club_terbanyak'] ?? null) !== null) ({{ $s['club_terbanyak_peserta'] ?? 0 }} peserta, {{ $s['club_terbanyak_nomor'] ?? 0 }} nomor)@endif</dd>
+                                            <dd>{{ $s['club_terbanyak'] ?? '—' }}@if (($s['club_terbanyak'] ?? null) !== null)<span class="sub">({{ $s['club_terbanyak_peserta'] ?? 0 }} peserta, {{ $s['club_terbanyak_nomor'] ?? 0 }} nomor)</span>@endif</dd>
                                         </dl>
                                     </div>
                                 </div>
