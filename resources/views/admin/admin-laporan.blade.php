@@ -67,7 +67,7 @@
         gap: 12px;
     }
     .laporan-detail-group {
-        flex: 1 1 140px;
+        flex: 1 1;
         background: #f9fafb;
         border: 1px solid #e5e7eb;
         border-radius: 8px;
