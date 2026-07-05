@@ -126,22 +126,94 @@ class LaporanReportService
             return [];
         }
 
-        $payments = DB::table('acara_atlet as aa')
+        // A single payment can cover registrations across multiple competitions
+        // (the tagihan flow lets users pay across competitions at once), so its
+        // real total_harga must be split between them, not counted once per
+        // competition. We split each payment's total_harga proportionally to each
+        // competition's share of the registration prices (acara.harga).
+        $paymentIds = DB::table('acara_atlet as aa')
+            ->join('acara as ac', 'aa.acara_id', '=', 'ac.id')
+            ->whereIn('ac.kompetisi_id', $kompetisiIds)
+            ->whereNotNull('aa.pembayaran_id')
+            ->distinct()
+            ->pluck('aa.pembayaran_id')
+            ->all();
+
+        if (empty($paymentIds)) {
+            return [];
+        }
+
+        // Load every registration of those payments across ALL competitions they
+        // touch (not just the in-scope ones) so the price-share denominator is
+        // complete and an in-scope competition only gets its fair slice.
+        $regs = DB::table('acara_atlet as aa')
             ->join('acara as ac', 'aa.acara_id', '=', 'ac.id')
             ->join('pembayaran as p', 'aa.pembayaran_id', '=', 'p.id')
-            ->whereIn('ac.kompetisi_id', $kompetisiIds)
-            ->select('ac.kompetisi_id as kompetisi_id', 'p.id as pembayaran_id', 'p.total_harga', 'p.status')
-            ->distinct()
+            ->whereIn('aa.pembayaran_id', $paymentIds)
+            ->select('aa.pembayaran_id as pembayaran_id', 'p.total_harga as total_harga', 'p.status as status', 'ac.kompetisi_id as kompetisi_id', 'ac.harga as harga')
             ->get();
 
         $out = [];
-        foreach ($payments->groupBy('kompetisi_id') as $compId => $rows) {
-            $out[$compId] = [
-                'terkumpul' => (int) $rows->where('status', 'Berhasil')->sum('total_harga'),
-                'tertunda' => (int) $rows->where('status', 'Menunggu')->sum('total_harga'),
-            ];
+        foreach ($regs->groupBy('pembayaran_id') as $rows) {
+            $first = $rows->first();
+            $bucket = match ($first->status) {
+                'Berhasil' => 'terkumpul',
+                'Menunggu' => 'tertunda',
+                default => null, // Gagal / Kedaluarsa collect nothing.
+            };
+            if ($bucket === null) {
+                continue;
+            }
+
+            $weights = $rows->groupBy('kompetisi_id')->map(fn ($g) => (int) $g->sum('harga'))->all();
+            foreach ($this->splitAmount((int) $first->total_harga, $weights) as $compId => $amount) {
+                $out[$compId] ??= ['terkumpul' => 0, 'tertunda' => 0];
+                $out[$compId][$bucket] += $amount;
+            }
         }
+
         return $out;
+    }
+
+    /**
+     * Split an integer $total across weighted keys so the shares always sum back
+     * to exactly $total (largest-remainder method). Zero total weight splits by
+     * count instead of dividing by zero.
+     *
+     * @param  array<int|string, int>  $weights
+     * @return array<int|string, int>
+     */
+    private function splitAmount(int $total, array $weights): array
+    {
+        $totalWeight = array_sum($weights);
+        if ($totalWeight <= 0) {
+            $weights = array_fill_keys(array_keys($weights), 1);
+            $totalWeight = count($weights);
+        }
+
+        $shares = [];
+        $remainders = [];
+        $allocated = 0;
+        foreach ($weights as $key => $w) {
+            $exact = $total * $w / $totalWeight;
+            $shares[$key] = (int) floor($exact);
+            $remainders[$key] = $exact - $shares[$key];
+            $allocated += $shares[$key];
+        }
+
+        // Hand the leftover units to the largest fractional remainders, tie-broken
+        // by larger weight then key so the result is deterministic.
+        $leftover = $total - $allocated;
+        uksort($remainders, fn ($a, $b) => [$remainders[$b], $weights[$b], $b] <=> [$remainders[$a], $weights[$a], $a]);
+        foreach (array_keys($remainders) as $key) {
+            if ($leftover <= 0) {
+                break;
+            }
+            $shares[$key]++;
+            $leftover--;
+        }
+
+        return $shares;
     }
 
     public function summaries(array $kompetisiIds): array

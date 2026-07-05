@@ -171,8 +171,10 @@ class LaporanReportServiceTest extends TestCase
             'total_harga' => 99999, 'status' => 'Gagal',
         ]);
 
+        // Revenue is attributed per registration via acara.harga, filtered by payment status.
+        $hargas = [1 => 100000, 2 => 50000, 3 => 50000, 4 => 99999];
         foreach ([[1, $paid], [2, $paid], [3, $pending], [4, $failed]] as [$nomor, $pay]) {
-            $acara = Acara::factory()->create(['kompetisi_id' => $k->id, 'nomor_lomba' => $nomor]);
+            $acara = Acara::factory()->create(['kompetisi_id' => $k->id, 'nomor_lomba' => $nomor, 'harga' => $hargas[$nomor]]);
             $atlet->acara()->attach($acara->id, [
                 'status_pembayaran' => $pay->status === 'Berhasil' ? 'Selesai' : 'Menunggu',
                 'pembayaran_id' => $pay->id,
@@ -181,8 +183,67 @@ class LaporanReportServiceTest extends TestCase
 
         $s = collect((new LaporanReportService())->summaries([$k->id]))->firstWhere('kompetisi_id', $k->id);
 
-        $this->assertSame(150000, $s['pendapatan_terkumpul']); // distinct Berhasil payment, once
-        $this->assertSame(50000, $s['pendapatan_tertunda']);   // Menunggu payment
+        $this->assertSame(150000, $s['pendapatan_terkumpul']); // Berhasil registrations: 100000 + 50000
+        $this->assertSame(50000, $s['pendapatan_tertunda']);   // Menunggu registration: 50000
+    }
+
+    public function test_revenue_is_not_double_counted_across_competitions(): void
+    {
+        // One payment covering registrations in TWO competitions (the tagihan
+        // "select across competitions" flow) must attribute each competition
+        // only its own registrations' harga, never the whole payment twice.
+        $kA = Kompetisi::factory()->create(['nama' => 'Komp A', 'buka_pendaftaran' => now()->subDay(), 'waktu_kompetisi' => now()->addDay()]);
+        $kB = Kompetisi::factory()->create(['nama' => 'Komp B', 'buka_pendaftaran' => now()->subDay(), 'waktu_kompetisi' => now()->addDay()]);
+
+        $u = User::factory()->create(['club' => 'Alpha', 'email' => 'a@x.com', 'phone' => '0811', 'role' => 'user']);
+        $atlet = Atlet::create(['user_id' => $u->id, 'name' => 'Andi', 'umur' => '2010-01-01', 'jenis_kelamin' => 'Pria']);
+
+        // total_harga is the real charged amount (200000 registrations + 2% fee).
+        $paid = Pembayaran::create([
+            'user_id' => $u->id, 'midtrans_order_id' => 'ORD-1', 'metode_pembayaran' => 'qris',
+            'total_harga' => 204000, 'status' => 'Berhasil',
+        ]);
+
+        $acA = Acara::factory()->create(['kompetisi_id' => $kA->id, 'nomor_lomba' => 1, 'harga' => 120000]);
+        $acB = Acara::factory()->create(['kompetisi_id' => $kB->id, 'nomor_lomba' => 1, 'harga' => 80000]);
+        $atlet->acara()->attach($acA->id, ['status_pembayaran' => 'Selesai', 'pembayaran_id' => $paid->id]);
+        $atlet->acara()->attach($acB->id, ['status_pembayaran' => 'Selesai', 'pembayaran_id' => $paid->id]);
+
+        $summaries = collect((new LaporanReportService())->summaries([$kA->id, $kB->id]));
+        $revA = $summaries->firstWhere('kompetisi_id', $kA->id)['pendapatan_terkumpul'];
+        $revB = $summaries->firstWhere('kompetisi_id', $kB->id)['pendapatan_terkumpul'];
+
+        // total_harga split by price share (fee included), each competition once.
+        $this->assertSame(122400, $revA); // 204000 * 120000/200000
+        $this->assertSame(81600, $revB);  // 204000 *  80000/200000
+        $this->assertSame(204000, $revA + $revB); // sums back to real money paid
+    }
+
+    public function test_split_payment_rounds_so_shares_sum_to_total(): void
+    {
+        // Odd total across equal price shares must still sum back exactly.
+        $kA = Kompetisi::factory()->create(['nama' => 'Komp A', 'buka_pendaftaran' => now()->subDay(), 'waktu_kompetisi' => now()->addDay()]);
+        $kB = Kompetisi::factory()->create(['nama' => 'Komp B', 'buka_pendaftaran' => now()->subDay(), 'waktu_kompetisi' => now()->addDay()]);
+
+        $u = User::factory()->create(['club' => 'Alpha', 'email' => 'a@x.com', 'phone' => '0811', 'role' => 'user']);
+        $atlet = Atlet::create(['user_id' => $u->id, 'name' => 'Andi', 'umur' => '2010-01-01', 'jenis_kelamin' => 'Pria']);
+
+        $paid = Pembayaran::create([
+            'user_id' => $u->id, 'midtrans_order_id' => 'ORD-1', 'metode_pembayaran' => 'qris',
+            'total_harga' => 101, 'status' => 'Berhasil',
+        ]);
+
+        $acA = Acara::factory()->create(['kompetisi_id' => $kA->id, 'nomor_lomba' => 1, 'harga' => 50]);
+        $acB = Acara::factory()->create(['kompetisi_id' => $kB->id, 'nomor_lomba' => 1, 'harga' => 50]);
+        $atlet->acara()->attach($acA->id, ['status_pembayaran' => 'Selesai', 'pembayaran_id' => $paid->id]);
+        $atlet->acara()->attach($acB->id, ['status_pembayaran' => 'Selesai', 'pembayaran_id' => $paid->id]);
+
+        $summaries = collect((new LaporanReportService())->summaries([$kA->id, $kB->id]));
+        $revA = $summaries->firstWhere('kompetisi_id', $kA->id)['pendapatan_terkumpul'];
+        $revB = $summaries->firstWhere('kompetisi_id', $kB->id)['pendapatan_terkumpul'];
+
+        $this->assertSame(101, $revA + $revB);          // no cent lost or invented
+        $this->assertEqualsCanonicalizing([50, 51], [$revA, $revB]); // one gets the leftover unit
     }
 
     public function test_completed_trend_returns_only_past_in_date_order(): void
