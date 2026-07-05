@@ -267,37 +267,6 @@ class LaporanReportService
         return $out;
     }
 
-    /**
-     * @return array<int, array{nama:string, tanggal:string, peserta:int, nomor:int, revenue:int}>
-     */
-    public function completedTrend(): array
-    {
-        $comps = Kompetisi::where('waktu_kompetisi', '<', now())
-            ->orderBy('waktu_kompetisi')
-            ->get();
-
-        $ids = $comps->pluck('id')->all();
-        if (empty($ids)) {
-            return [];
-        }
-
-        $byComp = $this->baseRows($ids)->groupBy('kompetisi_id');
-        $revenue = $this->revenueByComp($ids);
-
-        $out = [];
-        foreach ($comps as $k) {
-            $rows = $byComp->get($k->id, collect());
-            $out[] = [
-                'nama' => $k->nama,
-                'tanggal' => \Carbon\Carbon::parse($k->waktu_kompetisi)->format('Y-m-d'),
-                'peserta' => $rows->pluck('atlet_name')->unique()->count(),
-                'nomor' => $rows->count(),
-                'revenue' => (int) ($revenue[$k->id]['terkumpul'] ?? 0),
-            ];
-        }
-        return $out;
-    }
-
     public function daftarRows(array $kompetisiIds): array
     {
         $base = $this->baseRows($kompetisiIds);

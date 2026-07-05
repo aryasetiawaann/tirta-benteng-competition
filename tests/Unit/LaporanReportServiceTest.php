@@ -246,38 +246,6 @@ class LaporanReportServiceTest extends TestCase
         $this->assertEqualsCanonicalizing([50, 51], [$revA, $revB]); // one gets the leftover unit
     }
 
-    public function test_completed_trend_returns_only_past_in_date_order(): void
-    {
-        // Completed, older
-        $this->seedKompetisi(
-            ['nama' => 'Selesai Lama', 'buka_pendaftaran' => now()->subDays(30), 'waktu_kompetisi' => now()->subDays(10)],
-            [
-                ['club' => 'Alpha', 'email' => 'a@x.com', 'phone' => '0811', 'user_name' => 'UA', 'atlet' => 'Andi', 'nomor' => 1, 'status' => 'Selesai'],
-                ['club' => 'Alpha', 'email' => 'a@x.com', 'phone' => '0811', 'user_name' => 'UA', 'atlet' => 'Andi', 'nomor' => 2, 'status' => 'Selesai'],
-            ]
-        );
-        // Completed, newer
-        $this->seedKompetisi(
-            ['nama' => 'Selesai Baru', 'buka_pendaftaran' => now()->subDays(20), 'waktu_kompetisi' => now()->subDays(2)],
-            [
-                ['club' => 'Beta', 'email' => 'b@x.com', 'phone' => '0822', 'user_name' => 'UB', 'atlet' => 'Cici', 'nomor' => 1, 'status' => 'Menunggu'],
-            ]
-        );
-        // Active (excluded) and future (excluded)
-        Kompetisi::factory()->create(['nama' => 'Aktif', 'buka_pendaftaran' => now()->subDay(), 'waktu_kompetisi' => now()->addDay()]);
-        Kompetisi::factory()->create(['nama' => 'Nanti', 'buka_pendaftaran' => now()->addDay(), 'waktu_kompetisi' => now()->addDays(5)]);
-
-        $trend = (new LaporanReportService())->completedTrend();
-
-        $this->assertCount(2, $trend);
-        $this->assertSame('Selesai Lama', $trend[0]['nama']); // ascending by date
-        $this->assertSame('Selesai Baru', $trend[1]['nama']);
-        $this->assertSame(1, $trend[0]['peserta']);           // Andi (unique)
-        $this->assertSame(2, $trend[0]['nomor']);             // 2 entries
-        $this->assertSame(0, $trend[0]['revenue']);           // no payments linked
-        $this->assertArrayHasKey('tanggal', $trend[0]);
-    }
-
     public function test_daftar_rows_list_with_total_atlet_and_total_club(): void
     {
         $k = $this->seedKompetisi(

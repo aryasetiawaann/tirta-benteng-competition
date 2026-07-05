@@ -21,9 +21,8 @@ class LaporanController extends Controller
         $competitions = $this->reports->activeCompetitions();
         $summaries = collect($this->reports->summaries($competitions->pluck('id')->all()))
             ->keyBy('kompetisi_id');
-        $completedTrend = $this->reports->completedTrend();
 
-        return view('admin.admin-laporan', compact('competitions', 'summaries', 'completedTrend'));
+        return view('admin.admin-laporan', compact('competitions', 'summaries'));
     }
 
     public function exportOne(Request $request, $id)

@@ -51,41 +51,6 @@ class LaporanPageTest extends TestCase
             ->assertSee('Tingkat Pelunasan');
     }
 
-    public function test_admin_sees_completed_competition_trend_section(): void
-    {
-        $this->withoutVite();
-
-        $k = Kompetisi::factory()->create([
-            'nama' => 'Lomba Selesai',
-            'buka_pendaftaran' => now()->subDays(10),
-            'waktu_kompetisi' => now()->subDay(),
-        ]);
-        $u = User::factory()->create(['club' => 'Alpha', 'phone' => '0811', 'role' => 'user']);
-        $atlet = Atlet::create(['user_id' => $u->id, 'name' => 'Andi', 'umur' => '2010-01-01', 'jenis_kelamin' => 'Pria']);
-        $acara = Acara::factory()->create(['kompetisi_id' => $k->id, 'nomor_lomba' => 1]);
-        $atlet->acara()->attach($acara->id, ['status_pembayaran' => 'Selesai']);
-
-        $this->actingAs($this->admin())
-            ->get(route('admin.laporan'))
-            ->assertOk()
-            ->assertSee('Tren Kompetisi Selesai')
-            ->assertSee('trendChart');
-    }
-
-    public function test_trend_section_shows_empty_state_without_completed(): void
-    {
-        $this->withoutVite();
-
-        Kompetisi::factory()->create([
-            'nama' => 'Aktif', 'buka_pendaftaran' => now()->subDay(), 'waktu_kompetisi' => now()->addDay(),
-        ]);
-
-        $this->actingAs($this->admin())
-            ->get(route('admin.laporan'))
-            ->assertOk()
-            ->assertSee('Belum ada kompetisi selesai.');
-    }
-
     public function test_admin_can_download_single_export_zip(): void
     {
         $k = Kompetisi::factory()->create([

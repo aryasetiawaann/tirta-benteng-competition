@@ -107,18 +107,6 @@
         margin-top: 1px;
     }
 
-    .trend-chart-wrap { position: relative; height: 340px; }
-    .trend-toggle button {
-        font-size: 0.75rem;
-        padding: 4px 10px;
-        border: 1px solid #d4d9e0;
-        background: #fff;
-        border-radius: 6px;
-        cursor: pointer;
-        margin-left: 6px;
-    }
-    .trend-toggle button.is-active { background: #111827; color: #fff; border-color: #111827; }
-
     /* Busy state while an export is being generated. */
     a[data-export].is-exporting { pointer-events: none; opacity: 0.5; }
     a[data-export] button:disabled { cursor: not-allowed; }
@@ -238,26 +226,6 @@
                 </div>
             @endif
         </section>
-
-        <section class="all-container all-card w100 mtopbot">
-            <header class="divider flex" style="justify-content: space-between; align-items: center;">
-                <h1>Tren Kompetisi Selesai</h1>
-                @if (!empty($completedTrend))
-                    <div class="trend-toggle">
-                        <button type="button" data-range="10" class="is-active">10 Terakhir</button>
-                        <button type="button" data-range="all">Semua</button>
-                    </div>
-                @endif
-            </header>
-
-            @if (empty($completedTrend))
-                <p class="m10">Belum ada kompetisi selesai.</p>
-            @else
-                <div class="m10 trend-chart-wrap">
-                    <canvas id="trendChart"></canvas>
-                </div>
-            @endif
-        </section>
     </div>
 
     <script>
@@ -316,78 +284,4 @@
             });
         });
     </script>
-
-    @if (!empty($completedTrend))
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            var raw = @json($completedTrend);
-            var canvas = document.getElementById('trendChart');
-            if (!canvas || !window.Chart || !raw.length) {
-                return;
-            }
-
-            function rpShort(v) {
-                if (v >= 1000000) return 'Rp ' + (v / 1000000).toFixed(1).replace('.', ',') + 'jt';
-                if (v >= 1000) return 'Rp ' + Math.round(v / 1000) + 'rb';
-                return 'Rp ' + v;
-            }
-            function rpFull(v) { return 'Rp ' + Number(v).toLocaleString('id-ID'); }
-
-            var chart = null;
-            function render(range) {
-                var data = range === 'all' ? raw : raw.slice(-10);
-                var cfg = {
-                    type: 'line',
-                    data: {
-                        labels: data.map(function (d) { return d.nama; }),
-                        datasets: [
-                            { label: 'Peserta', data: data.map(function (d) { return d.peserta; }), yAxisID: 'y', borderColor: '#2563eb', backgroundColor: '#2563eb', tension: 0.25 },
-                            { label: 'Nomor', data: data.map(function (d) { return d.nomor; }), yAxisID: 'y', borderColor: '#16a34a', backgroundColor: '#16a34a', tension: 0.25 },
-                            { label: 'Revenue', data: data.map(function (d) { return d.revenue; }), yAxisID: 'y1', borderColor: '#d97706', backgroundColor: '#d97706', tension: 0.25 }
-                        ]
-                    },
-                    options: {
-                        responsive: true,
-                        maintainAspectRatio: false,
-                        interaction: { mode: 'index', intersect: false },
-                        plugins: {
-                            legend: { position: 'bottom' },
-                            tooltip: {
-                                callbacks: {
-                                    afterTitle: function (items) {
-                                        var d = data[items[0].dataIndex];
-                                        return d ? d.tanggal : '';
-                                    },
-                                    label: function (ctx) {
-                                        if (ctx.dataset.label === 'Revenue') {
-                                            return 'Revenue: ' + rpFull(ctx.parsed.y);
-                                        }
-                                        return ctx.dataset.label + ': ' + ctx.parsed.y;
-                                    }
-                                }
-                            }
-                        },
-                        scales: {
-                            y: { type: 'linear', position: 'left', beginAtZero: true, title: { display: true, text: 'Peserta / Nomor' } },
-                            y1: { type: 'linear', position: 'right', beginAtZero: true, grid: { drawOnChartArea: false }, title: { display: true, text: 'Revenue' }, ticks: { callback: function (v) { return rpShort(v); } } }
-                        }
-                    }
-                };
-                if (chart) { chart.destroy(); }
-                chart = new Chart(canvas, cfg);
-            }
-
-            render('10');
-
-            document.querySelectorAll('.trend-toggle button').forEach(function (btn) {
-                btn.addEventListener('click', function () {
-                    document.querySelectorAll('.trend-toggle button').forEach(function (b) { b.classList.remove('is-active'); });
-                    btn.classList.add('is-active');
-                    render(btn.getAttribute('data-range'));
-                });
-            });
-        });
-    </script>
-    @endif
 @endsection
