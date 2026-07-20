@@ -79,7 +79,7 @@ class UnduhanController extends Controller
                 $acara->heats = $heats;
             }
 
-            $groups = ['A', 'B', 'C'];
+            $groups = $this->funGroups;
     
             $pdf = Pdf::loadView('layouts.print-layout-bukuacara' , compact('acaras', 'kompetisi', 'time', 'groups'))->setPaper('a4', 'potrait');
 
