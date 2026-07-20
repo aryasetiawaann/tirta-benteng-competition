@@ -19,9 +19,9 @@ class UnduhanController extends Controller
 {
 
     // Resmi
-    public $officialMaxLanes = 5;
+    public $officialMaxLanes = 8;
     // Fun
-    public $funMaxLanes = 3;
+    public $funMaxLanes = 4;
     public $funGroupCount = 3;
     public $funGroups = ['A', 'B', 'C'];
 
@@ -124,6 +124,12 @@ class UnduhanController extends Controller
             $heatCapacities[$i] = $maxLanes;
         }
 
+        // Jika Seri 1 hanya berisi 1 peserta dan ada Seri berikutnya, pinjam 1 peserta dari Seri 2
+        if ($remainder === 1 && $numHeats > 1) {
+            $heatCapacities[0] = 2;
+            $heatCapacities[1] = $maxLanes - 1;
+        }
+
         // Tentukan target kapasitas dari setiap Group di dalam seluruh Heats
         $groupTargets = [];
         for ($h = 0; $h < $numHeats; $h++) {
@@ -131,9 +137,17 @@ class UnduhanController extends Controller
             $base = (int) floor($heatCap / $totalGroups);
             $rem = $heatCap % $totalGroups;
 
+            $sizes = [];
             for ($g = 0; $g < $totalGroups; $g++) {
                 // Sebarkan sisa pembagian ke grup-grup pertama di heat tersebut
-                $groupTargets[$h][$g] = $g < $rem ? $base + 1 : $base;
+                $sizes[$g] = $g < $rem ? $base + 1 : $base;
+            }
+
+            // Optimalkan ukuran grup agar tidak ada grup yang berisi tepat 1 peserta jika memungkinkan
+            $sizes = $this->optimizeGroupSizes($sizes, $participantsPerGroup);
+
+            for ($g = 0; $g < $totalGroups; $g++) {
+                $groupTargets[$h][$g] = $sizes[$g];
             }
         }
 
@@ -461,6 +475,52 @@ class UnduhanController extends Controller
         }
 
         return $result; // Return the sorted array
+    }
+
+    private function optimizeGroupSizes($sizes, $maxPerGroup)
+    {
+        $n = count($sizes);
+        $changed = true;
+        while ($changed) {
+            $changed = false;
+            
+            // Cari grup yang berisi tepat 1 peserta
+            $oneIndex = -1;
+            for ($i = 0; $i < $n; $i++) {
+                if ($sizes[$i] === 1) {
+                    $oneIndex = $i;
+                    break;
+                }
+            }
+            
+            if ($oneIndex !== -1) {
+                // Cari grup lain yang memiliki isi >= 1 dan < $maxPerGroup
+                for ($j = 0; $j < $n; $j++) {
+                    if ($j !== $oneIndex && $sizes[$j] >= 1 && $sizes[$j] < $maxPerGroup) {
+                        $sizes[$j]++;
+                        $sizes[$oneIndex]--;
+                        $changed = true;
+                        break;
+                    }
+                }
+                
+                // Jika tidak ditemukan, coba pinjam dari grup yang isinya > 2
+                if (!$changed) {
+                    for ($j = 0; $j < $n; $j++) {
+                        if ($j !== $oneIndex && $sizes[$j] > 2) {
+                            $sizes[$j]--;
+                            $sizes[$oneIndex]++;
+                            $changed = true;
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+
+        // Urutkan grup secara descending agar grup yang lebih penuh berada di awal (Grup A, B, dst.)
+        rsort($sizes);
+        return $sizes;
     }
 
 }
