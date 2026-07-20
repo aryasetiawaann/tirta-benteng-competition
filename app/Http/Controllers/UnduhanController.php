@@ -98,61 +98,139 @@ class UnduhanController extends Controller
 
     private function divideIntoHeats($participants, $totalGroups, $participantsPerGroup) // jumlah grup per seri nya
     {
-        // Hitung jumlah peserta per heat (total grup * peserta per grup)
+        $totalParticipantsCount = count($participants);
+        if ($totalParticipantsCount === 0) {
+            return [];
+        }
+
+        // Hitung jumlah peserta maksimal per heat (total grup * peserta per grup)
         $maxLanes = $totalGroups * $participantsPerGroup;
+
+        // Hitung jumlah heats yang dibutuhkan
+        $numHeats = (int) ceil($totalParticipantsCount / $maxLanes);
+
+        // Hitung sisa peserta untuk Seri 1 (Heat pertama)
+        $remainder = $totalParticipantsCount % $maxLanes;
+        if ($remainder === 0) {
+            $remainder = $maxLanes;
+        }
+
+        // Tentukan kapasitas tiap Heat
+        // Seri 1 (Heat index 0) akan memiliki kapasitas $remainder
+        // Seri lainnya (Heat index 1..$numHeats-1) akan memiliki kapasitas $maxLanes
+        $heatCapacities = [];
+        $heatCapacities[0] = $remainder;
+        for ($i = 1; $i < $numHeats; $i++) {
+            $heatCapacities[$i] = $maxLanes;
+        }
+
+        // Tentukan target kapasitas dari setiap Group di dalam seluruh Heats
+        $groupTargets = [];
+        for ($h = 0; $h < $numHeats; $h++) {
+            $heatCap = $heatCapacities[$h];
+            $base = (int) floor($heatCap / $totalGroups);
+            $rem = $heatCap % $totalGroups;
+
+            for ($g = 0; $g < $totalGroups; $g++) {
+                // Sebarkan sisa pembagian ke grup-grup pertama di heat tersebut
+                $groupTargets[$h][$g] = $g < $rem ? $base + 1 : $base;
+            }
+        }
 
         // Step 1: Pisahkan peserta berdasarkan club
         $participantsByClub = [];
         foreach ($participants as $participant) {
-            $club = $participant['club'];
+            $club = $participant['club'] ?? '-';
             $participantsByClub[$club][] = $participant;
         }
 
-        // Step 2: Cek apakah semua peserta berasal dari club yang sama
-        if (count($participantsByClub) === 1) {
-            // Semua peserta berasal dari satu club, cukup acak dan bagi mereka
-            shuffle($participants); // Acak peserta
-            $heats = array_chunk($participants, $maxLanes);
-
-            foreach ($heats as &$heat) {
-                // Isi dengan null jika kurang dari $maxLanes peserta
-                $heat = array_merge($heat, array_fill(0, $maxLanes - count($heat), null));
-                // Membagi setiap heat menjadi grup (sesuai jumlah grup dan peserta per grup)
-                $heat = array_chunk($heat, $participantsPerGroup);
-            }
-
-            return $heats;
+        // Step 2: Acak peserta di dalam masing-masing club
+        foreach ($participantsByClub as $club => &$clubParticipants) {
+            shuffle($clubParticipants);
         }
+        unset($clubParticipants);
 
-        // Step 3: Ambil peserta secara acak dari tiap club jika lebih dari satu club
-        $shuffledParticipants = [];
-        while (!empty($participantsByClub)) {
-            foreach ($participantsByClub as $club => $participantsInClub) {
-                if (!empty($participantsInClub)) {
-                    // Ambil peserta secara acak dari tiap club
-                    $shuffledParticipants[] = array_shift($participantsByClub[$club]);
-                }
+        // Step 3: Urutkan klub berdasarkan jumlah peserta terbanyak (descending)
+        uasort($participantsByClub, function ($a, $b) {
+            return count($b) <=> count($a);
+        });
 
-                // Hapus club jika semua pesertanya sudah habis
-                if (empty($participantsByClub[$club])) {
-                    unset($participantsByClub[$club]);
-                }
+        // Step 4: Inisialisasi struktur heats dan groups yang kosong
+        $heats = [];
+        for ($h = 0; $h < $numHeats; $h++) {
+            $heats[$h] = [];
+            for ($g = 0; $g < $totalGroups; $g++) {
+                $heats[$h][$g] = [];
             }
         }
 
-        // Step 4: Membagi peserta yang telah diacak ke dalam heat, maksimal peserta per heat
-        $heats = array_chunk($shuffledParticipants, $maxLanes);
+        // Step 5: Sebarkan peserta klub-demi-klub, peserta-demi-peserta
+        foreach ($participantsByClub as $club => $clubParticipants) {
+            foreach ($clubParticipants as $participant) {
+                $candidateGroups = [];
 
-        // Step 5: Isi setiap heat dengan null jika kurang dari $maxLanes peserta
-        foreach ($heats as &$heat) {
-            $heat = array_merge($heat, array_fill(0, $maxLanes - count($heat), null));
-            // Membagi setiap heat menjadi grup (sesuai jumlah grup dan peserta per grup)
-            $heat = array_chunk($heat, $participantsPerGroup);
+                for ($h = 0; $h < $numHeats; $h++) {
+                    for ($g = 0; $g < $totalGroups; $g++) {
+                        $currentGroupSize = count($heats[$h][$g]);
+                        $targetSize = $groupTargets[$h][$g];
 
+                        // Grup hanya boleh dipilih jika belum mencapai target kapasitasnya
+                        if ($currentGroupSize < $targetSize) {
+                            // Hitung berapa peserta dari club yang sama yang sudah ada di grup ini
+                            $sameClubCount = 0;
+                            foreach ($heats[$h][$g] as $p) {
+                                if (isset($p['club']) && $p['club'] === $club) {
+                                    $sameClubCount++;
+                                }
+                            }
+
+                            $candidateGroups[] = [
+                                'heatIndex' => $h,
+                                'groupIndex' => $g,
+                                'sameClubCount' => $sameClubCount,
+                                'groupSize' => $currentGroupSize,
+                            ];
+                        }
+                    }
+                }
+
+                // Dari kandidat yang ada, prioritaskan sameClubCount terkecil, lalu groupSize terkecil.
+                usort($candidateGroups, function ($a, $b) {
+                    if ($a['sameClubCount'] !== $b['sameClubCount']) {
+                        return $a['sameClubCount'] <=> $b['sameClubCount'];
+                    }
+                    return $a['groupSize'] <=> $b['groupSize'];
+                });
+
+                if (!empty($candidateGroups)) {
+                    $bestCandidate = $candidateGroups[0];
+                    // Temukan semua kandidat yang setara untuk diacak (tie-breaking)
+                    $tiedCandidates = [];
+                    foreach ($candidateGroups as $cand) {
+                        if ($cand['sameClubCount'] === $bestCandidate['sameClubCount'] && 
+                            $cand['groupSize'] === $bestCandidate['groupSize']) {
+                            $tiedCandidates[] = $cand;
+                        } else {
+                            break;
+                        }
+                    }
+
+                    // Pilih satu dari kandidat yang setara secara acak
+                    $chosen = $tiedCandidates[array_rand($tiedCandidates)];
+                    $heats[$chosen['heatIndex']][$chosen['groupIndex']][] = $participant;
+                }
+            }
         }
 
-        if(count($heats) > 1 ){
-            $heats = array_values(array_reverse($heats));
+        // Step 6: Pad setiap grup dengan null agar ukurannya tepat $participantsPerGroup
+        for ($h = 0; $h < $numHeats; $h++) {
+            for ($g = 0; $g < $totalGroups; $g++) {
+                $currentGroup = $heats[$h][$g];
+                $paddingNeeded = $participantsPerGroup - count($currentGroup);
+                if ($paddingNeeded > 0) {
+                    $heats[$h][$g] = array_merge($currentGroup, array_fill(0, $paddingNeeded, null));
+                }
+            }
         }
 
         return $heats;
@@ -268,7 +346,13 @@ class UnduhanController extends Controller
         $participantsArray = $participants->toArray();
 
         usort($participantsArray, function($a, $b) {
-            return $a['track_record'] <=> $b['track_record'];
+            $cmp = $a['track_record'] <=> $b['track_record'];
+            if ($cmp === 0) {
+                $dobA = isset($a['umur']) ? $a['umur'] : '9999-12-31';
+                $dobB = isset($b['umur']) ? $b['umur'] : '9999-12-31';
+                return $dobA <=> $dobB;
+            }
+            return $cmp;
         });
 
         // Membagi peserta yang telah diurutkan ke dalam heat
@@ -344,18 +428,27 @@ class UnduhanController extends Controller
             return $participant;
         }, $participants);
 
-        // Sort participants by 'track_record' in ascending order
+        // Sort participants by 'track_record' in ascending order, with 'umur' as tie-breaker (older first)
         usort($participants, function($a, $b) {
             $trackRecordA = $a['track_record'];
             $trackRecordB = $b['track_record'];
-            return $trackRecordA <=> $trackRecordB;
+            $cmp = $trackRecordA <=> $trackRecordB;
+            if ($cmp === 0) {
+                $dobA = isset($a['umur']) ? $a['umur'] : '9999-12-31';
+                $dobB = isset($b['umur']) ? $b['umur'] : '9999-12-31';
+                return $dobA <=> $dobB;
+            }
+            return $cmp;
         });
     
         $result = array_fill(0, $maxLanes, null);
         
-        $middleIndex = intdiv($maxLanes, 2);
-        $leftIndex = $middleIndex - 1;
-        $rightIndex = $middleIndex;
+        if ($maxLanes % 2 == 0) {
+            $leftIndex = intdiv($maxLanes, 2) - 1;
+        } else {
+            $leftIndex = intdiv($maxLanes, 2);
+        }
+        $rightIndex = $leftIndex + 1;
         
         foreach ($participants as $i => $participant) {
             if ($i % 2 == 0) {

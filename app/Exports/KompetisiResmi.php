@@ -146,10 +146,10 @@ class KompetisiResmi implements FromCollection, WithMapping, WithEvents
                     $sheet->mergeCells("B$currentRow:C$currentRow");
                     $sheet->setCellValue("B$currentRow", ' (KU ' . strtoupper($acara->grup) 
                     . ') ');
-                    $sheet->mergeCells("D$currentRow:G$currentRow");
+                    $sheet->mergeCells("D$currentRow:F$currentRow");
                     $sheet->setCellValue("D$currentRow", $acara->nama);
-                    $sheet->setCellValue("H$currentRow", $kategori);
-                    $sheet->getStyle("A$currentRow:H$currentRow")->applyFromArray($headerStyle);
+                    $sheet->setCellValue("G$currentRow", $kategori);
+                    $sheet->getStyle("A$currentRow:G$currentRow")->applyFromArray($headerStyle);
 
                     $currentRow++;
 
@@ -170,10 +170,9 @@ class KompetisiResmi implements FromCollection, WithMapping, WithEvents
                             $sheet->setCellValue("C$currentRow", "Thn Lahir");
                             $sheet->setCellValue("D$currentRow", "KU");
                             $sheet->setCellValue("E$currentRow", "Asal Sekolah/Klub");
-                            $sheet->setCellValue("F$currentRow", "Provinsi");
-                            $sheet->setCellValue("G$currentRow", "QET");
-                            $sheet->setCellValue("H$currentRow", "Hasil");
-                            $sheet->getStyle("A$currentRow:H$currentRow")->applyFromArray($subHeaderStyle);
+                            $sheet->setCellValue("F$currentRow", "QET");
+                            $sheet->setCellValue("G$currentRow", "Hasil");
+                            $sheet->getStyle("A$currentRow:G$currentRow")->applyFromArray($subHeaderStyle);
                             $currentRow++;
 
                             $this->applySeriStyle($sheet, $currentRow);
@@ -194,7 +193,6 @@ class KompetisiResmi implements FromCollection, WithMapping, WithEvents
                                             isset($participant['umur']) ? \Carbon\Carbon::parse($participant['umur'])->format('Y') : '',
                                             'KU ' . $acara->grup,
                                             $participant['club'],
-                                            $participant['province'] ?? '',
                                             $participant['track_record'] == 999 ? 'NT' : $trackRecordFormatted,
                                             '',
                                         ]], null, "A$currentRow");
@@ -203,7 +201,7 @@ class KompetisiResmi implements FromCollection, WithMapping, WithEvents
                                 {
                                     $sheet->fromArray([[
                                             $laneIndex + 1,
-                                            '', '', '', '', '', '', ''
+                                            '', '', '', '', '', ''
                                         ]], null, "A$currentRow");
                                 }
 
@@ -249,7 +247,7 @@ class KompetisiResmi implements FromCollection, WithMapping, WithEvents
         ]);
 
         // Set QET dan HASIL ke tengah
-        $sheet->getStyle("G$startSeriRow:H$endSeriRow")->applyFromArray([
+        $sheet->getStyle("F$startSeriRow:G$endSeriRow")->applyFromArray([
             'alignment' => [
                 'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER,
             ],
@@ -264,9 +262,8 @@ class KompetisiResmi implements FromCollection, WithMapping, WithEvents
         $sheet->getColumnDimension('C')->setWidth(12); // TAHUN LAHIR
         $sheet->getColumnDimension('D')->setWidth(10); // KU
         $sheet->getColumnDimension('E')->setWidth(25); // ASAL SEKOLAH
-        $sheet->getColumnDimension('F')->setWidth(20); // PROVINSI
-        $sheet->getColumnDimension('G')->setWidth(15); // QET
-        $sheet->getColumnDimension('H')->setWidth(15); // HASIL
+        $sheet->getColumnDimension('F')->setWidth(15); // QET
+        $sheet->getColumnDimension('G')->setWidth(15); // HASIL
     }
 
     
