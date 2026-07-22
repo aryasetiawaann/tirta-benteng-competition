@@ -385,9 +385,17 @@ class UnduhanController extends Controller
                 if (isset($heats[$index + 1]) && is_array($heats[$index + 1])) {
                     $nextHeat =& $heats[$index + 1];
     
-                    // Urutkan nextHeat berdasarkan track_record (terbesar ke terkecil = paling lambat dulu)
+                    // Urutkan nextHeat berdasarkan track_record (paling lambat dulu).
+                    // Jika track_record sama, prioritaskan peserta yang lebih muda (dobB <=> dobA) untuk dipindahkan ke Seri 1,
+                    // sehingga peserta yang lebih tua tetap berada di Seri 2 (posisi diuntungkan).
                     usort($nextHeat, function ($a, $b) {
-                        return $b['track_record'] <=> $a['track_record'];
+                        $cmp = $b['track_record'] <=> $a['track_record'];
+                        if ($cmp === 0) {
+                            $dobA = isset($a['umur']) ? $a['umur'] : '9999-12-31';
+                            $dobB = isset($b['umur']) ? $b['umur'] : '9999-12-31';
+                            return $dobB <=> $dobA;
+                        }
+                        return $cmp;
                     });
     
                     // Ambil 3 peserta paling lambat
