@@ -21,9 +21,9 @@ class UnduhanController extends Controller
     // Resmi
     public $officialMaxLanes = 8;
     // Fun
-    public $funMaxLanes = 4;
-    public $funGroupCount = 3;
-    public $funGroups = ['A', 'B', 'C'];
+    public $funMaxLanes = 16;
+    public $funGroupCount = 4;
+    public $funGroups = ['A', 'B', 'C', 'D'];
 
     public function userBukuAcara(){
 
