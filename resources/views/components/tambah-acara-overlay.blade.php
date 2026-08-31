@@ -24,8 +24,17 @@
                 <label for="jenis_lomba">Jenis Lomba *</label>
                 <select name="jenis_lomba" id="jenis_lomba">
                     <option value="tidak ada">Tidak Ada</option>
-                    <option value="25m papan gaya bebas">25m Papan Gaya Bebas</option>
+                    <option value="50m apnea">50m Apnea</option>
+                    <option value="25m bifin">25m Bifin</option>
+                    <option value="25m bifin board">25m Bifin Board</option>
+                    <option value="50m bifin">50m Bifin</option>
+                    <option value="50m bifin board">50m Bifin Board</option>
+                    <option value="50m snorkling bifin">50m Snorkling Bifin</option>
+                    <option value="100m bifin">100m Bifin</option>
+                    <option value="200m bifin">200m Bifin</option>
+                    <option value="400m bifin">400m Bifin</option>
                     <option value="25m gaya bebas">25m Gaya Bebas</option>
+                    <option value="25m papan gaya bebas">25m Papan Gaya Bebas</option>
                     <option value="25m fins gaya bebas">25m Fins Gaya Bebas</option>
                     <option value="50m gaya bebas">50m Gaya Bebas</option>
                     <option value="50m fins gaya bebas">50m Fins Gaya Bebas</option>
@@ -34,6 +43,16 @@
                     <option value="400m gaya bebas">400m Gaya Bebas</option>
                     <option value="800m gaya bebas">800m Gaya Bebas</option>
                     <option value="1500m gaya bebas">1500m Gaya Bebas</option>
+                    <option value="25m gaya dada">25m Gaya Dada</option>
+                    <option value="25m papan gaya dada">25m Papan Gaya Dada</option>
+                    <option value="50m gaya dada">50m Gaya Dada</option>
+                    <option value="50m papan gaya dada">50m Papan Gaya Dada</option>
+                    <option value="100m gaya dada">100m Gaya Dada</option>
+                    <option value="100m papan gaya dada">100m Papan Gaya Dada</option>
+                    <option value="200m gaya dada">200m Gaya Dada</option>
+                    <option value="100m gaya ganti">100m Gaya Ganti</option>
+                    <option value="200m gaya ganti">200m Gaya Ganti</option>
+                    <option value="400m gaya ganti">400m Gaya Ganti</option>
                     <option value="25m gaya kupu-kupu">25m Gaya Kupu-Kupu</option>
                     <option value="25m fins gaya kupu-kupu">25m Fins Gaya Kupu-Kupu</option>
                     <option value="50m gaya kupu-kupu">50m Gaya Kupu-Kupu</option>
@@ -44,23 +63,6 @@
                     <option value="50m gaya punggung">50m Gaya Punggung</option>
                     <option value="100m gaya punggung">100m Gaya Punggung</option>
                     <option value="200m gaya punggung">200m Gaya Punggung</option>
-                    <option value="25m gaya dada">25m Gaya Dada</option>
-                    <option value="25m papan gaya dada">25m Papan Gaya Dada</option>
-                    <option value="50m gaya dada">50m Gaya Dada</option>
-                    <option value="50m papan gaya dada">50m Papan Gaya Dada</option>
-                    <option value="100m gaya dada">100m Gaya Dada</option>
-                    <option value="100m papan gaya dada">100m Papan Gaya Dada</option>
-                    <option value="200m gaya dada">200m Gaya Dada</option>
-                    <option value="200m gaya ganti">200m Gaya Ganti</option>
-                    <option value="400m gaya ganti">400m Gaya Ganti</option>
-                    <option value="25m bifin">25m Bifin</option>
-                    <option value="25m bifin board">25m Bifin Board</option>
-                    <option value="50m bifin">50m Bifin</option>
-                    <option value="50m bifin board">50m Bifin Board</option>
-                    <option value="50m snorkling bifin">50m Snorkling Bifin</option>
-                    <option value="100m bifin">100m Bifin</option>
-                    <option value="200m bifin">200m Bifin</option>
-                    <option value="400m bifin">400m Bifin</option>
                     <option value="25m surface board">25m Surface Board</option>
                     <option value="50m surface">50m Surface</option>
                     <option value="50m surface board">50m Surface Board</option>
@@ -68,7 +70,6 @@
                     <option value="200m surface">200m Surface</option>
                     <option value="400m surface">400m Surface</option>
                     <option value="800m surface">800m Surface</option>
-                    <option value="50m apnea">50m Apnea</option>
                 </select>
 
                 <label for="harga">Harga*</label>
