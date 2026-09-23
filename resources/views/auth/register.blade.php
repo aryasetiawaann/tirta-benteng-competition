@@ -99,7 +99,7 @@
             const provinsiSelect = document.getElementById('provinsi');
             const oldProvinsi = "{{ old('provinsi') }}";
 
-            fetch('/api/provinces')
+            fetch('/wilayah/provinces')
                 .then(response => response.json())
                 .then(result => {
                     const data = result.data;

@@ -108,7 +108,7 @@ document.addEventListener('DOMContentLoaded', function () {
         if(!provinceCode) return;
         regencySelect.innerHTML = '<option value="" disabled selected>Memuat...</option>';
         regencySelect.disabled = true;
-        fetch(`/api/regencies/${provinceCode}`)
+        fetch(`/wilayah/regencies/${provinceCode}`)
             .then(res => res.json())
             .then(result => {
                 regencySelect.innerHTML = '<option value="" disabled selected>Pilih Kota/Kabupaten</option>';
@@ -129,7 +129,7 @@ document.addEventListener('DOMContentLoaded', function () {
         if(!regencyCode) return;
         districtSelect.innerHTML = '<option value="" disabled selected>Memuat...</option>';
         districtSelect.disabled = true;
-        fetch(`/api/districts/${regencyCode}`)
+        fetch(`/wilayah/districts/${regencyCode}`)
             .then(res => res.json())
             .then(result => {
                 districtSelect.innerHTML = '<option value="" disabled selected>Pilih Kecamatan</option>';
@@ -147,7 +147,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     provinceSelect.innerHTML = '<option value="" disabled selected>Memuat...</option>';
     provinceSelect.disabled = true;
-    fetch('/api/provinces')
+    fetch('/wilayah/provinces')
         .then(response => response.json())
         .then(result => {
             provinceSelect.innerHTML = '<option value="" disabled selected>Pilih Provinsi</option>';

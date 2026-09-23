@@ -1,11 +1,11 @@
 <?php
 
 use App\Http\Controllers\PesertaController;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\KompetisiController;
 use App\Http\Controllers\Api\AtletController;
+use App\Http\Controllers\Api\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,9 +21,7 @@ use App\Http\Controllers\Api\AtletController;
 Route::get('/kompetisi', [KompetisiController::class, 'getAllKompetisi']);
 Route::get('/kompetisi/{id}', [KompetisiController::class, 'getKompetisiById']);
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+Route::middleware('auth:sanctum')->get('/user', [UserController::class, 'show']);
 
 Route::post('/midtrans-callback', [PesertaController::class, 'paymentCallback']);
 

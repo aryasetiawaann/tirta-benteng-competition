@@ -1,6 +1,5 @@
 <?php
 
-use Illuminate\Support\Facades\Cache;
 use App\Http\Controllers\AcaraController;
 use App\Http\Controllers\AtletController;
 use App\Http\Controllers\KompetisiController;
@@ -16,8 +15,8 @@ use App\Http\Controllers\TrackRecordController;
 use App\Http\Controllers\DaftarPesertaController;
 use App\Http\Controllers\WinnerController;
 use App\Http\Controllers\LaporanController;
+use App\Http\Controllers\WilayahController;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Http;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -155,22 +154,8 @@ Route::middleware(['auth','role:admin'])->group(function () {
     Route::get('/admin/dashboard/laporan/{id}/export', [LaporanController::class, 'exportOne'])->name('admin.laporan.export');
 });
 
-Route::get('/api/provinces', function () {
-    return Cache::remember('wilayah_provinces', now()->addDays(30), function () {
-        return Http::get('https://wilayah.id/api/provinces.json')->json();
-    });
-});
-
-Route::get('/api/regencies/{id}', function ($id) {
-    return Cache::remember("wilayah_regencies_{$id}", now()->addDays(30), function () use ($id) {
-        return Http::get("https://wilayah.id/api/regencies/{$id}.json")->json();
-    });
-});
-
-Route::get('/api/districts/{id}', function ($id) {
-    return Cache::remember("wilayah_districts_{$id}", now()->addDays(30), function () use ($id) {
-        return Http::get("https://wilayah.id/api/districts/{$id}.json")->json();
-    });
-});
+Route::get('/wilayah/provinces', [WilayahController::class, 'provinces'])->name('wilayah.provinces');
+Route::get('/wilayah/regencies/{id}', [WilayahController::class, 'regencies'])->name('wilayah.regencies');
+Route::get('/wilayah/districts/{id}', [WilayahController::class, 'districts'])->name('wilayah.districts');
 
 require __DIR__.'/auth.php';

@@ -162,7 +162,7 @@
             const provinsiSelect = document.getElementById('provinsi');
             const currentProvinsi = "{{ old('provinsi', auth()->user()->province) }}";
 
-            fetch('/api/provinces')
+            fetch('/wilayah/provinces')
                 .then(response => response.json())
                 .then(result => {
                     const data = result.data;
