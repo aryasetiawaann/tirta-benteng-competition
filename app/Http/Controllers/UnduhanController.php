@@ -19,7 +19,7 @@ class UnduhanController extends Controller
 {
 
     // Resmi
-    public $officialMaxLanes = 8;
+    public $officialMaxLanes = 6;
     // Fun
     public $funMaxLanes = 4;
     public $funGroupCount = 2;
